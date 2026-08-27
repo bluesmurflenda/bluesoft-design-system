@@ -1,0 +1,288 @@
+// Figma DS Master > Checkbox & Radio & Switch(Toggle) 페이지, 2026-08-27 라이브 실측
+// 체크박스/라디오 글리프 자체는 primitive를 직접 참조한다(별도 시맨틱 레이어 없음) —
+// choice/* 시맨틱 토큰은 라벨·설명 텍스트 색상에만 쓰인다.
+// disabled는 Figma에서도 대부분 opacity 50%로 처리돼 있어 동일하게 통일 적용한다.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$choice-size: 20px;
+$choice-border-width: 2px;
+$checkbox-radius: 6px;
+
+$choice-colors: (
+  normal: (
+    border: $color-neutral-300,
+    border-hover: $color-neutral-400,
+    ring: $effect-focus-ring,
+    selected-bg: $color-blue-500,
+    selected-bg-hover: $color-blue-700,
+    label-fg: $color-neutral-800,
+  ),
+  valid: (
+    border: $color-green-600,
+    border-hover: $color-green-700,
+    ring: $color-green-100,
+    selected-bg: $color-green-600,
+    selected-bg-hover: $color-green-700,
+    label-fg: $color-green-600,
+  ),
+  invalid: (
+    border: $color-red-500,
+    border-hover: $color-red-600,
+    ring: $color-red-200,
+    selected-bg: $color-red-500,
+    selected-bg-hover: $color-red-600,
+    label-fg: $color-red-600,
+  ),
+);
+
+$choice-bg-hover: $color-neutral-200; // unselected hover 배경(검증 상태 무관 공통)
+$choice-description-fg: $color-neutral-600;
+
+// 체크박스·라디오 공용 글리프
+.choice__box {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: $choice-size;
+  height: $choice-size;
+  border: $choice-border-width solid map.get(map.get($choice-colors, normal), border);
+  background-color: $color-white;
+  transition: background-color $motion-fast, border-color $motion-fast, box-shadow $motion-fast;
+}
+
+.choice-checkbox .choice__box {
+  border-radius: $checkbox-radius;
+}
+
+.choice-radio .choice__box {
+  border-radius: $radius-full;
+}
+
+.choice__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  &:hover:not(:disabled) + .choice__box {
+    background-color: $choice-bg-hover;
+    border-color: map.get(map.get($choice-colors, normal), border-hover);
+  }
+
+  &:focus-visible + .choice__box {
+    box-shadow: 0 0 0 2px map.get(map.get($choice-colors, normal), ring);
+  }
+
+  &:checked + .choice__box,
+  &:indeterminate + .choice__box {
+    border-color: transparent;
+    background-color: map.get(map.get($choice-colors, normal), selected-bg);
+  }
+
+  &:checked:hover:not(:disabled) + .choice__box,
+  &:indeterminate:hover:not(:disabled) + .choice__box {
+    background-color: map.get(map.get($choice-colors, normal), selected-bg-hover);
+  }
+
+  &:disabled + .choice__box {
+    opacity: 0.5;
+  }
+}
+
+// 검증 상태(valid/invalid) — .choice가 modifier 클래스를 받는다.
+@each $validation in (valid, invalid) {
+  $c: map.get($choice-colors, $validation);
+
+  .choice--#{$validation} {
+    .choice__box {
+      border-color: map.get($c, border);
+    }
+
+    .choice__input {
+      &:hover:not(:disabled) + .choice__box {
+        border-color: map.get($c, border-hover);
+      }
+      &:focus-visible + .choice__box {
+        box-shadow: 0 0 0 2px map.get($c, ring);
+      }
+      &:checked + .choice__box,
+      &:indeterminate + .choice__box {
+        background-color: map.get($c, selected-bg);
+      }
+      &:checked:hover:not(:disabled) + .choice__box,
+      &:indeterminate:hover:not(:disabled) + .choice__box {
+        background-color: map.get($c, selected-bg-hover);
+      }
+    }
+
+    .choice__label {
+      color: map.get($c, label-fg);
+    }
+  }
+}
+
+// 체크/인디터미네이트 글리프(아이콘 폰트·SVG 대신 CSS만으로 표시)
+.choice-checkbox .choice__input:checked + .choice__box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid $color-white;
+  border-bottom: 2px solid $color-white;
+  transform: rotate(-45deg) translateY(-1px);
+}
+
+.choice-checkbox .choice__input:indeterminate + .choice__box::after {
+  content: '';
+  position: absolute;
+  top: 44.25%;
+  bottom: 43.75%;
+  left: 25%;
+  right: 25%;
+  background-color: $color-white;
+}
+
+.choice-radio .choice__input:checked + .choice__box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border-radius: $radius-full;
+  background-color: $color-white;
+}
+
+// 라벨 + 설명
+.choice {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: $space-2;
+  cursor: pointer;
+
+  &:has(.choice__input:disabled) {
+    cursor: not-allowed;
+  }
+}
+
+.choice__text {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.choice__label {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-md;
+  line-height: $font-leading-body-md;
+  color: $color-neutral-800; // choice/label/fg
+}
+
+.choice__description {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $choice-description-fg; // choice/description/fg
+}
+
+// Toggle(Switch) — 같은 페이지에 속한 별도 컨트롤
+$toggle-width: 36px;
+$toggle-height: 20px;
+$toggle-knob-size: 16px;
+$toggle-knob-inset: 2px;
+
+$toggle-colors: (
+  bg-on: $color-blue-500,
+  bg-on-hover: $color-blue-600,
+  bg-off: $color-neutral-300,
+  bg-off-hover: $color-neutral-400,
+  knob: $color-white,
+);
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  cursor: pointer;
+
+  &:has(.toggle__input:disabled) {
+    cursor: not-allowed;
+  }
+}
+
+.toggle__track {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: $toggle-width;
+  height: $toggle-height;
+  border-radius: $radius-full;
+  background-color: map.get($toggle-colors, bg-off);
+  transition: background-color $motion-fast;
+}
+
+.toggle__knob {
+  position: absolute;
+  top: $toggle-knob-inset;
+  left: $toggle-knob-inset;
+  width: $toggle-knob-size;
+  height: $toggle-knob-size;
+  border-radius: $radius-full;
+  background-color: map.get($toggle-colors, knob);
+  transition: transform $motion-fast;
+}
+
+.toggle__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  &:hover:not(:disabled) + .toggle__track {
+    background-color: map.get($toggle-colors, bg-off-hover);
+  }
+
+  &:focus-visible + .toggle__track {
+    box-shadow: 0 0 0 3px $effect-focus-ring;
+  }
+
+  &:checked + .toggle__track {
+    background-color: map.get($toggle-colors, bg-on);
+
+    .toggle__knob {
+      transform: translateX($toggle-width - $toggle-knob-size - $toggle-knob-inset * 2);
+    }
+  }
+
+  &:checked:hover:not(:disabled) + .toggle__track {
+    background-color: map.get($toggle-colors, bg-on-hover);
+  }
+
+  &:disabled + .toggle__track {
+    opacity: 0.5;
+  }
+}
+
+.toggle__label {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-md;
+  line-height: $font-leading-body-md;
+  color: $color-neutral-800; // toggle-fg
+}
