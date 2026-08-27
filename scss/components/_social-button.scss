@@ -1,0 +1,102 @@
+// Figma DS Master > Social Button (node 422:6313), 2026-08-27 라이브 인스턴스 실측
+// 신규 컴포넌트(기존 CHH2 코드 없음). Social 4종(naver/kakao/apple/google) × Theme 2(brand/outline)
+// × Type 2(icon/label) × State 3(default/hover/focus — disabled 축 자체가 없음). Size 축 없음, 높이 48 고정.
+// hover는 배경색이 바뀌는 게 아니라 검정 8% 오버레이가 얹히는 방식(실측 확인) — 모든 소셜·테마 공통.
+
+@use '../tokens/primitive' as *;
+@use 'button' as btn;
+
+$social-height: 48px;
+$social-padding-x: $space-5;
+$social-gap: $space-2;
+$social-logo-size: 20px;
+$social-hover-overlay: rgba($color-black, 0.08);
+
+// google은 브랜드 테마에서도 outline과 동일 처리(문서·실측 공통) — 별도 브랜드색 없음.
+$social-brand-colors: (
+  naver: $social-naver,
+  kakao: $social-kakao,
+  apple: $social-apple,
+);
+
+.social-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: $social-height;
+  gap: $social-gap;
+  border-radius: btn.$button-radius;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-body-lg;
+  line-height: $font-leading-body-lg;
+  cursor: pointer;
+  overflow: hidden; // hover 오버레이가 radius 밖으로 안 나가도록
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: transparent;
+    transition: background-color $motion-fast;
+    pointer-events: none;
+  }
+
+  &:hover:not(:disabled):not([aria-disabled='true'])::after {
+    background-color: $social-hover-overlay;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px $effect-focus-ring;
+  }
+}
+
+// Type=label: 좌우 패딩 있음, 폭은 내용에 따라 자동(HUG)
+.social-btn-label {
+  padding-inline: $social-padding-x;
+}
+
+// Type=icon: 48×48 정사각, 패딩 없음
+.social-btn-icon {
+  width: $social-height;
+  padding-inline: 0;
+}
+
+.social-btn__logo {
+  width: $social-logo-size;
+  height: $social-logo-size;
+  flex-shrink: 0;
+}
+
+// google의 아이콘 전용 로고(Icon/social-google)는 실측상 24px — label 타입은 20px 그대로.
+.social-btn-icon.social-btn-google .social-btn__logo {
+  width: 24px;
+  height: 24px;
+}
+
+// outline 테마 — 4개 소셜 공통(naver/kakao/apple의 outline 변형 + google 전체)
+.social-btn-outline,
+.social-btn-google {
+  background-color: $color-white;
+  border: 1px solid $color-neutral-300; // button/outline/border
+  color: $color-neutral-700; // button/outline/fg
+}
+
+// brand 테마 — naver/kakao/apple만 (google은 위 outline 규칙을 그대로 씀)
+@each $social, $bg in $social-brand-colors {
+  .social-btn-brand.social-btn-#{$social} {
+    background-color: $bg;
+    border: none;
+    // kakao는 문서화된 기존 결함: 카카오 공식 가이드는 검정(#191600) 글자인데
+    // 현재 DS 라이브 값은 흰색이다. Figma가 원본이므로 흰색을 그대로 따르되 결함은 남겨둔다.
+    color: $color-white;
+  }
+}
