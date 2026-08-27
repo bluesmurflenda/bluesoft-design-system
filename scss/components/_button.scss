@@ -1,0 +1,123 @@
+// Figma DS Master > Button (node 182:45) + Theme > button 그룹, 2026-08-27 라이브 인스턴스 실측
+// 변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 5(xs/sm/md/lg/xl) × 상태 5
+
+@use '../tokens/primitive' as *;
+@use '../tokens/shape' as shape;
+@use 'sass:map';
+
+$button-radius: map.get(shape.$shape-rounded, button-radius);
+
+// xs는 radius-xs 전용 토큰을 쓴다(둥근 정도 모드와 무관, 터치 타겟 28px이라 데스크톱 보조 액션 전용).
+$button-sizes: (
+  xs: (height: 28px, padding-x: $space-2, font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, radius: $radius-xsm),
+  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, radius: $button-radius),
+  md: (height: 40px, padding-x: $space-5, font-size: $font-size-body-md, line-height: $font-leading-body-md, radius: $button-radius),
+  lg: (height: 48px, padding-x: $space-6, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, radius: $button-radius),
+  xl: (height: 56px, padding-x: $space-6, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, radius: $button-radius),
+);
+// lg와 xl이 padding-x 둘 다 24로 동일 — DS Master 라이브 실측 그대로다(ds.md에 의도 확인 필요로 기록돼 있음).
+
+$button-gap: $space-2; // 아이콘·라벨 내부 gap. 사이즈별 세분값은 문서화돼 있지 않아 단일값 사용.
+
+$button-variants: (
+  primary: (bg: $color-blue-600, bg-hover: $color-blue-700, bg-pressed: $color-blue-800, fg: $color-white),
+  secondary: (bg: $color-blue-50, bg-hover: $color-blue-100, bg-pressed: $color-blue-200, fg: $color-blue-700),
+  tertiary: (bg: $color-neutral-400, bg-hover: $color-neutral-500, bg-pressed: $color-neutral-600, fg: $color-white),
+  outline: (bg: $color-white, bg-hover: $color-neutral-50, bg-pressed: $color-neutral-100, border: $color-neutral-300, fg: $color-neutral-700),
+  ghost: (bg: transparent, bg-hover: $color-neutral-100, bg-pressed: $color-neutral-200, fg: $color-neutral-700),
+  danger: (bg: $color-red-600, bg-hover: $color-red-700, bg-pressed: $color-red-800, fg: $color-white),
+  scrim-dark: (bg: rgba(0, 0, 0, 0.3), bg-hover: rgba(0, 0, 0, 0.6), bg-pressed: rgba(0, 0, 0, 0.8), fg: $color-white),
+  scrim-light: (bg: rgba(255, 255, 255, 0.3), bg-hover: rgba(255, 255, 255, 0.6), bg-pressed: rgba(255, 255, 255, 0.8), fg: $color-neutral-900),
+);
+
+// disabled는 전 변형 공통(link 제외 — link는 자기 전용 fg-disabled 토큰을 쓴다).
+$button-disabled-bg: $color-slate-100;
+$button-disabled-border: $color-slate-200;
+$button-disabled-fg: $color-slate-400;
+
+$button-link-fg: $color-neutral-700;
+$button-link-fg-hover: $color-blue-600;
+$button-link-fg-pressed: $color-blue-800;
+$button-link-fg-disabled: $color-neutral-400;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $button-gap;
+  border: none;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-semibold;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color $motion-fast, border-color $motion-fast, color $motion-fast;
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $effect-focus-ring;
+  }
+}
+
+@each $size, $props in $button-sizes {
+  .btn-#{$size} {
+    height: map.get($props, height);
+    padding-inline: map.get($props, padding-x);
+    font-size: map.get($props, font-size);
+    line-height: map.get($props, line-height);
+    border-radius: map.get($props, radius);
+  }
+}
+
+@each $variant, $colors in $button-variants {
+  .btn-#{$variant} {
+    background-color: map.get($colors, bg);
+    color: map.get($colors, fg);
+    @if map.has-key($colors, border) {
+      border: 1px solid map.get($colors, border);
+    }
+
+    &:hover:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($colors, bg-hover);
+    }
+
+    &:active:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($colors, bg-pressed);
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: $button-disabled-bg;
+      color: $button-disabled-fg;
+      @if map.has-key($colors, border) {
+        border-color: $button-disabled-border;
+      }
+    }
+  }
+}
+
+// link: 배경·좌우 패딩 없음, 높이는 텍스트 행간과 같다. 밑줄은 CSS로 처리(Figma 밑줄 전파 문제 회피).
+.btn-link {
+  height: auto;
+  padding-inline: 0;
+  background: none;
+  color: $button-link-fg;
+  text-decoration: underline;
+
+  &:hover:not(:disabled):not([aria-disabled='true']) {
+    color: $button-link-fg-hover;
+  }
+
+  &:active:not(:disabled):not([aria-disabled='true']) {
+    color: $button-link-fg-pressed;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    color: $button-link-fg-disabled;
+  }
+}

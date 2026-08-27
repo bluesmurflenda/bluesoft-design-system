@@ -11,11 +11,11 @@ $modal-width-md: 500px;
 $modal-width-lg: 800px;
 $modal-width-xl: 1140px;
 
+// button/padding-x는 원래 Shape 컬렉션 미리보기 보드에 모드별로 들어있었으나,
+// 2026-08-27 라이브 인스턴스 실측 결과 Shape(둥근 정도)와 무관한 전역값으로 확인돼 제외했다.
+// 실제 값은 components/_button.scss에서 정의한다 (xs 8 / sm 12 / md 20 / lg 24 / xl 24).
+
 $shape-rounded: (
-  button-padding-x-sm: $space-3,
-  button-padding-x-md: $space-4,
-  button-padding-x-lg: $space-5,
-  button-padding-x-xl: $space-6,
   button-radius: $radius-sm,
   calendar-radius: $radius-lg,
   calendar-cell-radius: $radius-full,
@@ -27,10 +27,6 @@ $shape-rounded: (
 );
 
 $shape-square: (
-  button-padding-x-sm: $space-3,
-  button-padding-x-md: $space-4,
-  button-padding-x-lg: $space-5,
-  button-padding-x-xl: $space-6,
   button-radius: $radius-none,
   calendar-radius: $radius-none,
   calendar-cell-radius: $radius-none,
@@ -42,10 +38,6 @@ $shape-square: (
 );
 
 $shape-pill: (
-  button-padding-x-sm: $space-4,
-  button-padding-x-md: $space-5,
-  button-padding-x-lg: $space-6,
-  button-padding-x-xl: $space-7,
   button-radius: $radius-full,
   calendar-radius: $radius-2xl,
   calendar-cell-radius: $radius-full,
