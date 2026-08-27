@@ -1,0 +1,77 @@
+@use '../tokens/primitive' as *;
+
+// body 타입 스케일
+.text-body-2xs {
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+}
+.text-body-xs {
+  font-size: $font-size-body-xs;
+  line-height: $font-leading-body-xs;
+}
+.text-body-sm {
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+.text-body-md {
+  font-size: $font-size-body-md;
+  line-height: $font-leading-body-md;
+}
+.text-body-lg {
+  font-size: $font-size-body-lg;
+  line-height: $font-leading-body-lg;
+}
+.text-body-xl {
+  font-size: $font-size-body-xl;
+  line-height: $font-leading-body-xl;
+}
+.text-body-2xl {
+  font-size: $font-size-body-2xl;
+  line-height: $font-leading-body-2xl;
+}
+
+// display 타입 스케일
+.text-display-xs {
+  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-display-xs;
+  line-height: $font-leading-display-xs;
+}
+.text-display-sm {
+  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-display-sm;
+  line-height: $font-leading-display-sm;
+}
+.text-display-md {
+  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-display-md;
+  line-height: $font-leading-display-md;
+}
+.text-display-lg {
+  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-display-lg;
+  line-height: $font-leading-display-lg;
+}
+.text-display-xl {
+  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-display-xl;
+  line-height: $font-leading-display-xl;
+}
+.text-display-2xl {
+  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-display-2xl;
+  line-height: $font-leading-display-2xl;
+}
+
+// 굵기
+.fw-regular {
+  font-weight: $font-weight-regular;
+}
+.fw-medium {
+  font-weight: $font-weight-medium;
+}
+.fw-semibold {
+  font-weight: $font-weight-semibold;
+}
+.fw-bold {
+  font-weight: $font-weight-bold;
+}

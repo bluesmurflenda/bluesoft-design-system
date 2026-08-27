@@ -1,0 +1,88 @@
+// Figma DS Master > Breakpoint collection (~/.claude/ds/bluesoft-ds.md 표 값)
+// 모드: Mobile / Tablet / Laptop / Desktop / Wide
+
+$breakpoint-mobile: 375px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1440px;
+$breakpoint-wide: 1920px;
+
+// 실제 CSS 미디어쿼리 분기는 3개만 쓴다 — 1440·1920은 container/padding-x가 0이라 별도 분기가 필요 없다.
+$css-breakpoint-sm: 768px;
+$css-breakpoint-md: 1024px;
+$css-breakpoint-lg: 1280px;
+
+$grid-columns: (
+  mobile: 4,
+  tablet: 8,
+  laptop: 12,
+  desktop: 12,
+  wide: 12,
+);
+
+$grid-gutter: (
+  mobile: 16px,
+  tablet: 24px,
+  laptop: 24px,
+  desktop: 24px,
+  wide: 24px,
+);
+
+$grid-margin: (
+  mobile: 16px,
+  tablet: 32px,
+  laptop: 32px,
+  desktop: 120px,
+  wide: 360px,
+);
+
+// 컨테이너는 width:100% + max-width 방식. desktop 이상은 padding-x 0, margin-inline:auto가 여백을 만든다.
+$container-width: (
+  mobile: 375px,
+  tablet: 768px,
+  laptop: 1024px,
+  desktop: 1200px,
+  wide: 1200px,
+);
+
+$container-padding-x: (
+  mobile: 16px,
+  tablet: 32px,
+  laptop: 32px,
+  desktop: 0,
+  wide: 0,
+);
+
+$container-max-width: 1200px;
+
+$section-gap: (
+  mobile: 40px,
+  tablet: 40px,
+  laptop: 40px,
+  desktop: 80px,
+  wide: 80px,
+);
+
+$section-gap-sub: (
+  mobile: 32px,
+  tablet: 32px,
+  laptop: 40px,
+  desktop: 40px,
+  wide: 40px,
+);
+
+$section-padding-top: (
+  mobile: 40px,
+  tablet: 40px,
+  laptop: 40px,
+  desktop: 80px,
+  wide: 80px,
+);
+
+$section-padding-bottom: (
+  mobile: 64px,
+  tablet: 64px,
+  laptop: 80px,
+  desktop: 128px,
+  wide: 128px,
+);

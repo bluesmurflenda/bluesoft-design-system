@@ -1,0 +1,52 @@
+// Figma DS Master > Theme collection (Default 모드) 라이브 조회값
+// 일반 시맨틱 그룹만 포함: accent, brand, border, surface, text
+// 컴포넌트별 시맨틱(button/chip/tabs 등)은 해당 컴포넌트 SCSS에서 별도로 채운다.
+
+@use 'primitive' as *;
+
+// accent (= primitive sky 별칭)
+$accent-50: $color-sky-50;
+$accent-100: $color-sky-100;
+$accent-200: $color-sky-200;
+$accent-300: $color-sky-300;
+$accent-400: $color-sky-400;
+$accent-500: $color-sky-500;
+$accent-600: $color-sky-600;
+$accent-700: $color-sky-700;
+$accent-800: $color-sky-800;
+$accent-900: $color-sky-900;
+
+// brand (= primitive blue 별칭)
+$brand-50: $color-blue-50;
+$brand-100: $color-blue-100;
+$brand-200: $color-blue-200;
+$brand-300: $color-blue-300;
+$brand-400: $color-blue-400;
+$brand-500: $color-blue-500;
+$brand-600: $color-blue-600;
+$brand-700: $color-blue-700;
+$brand-800: $color-blue-800;
+$brand-900: $color-blue-900;
+
+// border
+$border-accent: $color-sky-500;
+$border-brand: $color-blue-500;
+$border-default: $color-neutral-200;
+$border-strong: $color-neutral-300;
+
+// surface
+$surface-accent-subtle: $color-sky-50;
+$surface-brand-subtle: $color-blue-50;
+$surface-default: $color-white;
+$surface-inverse: $color-neutral-900;
+$surface-muted: $color-neutral-100;
+$surface-subtle: $color-neutral-50;
+
+// text
+$text-brand: $color-blue-600;
+$text-error: $color-red-600;
+$text-disabled: $color-neutral-400;
+$text-inverse: $color-white;
+$text-primary: $color-neutral-800;
+$text-secondary: $color-neutral-700;
+$text-tertiary: $color-neutral-600;

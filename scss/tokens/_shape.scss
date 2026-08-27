@@ -1,0 +1,57 @@
+// Figma DS Master > Shape collection (Rounded / Square / Pill 모드) 라이브 조회값
+// 프로젝트가 셋 중 하나를 선택해 $shape-* 맵을 사용한다.
+
+@use 'primitive' as *;
+
+// Shape 컬렉션에 포함돼 있지만 모드에 따라 값이 변하지 않는 항목 (참고 — 실제로는 각 컴포넌트 SCSS에서 직접 사용)
+$board-col-date: 120px;
+$board-col-views: 100px;
+$modal-width-sm: 300px;
+$modal-width-md: 500px;
+$modal-width-lg: 800px;
+$modal-width-xl: 1140px;
+
+$shape-rounded: (
+  button-padding-x-sm: $space-3,
+  button-padding-x-md: $space-4,
+  button-padding-x-lg: $space-5,
+  button-padding-x-xl: $space-6,
+  button-radius: $radius-sm,
+  calendar-radius: $radius-lg,
+  calendar-cell-radius: $radius-full,
+  con-radius: $radius-full,
+  pagination-radius: $radius-lg,
+  tabs-radius: $radius-lg,
+  tabs-gap-pill: $space-2,
+  tabs-gap-underline: $space-2,
+);
+
+$shape-square: (
+  button-padding-x-sm: $space-3,
+  button-padding-x-md: $space-4,
+  button-padding-x-lg: $space-5,
+  button-padding-x-xl: $space-6,
+  button-radius: $radius-none,
+  calendar-radius: $radius-none,
+  calendar-cell-radius: $radius-none,
+  con-radius: $radius-full,
+  pagination-radius: $radius-none,
+  tabs-radius: $radius-none,
+  tabs-gap-pill: $space-2,
+  tabs-gap-underline: $space-2,
+);
+
+$shape-pill: (
+  button-padding-x-sm: $space-4,
+  button-padding-x-md: $space-5,
+  button-padding-x-lg: $space-6,
+  button-padding-x-xl: $space-7,
+  button-radius: $radius-full,
+  calendar-radius: $radius-2xl,
+  calendar-cell-radius: $radius-full,
+  con-radius: $radius-full,
+  pagination-radius: $radius-full,
+  tabs-radius: $radius-full,
+  tabs-gap-pill: $space-2,
+  tabs-gap-underline: $space-2,
+);
