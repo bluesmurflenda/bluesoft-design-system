@@ -1,0 +1,216 @@
+// Figma DS Master > Tabs/Item (node 368:3229) + Tabs/Segmented (1088:33), 2026-08-27 라이브 실측
+// Type 4종(underline/underline-brand/pill/segmented) × Size 4(sm/md/lg/xl) × State 4(default/hover/selected/disabled)
+// 텍스트는 전 타입·전 사이즈 Body/Sm(14/20) 고정 — Size는 패딩·높이만 바꾼다(라이브 실측 확인).
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+// underline·underline-brand: 고정 높이 + 내부 Content가 FILL, 좌우 패딩은 Content 쪽에.
+$tabs-underline-sizes: (
+  sm: (height: 32px, padding-x: $space-3),
+  md: (height: 40px, padding-x: $space-4),
+  lg: (height: 48px, padding-x: $space-5),
+  xl: (height: 56px, padding-x: $space-5),
+);
+
+// pill: 패딩 기반 HUG, 테두리 있음.
+$tabs-pill-sizes: (
+  sm: (padding-y: 6px, padding-x: $space-4),
+  md: (padding-y: 8px, padding-x: $space-5),
+  lg: (padding-y: 12px, padding-x: $space-6),
+  xl: (padding-y: 14px, padding-x: $space-7),
+);
+
+// segmented: 패딩 기반 HUG, 테두리 없음(선택 시 흰 배경+그림자로 표시).
+$tabs-segmented-sizes: (
+  sm: (padding-y: 4px, padding-x: $space-3),
+  md: (padding-y: 6px, padding-x: $space-4),
+  lg: (padding-y: 10px, padding-x: $space-6),
+  xl: (padding-y: 12px, padding-x: $space-7),
+);
+
+$tabs-gap: $space-2;
+$tabs-radius: $radius-full;
+$tabs-segment-container-padding: 2px;
+$tabs-segment-items-gap: 2px;
+$tabs-segment-track-bg: $color-slate-100;
+$tabs-segment-track-border: $color-slate-200;
+
+$tabs-underline-colors: (
+  fg: $color-slate-600,
+  fg-hover: $color-slate-700,
+  fg-active: $color-slate-800,
+  fg-disabled: $color-slate-400,
+  underline-active: $color-slate-800,
+);
+
+$tabs-underline-brand-colors: (
+  fg: $color-slate-600,
+  fg-hover: $color-blue-700,
+  fg-active: $color-blue-600,
+  fg-disabled: $color-slate-400,
+  underline-active: $color-blue-600,
+);
+
+$tabs-pill-colors: (
+  fg: $color-slate-600,
+  fg-hover: $color-slate-700,
+  fg-active: $color-blue-600,
+  fg-disabled: $color-slate-400,
+  border: $color-slate-200,
+  border-hover: $color-slate-300,
+  border-active: $color-blue-200,
+  bg-hover: $color-slate-50,
+  bg-active: $color-blue-50,
+);
+
+$tabs-segmented-colors: (
+  fg: $color-slate-600,
+  fg-hover: $color-slate-700,
+  fg-active: $color-slate-900,
+  fg-disabled: $color-slate-400,
+  bg-active: $color-white,
+);
+
+.tabs-item {
+  display: inline-flex;
+  align-items: center;
+  gap: $tabs-gap;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}
+
+// underline / underline-brand
+@mixin tabs-underline-type($colors) {
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0;
+  color: map.get($colors, fg);
+
+  .tabs-item__content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $tabs-gap;
+    flex: 1 0 0;
+  }
+
+  .tabs-item__underline {
+    height: 2px;
+    width: 100%;
+    background-color: transparent;
+  }
+
+  &:hover:not([aria-disabled='true']) {
+    color: map.get($colors, fg-hover);
+  }
+
+  &.is-selected {
+    color: map.get($colors, fg-active);
+
+    .tabs-item__underline {
+      background-color: map.get($colors, underline-active);
+    }
+  }
+
+  &[aria-disabled='true'] {
+    color: map.get($colors, fg-disabled);
+  }
+}
+
+.tabs-item-underline {
+  @include tabs-underline-type($tabs-underline-colors);
+}
+
+.tabs-item-underline-brand {
+  @include tabs-underline-type($tabs-underline-brand-colors);
+}
+
+@each $size, $props in $tabs-underline-sizes {
+  .tabs-item-underline.tabs-item-#{$size},
+  .tabs-item-underline-brand.tabs-item-#{$size} {
+    height: map.get($props, height);
+
+    .tabs-item__content {
+      padding-inline: map.get($props, padding-x);
+    }
+  }
+}
+
+// pill
+.tabs-item-pill {
+  border: 1px solid map.get($tabs-pill-colors, border);
+  border-radius: $tabs-radius;
+  color: map.get($tabs-pill-colors, fg);
+  background-color: transparent;
+
+  &:hover:not([aria-disabled='true']) {
+    border-color: map.get($tabs-pill-colors, border-hover);
+    background-color: map.get($tabs-pill-colors, bg-hover);
+    color: map.get($tabs-pill-colors, fg-hover);
+  }
+
+  &.is-selected {
+    border-color: map.get($tabs-pill-colors, border-active);
+    background-color: map.get($tabs-pill-colors, bg-active);
+    color: map.get($tabs-pill-colors, fg-active);
+  }
+
+  &[aria-disabled='true'] {
+    color: map.get($tabs-pill-colors, fg-disabled);
+  }
+}
+
+@each $size, $props in $tabs-pill-sizes {
+  .tabs-item-pill.tabs-item-#{$size} {
+    padding-block: map.get($props, padding-y);
+    padding-inline: map.get($props, padding-x);
+  }
+}
+
+// segmented (개별 아이템 — 바깥 Segment 컨테이너는 .tabs-segment 참조)
+.tabs-item-segmented {
+  border-radius: $tabs-radius;
+  color: map.get($tabs-segmented-colors, fg);
+  background-color: transparent;
+
+  &:hover:not([aria-disabled='true']) {
+    color: map.get($tabs-segmented-colors, fg-hover);
+  }
+
+  &.is-selected {
+    background-color: map.get($tabs-segmented-colors, bg-active);
+    color: map.get($tabs-segmented-colors, fg-active);
+    box-shadow: 0 1px 1px rgba($color-black, 0.05); // Shadow/xs
+  }
+
+  &[aria-disabled='true'] {
+    color: map.get($tabs-segmented-colors, fg-disabled);
+  }
+}
+
+@each $size, $props in $tabs-segmented-sizes {
+  .tabs-item-segmented.tabs-item-#{$size} {
+    padding-block: map.get($props, padding-y);
+    padding-inline: map.get($props, padding-x);
+  }
+}
+
+// Segment 컨테이너 — segmented 타입 아이템을 감싼다.
+.tabs-segment {
+  display: inline-flex;
+  align-items: center;
+  gap: $tabs-segment-items-gap;
+  padding: $tabs-segment-container-padding;
+  border: 1px solid $tabs-segment-track-border;
+  border-radius: $tabs-radius;
+  background-color: $tabs-segment-track-bg;
+}

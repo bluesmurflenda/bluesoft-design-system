@@ -1,0 +1,67 @@
+// Figma DS Master > Chip (node 401:1594), 2026-08-27 라이브 인스턴스 실측
+// 색상 6종(brand/neutral/success/warning/error/info) × 사이즈 3(sm/md/lg)
+// dot/icon-left/count/removable은 컴포넌트 자체의 슬롯(불리언)이라 별도 컴포넌트가 아니라
+// 이 파일 하나의 클래스 조합(.chip__dot 등)으로 구현한다.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$chip-sizes: (
+  sm: (height: 22px, padding-x: $space-2, gap: $space-1, font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, icon: 12px, dot: 6px),
+  md: (height: 24px, padding-x: 10px, gap: $space-1, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 14px, dot: 6px),
+  lg: (height: 28px, padding-x: $space-3, gap: 6px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px, dot: 8px),
+);
+
+// info는 라이브 실측상 brand와 완전히 동일한 값(#eff6ff/#1d4ed8)이다 — 추정 아님, 그대로 반영.
+$chip-colors: (
+  brand: (bg: $color-blue-50, fg: $color-blue-700),
+  neutral: (bg: $color-slate-50, fg: $color-slate-600),
+  success: (bg: $color-green-50, fg: $color-green-700),
+  warning: (bg: $color-yellow-50, fg: $color-yellow-700),
+  error: (bg: $color-red-50, fg: $color-red-700),
+  info: (bg: $color-blue-50, fg: $color-blue-700),
+);
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: $radius-full;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+}
+
+@each $size, $props in $chip-sizes {
+  .chip-#{$size} {
+    height: map.get($props, height);
+    padding-inline: map.get($props, padding-x);
+    gap: map.get($props, gap);
+    font-size: map.get($props, font-size);
+    line-height: map.get($props, line-height);
+
+    .chip__icon,
+    .chip__close {
+      width: map.get($props, icon);
+      height: map.get($props, icon);
+      flex-shrink: 0;
+    }
+
+    .chip__dot {
+      width: map.get($props, dot);
+      height: map.get($props, dot);
+      border-radius: $radius-full;
+      flex-shrink: 0;
+    }
+  }
+}
+
+@each $color, $c in $chip-colors {
+  .chip-#{$color} {
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
+
+    .chip__dot {
+      background-color: map.get($c, fg);
+    }
+  }
+}

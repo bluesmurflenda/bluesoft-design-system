@@ -22,8 +22,6 @@ icons/
 docs/              GitHub Pages 시각화 페이지
 ```
 
-LXP(`theme/coursemos/scss/coursemos`)의 `frame/`·`utilities/` 패턴을 참고하되, `frame`은 coursemos가 "페이지 종속적이지 않은 컴포넌트"를 가리키려 붙인 자체 명명이라 이 저장소엔 Moodle 전용 폴더(course/grade/mform 등)와 구분할 대상이 없어 `components/`로 바꿨다.
-
 ## 결정 사항
 
 - 빌드 도구(Grunt 등)는 아직 안 붙임 — 필요해지면 그때 추가
