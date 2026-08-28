@@ -13,27 +13,27 @@ $progress-bar-value-fg: $text-primary;
   display: flex;
   align-items: center;
   gap: $space-3;
-}
 
-.progress-bar__track {
-  flex: 1;
-  height: 8px;
-  border-radius: $radius-full;
-  background-color: $progress-bar-track-bg;
-  overflow: hidden;
-}
+  &__track {
+    flex: 1;
+    height: 8px;
+    border-radius: $radius-full;
+    background-color: $progress-bar-track-bg;
+    overflow: hidden;
+  }
 
-.progress-bar__fill {
-  height: 100%;
-  border-radius: $radius-full;
-  background-color: $progress-bar-fill-bg;
-  width: var(--progress-bar-value, 0%);
-}
+  &__fill {
+    height: 100%;
+    border-radius: $radius-full;
+    background-color: $progress-bar-fill-bg;
+    width: var(--progress-bar-value, 0%);
+  }
 
-.progress-bar__value {
-  flex-shrink: 0;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $progress-bar-value-fg;
+  &__value {
+    flex-shrink: 0;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $progress-bar-value-fg;
+  }
 }

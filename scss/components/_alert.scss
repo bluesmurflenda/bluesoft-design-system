@@ -77,50 +77,50 @@ $alert-colors: (
     height: 20px;
     flex-shrink: 0;
   }
-}
 
-.alert-inline,
-.alert-toast {
-  padding: $space-4;
-  border-radius: $radius-lg;
-}
+  &-inline,
+  &-toast {
+    padding: $space-4;
+    border-radius: $radius-lg;
+  }
 
-.alert-toast {
-  width: 400px;
-  // 2026-08-28 실측(Shadow/lg): rgba(0,0,0,.08) 0/12/16/-4 + rgba(0,0,0,.03) 0/4/6/-2
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.03), 0 12px 16px -4px rgba(0, 0, 0, 0.08);
-}
+  &-toast {
+    width: 400px;
+    // 2026-08-28 실측(Shadow/lg): rgba(0,0,0,.08) 0/12/16/-4 + rgba(0,0,0,.03) 0/4/6/-2
+    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.03), 0 12px 16px -4px rgba(0, 0, 0, 0.08);
+  }
 
-.alert-banner {
-  padding: $space-4 $space-6;
-  border-radius: 0;
-  border: none; // 2026-08-28 실측: 배너 레이아웃은 보더 없이 배경색만 채워진다(inline/toast와 다름)
-}
+  &-banner {
+    padding: $space-4 $space-6;
+    border-radius: 0;
+    border: none; // 2026-08-28 실측: 배너 레이아웃은 보더 없이 배경색만 채워진다(inline/toast와 다름)
+  }
 
-.alert__body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-}
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
 
-.alert__title {
-  font-weight: $font-weight-semibold;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-}
+  &__title {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
 
-.alert__text {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $alert-fg-supporting; // 실측: alert/fg-supporting은 색상과 무관한 공용 톤
-}
+  &__text {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $alert-fg-supporting; // 실측: alert/fg-supporting은 색상과 무관한 공용 톤
+  }
 
-.alert__actions {
-  display: flex;
-  gap: $space-3;
-  padding-top: $space-2;
+  &__actions {
+    display: flex;
+    gap: $space-3;
+    padding-top: $space-2;
+  }
 }
 
 @each $color, $c in $alert-colors {

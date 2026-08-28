@@ -45,38 +45,40 @@ $list-item-fg-selected: var(--list-item-fg-selected);
   display: inline-flex;
   flex-direction: column;
   gap: $space-1;
-}
 
-.dropdown__trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-2;
-  border: 1px solid $dropdown-border;
-  background-color: var(--field-bg);
-  color: $dropdown-fg;
-  font-weight: $font-weight-medium;
-  cursor: pointer;
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    border: 1px solid $dropdown-border;
+    background-color: var(--field-bg);
+    color: $dropdown-fg;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
 
-  &:hover {
-    border-color: $color-neutral-400;
-  }
+    &:hover {
+      border-color: $color-neutral-400;
+    }
 
-  &[aria-expanded='true'] {
-    border-color: $color-blue-500;
-    box-shadow: 0 0 0 2px $effect-focus-ring;
+    &[aria-expanded='true'] {
+      border-color: $color-blue-500;
+      box-shadow: 0 0 0 2px $effect-focus-ring;
+    }
 
-    .dropdown__chevron {
+    // &[aria-expanded='true'] 안에 .dropdown__chevron을 한 번 더 중첩하면 4단이 되므로
+    // 복합 선택자로 펼친다(컴파일 결과 동일).
+    &[aria-expanded='true'] .dropdown__chevron {
       transform: rotate(180deg);
     }
   }
-}
 
-.dropdown__chevron {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  color: $dropdown-chevron;
-  transition: transform $motion-fast;
+  &__chevron {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: $dropdown-chevron;
+    transition: transform $motion-fast;
+  }
 }
 
 // 2026-08-28 전 사이즈 재실측(Size=sm~xl 4개 노드 직접 조회): lg와 xl은 둘 다 Body/Lg에서

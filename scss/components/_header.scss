@@ -45,75 +45,79 @@ $announcement-fg: $color-white;
 
 .site-header {
   width: 100%;
-}
 
-.site-header__announcement {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-3;
-  padding: $space-2 $space-10;
-  background-color: $announcement-bg;
-  color: $announcement-fg;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
+  &__announcement {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-3;
+    padding: $space-2 $space-10;
+    background-color: $announcement-bg;
+    color: $announcement-fg;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
 
-  @media (max-width: bp.$css-breakpoint-sm - 1) {
+    @media (max-width: bp.$css-breakpoint-sm - 1) {
+      padding-inline: $space-4;
+    }
+  }
+
+  &__main {
+    display: flex;
+    align-items: center;
+    gap: $space-10;
+    height: map.get(bp.$header-height, mobile);
     padding-inline: $space-4;
+
+    @media (min-width: bp.$css-breakpoint-md) {
+      height: map.get(bp.$header-height, desktop);
+      padding-inline: $space-10;
+    }
   }
-}
 
-.site-header__main {
-  display: flex;
-  align-items: center;
-  gap: $space-10;
-  height: map.get(bp.$header-height, mobile);
-  padding-inline: $space-4;
-
-  @media (min-width: bp.$css-breakpoint-md) {
-    height: map.get(bp.$header-height, desktop);
-    padding-inline: $space-10;
+  &-light {
+    .site-header__main {
+      background-color: $header-bg-light;
+      border-bottom: 1px solid $header-border-light;
+    }
   }
-}
 
-.site-header-light .site-header__main {
-  background-color: $header-bg-light;
-  border-bottom: 1px solid $header-border-light;
-}
+  &-dark {
+    .site-header__main {
+      background-color: $header-bg-dark;
+    }
+  }
 
-.site-header-dark .site-header__main {
-  background-color: $header-bg-dark;
-}
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex: 1;
 
-.site-header__menu {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  flex: 1;
+    @media (max-width: bp.$css-breakpoint-sm - 1) {
+      display: none;
+    }
+  }
 
-  @media (max-width: bp.$css-breakpoint-sm - 1) {
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+
+    @media (max-width: bp.$css-breakpoint-sm - 1) {
+      display: none;
+    }
+  }
+
+  &__menu-button {
     display: none;
-  }
-}
+    width: 40px;
+    height: 40px;
 
-.site-header__right {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-
-  @media (max-width: bp.$css-breakpoint-sm - 1) {
-    display: none;
-  }
-}
-
-.site-header__menu-button {
-  display: none;
-  width: 40px;
-  height: 40px;
-
-  @media (max-width: bp.$css-breakpoint-sm - 1) {
-    display: inline-flex;
+    @media (max-width: bp.$css-breakpoint-sm - 1) {
+      display: inline-flex;
+    }
   }
 }
 
@@ -133,11 +137,17 @@ $announcement-fg: $color-white;
   }
 }
 
-.site-header-dark .nav-menu-item {
-  color: $nav-menu-fg-dark;
+// &-dark 안에 .nav-menu-item을 중첩하고 그 안에서 다시 &:hover 상태를 쓰면 4단이 되므로
+// 복합 선택자로 펼친다(컴파일 결과 동일).
+.site-header {
+  &-dark {
+    .nav-menu-item {
+      color: $nav-menu-fg-dark;
+    }
 
-  &:hover,
-  &.is-selected {
-    color: $nav-menu-fg-dark;
+    .nav-menu-item:hover,
+    .nav-menu-item.is-selected {
+      color: $nav-menu-fg-dark;
+    }
   }
 }

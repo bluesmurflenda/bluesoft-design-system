@@ -36,86 +36,86 @@
   font-size: $font-size-body-lg;
   line-height: $font-leading-body-lg;
   cursor: pointer;
-}
 
-.side-nav-item__content {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  min-width: 0;
-}
-
-.side-nav-item__icon {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-}
-
-.side-nav-item__label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.side-nav-item__badge {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 24px;
-  padding-inline: 10px; // 2026-08-28 실측: space 토큰(8/12)에 안 맞는 리터럴 값
-  border-radius: $radius-full;
-  background-color: $color-slate-50;
-  color: $color-slate-600;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-}
-
-.side-nav-item-sub {
-  padding-left: 48px;
-}
-
-.side-nav-item-icon {
-  width: 48px;
-  height: 48px;
-  padding: $space-3;
-  justify-content: center;
-}
-
-.side-nav-item-light {
-  color: var(--nav-fg);
-
-  .side-nav-item__icon {
-    color: var(--nav-fg);
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    min-width: 0;
   }
 
-  &:hover {
-    background-color: var(--nav-item-bg-hover);
-    color: var(--nav-fg-hover);
+  &__icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__badge {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    padding-inline: 10px; // 2026-08-28 실측: space 토큰(8/12)에 안 맞는 리터럴 값
+    border-radius: $radius-full;
+    background-color: $color-slate-50;
+    color: $color-slate-600;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
+
+  &-sub {
+    padding-left: 48px;
+  }
+
+  &-icon {
+    width: 48px;
+    height: 48px;
+    padding: $space-3;
+    justify-content: center;
+  }
+
+  &-light {
+    color: var(--nav-fg);
 
     .side-nav-item__icon {
+      color: var(--nav-fg);
+    }
+
+    &:hover {
+      background-color: var(--nav-item-bg-hover);
       color: var(--nav-fg-hover);
+    }
+
+    &:hover .side-nav-item__icon {
+      color: var(--nav-fg-hover);
+    }
+
+    &.side-nav-item-selected {
+      background-color: var(--nav-item-bg-selected);
     }
   }
 
-  &.side-nav-item-selected {
-    background-color: var(--nav-item-bg-selected);
-  }
-}
-
-.side-nav-item-dark {
-  color: $color-white;
-
-  .side-nav-item__icon {
+  &-dark {
     color: $color-white;
-  }
 
-  &:hover {
-    background-color: var(--nav-dark-item-bg-hover);
-  }
+    .side-nav-item__icon {
+      color: $color-white;
+    }
 
-  &.side-nav-item-selected {
-    background-color: var(--nav-dark-item-bg-selected);
+    &:hover {
+      background-color: var(--nav-dark-item-bg-hover);
+    }
+
+    &.side-nav-item-selected {
+      background-color: var(--nav-dark-item-bg-selected);
+    }
   }
 }

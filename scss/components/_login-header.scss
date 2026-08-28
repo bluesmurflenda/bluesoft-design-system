@@ -16,29 +16,29 @@ $login-header-supporting-fg: $text-secondary;
   .logo {
     height: 18px; // 실측: 140×18
   }
-}
 
-.login-header-center {
-  align-items: center;
-  text-align: center;
-}
+  &-center {
+    align-items: center;
+    text-align: center;
+  }
 
-.login-header__text {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-}
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
 
-.login-header__title {
-  font-weight: $font-weight-semibold;
-  font-size: $font-size-display-sm;
-  line-height: $font-leading-display-sm;
-  color: $login-header-title-fg;
-}
+  &__title {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-display-sm;
+    line-height: $font-leading-display-sm;
+    color: $login-header-title-fg;
+  }
 
-.login-header__supporting {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-lg;
-  line-height: $font-leading-body-lg;
-  color: $login-header-supporting-fg;
+  &__supporting {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-lg;
+    line-height: $font-leading-body-lg;
+    color: $login-header-supporting-fg;
+  }
 }

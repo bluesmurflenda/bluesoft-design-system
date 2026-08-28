@@ -62,45 +62,45 @@ $select-validation-colors: (
   flex-direction: column;
   gap: $space-1;
   width: 100%;
-}
 
-.select__label {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $select-label-fg;
-}
+  &__label {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $select-label-fg;
+  }
 
-.select__field {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  border-radius: $radius-sm;
-  background-color: $select-bg;
-  color: $select-fg;
-  cursor: pointer;
-}
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    border-radius: $radius-sm;
+    background-color: $select-bg;
+    color: $select-fg;
+    cursor: pointer;
+  }
 
-.select__icon,
-.select__chevron {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  color: $select-icon-fg;
-}
+  &__icon,
+  &__chevron {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: $select-icon-fg;
+  }
 
-.select__content {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  &__content {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.select__hint {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $select-hint-fg;
+  &__hint {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $select-hint-fg;
+  }
 }
 
 @each $size, $props in $select-sizes {

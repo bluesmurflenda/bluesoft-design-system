@@ -9,12 +9,12 @@
   height: 15px;
   width: auto;
   aspect-ratio: 120 / 15;
-}
 
-.logo-lg {
-  height: 18px;
-}
+  &-lg {
+    height: 18px;
+  }
 
-.logo-xl {
-  height: 30px;
+  &-xl {
+    height: 30px;
+  }
 }

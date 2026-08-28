@@ -70,65 +70,65 @@ $calendar-today-fg: var(--calendar-today-fg);
   max-height: 474px;
   padding: $space-5;
   border-radius: $calendar-radius;
-}
 
-.calendar-card {
-  background-color: $calendar-bg;
-}
-
-.calendar__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.calendar__month-label {
-  font-weight: $font-weight-bold;
-  font-size: $font-size-body-xl;
-  line-height: $font-leading-body-xl;
-  color: $calendar-header-fg;
-}
-
-.calendar__nav {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-}
-// nav 버튼은 icon-btn-ghost icon-btn-sm 재사용(32×32, ghost 배경)을 그대로 쓴다.
-
-.calendar__weekday-row {
-  display: flex;
-  gap: $calendar-gap-cell;
-}
-
-.calendar__weekday {
-  display: flex;
-  flex: 1 0 0;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $calendar-weekday-fg;
-
-  &.is-saturday {
-    color: $calendar-saturday-fg;
+  &-card {
+    background-color: $calendar-bg;
   }
-  &.is-sunday {
-    color: $calendar-sunday-fg;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-}
 
-.calendar__weeks {
-  display: flex;
-  flex-direction: column;
-  gap: $calendar-gap-row;
-}
+  &__month-label {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-body-xl;
+    line-height: $font-leading-body-xl;
+    color: $calendar-header-fg;
+  }
 
-.calendar__week {
-  display: flex;
-  gap: $calendar-gap-cell;
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+  }
+  // nav 버튼은 icon-btn-ghost icon-btn-sm 재사용(32×32, ghost 배경)을 그대로 쓴다.
+
+  &__weekday-row {
+    display: flex;
+    gap: $calendar-gap-cell;
+  }
+
+  &__weekday {
+    display: flex;
+    flex: 1 0 0;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $calendar-weekday-fg;
+
+    &.is-saturday {
+      color: $calendar-saturday-fg;
+    }
+    &.is-sunday {
+      color: $calendar-sunday-fg;
+    }
+  }
+
+  &__weeks {
+    display: flex;
+    flex-direction: column;
+    gap: $calendar-gap-row;
+  }
+
+  &__week {
+    display: flex;
+    gap: $calendar-gap-cell;
+  }
 }
 
 .calendar-day {

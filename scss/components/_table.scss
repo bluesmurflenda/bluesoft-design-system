@@ -92,46 +92,51 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
   }
 }
 
-.table-cell-body {
-  color: $table-cell-fg;
-  font-weight: $font-weight-medium;
-}
+.table-cell {
+  &-body {
+    color: $table-cell-fg;
+    font-weight: $font-weight-medium;
 
-.table-cell-body .table-cell__supporting {
-  color: $table-cell-fg-muted;
-  font-size: $font-size-body-2xs;
-  line-height: $font-leading-body-2xs;
-  font-weight: $font-weight-medium;
-}
+    .table-cell__supporting {
+      color: $table-cell-fg-muted;
+      font-size: $font-size-body-2xs;
+      line-height: $font-leading-body-2xs;
+      font-weight: $font-weight-medium;
+    }
+  }
 
-.table-cell-header-col {
-  background-color: $table-header-bg;
-  color: $table-header-fg;
-  font-weight: $font-weight-semibold;
-}
+  &-header-col {
+    background-color: $table-header-bg;
+    color: $table-header-fg;
+    font-weight: $font-weight-semibold;
+  }
 
-.table-cell-header-row {
-  background-color: $table-header-row-bg;
-  color: $table-header-row-fg;
-  font-weight: $font-weight-semibold;
-  border-right: $border-hairline solid $table-border;
-}
+  &-header-row {
+    background-color: $table-header-row-bg;
+    color: $table-header-row-fg;
+    font-weight: $font-weight-semibold;
+    border-right: $border-hairline solid $table-border;
+  }
 
-// 셀 내부 슬롯 — Leading(고정폭, sm·md 24 / lg 32), Chip/Action(HUG), Text block(FILL)
-.table-cell__leading {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: $radius-full;
-}
-.table-cell-lg .table-cell__leading {
-  width: 32px;
-  height: 32px;
-}
+  // 셀 내부 슬롯 — Leading(고정폭, sm·md 24 / lg 32), Chip/Action(HUG), Text block(FILL)
+  &__leading {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: $radius-full;
+  }
 
-.table-cell__text {
-  flex: 1 0 0;
-  min-width: 0;
+  &-lg {
+    .table-cell__leading {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__text {
+    flex: 1 0 0;
+    min-width: 0;
+  }
 }
 
 // 2026-08-28: 자체 .table-pagination 구현을 제거했다 — board.scss와 같은 이유로,

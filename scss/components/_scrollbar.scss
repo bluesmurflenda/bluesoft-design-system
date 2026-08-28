@@ -42,10 +42,10 @@ $scrollbar-thumb-bg-hover: $color-neutral-500;
       background: $scrollbar-thumb-bg-hover;
     }
   }
-}
 
-// 가로 스크롤 컨테이너용
-.scroll-area-x {
-  overflow-x: auto;
-  overflow-y: hidden;
+  // 가로 스크롤 컨테이너용
+  &-x {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
 }

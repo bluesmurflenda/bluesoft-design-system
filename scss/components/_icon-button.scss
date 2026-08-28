@@ -99,59 +99,61 @@ $icon-button-extra-variants: (
   }
 }
 
-// ghost-inverse: 어두운 배경 위 아이콘 버튼. disabled여도 배경은 투명 유지, 글자만 공용 disabled 톤으로.
-.icon-btn-ghost-inverse {
-  $c: map.get($icon-button-extra-variants, ghost-inverse);
-  background-color: map.get($c, bg);
-  color: map.get($c, fg);
+.icon-btn {
+  // ghost-inverse: 어두운 배경 위 아이콘 버튼. disabled여도 배경은 투명 유지, 글자만 공용 disabled 톤으로.
+  &-ghost-inverse {
+    $c: map.get($icon-button-extra-variants, ghost-inverse);
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
 
-  &:hover:not(:disabled):not([aria-disabled='true']) {
-    background-color: map.get($c, bg-hover);
+    &:hover:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($c, bg-hover);
+    }
+    &:active:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($c, bg-pressed);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: transparent;
+      color: btn.$button-disabled-fg;
+    }
   }
-  &:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: map.get($c, bg-pressed);
-  }
-  &:disabled,
-  &[aria-disabled='true'] {
-    background-color: transparent;
-    color: btn.$button-disabled-fg;
-  }
-}
 
-// ghost-brand: 투명 배경 + 브랜드 글자색. disabled도 배경은 투명 유지(전용 fg-disabled 사용).
-.icon-btn-ghost-brand {
-  $c: map.get($icon-button-extra-variants, ghost-brand);
-  background-color: map.get($c, bg);
-  color: map.get($c, fg);
+  // ghost-brand: 투명 배경 + 브랜드 글자색. disabled도 배경은 투명 유지(전용 fg-disabled 사용).
+  &-ghost-brand {
+    $c: map.get($icon-button-extra-variants, ghost-brand);
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
 
-  &:hover:not(:disabled):not([aria-disabled='true']) {
-    background-color: map.get($c, bg-hover);
+    &:hover:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($c, bg-hover);
+    }
+    &:active:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($c, bg-pressed);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: transparent;
+      color: var(--icon-btn-ghost-brand-fg-disabled);
+    }
   }
-  &:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: map.get($c, bg-pressed);
-  }
-  &:disabled,
-  &[aria-disabled='true'] {
-    background-color: transparent;
-    color: var(--icon-btn-ghost-brand-fg-disabled);
-  }
-}
 
-// ghost-white: ghost와 배경 처리 동일, 아이콘만 흰색. disabled는 배경 투명 유지 + 공용 disabled 톤(다른 공유 변형과 동일 처리).
-.icon-btn-ghost-white {
-  $c: map.get($icon-button-extra-variants, ghost-white);
-  background-color: map.get($c, bg);
-  color: map.get($c, fg);
+  // ghost-white: ghost와 배경 처리 동일, 아이콘만 흰색. disabled는 배경 투명 유지 + 공용 disabled 톤(다른 공유 변형과 동일 처리).
+  &-ghost-white {
+    $c: map.get($icon-button-extra-variants, ghost-white);
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
 
-  &:hover:not(:disabled):not([aria-disabled='true']) {
-    background-color: map.get($c, bg-hover);
-  }
-  &:active:not(:disabled):not([aria-disabled='true']) {
-    background-color: map.get($c, bg-pressed);
-  }
-  &:disabled,
-  &[aria-disabled='true'] {
-    background-color: transparent;
-    color: btn.$button-disabled-fg;
+    &:hover:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($c, bg-hover);
+    }
+    &:active:not(:disabled):not([aria-disabled='true']) {
+      background-color: map.get($c, bg-pressed);
+    }
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: transparent;
+      color: btn.$button-disabled-fg;
+    }
   }
 }

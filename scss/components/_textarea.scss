@@ -27,45 +27,45 @@ $textarea-validation-colors: (
   flex-direction: column;
   gap: 6px; // input과 동일한 실측 리터럴
   width: 100%;
-}
 
-.textarea__label {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $textarea-label-fg;
-}
-
-.textarea__field {
-  display: flex;
-  align-items: flex-start;
-  gap: $space-2;
-  border-radius: $radius-sm;
-  background-color: $color-white;
-  box-shadow: $textarea-shadow;
-  transition: border-color $motion-fast, box-shadow $motion-fast;
-}
-
-.textarea__control {
-  flex: 1 0 0;
-  min-width: 0;
-  resize: none;
-  border: none;
-  outline: none;
-  background: none;
-  padding: 0;
-  font-weight: $font-weight-regular;
-  color: $color-neutral-700;
-
-  &::placeholder {
-    color: $textarea-placeholder-fg;
+  &__label {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $textarea-label-fg;
   }
-}
 
-.textarea__hint {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
+  &__field {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-2;
+    border-radius: $radius-sm;
+    background-color: $color-white;
+    box-shadow: $textarea-shadow;
+    transition: border-color $motion-fast, box-shadow $motion-fast;
+  }
+
+  &__control {
+    flex: 1 0 0;
+    min-width: 0;
+    resize: none;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+    font-weight: $font-weight-regular;
+    color: $color-neutral-700;
+
+    &::placeholder {
+      color: $textarea-placeholder-fg;
+    }
+  }
+
+  &__hint {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
 }
 
 @each $size, $props in $textarea-sizes {
@@ -100,20 +100,22 @@ $textarea-validation-colors: (
     .textarea__hint {
       color: map.get($c, hint-fg);
     }
-  }
 
-  .textarea-#{$validation}.textarea-disabled .textarea__field {
-    border-color: map.get($c, border-disabled);
+    &.textarea-disabled .textarea__field {
+      border-color: map.get($c, border-disabled);
+    }
   }
 }
 
-.textarea-disabled {
-  .textarea__field {
-    background-color: $textarea-disabled-bg;
-    box-shadow: $textarea-shadow;
-  }
+.textarea {
+  &-disabled {
+    .textarea__field {
+      background-color: $textarea-disabled-bg;
+      box-shadow: $textarea-shadow;
+    }
 
-  .textarea__hint {
-    opacity: 0.4;
+    .textarea__hint {
+      opacity: 0.4;
+    }
   }
 }

@@ -74,125 +74,139 @@ $choice-bg-hover: var(--choice-box-bg-hover); // unselected hover 배경(검증 
 $choice-description-fg: var(--choice-description-fg);
 
 // 체크박스·라디오 공용 글리프
-.choice__box {
-  position: relative;
-  display: inline-block;
-  flex-shrink: 0;
-  width: $choice-size;
-  height: $choice-size;
-  border: $choice-border-width solid map.get(map.get($choice-colors, normal), border);
-  background-color: var(--choice-box-bg);
-  transition: background-color $motion-fast, border-color $motion-fast, box-shadow $motion-fast;
-}
-
-.choice-checkbox .choice__box {
-  border-radius: $checkbox-radius;
-}
-
-.choice-radio .choice__box {
-  border-radius: $radius-full;
-}
-
-.choice__input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-
-  &:hover:not(:disabled) + .choice__box {
-    background-color: $choice-bg-hover;
-    border-color: map.get(map.get($choice-colors, normal), border-hover);
+.choice {
+  &__box {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    width: $choice-size;
+    height: $choice-size;
+    border: $choice-border-width solid map.get(map.get($choice-colors, normal), border);
+    background-color: var(--choice-box-bg);
+    transition: background-color $motion-fast, border-color $motion-fast, box-shadow $motion-fast;
   }
 
-  &:focus-visible + .choice__box {
-    box-shadow: 0 0 0 2px map.get(map.get($choice-colors, normal), ring);
+  &-checkbox {
+    .choice__box {
+      border-radius: $checkbox-radius;
+    }
   }
 
-  &:checked + .choice__box,
-  &:indeterminate + .choice__box {
-    border-color: transparent;
-    background-color: map.get(map.get($choice-colors, normal), selected-bg);
+  &-radio {
+    .choice__box {
+      border-radius: $radius-full;
+    }
   }
 
-  &:checked:hover:not(:disabled) + .choice__box,
-  &:indeterminate:hover:not(:disabled) + .choice__box {
-    background-color: map.get(map.get($choice-colors, normal), selected-bg-hover);
-  }
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 
-  &:disabled + .choice__box {
-    opacity: 0.5;
+    &:hover:not(:disabled) + .choice__box {
+      background-color: $choice-bg-hover;
+      border-color: map.get(map.get($choice-colors, normal), border-hover);
+    }
+
+    &:focus-visible + .choice__box {
+      box-shadow: 0 0 0 2px map.get(map.get($choice-colors, normal), ring);
+    }
+
+    &:checked + .choice__box,
+    &:indeterminate + .choice__box {
+      border-color: transparent;
+      background-color: map.get(map.get($choice-colors, normal), selected-bg);
+    }
+
+    &:checked:hover:not(:disabled) + .choice__box,
+    &:indeterminate:hover:not(:disabled) + .choice__box {
+      background-color: map.get(map.get($choice-colors, normal), selected-bg-hover);
+    }
+
+    &:disabled + .choice__box {
+      opacity: 0.5;
+    }
   }
 }
 
 // 검증 상태(valid/invalid) — .choice가 modifier 클래스를 받는다.
-@each $validation in (valid, invalid) {
-  $c: map.get($choice-colors, $validation);
+.choice {
+  @each $validation in (valid, invalid) {
+    $c: map.get($choice-colors, $validation);
 
-  .choice--#{$validation} {
-    .choice__box {
-      border-color: map.get($c, border);
-    }
+    &--#{$validation} {
+      .choice__box {
+        border-color: map.get($c, border);
+      }
 
-    .choice__input {
-      &:hover:not(:disabled) + .choice__box {
+      // .choice__input 내부에 상태를 한 번 더 중첩하면 4단이 되므로(.choice > &--valid > .choice__input > &:hover)
+      // 복합 선택자로 펼쳐 3단을 유지한다. 컴파일 결과는 기존과 동일하다.
+      .choice__input:hover:not(:disabled) + .choice__box {
         border-color: map.get($c, border-hover);
       }
-      &:focus-visible + .choice__box {
+      .choice__input:focus-visible + .choice__box {
         box-shadow: 0 0 0 2px map.get($c, ring);
       }
-      &:checked + .choice__box,
-      &:indeterminate + .choice__box {
+      .choice__input:checked + .choice__box,
+      .choice__input:indeterminate + .choice__box {
         background-color: map.get($c, selected-bg);
       }
-      &:checked:hover:not(:disabled) + .choice__box,
-      &:indeterminate:hover:not(:disabled) + .choice__box {
+      .choice__input:checked:hover:not(:disabled) + .choice__box,
+      .choice__input:indeterminate:hover:not(:disabled) + .choice__box {
         background-color: map.get($c, selected-bg-hover);
       }
-    }
 
-    .choice__label {
-      color: map.get($c, label-fg);
+      .choice__label {
+        color: map.get($c, label-fg);
+      }
     }
   }
 }
 
 // 체크/인디터미네이트 글리프(아이콘 폰트·SVG 대신 CSS만으로 표시)
-.choice-checkbox .choice__input:checked + .choice__box::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid $color-white;
-  border-bottom: 2px solid $color-white;
-  transform: rotate(-45deg) translateY(-1px);
-}
+.choice {
+  &-checkbox {
+    .choice__input:checked + .choice__box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 10px;
+      height: 6px;
+      border-left: 2px solid $color-white;
+      border-bottom: 2px solid $color-white;
+      transform: rotate(-45deg) translateY(-1px);
+    }
 
-.choice-checkbox .choice__input:indeterminate + .choice__box::after {
-  content: '';
-  position: absolute;
-  top: 44.25%;
-  bottom: 43.75%;
-  left: 25%;
-  right: 25%;
-  background-color: $color-white;
-}
+    .choice__input:indeterminate + .choice__box::after {
+      content: '';
+      position: absolute;
+      top: 44.25%;
+      bottom: 43.75%;
+      left: 25%;
+      right: 25%;
+      background-color: $color-white;
+    }
+  }
 
-.choice-radio .choice__input:checked + .choice__box::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 8px;
-  height: 8px;
-  border-radius: $radius-full;
-  background-color: $color-white;
+  &-radio {
+    .choice__input:checked + .choice__box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 8px;
+      height: 8px;
+      border-radius: $radius-full;
+      background-color: $color-white;
+    }
+  }
 }
 
 // 라벨 + 설명
@@ -205,26 +219,26 @@ $choice-description-fg: var(--choice-description-fg);
   &:has(.choice__input:disabled) {
     cursor: not-allowed;
   }
-}
 
-.choice__text {
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-}
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
 
-.choice__label {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-md;
-  line-height: $font-leading-body-md;
-  color: var(--choice-label-fg);
-}
+  &__label {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-md;
+    line-height: $font-leading-body-md;
+    color: var(--choice-label-fg);
+  }
 
-.choice__description {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $choice-description-fg; // choice/description/fg
+  &__description {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $choice-description-fg; // choice/description/fg
+  }
 }
 
 // Toggle(Switch) — 같은 페이지에 속한 별도 컨트롤
@@ -250,69 +264,71 @@ $toggle-colors: (
   &:has(.toggle__input:disabled) {
     cursor: not-allowed;
   }
-}
 
-.toggle__track {
-  position: relative;
-  display: inline-block;
-  flex-shrink: 0;
-  width: $toggle-width;
-  height: $toggle-height;
-  border-radius: $radius-full;
-  background-color: map.get($toggle-colors, bg-off);
-  transition: background-color $motion-fast;
-}
-
-.toggle__knob {
-  position: absolute;
-  top: $toggle-knob-inset;
-  left: $toggle-knob-inset;
-  width: $toggle-knob-size;
-  height: $toggle-knob-size;
-  border-radius: $radius-full;
-  background-color: map.get($toggle-colors, knob);
-  transition: transform $motion-fast;
-}
-
-.toggle__input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-
-  &:hover:not(:disabled) + .toggle__track {
-    background-color: map.get($toggle-colors, bg-off-hover);
+  &__track {
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    width: $toggle-width;
+    height: $toggle-height;
+    border-radius: $radius-full;
+    background-color: map.get($toggle-colors, bg-off);
+    transition: background-color $motion-fast;
   }
 
-  &:focus-visible + .toggle__track {
-    box-shadow: 0 0 0 3px $effect-focus-ring;
+  &__knob {
+    position: absolute;
+    top: $toggle-knob-inset;
+    left: $toggle-knob-inset;
+    width: $toggle-knob-size;
+    height: $toggle-knob-size;
+    border-radius: $radius-full;
+    background-color: map.get($toggle-colors, knob);
+    transition: transform $motion-fast;
   }
 
-  &:checked + .toggle__track {
-    background-color: map.get($toggle-colors, bg-on);
+  &__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 
-    .toggle__knob {
+    &:hover:not(:disabled) + .toggle__track {
+      background-color: map.get($toggle-colors, bg-off-hover);
+    }
+
+    &:focus-visible + .toggle__track {
+      box-shadow: 0 0 0 3px $effect-focus-ring;
+    }
+
+    &:checked + .toggle__track {
+      background-color: map.get($toggle-colors, bg-on);
+    }
+
+    // &:checked + .toggle__track 안에 .toggle__knob을 한 번 더 중첩하면 4단이 되므로
+    // 복합 선택자로 펼친다(컴파일 결과 동일).
+    &:checked + .toggle__track .toggle__knob {
       transform: translateX($toggle-width - $toggle-knob-size - $toggle-knob-inset * 2);
+    }
+
+    &:checked:hover:not(:disabled) + .toggle__track {
+      background-color: map.get($toggle-colors, bg-on-hover);
+    }
+
+    &:disabled + .toggle__track {
+      opacity: 0.5;
     }
   }
 
-  &:checked:hover:not(:disabled) + .toggle__track {
-    background-color: map.get($toggle-colors, bg-on-hover);
+  &__label {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-md;
+    line-height: $font-leading-body-md;
+    color: var(--toggle-fg);
   }
-
-  &:disabled + .toggle__track {
-    opacity: 0.5;
-  }
-}
-
-.toggle__label {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-md;
-  line-height: $font-leading-body-md;
-  color: var(--toggle-fg);
 }

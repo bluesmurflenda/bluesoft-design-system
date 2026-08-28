@@ -32,62 +32,62 @@ $input-validation-colors: (
   flex-direction: column;
   gap: 6px; // 2026-08-28 실측: space 토큰(4/8)에 안 맞는 리터럴 값
   width: 100%;
-}
 
-.input__label {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $input-label-fg;
-}
-
-.input__field {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  border-radius: $radius-sm;
-  background-color: $color-white;
-  box-shadow: $input-shadow;
-  transition: border-color $motion-fast, box-shadow $motion-fast;
-}
-
-.input__content {
-  display: flex;
-  flex: 1 0 0;
-  align-items: center;
-  gap: $space-2;
-  min-width: 0;
-}
-
-.input__control {
-  flex: 1 0 0;
-  min-width: 0;
-  border: none;
-  outline: none;
-  background: none;
-  padding: 0;
-  font-weight: $font-weight-regular;
-  color: $color-neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
-
-  &::placeholder {
-    color: $input-placeholder-fg;
+  &__label {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $input-label-fg;
   }
 
-  &:disabled {
-    cursor: not-allowed;
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    border-radius: $radius-sm;
+    background-color: $color-white;
+    box-shadow: $input-shadow;
+    transition: border-color $motion-fast, box-shadow $motion-fast;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1 0 0;
+    align-items: center;
+    gap: $space-2;
+    min-width: 0;
+  }
+
+  &__control {
+    flex: 1 0 0;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+    font-weight: $font-weight-regular;
+    color: $color-neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
 
     &::placeholder {
+      color: $input-placeholder-fg;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:disabled::placeholder {
       color: $input-disabled-placeholder-fg;
     }
   }
-}
 
-.input__icon {
-  flex-shrink: 0;
-}
+  &__icon {
+    flex-shrink: 0;
+  }
 
-.input__hint {
-  font-weight: $font-weight-regular;
+  &__hint {
+    font-weight: $font-weight-regular;
+  }
 }
 
 @each $size, $props in $input-sizes {
@@ -135,13 +135,15 @@ $input-validation-colors: (
   }
 }
 
-.input-disabled {
-  .input__field {
-    background-color: $input-disabled-bg;
-    box-shadow: $input-shadow;
-  }
+.input {
+  &-disabled {
+    .input__field {
+      background-color: $input-disabled-bg;
+      box-shadow: $input-shadow;
+    }
 
-  .input__hint {
-    opacity: 0.4; // 2026-08-28 실측: disabled+invalid/valid 조합에서 힌트 텍스트만 40%로 흐려짐
+    .input__hint {
+      opacity: 0.4; // 2026-08-28 실측: disabled+invalid/valid 조합에서 힌트 텍스트만 40%로 흐려짐
+    }
   }
 }

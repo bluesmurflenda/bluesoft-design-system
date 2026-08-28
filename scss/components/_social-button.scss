@@ -56,23 +56,23 @@ $social-brand-colors: (
     outline: none;
     box-shadow: 0 0 0 2px $effect-focus-ring;
   }
-}
 
-// Type=label: 좌우 패딩 있음, 폭은 내용에 따라 자동(HUG)
-.social-btn-label {
-  padding-inline: $social-padding-x;
-}
+  // Type=label: 좌우 패딩 있음, 폭은 내용에 따라 자동(HUG)
+  &-label {
+    padding-inline: $social-padding-x;
+  }
 
-// Type=icon: 48×48 정사각, 패딩 없음
-.social-btn-icon {
-  width: $social-height;
-  padding-inline: 0;
-}
+  // Type=icon: 48×48 정사각, 패딩 없음
+  &-icon {
+    width: $social-height;
+    padding-inline: 0;
+  }
 
-.social-btn__logo {
-  width: $social-logo-size;
-  height: $social-logo-size;
-  flex-shrink: 0;
+  &__logo {
+    width: $social-logo-size;
+    height: $social-logo-size;
+    flex-shrink: 0;
+  }
 }
 
 // google의 아이콘 전용 로고(Icon/social-google)는 실측상 24px — label 타입은 20px 그대로.

@@ -36,58 +36,60 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
       max-width: min(#{$width}, calc(100% - #{$space-8}));
     }
   }
-}
 
-// alert 계열은 아이콘+텍스트를 세로 중앙 정렬
-.modal-alert-centered,
-.modal-alert-horizontal {
-  align-items: center;
-}
+  // alert 계열은 아이콘+텍스트를 세로 중앙 정렬
+  &-alert-centered,
+  &-alert-horizontal {
+    align-items: center;
+  }
 
-.modal__header {
-  display: flex;
-  align-items: flex-start;
-  gap: $space-4;
-  width: 100%;
-}
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-4;
+    width: 100%;
+  }
 
-// alert-centered는 세로 중앙 정렬, alert-horizontal은 아이콘과 한 줄에 배치(아래 modal__content 참조)
-.modal-header-center {
-  flex-direction: column;
-  align-items: center;
-  gap: $space-2;
-  text-align: center;
-}
+  // alert-centered는 세로 중앙 정렬, alert-horizontal은 아이콘과 한 줄에 배치(아래 modal__content 참조)
+  &-header-center {
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    text-align: center;
+  }
 
-.modal__title {
-  font-weight: $font-weight-semibold;
-  font-size: $font-size-body-lg;
-  line-height: $font-leading-body-lg;
-  color: $modal-title-fg;
-}
+  &__title {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-body-lg;
+    line-height: $font-leading-body-lg;
+    color: $modal-title-fg;
+  }
 
-.modal__description {
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $modal-description-fg;
-}
+  &__description {
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $modal-description-fg;
+  }
 
-.modal-header-left .modal__text {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-  flex: 1 0 0;
-  min-width: 0;
-  padding-top: $space-1;
-}
+  &-header-left {
+    .modal__text {
+      display: flex;
+      flex-direction: column;
+      gap: $space-2;
+      flex: 1 0 0;
+      min-width: 0;
+      padding-top: $space-1;
+    }
+  }
 
-// alert-horizontal: Featured Icon + 헤더를 한 줄에 배치하는 wrapper
-.modal__content {
-  display: flex;
-  align-items: center;
-  gap: $space-4;
-  width: 100%;
+  // alert-horizontal: Featured Icon + 헤더를 한 줄에 배치하는 wrapper
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    width: 100%;
+  }
 }
 
 // Featured Icon과 완전히 같은 색상 맵이라 _featured-icon.scss가 정의한 커스텀 프로퍼티를 그대로 재사용한다
@@ -122,37 +124,39 @@ $modal-icon-colors: (
   }
 }
 
-// 액션 버튼 영역 — 실제 버튼은 .btn .btn-lg .btn-primary/.btn-outline 재사용.
-// horizontal: 가로 배치, secondary(outline) 먼저·primary 나중, 버튼 flex:1.
-// stacked: 세로 배치, primary 먼저(위)·secondary(outline) 나중(아래), 버튼 폭 100%.
-.modal__actions {
-  display: flex;
-  gap: $space-3;
-  width: 100%;
-
-  .btn {
-    flex: 1 0 0;
-  }
-}
-
-.modal-actions-stacked {
-  flex-direction: column;
-
-  .btn {
+.modal {
+  // 액션 버튼 영역 — 실제 버튼은 .btn .btn-lg .btn-primary/.btn-outline 재사용.
+  // horizontal: 가로 배치, secondary(outline) 먼저·primary 나중, 버튼 flex:1.
+  // stacked: 세로 배치, primary 먼저(위)·secondary(outline) 나중(아래), 버튼 폭 100%.
+  &__actions {
+    display: flex;
+    gap: $space-3;
     width: 100%;
-  }
-}
 
-// 콘텐츠 슬롯(플레이스홀더) — 실제 프로젝트에서는 내용으로 대체된다.
-.modal__slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border: 1px dashed $color-slate-300;
-  border-radius: $radius-sm;
-  background-color: $color-slate-50;
-  color: $color-slate-600;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
+    .btn {
+      flex: 1 0 0;
+    }
+  }
+
+  &-actions-stacked {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  // 콘텐츠 슬롯(플레이스홀더) — 실제 프로젝트에서는 내용으로 대체된다.
+  &__slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 1px dashed $color-slate-300;
+    border-radius: $radius-sm;
+    background-color: $color-slate-50;
+    color: $color-slate-600;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
 }

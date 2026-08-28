@@ -40,90 +40,100 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
   border-radius: $radius-sm;
   // 2026-08-28 실측(Shadow/lg): alert-toast와 동일 값, 기존 코드에 누락돼 있었음
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.03)) drop-shadow(0 12px 16px rgba(0, 0, 0, 0.08));
-}
 
-.tooltip__content {
-  padding: $space-3;
-  border-radius: $radius-sm;
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-}
-
-.tooltip__title {
-  font-weight: $font-weight-semibold;
-  font-size: $font-size-body-2xs;
-  line-height: $font-leading-body-2xs;
-}
-
-.tooltip__supporting {
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-2xs;
-  line-height: $font-leading-body-2xs;
-}
-
-.tooltip__arrow {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  transform: rotate(45deg);
-}
-
-.tooltip-dark {
-  .tooltip__content {
-    background-color: $tooltip-dark-bg;
+  &__content {
+    padding: $space-3;
+    border-radius: $radius-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
   }
-  .tooltip__title {
-    color: $tooltip-dark-fg;
-  }
-  .tooltip__supporting {
-    color: $tooltip-dark-fg-supporting;
-  }
-  .tooltip__arrow {
-    background-color: $tooltip-dark-bg;
-  }
-}
 
-.tooltip-light {
-  .tooltip__content {
-    background-color: $tooltip-light-bg;
+  &__title {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-body-2xs;
+    line-height: $font-leading-body-2xs;
   }
-  .tooltip__title {
-    color: $tooltip-light-fg;
+
+  &__supporting {
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-2xs;
+    line-height: $font-leading-body-2xs;
   }
-  .tooltip__supporting {
-    color: $tooltip-light-fg-supporting;
+
+  &__arrow {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
   }
-  .tooltip__arrow {
-    background-color: $tooltip-light-bg;
+
+  &-dark {
+    .tooltip__content {
+      background-color: $tooltip-dark-bg;
+    }
+    .tooltip__title {
+      color: $tooltip-dark-fg;
+    }
+    .tooltip__supporting {
+      color: $tooltip-dark-fg-supporting;
+    }
+    .tooltip__arrow {
+      background-color: $tooltip-dark-bg;
+    }
   }
-}
 
-// Arrow 위치 — bottom(위쪽에 툴팁, 화살표 아래) 기준 실측. top/left/right는 대칭 반전.
-.tooltip-arrow-bottom .tooltip__arrow {
-  bottom: -6px;
-  left: 50%;
-  margin-left: -6px;
-}
+  &-light {
+    .tooltip__content {
+      background-color: $tooltip-light-bg;
+    }
+    .tooltip__title {
+      color: $tooltip-light-fg;
+    }
+    .tooltip__supporting {
+      color: $tooltip-light-fg-supporting;
+    }
+    .tooltip__arrow {
+      background-color: $tooltip-light-bg;
+    }
+  }
 
-.tooltip-arrow-top .tooltip__arrow {
-  top: -6px;
-  left: 50%;
-  margin-left: -6px;
-}
+  // Arrow 위치 — bottom(위쪽에 툴팁, 화살표 아래) 기준 실측. top/left/right는 대칭 반전.
+  &-arrow-bottom {
+    .tooltip__arrow {
+      bottom: -6px;
+      left: 50%;
+      margin-left: -6px;
+    }
+  }
 
-.tooltip-arrow-left .tooltip__arrow {
-  left: -6px;
-  top: 50%;
-  margin-top: -6px;
-}
+  &-arrow-top {
+    .tooltip__arrow {
+      top: -6px;
+      left: 50%;
+      margin-left: -6px;
+    }
+  }
 
-.tooltip-arrow-right .tooltip__arrow {
-  right: -6px;
-  top: 50%;
-  margin-top: -6px;
-}
+  &-arrow-left {
+    .tooltip__arrow {
+      left: -6px;
+      top: 50%;
+      margin-top: -6px;
+    }
+  }
 
-.tooltip-arrow-none .tooltip__arrow {
-  display: none;
+  &-arrow-right {
+    .tooltip__arrow {
+      right: -6px;
+      top: 50%;
+      margin-top: -6px;
+    }
+  }
+
+  &-arrow-none {
+    .tooltip__arrow {
+      display: none;
+    }
+  }
 }

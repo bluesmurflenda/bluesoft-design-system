@@ -125,7 +125,9 @@ $con-themes: (
   }
 }
 
-.con-disabled {
-  opacity: 0.4;
-  pointer-events: none;
+.con {
+  &-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
 }

@@ -70,16 +70,16 @@ $pagination-icon-fg: $color-neutral-600;
     cursor: default;
     pointer-events: none;
   }
-}
 
-// numbers-buttons/button-group 안에서는 사각형(라운드 없음) + 테두리로 서로 붙어있는 형태
-.pagination-number-square {
-  border-radius: 0;
-  border: 1px solid $pagination-border;
-  margin-left: -1px;
+  // numbers-buttons/button-group 안에서는 사각형(라운드 없음) + 테두리로 서로 붙어있는 형태
+  &-square {
+    border-radius: 0;
+    border: 1px solid $pagination-border;
+    margin-left: -1px;
 
-  &:first-child {
-    margin-left: 0;
+    &:first-child {
+      margin-left: 0;
+    }
   }
 }
 
@@ -242,38 +242,38 @@ $pagination-icon-fg: $color-neutral-600;
   padding-block: $space-3;
   border-top: 1px solid $pagination-border;
   border-bottom: 1px solid $pagination-border;
-}
 
-.pagination-compact__nav {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: $pagination-radius;
-  background: transparent;
-  color: $pagination-icon-fg;
-  cursor: pointer;
+  &__nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $pagination-radius;
+    background: transparent;
+    color: $pagination-icon-fg;
+    cursor: pointer;
 
-  &:hover {
-    background-color: $pagination-bg-hover;
+    &:hover {
+      background-color: $pagination-bg-hover;
+    }
+
+    &:disabled,
+    &[aria-disabled='true'] {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
   }
 
-  &:disabled,
-  &[aria-disabled='true'] {
-    opacity: 0.4;
-    cursor: not-allowed;
-    pointer-events: none;
+  &__numbers {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
   }
-
-  .icon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.pagination-compact__numbers {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
 }

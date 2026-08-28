@@ -22,35 +22,35 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   padding-block: $space-5;
   padding-inline: $space-4;
   border-bottom: $border-hairline solid $board-border;
-}
 
-.board-row__content {
-  display: flex;
-  align-items: center;
-  gap: $space-1;
-  flex: 1 0 0;
-  min-width: 0;
-}
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex: 1 0 0;
+    min-width: 0;
+  }
 
-.board-row__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: $font-size-body-md;
-  line-height: $font-leading-body-md;
-  color: $board-title-fg;
-  font-weight: $font-weight-regular;
-}
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: $font-size-body-md;
+    line-height: $font-leading-body-md;
+    color: $board-title-fg;
+    font-weight: $font-weight-regular;
+  }
 
-// kind=notice일 때 제목이 굵어진다.
-.board-row-notice .board-row__title {
-  font-weight: $font-weight-semibold;
-}
+  // kind=notice일 때 제목이 굵어진다.
+  &-notice &__title {
+    font-weight: $font-weight-semibold;
+  }
 
-.board-row__meta {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
+  &__meta {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
 }
 
 .board-cell {
@@ -61,16 +61,16 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
   text-align: center;
-}
 
-.board-cell-body {
-  color: $board-meta-fg;
-  font-weight: $font-weight-regular;
-}
+  &-body {
+    color: $board-meta-fg;
+    font-weight: $font-weight-regular;
+  }
 
-.board-cell-header {
-  color: $board-header-fg;
-  font-weight: $font-weight-medium;
+  &-header {
+    color: $board-header-fg;
+    font-weight: $font-weight-medium;
+  }
 }
 
 .board-header {
@@ -81,29 +81,29 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   background-color: $board-header-bg;
   border-top: $border-hairline solid $board-border;
   border-bottom: $border-hairline solid $board-border;
-}
 
-.board-header__title {
-  flex: 1 0 0;
-  min-width: 0;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $board-header-fg;
+  &__title {
+    flex: 1 0 0;
+    min-width: 0;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $board-header-fg;
+  }
 }
 
 .board-list {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
 
-// container=yes — 카드형으로 감싼 목록
-.board-list-container {
-  background-color: $surface-default;
-  border: $border-hairline solid $board-border;
-  border-radius: $radius-lg;
-  overflow: hidden;
+  // container=yes — 카드형으로 감싼 목록
+  &-container {
+    background-color: $surface-default;
+    border: $border-hairline solid $board-border;
+    border-radius: $radius-lg;
+    overflow: hidden;
+  }
 }
 
 // board-card — 모바일용 카드형 게시글
@@ -114,26 +114,26 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   padding-block: $space-4;
   padding-inline: $space-3;
   border-bottom: $border-hairline solid $board-border;
-}
 
-.board-card__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: $font-size-body-md;
-  line-height: $font-leading-body-md;
-  font-weight: $font-weight-regular;
-  color: $board-title-fg;
-}
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: $font-size-body-md;
+    line-height: $font-leading-body-md;
+    font-weight: $font-weight-regular;
+    color: $board-title-fg;
+  }
 
-.board-card__meta {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-  color: $board-meta-fg;
-  white-space: nowrap;
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    color: $board-meta-fg;
+    white-space: nowrap;
+  }
 }
 
 // Pagination — board-list(container=no)는 numbers 타입, container=yes는 table과 같은 simple-icon 타입(table-pagination 재사용)

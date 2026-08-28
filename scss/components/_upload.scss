@@ -44,24 +44,24 @@ $upload-item-state-border: (
   border-radius: $radius-sm;
   background-color: $surface-default;
   text-align: center;
-}
 
-.upload-dropzone__action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-1;
-  color: $upload-fg-supporting;
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-}
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-1;
+    color: $upload-fg-supporting;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
 
-.upload-dropzone__supporting {
-  color: $upload-fg-supporting;
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-2xs;
-  line-height: $font-leading-body-2xs;
+  &__supporting {
+    color: $upload-fg-supporting;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-2xs;
+    line-height: $font-leading-body-2xs;
+  }
 }
 
 .upload-item {
@@ -79,53 +79,53 @@ $upload-item-state-border: (
       border: 1px solid $border;
     }
   }
-}
 
-.upload-item__icon {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: $radius-full;
-  border: 4px solid $upload-icon-badge-border;
-  background-color: $upload-icon-badge-bg;
+  &__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-full;
+    border: 4px solid $upload-icon-badge-border;
+    background-color: $upload-icon-badge-bg;
 
-  .icon {
-    width: 16px;
-    height: 16px;
-    color: $upload-icon-fg;
+    .icon {
+      width: 16px;
+      height: 16px;
+      color: $upload-icon-fg;
+    }
   }
-}
 
-.upload-item__content {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-}
+  &__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+  }
 
-.upload-item__title {
-  color: $upload-fg-title;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-}
+  &__title {
+    color: $upload-fg-title;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
 
-.upload-item__supporting {
-  color: $upload-fg-supporting;
-  font-weight: $font-weight-regular;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-}
+  &__supporting {
+    color: $upload-fg-supporting;
+    font-weight: $font-weight-regular;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+  }
 
-// uploading/error 상태의 취소·설정 아이콘버튼 — 콘텐츠 우상단 모서리에 -8px 겹침(실측)
-.upload-item__action {
-  position: absolute;
-  top: -8px;
-  right: -8px;
+  // uploading/error 상태의 취소·설정 아이콘버튼 — 콘텐츠 우상단 모서리에 -8px 겹침(실측)
+  &__action {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+  }
 }
 
 // done 상태의 체크박스는 .choice.choice-checkbox(showLabel 없이 box만)를 그대로 배치한다.
