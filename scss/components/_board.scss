@@ -8,7 +8,7 @@
 $board-border: $color-neutral-200; // border/default — table의 slate-200과 다른 값이라 별도 정의
 $board-title-fg: $color-neutral-800; // text-primary
 $board-meta-fg: $color-neutral-600; // text-tertiary
-$board-header-bg: $color-neutral-50; // table-header-bg
+$board-header-bg: $color-slate-50; // table-header-bg 재사용 — 2026-08-28 재실측: #f8fafc(slate-50), neutral-50(#fafafa) 아니었음
 $board-header-fg: $color-neutral-800;
 $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 컬럼 폭이 동일(120)로 확인.
                           // Shape 컬렉션 미리보기 보드엔 조회수 컬럼이 100으로 나와 있었으나

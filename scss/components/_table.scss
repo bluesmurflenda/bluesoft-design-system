@@ -8,9 +8,10 @@
 @use 'sass:map';
 
 $table-border: $color-slate-200;
-$table-header-bg: $color-neutral-50;
+// 2026-08-28 재실측: header-bg와 header-row-bg가 서로 바뀌어 있었음(neutral-50=#fafafa / slate-50=#f8fafc 혼동).
+$table-header-bg: $color-slate-50;
 $table-header-fg: $color-neutral-800;
-$table-header-row-bg: $color-slate-50;
+$table-header-row-bg: $color-neutral-50;
 $table-header-row-fg: $color-neutral-800;
 $table-cell-fg: $color-neutral-700;
 $table-cell-fg-muted: $color-slate-600;
