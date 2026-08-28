@@ -17,6 +17,8 @@ $tooltip-light-fg-supporting: $color-neutral-600;
   flex-direction: column;
   width: 320px;
   border-radius: $radius-sm;
+  // 2026-08-28 실측(Shadow/lg): alert-toast와 동일 값, 기존 코드에 누락돼 있었음
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.03)) drop-shadow(0 12px 16px rgba(0, 0, 0, 0.08));
 }
 
 .tooltip__content {

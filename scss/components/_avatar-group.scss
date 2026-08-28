@@ -6,7 +6,7 @@
 
 $avatar-group-size: 32px;
 $avatar-group-overlap: -8px;
-$avatar-group-ring: 2px solid $color-white;
+$avatar-group-ring: 0 0 0 2px $color-white; // outside 스트로크 — border 대신 box-shadow로(box-sizing:border-box에서 border는 32px 안쪽을 파먹는다)
 $avatar-bg: $color-neutral-100;
 $avatar-fg: $color-neutral-600;
 
@@ -30,7 +30,7 @@ $avatar-fg: $color-neutral-600;
   width: $avatar-group-size;
   height: $avatar-group-size;
   border-radius: $radius-full;
-  border: $avatar-group-ring;
+  box-shadow: $avatar-group-ring;
   background-color: $avatar-bg;
   color: $avatar-fg;
   font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
