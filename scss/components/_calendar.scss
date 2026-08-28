@@ -39,7 +39,7 @@
   --calendar-today-fg: #60a5fa;
 }
 
-$calendar-radius: $radius-lg; // 16 — Shape Rounded 모드 값과 일치(재검증 완료)
+$calendar-radius: var(--shape-calendar-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
 $calendar-bg: var(--calendar-bg);
 $calendar-header-fg: var(--calendar-header-fg);
 $calendar-weekday-fg: var(--calendar-weekday-fg);
@@ -137,7 +137,7 @@ $calendar-today-fg: var(--calendar-today-fg);
   aspect-ratio: 1 / 1;
   align-items: center;
   justify-content: center;
-  border-radius: $radius-full;
+  border-radius: var(--shape-calendar-cell-radius);
   background-color: transparent;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;

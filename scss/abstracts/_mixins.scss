@@ -1,0 +1,16 @@
+// bluesoft-token-scss-design.md 재설계안 — mq() 믹스인(모바일 퍼스트, min-width 전용).
+// container()/section() 레이아웃 믹스인은 tokens/_breakpoint.scss를 CSS 커스텀 프로퍼티로
+// 전환하는 2단계에서, 그 변수들을 참조하는 형태로 추가한다(지금은 근거가 될 CSS 변수가 없어 보류).
+
+@use 'sass:map';
+@use 'maps';
+
+@mixin mq($key) {
+  @if not map.has-key(maps.$breakpoints, $key) {
+    @error "mq(#{$key}) — 존재하지 않는 breakpoint 키입니다. 사용 가능한 키: #{map.keys(maps.$breakpoints)}";
+  }
+
+  @media (min-width: map.get(maps.$breakpoints, $key)) {
+    @content;
+  }
+}

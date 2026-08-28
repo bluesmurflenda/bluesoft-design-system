@@ -4,6 +4,10 @@
 @use 'tokens/shape';
 @use 'function';
 
+@use 'abstracts/maps';
+@use 'abstracts/functions';
+@use 'abstracts/mixins';
+
 @use 'utilities/reset';
 @use 'utilities/typography';
 

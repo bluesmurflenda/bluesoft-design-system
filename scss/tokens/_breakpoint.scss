@@ -1,5 +1,11 @@
-// Figma DS Master > Breakpoint collection (~/.claude/ds/bluesoft-ds.md 표 값)
-// 모드: Mobile / Tablet / Laptop / Desktop / Wide
+// Figma DS Master > Breakpoint collection, 2026-08-28 재정비(bluesoft-token-scss-design.md 기준)
+// 5모드(Mobile/Tablet/Laptop/Desktop/Wide) 값을 실측한 결과 grid-margin 하나만 desktop(120)≠wide(360)로
+// 실제 차이가 있고 나머지는 전부 laptop 이상에서 desktop=wide로 동일하다. 그래서 실사용 CSS 분기는
+// 768/1024/1280 3개로 충분하며, grid-margin만 1920에서 한 번 더 갈라진다.
+//
+// 컴포넌트가 매번 map.get()으로 breakpoint별 값을 꺼내 쓰던 방식을, 여기서 CSS 커스텀 프로퍼티로
+// 한 번만 정의해두고 컴포넌트는 var(--token-name)만 참조하면 자동으로 반응하는 방식으로 바꾼다
+// (primitive/semantic 레이어가 이미 쓰고 있는 :root + [data-*]/미디어쿼리 패턴과 동일한 사상).
 
 $breakpoint-mobile: 375px;
 $breakpoint-tablet: 768px;
@@ -7,131 +13,88 @@ $breakpoint-laptop: 1024px;
 $breakpoint-desktop: 1440px;
 $breakpoint-wide: 1920px;
 
-// 실제 CSS 미디어쿼리 분기는 3개만 쓴다 — 1440·1920은 container/padding-x가 0이라 별도 분기가 필요 없다.
+// 실제 CSS 미디어쿼리 분기 — mq() 믹스인(abstracts/_mixins.scss)도 이 값을 그대로 참조한다.
 $css-breakpoint-sm: 768px;
 $css-breakpoint-md: 1024px;
 $css-breakpoint-lg: 1280px;
 
-$grid-columns: (
-  mobile: 4,
-  tablet: 8,
-  laptop: 12,
-  desktop: 12,
-  wide: 12,
-);
+:root {
+  --grid-columns: 4;
+  --grid-gutter: 16px;
+  --grid-margin: 16px;
 
-$grid-gutter: (
-  mobile: 16px,
-  tablet: 24px,
-  laptop: 24px,
-  desktop: 24px,
-  wide: 24px,
-);
+  --container-width: 375px;
+  --container-padding-x: 16px;
 
-$grid-margin: (
-  mobile: 16px,
-  tablet: 32px,
-  laptop: 32px,
-  desktop: 120px,
-  wide: 360px,
-);
+  --section-gap: 32px; // 2026-08-28 확인: space/8 (기존 40은 오류)
+  --section-gap-sub: 32px;
+  --section-padding-top: 32px; // 2026-08-28 확인: space/8 (기존 40은 오류)
+  --section-padding-bottom: 48px; // 2026-08-28 확인: space/12 (기존 64는 오류)
 
-// 컨테이너는 width:100% + max-width 방식. desktop 이상은 padding-x 0, margin-inline:auto가 여백을 만든다.
-$container-width: (
-  mobile: 375px,
-  tablet: 768px,
-  laptop: 1024px,
-  desktop: 1200px,
-  wide: 1200px,
-);
+  --header-height: 64px;
+  --sub-visual-height: 140px;
+  --tabs-height: 48px;
+  --field-gap: 16px;
+  --field-body-gap: 12px;
+  --table-col-label-width: 200px;
+}
 
-$container-padding-x: (
-  mobile: 16px,
-  tablet: 32px,
-  laptop: 32px,
-  desktop: 0,
-  wide: 0,
-);
+@media (min-width: $css-breakpoint-sm) {
+  :root {
+    --grid-columns: 8;
+    --grid-gutter: 24px;
+    --grid-margin: 32px;
 
-$container-max-width: 1200px;
+    --container-width: 768px;
+    --container-padding-x: 32px;
 
-$section-gap: (
-  mobile: 32px, // 2026-08-28 Figma 변수 패널 스크린샷으로 확인: space/8 (기존 40은 오류)
-  tablet: 40px,
-  laptop: 40px,
-  desktop: 80px,
-  wide: 80px,
-);
+    --section-gap: 40px;
+    --section-padding-top: 40px;
+    --section-padding-bottom: 64px;
 
-$section-gap-sub: (
-  mobile: 32px,
-  tablet: 32px,
-  laptop: 40px,
-  desktop: 40px,
-  wide: 40px,
-);
+    --sub-visual-height: 180px;
+    --field-gap: 20px;
+    --field-body-gap: 16px;
+    --table-col-label-width: 240px;
+  }
+}
 
-$section-padding-top: (
-  mobile: 32px, // 2026-08-28 확인: space/8 (기존 40은 오류)
-  tablet: 40px,
-  laptop: 40px,
-  desktop: 80px,
-  wide: 80px,
-);
+@media (min-width: $css-breakpoint-md) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 24px;
+    --grid-margin: 32px;
 
-$section-padding-bottom: (
-  mobile: 48px, // 2026-08-28 확인: space/12 (기존 64는 오류)
-  tablet: 64px,
-  laptop: 80px,
-  desktop: 128px,
-  wide: 128px,
-);
+    --container-width: 1024px;
 
-// 2026-08-28 사용자가 Figma 변수 패널 스크린샷으로 직접 확인해준 신규 변수 6종
-$header-height: (
-  mobile: 64px,
-  tablet: 64px,
-  laptop: 64px,
-  desktop: 80px,
-  wide: 80px,
-);
+    --section-gap-sub: 40px;
+    --section-padding-bottom: 80px;
 
-$sub-visual-height: (
-  mobile: 140px,
-  tablet: 180px,
-  laptop: 220px,
-  desktop: 260px,
-  wide: 260px,
-);
+    --sub-visual-height: 220px;
+    --tabs-height: 56px;
+    --table-col-label-width: 320px;
+  }
+}
 
-$tabs-height: (
-  mobile: 48px,
-  tablet: 48px,
-  laptop: 56px,
-  desktop: 56px,
-  wide: 56px,
-);
+@media (min-width: $css-breakpoint-lg) {
+  :root {
+    --grid-margin: 120px;
 
-$field-gap: (
-  mobile: 16px,
-  tablet: 20px,
-  laptop: 24px,
-  desktop: 24px,
-  wide: 24px,
-);
+    --container-width: 1200px;
+    --container-padding-x: 0;
 
-$field-body-gap: (
-  mobile: 12px,
-  tablet: 16px,
-  laptop: 16px,
-  desktop: 16px,
-  wide: 16px,
-);
+    --section-gap: 80px;
+    --section-padding-top: 80px;
+    --section-padding-bottom: 128px;
 
-$table-col-label-width: (
-  mobile: 200px,
-  tablet: 240px,
-  laptop: 320px,
-  desktop: 360px,
-  wide: 360px,
-);
+    --header-height: 80px; // 2026-08-28 확인: laptop(1024)까지 64 유지, desktop(1280)에서 80 — 기존 header.scss는 1024에서 전환하던 버그
+    --sub-visual-height: 260px;
+    --field-gap: 24px;
+  }
+}
+
+@media (min-width: $breakpoint-wide) {
+  :root {
+    --grid-margin: 360px; // grid-margin만 desktop(120)≠wide(360) — 유일하게 4번째 분기가 필요한 항목
+  }
+}

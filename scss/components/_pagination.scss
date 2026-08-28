@@ -39,7 +39,7 @@ $pagination-fg-hover: var(--pagination-fg-hover);
 $pagination-bg-hover: var(--pagination-bg-hover);
 $pagination-current-bg: var(--pagination-current-bg);
 $pagination-current-fg: var(--pagination-current-fg);
-$pagination-radius: $radius-sm; // pagination/radius
+$pagination-radius: var(--shape-pagination-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
 $pagination-icon-fg: $color-neutral-600;
 
 // ──────────────────────────────────────────────────────────────

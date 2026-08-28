@@ -2,7 +2,6 @@
 // 변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 5(xs/sm/md/lg/xl) × 상태 5
 
 @use '../tokens/primitive' as *;
-@use '../tokens/shape' as shape;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측: primary/danger/tertiary-fg/scrim 배경은 라이트·다크 동일이라 다크 블록 불필요.
@@ -59,7 +58,7 @@
   --button-scrim-light-fg: #f5f5f5;
 }
 
-$button-radius: map.get(shape.$shape-rounded, button-radius);
+$button-radius: var(--shape-button-radius);
 
 // xs는 radius-xs 전용 토큰을 쓴다(둥근 정도 모드와 무관, 터치 타겟 28px이라 데스크톱 보조 액션 전용).
 $button-sizes: (

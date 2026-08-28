@@ -1,53 +1,42 @@
-// Figma DS Master > Shape collection (Rounded / Square / Pill 모드) 라이브 조회값
-// 프로젝트가 셋 중 하나를 선택해 $shape-* 맵을 사용한다.
+// Figma DS Master > Shape collection (Rounded / Square / Pill 모드), 2026-08-28 재정비
+// (bluesoft-token-scss-design.md 기준 — 컴파일타임 맵 선택 방식에서 [data-shape] 런타임 전환으로 변경)
+//
+// con-radius/tabs-gap-pill/tabs-gap-underline은 Shape 컬렉션에 값이 있지만 3모드 전부 동일해서
+// 실제로는 모드와 무관한 상수다(button-padding-x 때와 같은 케이스, 아래 참고) — CSS 변수화 대상에서
+// 제외했고 각 컴포넌트가 그대로 고정값을 쓴다. 실제로 모드에 따라 값이 달라지는 5개(button/calendar/
+// calendar-cell/pagination/tabs-radius)만 CSS 커스텀 프로퍼티로 둔다. 기본값은 rounded.
 
 @use 'primitive' as *;
 
-// Shape 컬렉션에 포함돼 있지만 모드에 따라 값이 변하지 않는 항목 (참고 — 실제로는 각 컴포넌트 SCSS에서 직접 사용)
-// board-col-date/views는 2026-08-27 board-row 라이브 재검증 결과 둘 다 120으로 확인(미리보기 보드는 views만 100으로 stale) —
-// 실제 값은 components/_board.scss의 $board-col-width에서 정의한다.
+:root {
+  --shape-button-radius: #{$radius-sm};
+  --shape-calendar-radius: #{$radius-lg};
+  --shape-calendar-cell-radius: #{$radius-full};
+  --shape-pagination-radius: #{$radius-sm};
+  --shape-tabs-radius: #{$radius-full};
+}
+
+[data-shape='square'] {
+  --shape-button-radius: #{$radius-none};
+  --shape-calendar-radius: #{$radius-none};
+  --shape-calendar-cell-radius: #{$radius-none};
+  --shape-pagination-radius: #{$radius-none};
+  --shape-tabs-radius: #{$radius-none};
+}
+
+[data-shape='pill'] {
+  --shape-button-radius: #{$radius-full};
+  --shape-calendar-radius: #{$radius-2xl};
+  --shape-calendar-cell-radius: #{$radius-full};
+  --shape-pagination-radius: #{$radius-full};
+  --shape-tabs-radius: #{$radius-full};
+}
+
+// button/padding-x는 Shape 컬렉션 미리보기 보드에 모드별로 들어있었으나 2026-08-27 라이브 인스턴스
+// 실측 결과 Shape(둥근 정도)와 무관한 전역값으로 확인돼 제외했다 — components/_button.scss에서 정의.
+
+// Shape 컬렉션과 무관하게 이 파일에 보관돼 온 modal 폭 상수(모드 무관 고정값).
 $modal-width-sm: 300px;
 $modal-width-md: 500px;
 $modal-width-lg: 800px;
-$modal-width-xl: 1000px; // 2026-08-28 확인: Figma 변수 modal/width/xl 실제값 1000 (ds.md의 1140은 오기)
-
-// button/padding-x는 원래 Shape 컬렉션 미리보기 보드에 모드별로 들어있었으나,
-// 2026-08-27 라이브 인스턴스 실측 결과 Shape(둥근 정도)와 무관한 전역값으로 확인돼 제외했다.
-// 실제 값은 components/_button.scss에서 정의한다 (xs 8 / sm 12 / md 20 / lg 24 / xl 24).
-
-$shape-rounded: (
-  button-radius: $radius-sm,
-  calendar-radius: $radius-lg,
-  calendar-cell-radius: $radius-full,
-  con-radius: $radius-full,
-  pagination-radius: $radius-sm, // 2026-08-27 재검증: 8(radius-sm) — 미리보기 보드는 16(stale)이었음
-  tabs-radius: $radius-full, // 2026-08-27 재검증: 999(radius-full) — 미리보기 보드는 16(stale)이었음
-  tabs-gap-pill: $space-2,
-  tabs-gap-underline: $space-2,
-);
-
-// Square/Pill 모드는 Rounded처럼 라이브 인스턴스로 직접 재검증할 방법이 없다(도구 제약 —
-// 현재 파일에 활성화된 모드만 인스턴스로 조회 가능, button-padding-x 때와 동일한 한계).
-// 다만 button-radius/con-radius/calendar-radius처럼 극단값(0 또는 full)인 항목은
-// 미리보기 보드가 stale이어도 어긋날 가능성이 낮아 그대로 유지한다.
-$shape-square: (
-  button-radius: $radius-none,
-  calendar-radius: $radius-none,
-  calendar-cell-radius: $radius-none,
-  con-radius: $radius-full,
-  pagination-radius: $radius-none,
-  tabs-radius: $radius-none,
-  tabs-gap-pill: $space-2,
-  tabs-gap-underline: $space-2,
-);
-
-$shape-pill: (
-  button-radius: $radius-full,
-  calendar-radius: $radius-2xl,
-  calendar-cell-radius: $radius-full,
-  con-radius: $radius-full,
-  pagination-radius: $radius-full,
-  tabs-radius: $radius-full,
-  tabs-gap-pill: $space-2,
-  tabs-gap-underline: $space-2,
-);
+$modal-width-xl: 1000px;

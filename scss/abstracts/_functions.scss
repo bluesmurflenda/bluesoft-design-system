@@ -1,0 +1,55 @@
+// bluesoft-token-scss-design.md 재설계안 — space()/radius() 함수.
+// tokens/_primitive.scss의 $space-*/$radius-* 별칭(이미 var(--space-*)/var(--radius-*)을 가리킴) 위에
+// 존재하지 않는 키를 즉시 컴파일 에러로 드러내는 유효성 검증만 얹는다. 값 자체는 그대로 CSS 커스텀 프로퍼티다.
+
+@use 'sass:map';
+@use '../tokens/primitive' as *;
+
+$space-scale: (
+  0: $space-0,
+  1: $space-1,
+  2: $space-2,
+  3: $space-3,
+  4: $space-4,
+  5: $space-5,
+  6: $space-6,
+  7: $space-7,
+  8: $space-8,
+  10: $space-10,
+  12: $space-12,
+  16: $space-16,
+  20: $space-20,
+  24: $space-24,
+  32: $space-32,
+  40: $space-40,
+  48: $space-48,
+  56: $space-56,
+  64: $space-64,
+);
+
+@function space($key) {
+  @if not map.has-key($space-scale, $key) {
+    @error "space(#{$key}) — 존재하지 않는 space 키입니다. 사용 가능한 키: #{map.keys($space-scale)}";
+  }
+  @return map.get($space-scale, $key);
+}
+
+$radius-scale: (
+  none: $radius-none,
+  xsm: $radius-xsm,
+  sm: $radius-sm,
+  md: $radius-md,
+  lg: $radius-lg,
+  xl: $radius-xl,
+  2xl: $radius-2xl,
+  3xl: $radius-3xl,
+  4xl: $radius-4xl,
+  full: $radius-full,
+);
+
+@function radius($key) {
+  @if not map.has-key($radius-scale, $key) {
+    @error "radius(#{$key}) — 존재하지 않는 radius 키입니다. 사용 가능한 키: #{map.keys($radius-scale)}";
+  }
+  @return map.get($radius-scale, $key);
+}
