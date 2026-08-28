@@ -1,0 +1,137 @@
+// Figma DS Master > Inputs & Textarea & File 페이지 (node 1366:17664 Dropzone, 1366:17718 Item), 2026-08-28 라이브 인스턴스 실측
+// Dropzone: 정적 업로드 유도 박스. Item: State(uploading|done|error) — 진행률은 progress-bar 컴포넌트를 그대로 인스턴스한다.
+// 파일 아이콘 배지(원형 링)는 상태와 무관하게 항상 brand 톤 고정(실측: uploading/done/error 전부 동일 색).
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$upload-border: $color-neutral-200;
+$upload-fg: $color-neutral-700;
+$upload-fg-title: $color-neutral-800;
+$upload-icon-badge-bg: $color-blue-50;
+$upload-icon-badge-ring: $color-blue-100;
+
+$upload-item-state-border: (
+  uploading: $color-neutral-200,
+  done: $color-blue-500,
+  error: $color-red-600,
+);
+
+.upload-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-1;
+  width: 100%;
+  padding: $space-4 $space-6;
+  border: 1px solid $upload-border;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+  text-align: center;
+}
+
+.upload-dropzone__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+}
+
+.upload-dropzone__action {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  color: $upload-fg-title;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+.upload-dropzone__supporting {
+  color: $upload-fg-title;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+}
+
+.upload-item {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  width: 100%;
+  padding: $space-4;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+
+  @each $state, $border in $upload-item-state-border {
+    &-#{$state} {
+      border: 1px solid $border;
+    }
+  }
+}
+
+.upload-item__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-full;
+  background-color: $upload-icon-badge-bg;
+  box-shadow: 0 0 0 4px $upload-icon-badge-ring;
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    color: $color-blue-600;
+  }
+}
+
+.upload-item__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.upload-item__title {
+  color: $upload-fg-title;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+.upload-item__supporting {
+  color: $upload-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+// done 상태 전용 체크 표시 — choice-checkbox 시각 규칙(radius 6, blue-500, 흰 체크)과 동일하게 재현.
+.upload-item__check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: $radius-xsm;
+  background-color: $color-blue-500;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid $color-white;
+    border-bottom: 2px solid $color-white;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+}

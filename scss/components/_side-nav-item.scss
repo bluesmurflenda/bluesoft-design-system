@@ -1,0 +1,105 @@
+// Figma DS Master > Navigation (Header, Footer) 페이지 (node 1299:424 _Side Nav/Item), 2026-08-28 라이브 인스턴스 실측
+// Type(default|sub|icon) × Theme(light|dark) × State(default|hover|selected) = 18변형
+// dark 테마 hover/selected 배경은 문서에 이미 확정된 시맨틱 별칭을 그대로 쓴다(nav/dark/item/bg-hover→brand/800, bg-selected→brand/600).
+// dark 테마 hover/selected의 글자·아이콘 흰색 유지는 2026-08-28 노드 1299:270·1299:281 직접 조회로 확인 완료(nav-dark-fg가 두 상태 다 white).
+
+@use '../tokens/primitive' as *;
+
+.side-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+  width: 100%;
+  height: 40px;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-lg;
+  line-height: $font-leading-body-lg;
+  cursor: pointer;
+}
+
+.side-nav-item__content {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  min-width: 0;
+}
+
+.side-nav-item__icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.side-nav-item__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.side-nav-item__badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding-inline: 10px; // 2026-08-28 실측: space 토큰(8/12)에 안 맞는 리터럴 값
+  border-radius: $radius-full;
+  background-color: $color-slate-50;
+  color: $color-slate-600;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+.side-nav-item-sub {
+  padding-left: 48px;
+}
+
+.side-nav-item-icon {
+  width: 48px;
+  height: 48px;
+  padding: $space-3;
+  justify-content: center;
+}
+
+.side-nav-item-light {
+  color: $color-neutral-800;
+
+  .side-nav-item__icon {
+    color: $color-neutral-800;
+  }
+
+  &:hover {
+    background-color: $color-neutral-50;
+    color: $color-blue-600;
+
+    .side-nav-item__icon {
+      color: $color-blue-600;
+    }
+  }
+
+  &.side-nav-item-selected {
+    background-color: $color-neutral-100;
+  }
+}
+
+.side-nav-item-dark {
+  color: $color-white;
+
+  .side-nav-item__icon {
+    color: $color-white;
+  }
+
+  &:hover {
+    background-color: $color-blue-800;
+  }
+
+  &.side-nav-item-selected {
+    background-color: $color-blue-600;
+  }
+}
