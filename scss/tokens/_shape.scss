@@ -9,7 +9,7 @@
 $modal-width-sm: 300px;
 $modal-width-md: 500px;
 $modal-width-lg: 800px;
-$modal-width-xl: 1140px;
+$modal-width-xl: 1000px; // 2026-08-28 확인: Figma 변수 modal/width/xl 실제값 1000 (ds.md의 1140은 오기)
 
 // button/padding-x는 원래 Shape 컬렉션 미리보기 보드에 모드별로 들어있었으나,
 // 2026-08-27 라이브 인스턴스 실측 결과 Shape(둥근 정도)와 무관한 전역값으로 확인돼 제외했다.
