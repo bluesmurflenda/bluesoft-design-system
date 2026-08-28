@@ -2029,6 +2029,9 @@ table {
 .modal.modal-xl {
   max-width: min(1000px, 100% - var(--space-8));
 }
+.modal.modal-sm {
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
 .modal-alert-centered, .modal-alert-horizontal {
   align-items: center;
 }

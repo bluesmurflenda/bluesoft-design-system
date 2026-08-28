@@ -26,6 +26,8 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
   gap: $space-6;
   width: 100%;
   padding: $space-6;
+  // ⚠️ 확인 필요(open-questions A2): white 프리미티브 직접 참조라 다크모드에서 흰 모달이 된다.
+  // modal/bg 다크값이 실측되지 않아 추정으로 채우지 않고 라이트값 그대로 둔다 — Figma 재조회 필요.
   background-color: $color-white;
   border-radius: $radius-lg;
   box-shadow: $modal-shadow;
@@ -35,6 +37,11 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
     &.modal-#{$bp} {
       max-width: min(#{$width}, calc(100% - #{$space-8}));
     }
+  }
+
+  // 2026-08-28 확인(nav-display-spec): sm만 패딩이 다르다(상20/우16/하16/좌16). md·lg·xl은 24 균일(위 기본값).
+  &.modal-sm {
+    padding: $space-5 $space-4 $space-4;
   }
 
   // alert 계열은 아이콘+텍스트를 세로 중앙 정렬
