@@ -499,6 +499,7 @@
   --button-padding-x-xl: var(--space-6);
   --calendar-radius: var(--radius-lg);
   --calendar-cell-radius: var(--radius-full);
+  --con-radius: var(--radius-full);
   --pagination-radius: var(--radius-sm);
   --tabs-radius: var(--radius-full);
 }
@@ -508,6 +509,7 @@
   --button-radius-xs: var(--radius-none);
   --calendar-radius: var(--radius-none);
   --calendar-cell-radius: var(--radius-none);
+  --con-radius: var(--radius-none);
   --pagination-radius: var(--radius-none);
   --tabs-radius: var(--radius-none);
 }
@@ -519,6 +521,7 @@
   --button-padding-x-xl: var(--space-7);
   --calendar-radius: var(--radius-2xl);
   --calendar-cell-radius: var(--radius-full);
+  --con-radius: var(--radius-full);
   --pagination-radius: var(--radius-full);
   --tabs-radius: var(--radius-full);
 }
@@ -3115,8 +3118,8 @@ table {
 }
 
 [data-theme=dark] {
-  --tooltip-dark-bg: #f5f5f5;
-  --tooltip-dark-fg: #0a0a0a;
+  --tooltip-dark-bg: #171717;
+  --tooltip-dark-fg: #ffffff;
   --tooltip-dark-fg-supporting: #0a0a0a;
   --tooltip-light-bg: #0a0a0a;
   --tooltip-light-fg: #d4d4d4;
@@ -3491,7 +3494,7 @@ table {
   --con-white-fg-hover: #60a5fa;
   --con-white-border-hover: #1e40af;
   --con-white-fg-selected: #0a0a0a;
-  --con-white-bg-selected: #60a5fa;
+  --con-white-bg-selected: #2563eb;
   --con-white-border-selected: #60a5fa;
 }
 
@@ -3499,7 +3502,7 @@ table {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  border-radius: var(--radius-full);
+  border-radius: var(--con-radius);
   border: 1px solid transparent;
   color: var(--con-fg);
   font-weight: var(--font-weight-medium);
@@ -3549,7 +3552,7 @@ table {
 }
 
 .con-gray {
-  background-color: transparent;
+  background-color: var(--con-white-bg);
   border-color: var(--con-gray-border);
 }
 .con-gray:hover:not(.con-disabled) {

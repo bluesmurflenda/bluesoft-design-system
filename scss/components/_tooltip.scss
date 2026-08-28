@@ -17,8 +17,10 @@
 }
 
 [data-theme='dark'] {
-  --tooltip-dark-bg: #f5f5f5;
-  --tooltip-dark-fg: #0a0a0a;
+  // 2026-08-28 확인(status-spec 0장): dark 모드에서 기계적으로 반전돼 "어두운 스타일" 툴팁이
+  // 흰색이 되는 결함 — bg·fg는 라이트값 그대로 고정한다. fg-supporting은 별도 확인 필요라 보류.
+  --tooltip-dark-bg: #171717;
+  --tooltip-dark-fg: #ffffff;
   --tooltip-dark-fg-supporting: #0a0a0a;
   --tooltip-light-bg: #0a0a0a;
   --tooltip-light-fg: #d4d4d4;

@@ -5,9 +5,11 @@
 // 이후 문서들이 전부 컴포넌트 네임스페이스를 접두사 없이 쓴다(--button-radius, --field-*, --calendar-*
 // 등). 같은 관례를 따른다.
 //
-// con-radius/tabs-gap-pill/tabs-gap-underline은 Shape 컬렉션에 값이 있지만 3모드 전부 동일해서
-// 실제로는 모드와 무관한 상수다(button-padding-x/xs·md·lg와 같은 케이스) — CSS 변수화 대상에서
-// 제외했고 각 컴포넌트가 그대로 고정값을 쓴다. 기본값은 rounded.
+// tabs-gap-pill/tabs-gap-underline은 Shape 컬렉션에 값이 있지만 3모드 전부 동일해서 실제로는
+// 모드와 무관한 상수다(button-padding-x/xs·md·lg와 같은 케이스) — CSS 변수화 대상에서 제외했고
+// 각 컴포넌트가 그대로 고정값을 쓴다. con-radius는 처음엔 같은 케이스로 보고 제외했으나
+// 2026-08-28 status-spec.md 재실측으로 Square에서 radius/none로 갈리는 게 확인돼 다시 포함시켰다.
+// 기본값은 rounded.
 
 @use 'primitive' as *;
 
@@ -21,6 +23,7 @@
   --button-padding-x-xl: #{$space-6};
   --calendar-radius: #{$radius-lg};
   --calendar-cell-radius: #{$radius-full};
+  --con-radius: #{$radius-full};
   --pagination-radius: #{$radius-sm};
   --tabs-radius: #{$radius-full};
 }
@@ -30,6 +33,7 @@
   --button-radius-xs: #{$radius-none};
   --calendar-radius: #{$radius-none};
   --calendar-cell-radius: #{$radius-none};
+  --con-radius: #{$radius-none};
   --pagination-radius: #{$radius-none};
   --tabs-radius: #{$radius-none};
 }
@@ -41,6 +45,7 @@
   --button-padding-x-xl: #{$space-7}; // Pill 모드만 xl 28(rounded/square는 24)
   --calendar-radius: #{$radius-2xl};
   --calendar-cell-radius: #{$radius-full};
+  --con-radius: #{$radius-full};
   --pagination-radius: #{$radius-full};
   --tabs-radius: #{$radius-full};
 }
