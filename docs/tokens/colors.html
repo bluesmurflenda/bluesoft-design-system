@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>색상 · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">토큰</a> / 색상</div>
+  <div class="doc-page-header">
+    <h1>색상</h1>
+    <p>Primitive 팔레트 전 스케일(50~900). 컴포넌트는 이 값을 직접 쓰지 않고 <code>$color-*</code> SCSS 변수를 통해 참조합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <div class="doc-subhead">Blue (Brand)</div>
+    <div class="doc-grid" id="swatch-blue"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Neutral</div>
+    <div class="doc-grid" id="swatch-neutral"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Slate</div>
+    <div class="doc-grid" id="swatch-slate"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Red</div>
+    <div class="doc-grid" id="swatch-red"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Green</div>
+    <div class="doc-grid" id="swatch-green"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Yellow</div>
+    <div class="doc-grid" id="swatch-yellow"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Sky</div>
+    <div class="doc-grid" id="swatch-sky"></div>
+  </section>
+  <section class="doc-section">
+    <div class="doc-subhead">Social</div>
+    <div class="doc-row" id="swatch-social"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  function renderSwatches(containerId, prefix, steps) {
+    var el = document.getElementById(containerId);
+    if (!el) return;
+    steps.forEach(function (step) {
+      var varName = '--color-' + prefix + '-' + step;
+      var swatch = document.createElement('div');
+      swatch.className = 'doc-swatch';
+      swatch.innerHTML =
+        '<div class="doc-swatch__chip" style="background-color:var(' + varName + ')"></div>' +
+        '<div class="doc-swatch__label">' + prefix + '-' + step + '</div>';
+      el.appendChild(swatch);
+    });
+  }
+  var scale = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+  ['blue', 'neutral', 'slate', 'red', 'green', 'yellow', 'sky'].forEach(function (p) {
+    renderSwatches('swatch-' + p, p, scale);
+  });
+
+  (function () {
+    var el = document.getElementById('swatch-social');
+    var items = [
+      ['social-naver', 'social-naver'],
+      ['social-kakao', 'social-kakao'],
+      ['social-apple', 'social-apple'],
+    ];
+    items.forEach(function (item) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-swatch';
+      wrap.innerHTML =
+        '<div class="doc-swatch__chip" style="width:120px;background-color:var(--' + item[0] + ')"></div>' +
+        '<div class="doc-swatch__label">' + item[1] + '</div>';
+      el.appendChild(wrap);
+    });
+  })();
+</script>
+</body>
+</html>

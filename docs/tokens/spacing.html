@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>간격 &amp; Radius · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">토큰</a> / 간격 &amp; Radius</div>
+  <div class="doc-page-header">
+    <h1>간격 &amp; Radius</h1>
+    <p><code>$space-*</code> 전체 스케일과 <code>$radius-*</code> 스케일(Shape 컬렉션, Rounded 모드 기준).</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Space</h2>
+    <p class="doc-desc"><code>$space-1</code> ~ <code>$space-20</code>. 4px 그리드 기반.</p>
+    <div class="doc-card doc-col" id="space-demo"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Radius</h2>
+    <p class="doc-desc">Shape 컬렉션 Rounded 모드. Square·Pill 모드는 현재 도구로 라이브 재검증이 불가해 문서화만 돼 있습니다.</p>
+    <div class="doc-card doc-row" id="radius-demo"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Border &amp; Motion</h2>
+    <div class="doc-card doc-col">
+      <div>
+        <div class="doc-label">Border</div>
+        <div class="doc-row" id="border-demo"></div>
+      </div>
+      <div>
+        <div class="doc-label">Motion (transition duration)</div>
+        <div class="doc-col" id="motion-demo"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  (function () {
+    var el = document.getElementById('space-demo');
+    var steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16, 20];
+    steps.forEach(function (s) {
+      var row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.alignItems = 'center';
+      row.style.gap = '16px';
+      row.innerHTML =
+        '<span class="doc-swatch__label" style="width:70px;flex-shrink:0;">space-' + s + '</span>' +
+        '<div style="width:var(--space-' + s + ');height:20px;background:var(--color-blue-500);border-radius:4px;flex-shrink:0;"></div>' +
+        '<span class="doc-swatch__label">var(--space-' + s + ')</span>';
+      el.appendChild(row);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('radius-demo');
+    var items = ['xsm', 'sm', 'md', 'lg', 'full'];
+    items.forEach(function (name) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-swatch';
+      wrap.innerHTML =
+        '<div style="width:64px;height:64px;background:var(--color-blue-100);border:1px solid var(--color-blue-300);border-radius:var(--radius-' + name + ');"></div>' +
+        '<div class="doc-swatch__label">radius-' + name + '</div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('border-demo');
+    ['hairline'].forEach(function (name) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-swatch';
+      wrap.innerHTML =
+        '<div style="width:100px;height:0;border-top:var(--border-' + name + ') solid var(--color-neutral-800);"></div>' +
+        '<div class="doc-swatch__label">border-' + name + '</div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('motion-demo');
+    ['fast', 'base', 'slow'].forEach(function (name) {
+      var row = document.createElement('div');
+      row.className = 'doc-swatch__label';
+      row.textContent = 'motion-' + name + ' = var(--motion-' + name + ')';
+      el.appendChild(row);
+    });
+  })();
+</script>
+</body>
+</html>

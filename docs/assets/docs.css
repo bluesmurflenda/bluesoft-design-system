@@ -1,0 +1,207 @@
+/* 문서 사이트 전용 레이아웃/크롬 CSS. 실제 컴포넌트 시각 스타일은 main.css(컴파일된 디자인시스템)가
+   담당하고, 여기서는 사이드바 배치·페이지 헤더·카드·그리드 같은 문서 UI만 다룬다.
+   모든 서브페이지(docs/tokens/*, docs/components/*)와 루트 index.html이 공유한다. */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-neutral-50, #fafafa);
+  color: var(--color-neutral-800, #262626);
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------- Sidebar — Figma "Sidebar navigation" 샘플(node 1240:11809) 구조.
+   시각 스타일(라운드·색·간격)은 컴포넌트 CSS(.side-nav-item, .input, .logo)가 담당하고
+   여기서는 레이아웃(배치·패딩·스크롤)만 잡는다. ---------- */
+.doc-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 312px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #fff;
+  border-right: 1px solid var(--color-neutral-200, #e5e5e5);
+  display: flex;
+  flex-direction: column;
+}
+.doc-sidebar__header {
+  padding: 32px 20px 20px 24px;
+}
+.doc-sidebar__search {
+  padding: 0 24px 24px;
+}
+.doc-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  flex: 1;
+}
+.doc-nav-group + .doc-nav-group {
+  margin-top: 16px;
+}
+.doc-sidebar__nav .side-nav-item {
+  text-decoration: none;
+  cursor: pointer;
+}
+.doc-sidebar__nav .side-nav-item + .side-nav-item {
+  margin-top: 2px;
+}
+.doc-sidebar__nav .side-nav-item-sub {
+  font-weight: 500;
+  font-size: 14px;
+}
+.doc-sidebar__footer {
+  padding: 16px;
+  border-top: 1px solid var(--color-neutral-200, #e5e5e5);
+}
+.doc-sidebar__footer .side-nav-item {
+  text-decoration: none;
+}
+.doc-search-hidden {
+  display: none !important;
+}
+
+/* ---------- Main ---------- */
+.doc-main {
+  margin-left: 312px;
+  flex: 1;
+  min-width: 0;
+  padding: 40px 48px 120px;
+  max-width: 1200px;
+}
+.doc-page-header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-neutral-200, #e5e5e5);
+}
+.doc-page-header h1 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  font-weight: 700;
+}
+.doc-page-header p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-neutral-600, #525252);
+}
+.doc-breadcrumb {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--color-neutral-500, #737373);
+}
+.doc-breadcrumb a {
+  color: var(--color-neutral-500, #737373);
+  text-decoration: none;
+}
+.doc-breadcrumb a:hover {
+  color: var(--color-blue-600, #2563eb);
+}
+
+.doc-section {
+  margin-bottom: 56px;
+  scroll-margin-top: 24px;
+}
+.doc-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-neutral-200, #e5e5e5);
+}
+.doc-section > p.doc-desc {
+  margin: 12px 0 20px;
+  font-size: 13px;
+  color: var(--color-neutral-600, #525252);
+}
+.doc-subhead {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-neutral-500, #737373);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 24px 0 10px;
+}
+.doc-subhead:first-child {
+  margin-top: 0;
+}
+
+.doc-card {
+  background: #fff;
+  border: 1px solid var(--color-neutral-200, #e5e5e5);
+  border-radius: 12px;
+  padding: 24px;
+}
+.doc-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.doc-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+.doc-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.doc-swatch__chip {
+  height: 56px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.doc-swatch__label {
+  font-size: 12px;
+  color: var(--color-neutral-600, #525252);
+  font-family: 'SFMono-Regular', Consolas, monospace;
+}
+.doc-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-neutral-400, #a3a3a3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+/* 변형 매트릭스 그리드 — 컴포넌트 페이지의 "모든 변형" 나열에 공용으로 쓴다.
+   각 셀은 캡션(.doc-cell__caption) + 실제 컴포넌트 인스턴스로 구성. */
+.doc-matrix {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+.doc-matrix-wide {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.doc-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-neutral-50, #fafafa);
+  border-radius: 8px;
+}
+.doc-cell__caption {
+  font-size: 11px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  color: var(--color-neutral-500, #737373);
+}
+.doc-scroll-x {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+.icon-sm { width: 16px; height: 16px; }

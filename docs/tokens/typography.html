@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>타이포그래피 · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">토큰</a> / 타이포그래피</div>
+  <div class="doc-page-header">
+    <h1>타이포그래피</h1>
+    <p>Display·Body 전체 타입 스케일. 폰트 패밀리는 Pretendard(사용자 환경에 미설치 시 시스템 폰트로 대체).</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Display</h2>
+    <p class="doc-desc">랜딩·로그인 헤더 등 큰 타이틀에 사용.</p>
+    <div class="doc-card doc-col" id="display-demo"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Body</h2>
+    <p class="doc-desc">2Xs ~ Xl. 대부분의 컴포넌트 텍스트가 이 스케일을 사용합니다.</p>
+    <div class="doc-card doc-col" id="body-demo"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Weight</h2>
+    <div class="doc-card doc-row" id="weight-demo"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  (function () {
+    var el = document.getElementById('display-demo');
+    ['sm'].forEach(function (s) {
+      var row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.alignItems = 'baseline';
+      row.style.gap = '16px';
+      row.innerHTML =
+        '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Display/' + s.toUpperCase() + '</span>' +
+        '<span style="font-weight:600;font-size:var(--font-size-display-' + s + ');line-height:var(--font-leading-display-' + s + ');">Ag가나다 BLUESOFT</span>';
+      el.appendChild(row);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('body-demo');
+    var items = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'];
+    items.forEach(function (s) {
+      var row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.alignItems = 'baseline';
+      row.style.gap = '16px';
+      row.innerHTML =
+        '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Body/' + s.toUpperCase() + '</span>' +
+        '<span style="font-size:var(--font-size-body-' + s + ');line-height:var(--font-leading-body-' + s + ');">Pretendard 타이포그래피 Ag가나다123</span>';
+      el.appendChild(row);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('weight-demo');
+    [['regular', 400], ['medium', 500], ['semibold', 600], ['bold', 700]].forEach(function (pair) {
+      var wrap = document.createElement('div');
+      wrap.innerHTML = '<span style="font-size:16px;font-weight:' + pair[1] + ';">' + pair[0] + ' (' + pair[1] + ')</span>';
+      el.appendChild(wrap);
+    });
+  })();
+</script>
+</body>
+</html>

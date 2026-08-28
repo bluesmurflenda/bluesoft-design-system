@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Table · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Table</div>
+  <div class="doc-page-header">
+    <h1>Table</h1>
+    <p>Role 3종(body/header-col/header-row) × Align 2종(center/left) × Size 3종(sm/md/lg, 폰트가 아니라 높이 밀도) = 18. Size는 sm·md가 Body/Sm을 공유하고 lg만 Body/Lg로 커집니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Cell 매트릭스</h2>
+    <div class="doc-matrix" id="cell-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>조립 예시</h2>
+    <p class="doc-desc">header-col(맨 위 헤더행) + body 조합. 페이지네이션은 Pagination 컴포넌트(<code>.pagination-simple-icon</code>)를 재사용합니다.</p>
+    <div class="doc-card">
+      <div class="table">
+        <div class="table-header">
+          <div class="table-cell table-cell-md table-cell-header-col align-left">이름</div>
+          <div class="table-cell table-cell-md table-cell-header-col">상태</div>
+          <div class="table-cell table-cell-md table-cell-header-col">가입일</div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell table-cell-md table-cell-body align-left">김블루</div>
+          <div class="table-cell table-cell-md table-cell-body"><span class="chip chip-sm chip-success">활성</span></div>
+          <div class="table-cell table-cell-md table-cell-body">2026.01.15</div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell table-cell-md table-cell-body align-left">이소프트</div>
+          <div class="table-cell table-cell-md table-cell-body"><span class="chip chip-sm chip-neutral">대기</span></div>
+          <div class="table-cell table-cell-md table-cell-body">2026.02.02</div>
+        </div>
+      </div>
+      <div class="table-pagination">
+        <span class="table-pagination__label">총 24건 중 1-10</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>header-row(왼쪽 라벨 열) 조합</h2>
+    <p class="doc-desc">배경이 header-col과 다른 톤(slate-50)이고 우측 보더가 추가됩니다.</p>
+    <div class="doc-card" style="display:inline-flex;">
+      <div class="table-cell table-cell-md table-cell-header-row" style="width:140px;">라벨</div>
+      <div class="table-cell table-cell-md table-cell-body" style="width:200px;">값</div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Leading 슬롯</h2>
+    <p class="doc-desc">고정폭 원형(sm·md 24px / lg 32px). 아바타·아이콘 1개.</p>
+    <div class="doc-card doc-row" id="leading-demo"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var ROLES = [
+    ['body', 'table-cell-body', '본문'],
+    ['header-col', 'table-cell-header-col', '헤더(위)'],
+    ['header-row', 'table-cell-header-row', '헤더(왼쪽)'],
+  ];
+  var SIZES = ['sm', 'md', 'lg'];
+  var ALIGNS = [['center', ''], ['left', 'align-left']];
+
+  (function () {
+    var el = document.getElementById('cell-matrix');
+    ROLES.forEach(function (role) {
+      SIZES.forEach(function (size) {
+        ALIGNS.forEach(function (align) {
+          var cell = document.createElement('div');
+          cell.className = 'doc-cell';
+          cell.innerHTML =
+            '<div style="width:100%;display:flex;">' +
+            '<div class="table-cell table-cell-' + size + ' table-cell-' + role[0] + ' ' + align[1] + '" style="width:100%;border:1px solid var(--color-neutral-200);">' + role[2] + '</div>' +
+            '</div>' +
+            '<span class="doc-cell__caption">table-cell-' + size + ' table-cell-' + role[0] + (align[1] ? ' ' + align[1] : '') + '</span>';
+          el.appendChild(cell);
+        });
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('leading-demo');
+    [['sm', 24], ['md', 24], ['lg', 32]].forEach(function (pair) {
+      var wrap = document.createElement('div');
+      wrap.style.display = 'flex';
+      wrap.style.alignItems = 'center';
+      wrap.style.gap = '8px';
+      wrap.innerHTML =
+        '<div class="table-cell table-cell-' + pair[0] + ' table-cell-body" style="width:180px;border:1px solid var(--color-neutral-200);">' +
+        '<span class="table-cell__leading" style="background:var(--color-blue-100);"></span>' +
+        '<span class="table-cell__text">size=' + pair[0] + '</span></div>';
+      el.appendChild(wrap);
+    });
+  })();
+</script>
+</body>
+</html>

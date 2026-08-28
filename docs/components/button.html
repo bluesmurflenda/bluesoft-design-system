@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Button · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">기본 컴포넌트</a> / Button</div>
+  <div class="doc-page-header">
+    <h1>Button</h1>
+    <p>변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 5(xs/sm/md/lg/xl) = 45. hover·pressed·focus는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외하고, 실제 클래스로 켤 수 있는 default/disabled만 나열합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Variant × Size (default)</h2>
+    <p class="doc-desc">scrim-dark/scrim-light은 배경 위에서만 의미가 있어 각각 어두운/밝은 배경 위에 올렸습니다.</p>
+    <div class="doc-scroll-x">
+      <table style="border-collapse:collapse;width:100%;">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:8px 16px 8px 0;font-size:12px;color:var(--color-neutral-500);"></th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">xs</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">sm</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">md</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">lg</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">xl</th>
+          </tr>
+        </thead>
+        <tbody id="btn-matrix"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Disabled</h2>
+    <p class="doc-desc">모든 변형 공통 톤(link 제외 — link는 자기 전용 fg-disabled 토큰).</p>
+    <div class="doc-card doc-row" id="btn-disabled"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Icon 조합</h2>
+    <p class="doc-desc">Icon Left/Right 슬롯 — <code>&lt;svg&gt;</code>를 라벨 앞뒤에 배치합니다.</p>
+    <div class="doc-card doc-row" id="btn-icons"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var VARIANTS = ['primary', 'secondary', 'tertiary', 'outline', 'ghost', 'danger', 'scrim-dark', 'scrim-light', 'link'];
+  var SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
+
+  function darkWrap(html) { return '<div style="background:#111;padding:12px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
+  function lightWrap(html) { return '<div style="background:#ddd;padding:12px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
+
+  (function () {
+    var tbody = document.getElementById('btn-matrix');
+    VARIANTS.forEach(function (variant) {
+      var row = document.createElement('tr');
+      var labelCell = document.createElement('td');
+      labelCell.style.cssText = 'padding:8px 16px 8px 0;font-size:12px;font-family:monospace;color:var(--color-neutral-600);white-space:nowrap;';
+      labelCell.textContent = 'btn-' + variant;
+      row.appendChild(labelCell);
+      SIZES.forEach(function (size) {
+        var cell = document.createElement('td');
+        cell.style.cssText = 'padding:8px 16px;';
+        var btnHtml = '<button class="btn btn-' + size + ' btn-' + variant + '">Button</button>';
+        if (variant === 'scrim-dark') btnHtml = darkWrap(btnHtml);
+        if (variant === 'scrim-light') btnHtml = lightWrap(btnHtml);
+        cell.innerHTML = btnHtml;
+        row.appendChild(cell);
+      });
+      tbody.appendChild(row);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('btn-disabled');
+    VARIANTS.forEach(function (variant) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      var btnHtml = '<button class="btn btn-md btn-' + variant + '" disabled>Button</button>';
+      if (variant === 'scrim-dark') btnHtml = darkWrap(btnHtml);
+      if (variant === 'scrim-light') btnHtml = lightWrap(btnHtml);
+      wrap.innerHTML = btnHtml + '<span class="doc-cell__caption">btn-' + variant + '</span>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('btn-icons');
+    var configs = [
+      ['btn-primary', 'plus', null, 'Add'],
+      [null, null, 'chevron-right', 'Next'],
+      ['btn-outline', 'download', null, 'Download'],
+    ];
+    configs.forEach(function (c) {
+      var cls = c[0] || 'btn-outline';
+      var left = c[1] ? '<svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-' + c[1] + '"></use></svg>' : '';
+      var right = c[2] ? '<svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-' + c[2] + '"></use></svg>' : '';
+      var btn = document.createElement('button');
+      btn.className = 'btn btn-md ' + cls;
+      btn.innerHTML = left + '<span>' + c[3] + '</span>' + right;
+      el.appendChild(btn);
+    });
+  })();
+</script>
+</body>
+</html>
