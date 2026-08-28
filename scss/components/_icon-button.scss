@@ -29,11 +29,13 @@
   --icon-btn-ghost-white-fg: #0a0a0a;
 }
 
+// 2026-08-28 확인(bluesoft-buttons-spec.md 4장): 아이콘 크기는 박스 크기와 별개로 18/20/24/24 —
+// sm은 아이콘 마스터(24)를 축소한 18px, lg·xl은 박스만 다르고 아이콘은 둘 다 24로 동일.
 $icon-button-sizes: (
-  sm: 32px,
-  md: 40px,
-  lg: 48px,
-  xl: 56px,
+  sm: (box: 32px, icon: 18px),
+  md: (box: 40px, icon: 20px),
+  lg: (box: 48px, icon: 24px),
+  xl: (box: 56px, icon: 24px),
 );
 
 // ghost-inverse·ghost-brand·ghost-white을 제외한 8개 변형은 button과 완전히 동일한 토큰을 공유한다.
@@ -64,10 +66,15 @@ $icon-button-extra-variants: (
   }
 }
 
-@each $size, $length in $icon-button-sizes {
+@each $size, $props in $icon-button-sizes {
   .icon-btn-#{$size} {
-    width: $length;
-    height: $length;
+    width: map.get($props, box);
+    height: map.get($props, box);
+
+    .icon {
+      width: map.get($props, icon);
+      height: map.get($props, icon);
+    }
   }
 }
 

@@ -490,27 +490,37 @@
   }
 }
 :root {
-  --shape-button-radius: var(--radius-sm);
-  --shape-calendar-radius: var(--radius-lg);
-  --shape-calendar-cell-radius: var(--radius-full);
-  --shape-pagination-radius: var(--radius-sm);
-  --shape-tabs-radius: var(--radius-full);
+  --button-radius: var(--radius-sm);
+  --button-radius-xs: var(--radius-xsm);
+  --button-padding-x-xs: var(--space-2);
+  --button-padding-x-sm: var(--space-3);
+  --button-padding-x-md: var(--space-5);
+  --button-padding-x-lg: var(--space-6);
+  --button-padding-x-xl: var(--space-6);
+  --calendar-radius: var(--radius-lg);
+  --calendar-cell-radius: var(--radius-full);
+  --pagination-radius: var(--radius-sm);
+  --tabs-radius: var(--radius-full);
 }
 
 [data-shape=square] {
-  --shape-button-radius: var(--radius-none);
-  --shape-calendar-radius: var(--radius-none);
-  --shape-calendar-cell-radius: var(--radius-none);
-  --shape-pagination-radius: var(--radius-none);
-  --shape-tabs-radius: var(--radius-none);
+  --button-radius: var(--radius-none);
+  --button-radius-xs: var(--radius-none);
+  --calendar-radius: var(--radius-none);
+  --calendar-cell-radius: var(--radius-none);
+  --pagination-radius: var(--radius-none);
+  --tabs-radius: var(--radius-none);
 }
 
 [data-shape=pill] {
-  --shape-button-radius: var(--radius-full);
-  --shape-calendar-radius: var(--radius-2xl);
-  --shape-calendar-cell-radius: var(--radius-full);
-  --shape-pagination-radius: var(--radius-full);
-  --shape-tabs-radius: var(--radius-full);
+  --button-radius: var(--radius-full);
+  --button-radius-xs: var(--radius-full);
+  --button-padding-x-sm: var(--space-4);
+  --button-padding-x-xl: var(--space-7);
+  --calendar-radius: var(--radius-2xl);
+  --calendar-cell-radius: var(--radius-full);
+  --pagination-radius: var(--radius-full);
+  --tabs-radius: var(--radius-full);
 }
 
 *,
@@ -748,42 +758,42 @@ table {
 
 .btn-xs {
   height: 28px;
-  padding-inline: var(--space-2);
+  padding-inline: var(--button-padding-x-xs);
   font-size: var(--font-size-body-2xs);
   line-height: var(--font-leading-body-2xs);
-  border-radius: var(--radius-xsm);
+  border-radius: var(--button-radius-xs);
 }
 
 .btn-sm {
   height: 32px;
-  padding-inline: var(--space-3);
+  padding-inline: var(--button-padding-x-sm);
   font-size: var(--font-size-body-sm);
   line-height: var(--font-leading-body-sm);
-  border-radius: var(--shape-button-radius);
+  border-radius: var(--button-radius);
 }
 
 .btn-md {
   height: 40px;
-  padding-inline: var(--space-5);
+  padding-inline: var(--button-padding-x-md);
   font-size: var(--font-size-body-md);
   line-height: var(--font-leading-body-md);
-  border-radius: var(--shape-button-radius);
+  border-radius: var(--button-radius);
 }
 
 .btn-lg {
   height: 48px;
-  padding-inline: var(--space-6);
+  padding-inline: var(--button-padding-x-lg);
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
-  border-radius: var(--shape-button-radius);
+  border-radius: var(--button-radius);
 }
 
 .btn-xl {
   height: 56px;
-  padding-inline: var(--space-6);
+  padding-inline: var(--button-padding-x-xl);
   font-size: var(--font-size-body-xl);
   line-height: var(--font-leading-body-xl);
-  border-radius: var(--shape-button-radius);
+  border-radius: var(--button-radius);
 }
 
 .btn-primary {
@@ -952,7 +962,7 @@ table {
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: var(--shape-button-radius);
+  border-radius: var(--button-radius);
   cursor: pointer;
   transition: background-color var(--motion-fast), border-color var(--motion-fast), color var(--motion-fast);
 }
@@ -968,20 +978,36 @@ table {
   width: 32px;
   height: 32px;
 }
+.icon-btn-sm .icon {
+  width: 18px;
+  height: 18px;
+}
 
 .icon-btn-md {
   width: 40px;
   height: 40px;
+}
+.icon-btn-md .icon {
+  width: 20px;
+  height: 20px;
 }
 
 .icon-btn-lg {
   width: 48px;
   height: 48px;
 }
+.icon-btn-lg .icon {
+  width: 24px;
+  height: 24px;
+}
 
 .icon-btn-xl {
   width: 56px;
   height: 56px;
+}
+.icon-btn-xl .icon {
+  width: 24px;
+  height: 24px;
 }
 
 .icon-btn-primary {
@@ -1156,7 +1182,7 @@ table {
   justify-content: center;
   height: 48px;
   gap: var(--space-2);
-  border-radius: var(--shape-button-radius);
+  border-radius: var(--button-radius);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
