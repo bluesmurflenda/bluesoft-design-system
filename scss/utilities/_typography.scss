@@ -1,77 +1,22 @@
-@use '../tokens/primitive' as *;
+@use 'sass:map';
+@use '../abstracts/maps';
 
-// body 타입 스케일
-.text-body-2xs {
-  font-size: $font-size-body-2xs;
-  line-height: $font-leading-body-2xs;
-}
-.text-body-xs {
-  font-size: $font-size-body-xs;
-  line-height: $font-leading-body-xs;
-}
-.text-body-sm {
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
-}
-.text-body-md {
-  font-size: $font-size-body-md;
-  line-height: $font-leading-body-md;
-}
-.text-body-lg {
-  font-size: $font-size-body-lg;
-  line-height: $font-leading-body-lg;
-}
-.text-body-xl {
-  font-size: $font-size-body-xl;
-  line-height: $font-leading-body-xl;
-}
-.text-body-2xl {
-  font-size: $font-size-body-2xl;
-  line-height: $font-leading-body-2xl;
+// 2026-08-29: $type-scale/$font-weight-scale(abstracts/_maps.scss)를 단일 소스로 삼아 생성한다 —
+// text() 믹스인과 값을 공유하므로 여기 있던 하드코딩과 text()가 두 곳에서 같은 값을 따로
+// 유지하는 중복을 없앤다. font-weight는 이 파일의 기존 관례대로 .text-*엔 넣지 않고 .fw-*로 분리
+// 유지한다(text() 믹스인은 weight가 필수라 이 용도에는 안 맞음 — 그래서 맵만 재사용하고 믹스인은 안 쓴다).
+@each $key, $type in maps.$type-scale {
+  .text-#{$key} {
+    @if map.has-key($type, family) {
+      font-family: map.get($type, family), -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    font-size: map.get($type, size);
+    line-height: map.get($type, lh);
+  }
 }
 
-// display 타입 스케일
-.text-display-xs {
-  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: $font-size-display-xs;
-  line-height: $font-leading-display-xs;
-}
-.text-display-sm {
-  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: $font-size-display-sm;
-  line-height: $font-leading-display-sm;
-}
-.text-display-md {
-  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: $font-size-display-md;
-  line-height: $font-leading-display-md;
-}
-.text-display-lg {
-  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: $font-size-display-lg;
-  line-height: $font-leading-display-lg;
-}
-.text-display-xl {
-  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: $font-size-display-xl;
-  line-height: $font-leading-display-xl;
-}
-.text-display-2xl {
-  font-family: $font-family-display, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: $font-size-display-2xl;
-  line-height: $font-leading-display-2xl;
-}
-
-// 굵기
-.fw-regular {
-  font-weight: $font-weight-regular;
-}
-.fw-medium {
-  font-weight: $font-weight-medium;
-}
-.fw-semibold {
-  font-weight: $font-weight-semibold;
-}
-.fw-bold {
-  font-weight: $font-weight-bold;
+@each $weight, $value in maps.$font-weight-scale {
+  .fw-#{$weight} {
+    font-weight: $value;
+  }
 }
