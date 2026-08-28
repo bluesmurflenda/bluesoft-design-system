@@ -27,3 +27,5 @@ docs/              GitHub Pages 시각화 페이지
 - 빌드 도구(Grunt 등)는 아직 안 붙임 — 필요해지면 그때 추가
 - 시각화 웹페이지는 GitHub Pages(`/docs`)로 서빙 — repo를 public으로 둔다
 - 위치는 SFTP 미러(`d:\ftp-blue`)와 무관한 순수 로컬 git 저장소
+- **토큰은 CSS 커스텀 프로퍼티 기반**(2026-08-28, 다크모드 대비). `_primitive.scss`가 `:root`/`[data-theme='dark']`에 `--color-*` 등을 정의하고, 기존 `$color-*` SCSS 변수는 전부 `var(--color-*)`를 가리키는 별칭이다 — 컴포넌트 파일은 `$변수`를 그대로 쓰면 된다. `_semantic.scss`도 자체 `--accent-*`/`--brand-*` 등 한 겹을 더 두고 primitive의 `var()`를 참조한다(primitive→semantic→component 3단).
+  **Figma Theme 컬렉션에 Dark 모드가 아직 없어서** `[data-theme='dark']` 블록은 구조만 두고 light와 완전히 같은 값을 임시로 넣어뒀다. Figma에 실제 다크 값이 생기면 `_primitive.scss`의 다크 블록 색상 항목만 교체하면 된다(컴포넌트 파일은 손댈 필요 없음).

@@ -1,52 +1,104 @@
 // Figma DS Master > Theme collection (Default 모드) 라이브 조회값
 // 일반 시맨틱 그룹만 포함: accent, brand, border, surface, text
 // 컴포넌트별 시맨틱(button/chip/tabs 등)은 해당 컴포넌트 SCSS에서 별도로 채운다.
+//
+// 2026-08-28 다크 모드 대비 커스텀 프로퍼티 전환: 시맨틱 토큰도 프리미티브를 직접 대입하지 않고
+// 자체 --변수로 한 단계 더 감싼다(primitive → semantic → component 3단 레이어).
+// 값 자체는 전부 primitive의 var(--color-*)를 그대로 참조하므로 다크 모드는 primitive 레이어에서만 갈아끼우면 된다.
 
 @use 'primitive' as *;
 
-// accent (= primitive sky 별칭)
-$accent-50: $color-sky-50;
-$accent-100: $color-sky-100;
-$accent-200: $color-sky-200;
-$accent-300: $color-sky-300;
-$accent-400: $color-sky-400;
-$accent-500: $color-sky-500;
-$accent-600: $color-sky-600;
-$accent-700: $color-sky-700;
-$accent-800: $color-sky-800;
-$accent-900: $color-sky-900;
+:root {
+  // accent (= primitive sky 별칭)
+  --accent-50: var(--color-sky-50);
+  --accent-100: var(--color-sky-100);
+  --accent-200: var(--color-sky-200);
+  --accent-300: var(--color-sky-300);
+  --accent-400: var(--color-sky-400);
+  --accent-500: var(--color-sky-500);
+  --accent-600: var(--color-sky-600);
+  --accent-700: var(--color-sky-700);
+  --accent-800: var(--color-sky-800);
+  --accent-900: var(--color-sky-900);
 
-// brand (= primitive blue 별칭)
-$brand-50: $color-blue-50;
-$brand-100: $color-blue-100;
-$brand-200: $color-blue-200;
-$brand-300: $color-blue-300;
-$brand-400: $color-blue-400;
-$brand-500: $color-blue-500;
-$brand-600: $color-blue-600;
-$brand-700: $color-blue-700;
-$brand-800: $color-blue-800;
-$brand-900: $color-blue-900;
+  // brand (= primitive blue 별칭)
+  --brand-50: var(--color-blue-50);
+  --brand-100: var(--color-blue-100);
+  --brand-200: var(--color-blue-200);
+  --brand-300: var(--color-blue-300);
+  --brand-400: var(--color-blue-400);
+  --brand-500: var(--color-blue-500);
+  --brand-600: var(--color-blue-600);
+  --brand-700: var(--color-blue-700);
+  --brand-800: var(--color-blue-800);
+  --brand-900: var(--color-blue-900);
 
-// border
-$border-accent: $color-sky-500;
-$border-brand: $color-blue-500;
-$border-default: $color-neutral-200;
-$border-strong: $color-neutral-300;
+  // border
+  --border-accent: var(--color-sky-500);
+  --border-brand: var(--color-blue-500);
+  --border-default: var(--color-neutral-200);
+  --border-strong: var(--color-neutral-300);
 
-// surface
-$surface-accent-subtle: $color-sky-50;
-$surface-brand-subtle: $color-blue-50;
-$surface-default: $color-white;
-$surface-inverse: $color-neutral-900;
-$surface-muted: $color-neutral-100;
-$surface-subtle: $color-neutral-50;
+  // surface
+  --surface-accent-subtle: var(--color-sky-50);
+  --surface-brand-subtle: var(--color-blue-50);
+  --surface-default: var(--color-white);
+  --surface-inverse: var(--color-neutral-900);
+  --surface-muted: var(--color-neutral-100);
+  --surface-subtle: var(--color-neutral-50);
 
-// text
-$text-brand: $color-blue-600;
-$text-error: $color-red-600;
-$text-disabled: $color-neutral-400;
-$text-inverse: $color-white;
-$text-primary: $color-neutral-800;
-$text-secondary: $color-neutral-700;
-$text-tertiary: $color-neutral-600;
+  // text
+  --text-brand: var(--color-blue-600);
+  --text-error: var(--color-red-600);
+  --text-disabled: var(--color-neutral-400);
+  --text-inverse: var(--color-white);
+  --text-primary: var(--color-neutral-800);
+  --text-secondary: var(--color-neutral-700);
+  --text-tertiary: var(--color-neutral-600);
+}
+
+// ──────────────────────────────────────────────────────────────
+// SCSS 별칭 — 기존 $accent-*, $brand-* 등의 이름은 그대로 유지, 값만 시맨틱 커스텀 프로퍼티로 전환.
+// ──────────────────────────────────────────────────────────────
+
+$accent-50: var(--accent-50);
+$accent-100: var(--accent-100);
+$accent-200: var(--accent-200);
+$accent-300: var(--accent-300);
+$accent-400: var(--accent-400);
+$accent-500: var(--accent-500);
+$accent-600: var(--accent-600);
+$accent-700: var(--accent-700);
+$accent-800: var(--accent-800);
+$accent-900: var(--accent-900);
+
+$brand-50: var(--brand-50);
+$brand-100: var(--brand-100);
+$brand-200: var(--brand-200);
+$brand-300: var(--brand-300);
+$brand-400: var(--brand-400);
+$brand-500: var(--brand-500);
+$brand-600: var(--brand-600);
+$brand-700: var(--brand-700);
+$brand-800: var(--brand-800);
+$brand-900: var(--brand-900);
+
+$border-accent: var(--border-accent);
+$border-brand: var(--border-brand);
+$border-default: var(--border-default);
+$border-strong: var(--border-strong);
+
+$surface-accent-subtle: var(--surface-accent-subtle);
+$surface-brand-subtle: var(--surface-brand-subtle);
+$surface-default: var(--surface-default);
+$surface-inverse: var(--surface-inverse);
+$surface-muted: var(--surface-muted);
+$surface-subtle: var(--surface-subtle);
+
+$text-brand: var(--text-brand);
+$text-error: var(--text-error);
+$text-disabled: var(--text-disabled);
+$text-inverse: var(--text-inverse);
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-tertiary: var(--text-tertiary);

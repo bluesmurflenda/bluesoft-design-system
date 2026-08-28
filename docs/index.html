@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BLUESOFT Design System</title>
+<link rel="stylesheet" href="assets/main.css" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-neutral-50, #fafafa);
+    color: var(--color-neutral-800, #262626);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar (Figma "Sidebar navigation" 샘플 구조 기반) ---------- */
+  .doc-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #fff;
+    border-right: 1px solid var(--color-neutral-200, #e5e5e5);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 0;
+  }
+  .doc-logo {
+    padding: 0 20px 20px;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    color: var(--color-blue-600, #2563eb);
+  }
+  .doc-search {
+    padding: 0 20px 20px;
+  }
+  .doc-search input {
+    width: 100%;
+    height: 36px;
+    padding-inline: 12px;
+    border: 1px solid var(--color-neutral-300, #d4d4d4);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .doc-nav-group {
+    padding: 4px 12px;
+  }
+  .doc-nav-group__title {
+    padding: 8px 8px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-neutral-400, #a3a3a3);
+  }
+  .doc-nav-link {
+    display: block;
+    padding: 7px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-neutral-700, #404040);
+    text-decoration: none;
+  }
+  .doc-nav-link:hover { background-color: var(--color-neutral-50, #fafafa); color: var(--color-blue-600, #2563eb); }
+  .doc-nav-link.is-active { background-color: var(--color-blue-50, #eff6ff); color: var(--color-blue-600, #2563eb); }
+
+  /* ---------- Main ---------- */
+  .doc-main {
+    margin-left: 280px;
+    flex: 1;
+    min-width: 0;
+    padding: 40px 48px 120px;
+    max-width: 1200px;
+  }
+  .doc-page-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-neutral-200, #e5e5e5);
+  }
+  .doc-page-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+  }
+  .doc-page-header p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-neutral-600, #525252);
+  }
+
+  .doc-section {
+    margin-bottom: 64px;
+    scroll-margin-top: 24px;
+  }
+  .doc-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-neutral-200, #e5e5e5);
+  }
+  .doc-section > p.doc-desc {
+    margin: 12px 0 20px;
+    font-size: 13px;
+    color: var(--color-neutral-600, #525252);
+  }
+  .doc-subhead {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-neutral-500, #737373);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 20px 0 10px;
+  }
+
+  .doc-card {
+    background: #fff;
+    border: 1px solid var(--color-neutral-200, #e5e5e5);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .doc-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+  .doc-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+  .doc-swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .doc-swatch__chip {
+    height: 56px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .doc-swatch__label {
+    font-size: 12px;
+    color: var(--color-neutral-600, #525252);
+    font-family: 'SFMono-Regular', Consolas, monospace;
+  }
+  .doc-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-neutral-400, #a3a3a3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  .icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+  .icon-sm { width: 16px; height: 16px; }
+
+  #dropzone-demo, #select-demo, #tooltip-demo { position: relative; }
+</style>
+</head>
+<body>
+
+<nav class="doc-sidebar">
+  <div class="doc-logo">BLUESOFT DS</div>
+  <div class="doc-search">
+    <input type="text" placeholder="컴포넌트 검색..." disabled />
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">시작하기</div>
+    <a class="doc-nav-link is-active" href="#intro">소개</a>
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">토큰</div>
+    <a class="doc-nav-link" href="#tokens-color">색상</a>
+    <a class="doc-nav-link" href="#tokens-space">간격 &amp; Radius</a>
+    <a class="doc-nav-link" href="#tokens-type">타이포그래피</a>
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">컴포넌트 · 기본</div>
+    <a class="doc-nav-link" href="#button">Button</a>
+    <a class="doc-nav-link" href="#icon-button">Icon Button</a>
+    <a class="doc-nav-link" href="#social-button">Social Button</a>
+    <a class="doc-nav-link" href="#chip">Chip</a>
+    <a class="doc-nav-link" href="#con">Con</a>
+    <a class="doc-nav-link" href="#tabs">Tabs</a>
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">컴포넌트 · 폼</div>
+    <a class="doc-nav-link" href="#checkbox-radio">Checkbox &amp; Radio &amp; Toggle</a>
+    <a class="doc-nav-link" href="#dropdown-select">Dropdown &amp; Select</a>
+    <a class="doc-nav-link" href="#upload">Upload</a>
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">컴포넌트 · 피드백</div>
+    <a class="doc-nav-link" href="#alert">Alert</a>
+    <a class="doc-nav-link" href="#modal">Modal</a>
+    <a class="doc-nav-link" href="#tooltip">Tooltip &amp; Help Icon</a>
+    <a class="doc-nav-link" href="#progress-bar">Progress Bar</a>
+    <a class="doc-nav-link" href="#featured-icon">Featured Icon</a>
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">컴포넌트 · 데이터</div>
+    <a class="doc-nav-link" href="#table">Table</a>
+    <a class="doc-nav-link" href="#board">Board</a>
+    <a class="doc-nav-link" href="#calendar">Calendar</a>
+    <a class="doc-nav-link" href="#card">Card</a>
+    <a class="doc-nav-link" href="#avatar-group">Avatar Group</a>
+    <a class="doc-nav-link" href="#pagination-compact">Pagination Compact</a>
+  </div>
+
+  <div class="doc-nav-group">
+    <div class="doc-nav-group__title">컴포넌트 · 네비게이션</div>
+    <a class="doc-nav-link" href="#side-nav-item">Side Nav Item</a>
+    <a class="doc-nav-link" href="#scrollbar">Scrollbar</a>
+  </div>
+</nav>
+
+<main class="doc-main">
+
+  <section class="doc-section" id="intro">
+    <div class="doc-page-header">
+      <h1>BLUESOFT Design System</h1>
+      <p>Figma DS Master를 코드화한 master SCSS 라이브러리. SI 프로젝트마다 이 저장소의 <code>scss/</code>를 복사해 사용합니다.</p>
+    </div>
+    <div class="doc-card">
+      <p style="margin:0 0 8px;font-size:14px;">토큰은 3단 구조입니다: <strong>Primitive</strong>(원시값, CSS 커스텀 프로퍼티) → <strong>Semantic</strong>(의미 별칭) → <strong>Component</strong>(컴포넌트별 SCSS 변수). 컴포넌트 파일은 <code>$변수</code>를 그대로 쓰면 됩니다.</p>
+      <p style="margin:0;font-size:14px;">아이콘은 <code>icons/sprite.svg</code> 하나에 <code>&lt;symbol&gt;</code>로 묶여 있으며 <code>&lt;use href="assets/icons/sprite.svg#icon-base-check"&gt;</code> 형태로 참조합니다.</p>
+    </div>
+  </section>
+
+  <!-- ============ TOKENS ============ -->
+  <section class="doc-section" id="tokens-color">
+    <h2>색상</h2>
+    <p class="doc-desc">Primitive 팔레트 중 대표 스케일. 컴포넌트는 이 값을 직접 쓰지 않고 <code>$color-*</code> SCSS 변수를 통해 참조합니다.</p>
+    <div class="doc-subhead">Blue</div>
+    <div class="doc-grid" id="swatch-blue"></div>
+    <div class="doc-subhead">Neutral</div>
+    <div class="doc-grid" id="swatch-neutral"></div>
+    <div class="doc-subhead">Slate</div>
+    <div class="doc-grid" id="swatch-slate"></div>
+    <div class="doc-subhead">Red / Green / Yellow</div>
+    <div class="doc-grid" id="swatch-status"></div>
+  </section>
+
+  <section class="doc-section" id="tokens-space">
+    <h2>간격 &amp; Radius</h2>
+    <p class="doc-desc"><code>$space-*</code> 스케일과 <code>$radius-*</code> 스케일(Shape 컬렉션, Rounded 모드 기준).</p>
+    <div class="doc-subhead">Space</div>
+    <div class="doc-row" id="space-demo"></div>
+    <div class="doc-subhead">Radius</div>
+    <div class="doc-row" id="radius-demo"></div>
+  </section>
+
+  <section class="doc-section" id="tokens-type">
+    <h2>타이포그래피</h2>
+    <p class="doc-desc">Body 타입 스케일 2Xs~Xl. 폰트 패밀리는 Pretendard.</p>
+    <div class="doc-col" id="type-demo"></div>
+  </section>
+
+  <!-- ============ BUTTON ============ -->
+  <section class="doc-section" id="button">
+    <h2>Button</h2>
+    <p class="doc-desc">변형 9종 × 사이즈 5 × 상태 5 = 225. 변형과 사이즈 대표만 표시합니다.</p>
+    <div class="doc-card doc-col">
+      <div>
+        <div class="doc-label">Variant (size=md)</div>
+        <div class="doc-row">
+          <button class="btn btn-md btn-primary">Primary</button>
+          <button class="btn btn-md btn-secondary">Secondary</button>
+          <button class="btn btn-md btn-tertiary">Tertiary</button>
+          <button class="btn btn-md btn-outline">Outline</button>
+          <button class="btn btn-md btn-ghost">Ghost</button>
+          <button class="btn btn-md btn-danger">Danger</button>
+          <button class="btn btn-md btn-link">Link</button>
+        </div>
+      </div>
+      <div>
+        <div class="doc-label">Scrim (어두운/밝은 배경 위)</div>
+        <div class="doc-row">
+          <div style="background:#111;padding:12px;border-radius:8px;"><button class="btn btn-md btn-scrim-dark">Scrim Dark</button></div>
+          <div style="background:#ddd;padding:12px;border-radius:8px;"><button class="btn btn-md btn-scrim-light">Scrim Light</button></div>
+        </div>
+      </div>
+      <div>
+        <div class="doc-label">Size (variant=primary)</div>
+        <div class="doc-row">
+          <button class="btn btn-xs btn-primary">xs</button>
+          <button class="btn btn-sm btn-primary">sm</button>
+          <button class="btn btn-md btn-primary">md</button>
+          <button class="btn btn-lg btn-primary">lg</button>
+          <button class="btn btn-xl btn-primary">xl</button>
+        </div>
+      </div>
+      <div>
+        <div class="doc-label">Disabled</div>
+        <div class="doc-row">
+          <button class="btn btn-md btn-primary" disabled>Primary</button>
+          <button class="btn btn-md btn-outline" disabled>Outline</button>
+          <button class="btn btn-md btn-link" disabled>Link</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ICON BUTTON ============ -->
+  <section class="doc-section" id="icon-button">
+    <h2>Icon Button</h2>
+    <p class="doc-desc">변형 11종 × 사이즈 4 × 상태 5 = 220.</p>
+    <div class="doc-card doc-row">
+      <button class="icon-btn icon-btn-md icon-btn-primary"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-plus"></use></svg></button>
+      <button class="icon-btn icon-btn-md icon-btn-secondary"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-edit"></use></svg></button>
+      <button class="icon-btn icon-btn-md icon-btn-tertiary"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-search"></use></svg></button>
+      <button class="icon-btn icon-btn-md icon-btn-outline"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-filter"></use></svg></button>
+      <button class="icon-btn icon-btn-md icon-btn-ghost"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-more-vertical"></use></svg></button>
+      <button class="icon-btn icon-btn-md icon-btn-danger"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-trash"></use></svg></button>
+      <button class="icon-btn icon-btn-md icon-btn-ghost-brand"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-star"></use></svg></button>
+      <div style="background:#111;padding:8px;border-radius:8px;">
+        <button class="icon-btn icon-btn-md icon-btn-ghost-inverse"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-x"></use></svg></button>
+        <button class="icon-btn icon-btn-md icon-btn-ghost-white"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-menu"></use></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL BUTTON ============ -->
+  <section class="doc-section" id="social-button">
+    <h2>Social Button</h2>
+    <p class="doc-desc">Social 4종 × Theme 2(brand/outline) × Type 2(label/icon). 사이즈 축 없음, 높이 48 고정.</p>
+    <div class="doc-card doc-col">
+      <div class="doc-row">
+        <button class="social-btn social-btn-label social-btn-brand social-btn-naver">
+          <span class="social-btn__logo"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-message-circle"></use></svg></span>Naver로 시작하기
+        </button>
+        <button class="social-btn social-btn-label social-btn-brand social-btn-kakao">
+          <span class="social-btn__logo"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-message-circle"></use></svg></span>Kakao로 시작하기
+        </button>
+        <button class="social-btn social-btn-label social-btn-brand social-btn-apple">
+          <span class="social-btn__logo"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-smile"></use></svg></span>Apple로 시작하기
+        </button>
+        <button class="social-btn social-btn-label social-btn-google">
+          <span class="social-btn__logo"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-globe"></use></svg></span>Google로 시작하기
+        </button>
+      </div>
+      <div class="doc-row">
+        <button class="social-btn social-btn-icon social-btn-outline"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-globe"></use></svg></button>
+        <button class="social-btn social-btn-icon social-btn-google"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-globe"></use></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHIP ============ -->
+  <section class="doc-section" id="chip">
+    <h2>Chip</h2>
+    <p class="doc-desc">색상 6종 × 사이즈 3.</p>
+    <div class="doc-card doc-col">
+      <div class="doc-row">
+        <span class="chip chip-md chip-brand">Brand</span>
+        <span class="chip chip-md chip-neutral">Neutral</span>
+        <span class="chip chip-md chip-success">Success</span>
+        <span class="chip chip-md chip-warning">Warning</span>
+        <span class="chip chip-md chip-error">Error</span>
+        <span class="chip chip-md chip-info">Info</span>
+      </div>
+      <div class="doc-row">
+        <span class="chip chip-sm chip-brand"><span class="chip__dot"></span>sm</span>
+        <span class="chip chip-md chip-brand"><span class="chip__dot"></span>md</span>
+        <span class="chip chip-lg chip-brand"><span class="chip__dot"></span>lg</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CON ============ -->
+  <section class="doc-section" id="con">
+    <h2>Con</h2>
+    <p class="doc-desc">선택 가능한 필터/세그먼트 칩. Theme 3(color/gray/white) × Size 3 × State 5.</p>
+    <div class="doc-card doc-row">
+      <span class="con con-md con-color">Con</span>
+      <span class="con con-md con-color con-selected">Selected</span>
+      <span class="con con-md con-gray">Con</span>
+      <span class="con con-md con-gray con-selected">Selected</span>
+      <div style="background:#1e40af;padding:10px;border-radius:8px;">
+        <span class="con con-md con-white">Con</span>
+        <span class="con con-md con-white con-selected">Selected</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TABS ============ -->
+  <section class="doc-section" id="tabs">
+    <h2>Tabs</h2>
+    <p class="doc-desc">Type 4종(underline/underline-brand/pill/segmented) × Size 4 × State 4.</p>
+    <div class="doc-card doc-col">
+      <div>
+        <div class="doc-label">Underline</div>
+        <div class="doc-row" style="gap:0;">
+          <span class="tabs-item tabs-item-underline tabs-item-md is-selected"><span class="tabs-item__content">전체</span><span class="tabs-item__underline"></span></span>
+          <span class="tabs-item tabs-item-underline tabs-item-md"><span class="tabs-item__content">구매</span><span class="tabs-item__underline"></span></span>
+          <span class="tabs-item tabs-item-underline tabs-item-md"><span class="tabs-item__content">판매</span><span class="tabs-item__underline"></span></span>
+        </div>
+      </div>
+      <div>
+        <div class="doc-label">Pill</div>
+        <div class="doc-row">
+          <span class="tabs-item tabs-item-pill tabs-item-md is-selected">전체</span>
+          <span class="tabs-item tabs-item-pill tabs-item-md">구매</span>
+          <span class="tabs-item tabs-item-pill tabs-item-md" aria-disabled="true">판매</span>
+        </div>
+      </div>
+      <div>
+        <div class="doc-label">Segmented</div>
+        <div class="tabs-segment">
+          <span class="tabs-item tabs-item-segmented tabs-item-md is-selected">일간</span>
+          <span class="tabs-item tabs-item-segmented tabs-item-md">주간</span>
+          <span class="tabs-item tabs-item-segmented tabs-item-md">월간</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHECKBOX / RADIO / TOGGLE ============ -->
+  <section class="doc-section" id="checkbox-radio">
+    <h2>Checkbox &amp; Radio &amp; Toggle</h2>
+    <p class="doc-desc">Validation(normal/valid/invalid) 축은 <code>.choice--valid</code>/<code>.choice--invalid</code> 수식자로 적용.</p>
+    <div class="doc-card doc-col">
+      <div class="doc-row">
+        <label class="choice choice-checkbox">
+          <input class="choice__input" type="checkbox" checked />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">Checkbox</span></span>
+        </label>
+        <label class="choice choice-checkbox">
+          <input class="choice__input" type="checkbox" />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">Unchecked</span></span>
+        </label>
+        <label class="choice choice-checkbox">
+          <input class="choice__input" type="checkbox" disabled />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">Disabled</span></span>
+        </label>
+        <label class="choice choice-radio">
+          <input class="choice__input" type="radio" name="doc-radio" checked />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">Radio</span></span>
+        </label>
+        <label class="choice choice-radio">
+          <input class="choice__input" type="radio" name="doc-radio" />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">Radio 2</span></span>
+        </label>
+      </div>
+      <div class="doc-row">
+        <label class="choice choice-checkbox choice--invalid">
+          <input class="choice__input" type="checkbox" />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">약관에 동의해주세요</span></span>
+        </label>
+        <label class="choice choice-checkbox choice--valid">
+          <input class="choice__input" type="checkbox" checked />
+          <span class="choice__box"></span>
+          <span class="choice__text"><span class="choice__label">확인되었습니다</span></span>
+        </label>
+      </div>
+      <div class="doc-row">
+        <label class="toggle">
+          <input class="toggle__input" type="checkbox" checked />
+          <span class="toggle__track"><span class="toggle__knob"></span></span>
+          <span class="toggle__label">On</span>
+        </label>
+        <label class="toggle">
+          <input class="toggle__input" type="checkbox" />
+          <span class="toggle__track"><span class="toggle__knob"></span></span>
+          <span class="toggle__label">Off</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DROPDOWN / SELECT ============ -->
+  <section class="doc-section" id="dropdown-select">
+    <h2>Dropdown &amp; Select</h2>
+    <p class="doc-desc">Select는 Dropdown의 list-item/list-panel 클래스를 재사용합니다.</p>
+    <div class="doc-card doc-row" style="align-items:flex-start;">
+      <div class="dropdown dropdown-md">
+        <button class="dropdown__trigger" aria-expanded="true">
+          <span>옵션 선택</span>
+          <svg class="dropdown__chevron"><use href="assets/icons/sprite.svg#icon-base-chevron-down"></use></svg>
+        </button>
+        <div class="list-panel">
+          <div class="list-item list-item-selected">옵션 1<svg class="list-item__check"><use href="assets/icons/sprite.svg#icon-base-check"></use></svg></div>
+          <div class="list-item">옵션 2</div>
+          <div class="list-item list-item-disabled">옵션 3 (비활성)</div>
+        </div>
+      </div>
+
+      <div class="select select-md select-normal" style="max-width:280px;">
+        <label class="select__label">라벨</label>
+        <div class="select__field">
+          <div class="select__content">선택해주세요</div>
+          <svg class="select__chevron"><use href="assets/icons/sprite.svg#icon-base-chevron-down"></use></svg>
+        </div>
+        <div class="select__hint">도움말 텍스트입니다.</div>
+      </div>
+
+      <div class="select select-md select-invalid" style="max-width:280px;">
+        <label class="select__label">라벨</label>
+        <div class="select__field">
+          <div class="select__content">선택해주세요</div>
+          <svg class="select__chevron"><use href="assets/icons/sprite.svg#icon-base-chevron-down"></use></svg>
+        </div>
+        <div class="select__hint">필수 항목입니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UPLOAD ============ -->
+  <section class="doc-section" id="upload">
+    <h2>Upload</h2>
+    <p class="doc-desc">Featured Icon + Progress Bar + Checkbox + Icon Button을 조합한 구조입니다.</p>
+    <div class="doc-card doc-col">
+      <div class="upload-dropzone">
+        <div class="featured-icon featured-icon-sm featured-icon-neutral">
+          <svg class="featured-icon__icon"><use href="assets/icons/sprite.svg#icon-base-upload-cloud"></use></svg>
+        </div>
+        <div class="upload-dropzone__action">
+          <button class="btn btn-link btn-md">Click to upload</button>
+          <span>or drag and drop</span>
+        </div>
+        <div class="upload-dropzone__supporting">SVG, PNG, JPG or GIF (max. 800x400px)</div>
+      </div>
+
+      <div class="upload-item upload-item-uploading">
+        <span class="upload-item__icon"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-film"></use></svg></span>
+        <div class="upload-item__content">
+          <span class="upload-item__title">video.mp4</span>
+          <span class="upload-item__supporting">4.2 MB</span>
+          <div class="progress-bar">
+            <div class="progress-bar__track"><div class="progress-bar__fill" style="--progress-bar-value:40%;"></div></div>
+            <span class="progress-bar__value">40%</span>
+          </div>
+        </div>
+        <button class="icon-btn icon-btn-sm icon-btn-ghost upload-item__action"><svg class="icon icon-sm"><use href="assets/icons/sprite.svg#icon-base-x"></use></svg></button>
+      </div>
+
+      <div class="upload-item upload-item-done">
+        <span class="upload-item__icon"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-file"></use></svg></span>
+        <div class="upload-item__content">
+          <span class="upload-item__title">파일명.pdf</span>
+          <span class="upload-item__supporting">200 KB</span>
+          <div class="progress-bar">
+            <div class="progress-bar__track"><div class="progress-bar__fill" style="--progress-bar-value:100%;"></div></div>
+            <span class="progress-bar__value">100%</span>
+          </div>
+        </div>
+        <label class="choice choice-checkbox">
+          <input class="choice__input" type="checkbox" checked />
+          <span class="choice__box"></span>
+        </label>
+      </div>
+
+      <div class="upload-item upload-item-error">
+        <span class="upload-item__icon"><svg class="icon"><use href="assets/icons/sprite.svg#icon-base-film"></use></svg></span>
+        <div class="upload-item__content">
+          <span class="upload-item__title">clip.mov</span>
+          <span class="upload-item__supporting">업로드 실패</span>
+          <div class="progress-bar">
+            <div class="progress-bar__track"><div class="progress-bar__fill" style="--progress-bar-value:40%;"></div></div>
+            <span class="progress-bar__value">40%</span>
+          </div>
+        </div>
+        <button class="icon-btn icon-btn-sm icon-btn-ghost upload-item__action"><svg class="icon icon-sm"><use href="assets/icons/sprite.svg#icon-base-settings"></use></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ALERT ============ -->
+  <section class="doc-section" id="alert">
+    <h2>Alert</h2>
+    <p class="doc-desc">Color 6종 × Layout 3종(inline/banner/toast).</p>
+    <div class="doc-card doc-col">
+      <div class="alert alert-inline alert-brand" style="width:480px;">
+        <svg class="alert__icon"><use href="assets/icons/sprite.svg#icon-base-alert-circle"></use></svg>
+        <div class="alert__body">
+          <div class="alert__title">Alert title</div>
+          <div class="alert__text">This is a supporting text for the alert message.</div>
+        </div>
+        <svg class="alert__close"><use href="assets/icons/sprite.svg#icon-base-x"></use></svg>
+      </div>
+      <div class="alert alert-banner alert-warning" style="width:100%;max-width:720px;">
+        <svg class="alert__icon"><use href="assets/icons/sprite.svg#icon-base-alert-triangle"></use></svg>
+        <div class="alert__body">
+          <div class="alert__title">주의가 필요합니다</div>
+          <div class="alert__text">저장하지 않은 변경사항이 있습니다.</div>
+        </div>
+        <svg class="alert__close"><use href="assets/icons/sprite.svg#icon-base-x"></use></svg>
+      </div>
+      <div class="alert alert-toast alert-error">
+        <svg class="alert__icon"><use href="assets/icons/sprite.svg#icon-base-alert-circle"></use></svg>
+        <div class="alert__body">
+          <div class="alert__title">오류가 발생했습니다</div>
+          <div class="alert__text">잠시 후 다시 시도해주세요.</div>
+        </div>
+        <svg class="alert__close"><use href="assets/icons/sprite.svg#icon-base-x"></use></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MODAL ============ -->
+  <section class="doc-section" id="modal">
+    <h2>Modal</h2>
+    <p class="doc-desc">Layout 3종 × Breakpoint 4종. 실제 다이얼로그 대신 정적 카드로 표시합니다.</p>
+    <div class="doc-row" style="align-items:flex-start;">
+      <div class="modal modal-sm">
+        <div class="modal__header">
+          <div class="modal__text">
+            <div class="modal__title">Modal title</div>
+            <div class="modal__description">Supporting text goes here.</div>
+          </div>
+        </div>
+        <div class="modal__slot">Content slot</div>
+        <div class="modal__actions modal-actions-stacked">
+          <button class="btn btn-lg btn-primary">Action</button>
+          <button class="btn btn-lg btn-outline">Cancel</button>
+        </div>
+      </div>
+
+      <div class="modal modal-sm modal-alert-centered">
+        <div class="modal-featured-icon modal-featured-icon-md modal-featured-icon-error">
+          <svg class="icon" style="width:24px;height:24px;"><use href="assets/icons/sprite.svg#icon-base-alert-triangle"></use></svg>
+        </div>
+        <div class="modal__header modal-header-center">
+          <div class="modal__title">삭제하시겠습니까?</div>
+          <div class="modal__description">이 작업은 되돌릴 수 없습니다.</div>
+        </div>
+        <div class="modal__actions modal-actions-stacked">
+          <button class="btn btn-lg btn-danger">삭제</button>
+          <button class="btn btn-lg btn-outline">취소</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TOOLTIP / HELP ICON ============ -->
+  <section class="doc-section" id="tooltip">
+    <h2>Tooltip &amp; Help Icon</h2>
+    <p class="doc-desc">Theme 2(light/dark) × Arrow 위치. Help Icon은 16px 아이콘 + Tooltip 조합입니다.</p>
+    <div class="doc-row" style="align-items:flex-start;gap:48px;">
+      <div class="tooltip tooltip-light tooltip-arrow-bottom">
+        <div class="tooltip__content">
+          <div class="tooltip__title">This is a tooltip</div>
+          <div class="tooltip__supporting">Tooltips describe or identify an element.</div>
+        </div>
+        <div class="tooltip__arrow"></div>
+      </div>
+      <div class="tooltip tooltip-dark tooltip-arrow-bottom">
+        <div class="tooltip__content">
+          <div class="tooltip__title">Dark tooltip</div>
+          <div class="tooltip__supporting">어두운 배경 위에서 사용합니다.</div>
+        </div>
+        <div class="tooltip__arrow"></div>
+      </div>
+      <span class="help-icon">
+        <svg class="icon"><use href="assets/icons/sprite.svg#icon-base-help-circle"></use></svg>
+        <span class="tooltip tooltip-dark tooltip-arrow-top" style="display:flex;position:absolute;bottom:24px;left:0;width:220px;">
+          <span class="tooltip__content">
+            <span class="tooltip__supporting" style="display:block;">도움말 텍스트입니다.</span>
+          </span>
+          <span class="tooltip__arrow"></span>
+        </span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ============ PROGRESS BAR ============ -->
+  <section class="doc-section" id="progress-bar">
+    <h2>Progress Bar</h2>
+    <div class="doc-card doc-col" style="max-width:400px;">
+      <div class="progress-bar">
+        <div class="progress-bar__track"><div class="progress-bar__fill" style="--progress-bar-value:25%;"></div></div>
+        <span class="progress-bar__value">25%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar__track"><div class="progress-bar__fill" style="--progress-bar-value:70%;"></div></div>
+        <span class="progress-bar__value">70%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED ICON ============ -->
+  <section class="doc-section" id="featured-icon">
+    <h2>Featured Icon</h2>
+    <p class="doc-desc">Color 5종 × Size 2종.</p>
+    <div class="doc-card doc-row">
+      <div class="featured-icon featured-icon-md featured-icon-brand"><svg class="featured-icon__icon"><use href="assets/icons/sprite.svg#icon-base-info"></use></svg></div>
+      <div class="featured-icon featured-icon-md featured-icon-neutral"><svg class="featured-icon__icon"><use href="assets/icons/sprite.svg#icon-base-settings"></use></svg></div>
+      <div class="featured-icon featured-icon-md featured-icon-success"><svg class="featured-icon__icon"><use href="assets/icons/sprite.svg#icon-base-check-circle"></use></svg></div>
+      <div class="featured-icon featured-icon-md featured-icon-warning"><svg class="featured-icon__icon"><use href="assets/icons/sprite.svg#icon-base-alert-triangle"></use></svg></div>
+      <div class="featured-icon featured-icon-md featured-icon-error"><svg class="featured-icon__icon"><use href="assets/icons/sprite.svg#icon-base-alert-circle"></use></svg></div>
+    </div>
+  </section>
+
+  <!-- ============ TABLE ============ -->
+  <section class="doc-section" id="table">
+    <h2>Table</h2>
+    <p class="doc-desc">Size는 밀도(높이 36/44/64), Align은 center/left.</p>
+    <div class="doc-card">
+      <div class="table">
+        <div class="table-header">
+          <div class="table-cell table-cell-md table-cell-header-col align-left">이름</div>
+          <div class="table-cell table-cell-md table-cell-header-col">상태</div>
+          <div class="table-cell table-cell-md table-cell-header-col">가입일</div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell table-cell-md table-cell-body align-left">김블루</div>
+          <div class="table-cell table-cell-md table-cell-body"><span class="chip chip-sm chip-success">활성</span></div>
+          <div class="table-cell table-cell-md table-cell-body">2026.01.15</div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell table-cell-md table-cell-body align-left">이소프트</div>
+          <div class="table-cell table-cell-md table-cell-body"><span class="chip chip-sm chip-neutral">대기</span></div>
+          <div class="table-cell table-cell-md table-cell-body">2026.02.02</div>
+        </div>
+      </div>
+      <div class="table-pagination">
+        <span class="table-pagination__label">총 24건 중 1-10</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOARD ============ -->
+  <section class="doc-section" id="board">
+    <h2>Board</h2>
+    <p class="doc-desc">게시판형 목록. Notice 배지는 chip 컴포넌트를 재사용합니다.</p>
+    <div class="doc-card" style="padding:0;">
+      <div class="board-list board-list-container">
+        <div class="board-header">
+          <div class="board-header__title">제목</div>
+          <div style="display:flex;">
+            <div class="board-cell board-cell-header">작성일</div>
+            <div class="board-cell board-cell-header">조회</div>
+          </div>
+        </div>
+        <div class="board-row board-row-notice">
+          <div class="board-row__content">
+            <span class="chip chip-sm chip-brand">공지</span>
+            <span class="board-row__title">2026년 상반기 정기 점검 안내</span>
+          </div>
+          <div class="board-row__meta">
+            <div class="board-cell board-cell-body">2026.01.10</div>
+            <div class="board-cell board-cell-body">1,204</div>
+          </div>
+        </div>
+        <div class="board-row">
+          <div class="board-row__content">
+            <span class="board-row__title">블루소프트 디자인시스템 v1.0 배포</span>
+          </div>
+          <div class="board-row__meta">
+            <div class="board-cell board-cell-body">2026.01.08</div>
+            <div class="board-cell board-cell-body">532</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CALENDAR ============ -->
+  <section class="doc-section" id="calendar">
+    <h2>Calendar</h2>
+    <div class="doc-row" style="align-items:flex-start;">
+      <div class="calendar calendar-card">
+        <div class="calendar__header">
+          <button class="icon-btn icon-btn-sm icon-btn-ghost"><svg class="icon icon-sm"><use href="assets/icons/sprite.svg#icon-base-chevron-down" style="transform:rotate(90deg);"></use></svg></button>
+          <span class="calendar__month-label">2026년 1월</span>
+          <button class="icon-btn icon-btn-sm icon-btn-ghost"><svg class="icon icon-sm"><use href="assets/icons/sprite.svg#icon-base-chevron-down" style="transform:rotate(-90deg);"></use></svg></button>
+        </div>
+        <div class="calendar__weekday-row">
+          <span class="calendar__weekday is-sunday">일</span>
+          <span class="calendar__weekday">월</span>
+          <span class="calendar__weekday">화</span>
+          <span class="calendar__weekday">수</span>
+          <span class="calendar__weekday">목</span>
+          <span class="calendar__weekday">금</span>
+          <span class="calendar__weekday is-saturday">토</span>
+        </div>
+        <div class="calendar__weeks">
+          <div class="calendar__week">
+            <span class="calendar-day is-empty">1</span>
+            <span class="calendar-day">1</span>
+            <span class="calendar-day">2</span>
+            <span class="calendar-day">3</span>
+            <span class="calendar-day">4</span>
+            <span class="calendar-day">5</span>
+            <span class="calendar-day is-saturday">6</span>
+          </div>
+          <div class="calendar__week">
+            <span class="calendar-day is-sunday">7</span>
+            <span class="calendar-day is-available">8</span>
+            <span class="calendar-day is-today">9</span>
+            <span class="calendar-day is-selected">10</span>
+            <span class="calendar-day is-unavailable">11</span>
+            <span class="calendar-day">12</span>
+            <span class="calendar-day is-saturday">13</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CARD ============ -->
+  <section class="doc-section" id="card">
+    <h2>Card</h2>
+    <p class="doc-desc">Orientation × Style(Default/Outline/Tinted).</p>
+    <div class="doc-row" style="align-items:flex-start;">
+      <div class="card card-vertical card-default" style="width:240px;">
+        <div class="card__body">
+          <div class="card__content">
+            <div class="card__eyebrow">EYEBROW</div>
+            <div class="card__title">카드 제목</div>
+            <div class="card__description">카드 설명 텍스트가 들어갑니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-vertical card-outline" style="width:240px;">
+        <div class="card__body">
+          <div class="card__content">
+            <div class="card__title">Outline 카드</div>
+            <div class="card__description">보더가 있는 스타일입니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card card-vertical card-tinted" style="width:240px;">
+        <div class="card__body">
+          <div class="card__content">
+            <div class="card__title">Tinted 카드</div>
+            <div class="card__description">배경이 채워진 스타일입니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AVATAR GROUP ============ -->
+  <section class="doc-section" id="avatar-group">
+    <h2>Avatar Group</h2>
+    <div class="doc-card doc-row">
+      <div class="avatar-group">
+        <span class="avatar">AB</span>
+        <span class="avatar">CD</span>
+        <span class="avatar">EF</span>
+        <span class="avatar-group__more">+5</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAGINATION COMPACT ============ -->
+  <section class="doc-section" id="pagination-compact">
+    <h2>Pagination Compact</h2>
+    <div class="doc-card">
+      <div class="pagination-compact">
+        <button class="pagination-compact__nav"><svg class="icon icon-sm"><use href="assets/icons/sprite.svg#icon-base-chevron-right" style="transform:scaleX(-1);"></use></svg></button>
+        <div class="pagination-compact__numbers">
+          <span class="pagination-compact__number pagination-compact__number-current">1</span>
+          <span class="pagination-compact__number">2</span>
+          <span class="pagination-compact__number">3</span>
+        </div>
+        <button class="pagination-compact__nav"><svg class="icon icon-sm"><use href="assets/icons/sprite.svg#icon-base-chevron-right"></use></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SIDE NAV ITEM ============ -->
+  <section class="doc-section" id="side-nav-item">
+    <h2>Side Nav Item</h2>
+    <p class="doc-desc">Type(default/sub/icon) × Theme(light/dark) × State.</p>
+    <div class="doc-row" style="align-items:flex-start;">
+      <div style="width:240px;background:#fff;padding:8px;border-radius:8px;border:1px solid #e5e5e5;">
+        <div class="side-nav-item side-nav-item-light side-nav-item-selected">
+          <span class="side-nav-item__content">
+            <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-home"></use></svg>
+            <span class="side-nav-item__label">홈</span>
+          </span>
+        </div>
+        <div class="side-nav-item side-nav-item-light">
+          <span class="side-nav-item__content">
+            <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-bell"></use></svg>
+            <span class="side-nav-item__label">알림</span>
+          </span>
+          <span class="side-nav-item__badge">3</span>
+        </div>
+      </div>
+      <div style="width:240px;background:#0f172a;padding:8px;border-radius:8px;">
+        <div class="side-nav-item side-nav-item-dark side-nav-item-selected">
+          <span class="side-nav-item__content">
+            <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-home"></use></svg>
+            <span class="side-nav-item__label">홈</span>
+          </span>
+        </div>
+        <div class="side-nav-item side-nav-item-dark">
+          <span class="side-nav-item__content">
+            <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-users"></use></svg>
+            <span class="side-nav-item__label">사용자</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCROLLBAR ============ -->
+  <section class="doc-section" id="scrollbar">
+    <h2>Scrollbar</h2>
+    <p class="doc-desc">마크업 없이 스크롤 컨테이너에 <code>.scroll-area</code> 클래스만 적용합니다.</p>
+    <div class="doc-card scroll-area" style="height:120px;overflow-y:auto;">
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+      <p>스크롤 가능한 콘텐츠입니다.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // 색상 스와치 렌더링 — CSS 커스텀 프로퍼티 값을 읽어 표시
+  function renderSwatches(containerId, prefix, steps) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    steps.forEach(function (step) {
+      const varName = '--color-' + prefix + '-' + step;
+      const swatch = document.createElement('div');
+      swatch.className = 'doc-swatch';
+      swatch.innerHTML =
+        '<div class="doc-swatch__chip" style="background-color:var(' + varName + ')"></div>' +
+        '<div class="doc-swatch__label">' + prefix + '-' + step + '</div>';
+      el.appendChild(swatch);
+    });
+  }
+  const scale = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+  renderSwatches('swatch-blue', 'blue', scale);
+  renderSwatches('swatch-neutral', 'neutral', scale);
+  renderSwatches('swatch-slate', 'slate', scale);
+  ['red', 'green', 'yellow'].forEach(function (p) { renderSwatches('swatch-status', p, [50, 500, 700]); });
+
+  // Space 스케일
+  (function () {
+    const el = document.getElementById('space-demo');
+    const steps = [1, 2, 3, 4, 5, 6, 8, 10];
+    steps.forEach(function (s) {
+      const wrap = document.createElement('div');
+      wrap.className = 'doc-swatch';
+      wrap.innerHTML =
+        '<div style="width:var(--space-' + s + ');height:24px;background:var(--color-blue-500);border-radius:4px;"></div>' +
+        '<div class="doc-swatch__label">space-' + s + '</div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  // Radius 스케일
+  (function () {
+    const el = document.getElementById('radius-demo');
+    const items = [
+      ['xsm', 'var(--radius-xsm)'],
+      ['sm', 'var(--radius-sm)'],
+      ['md', 'var(--radius-md)'],
+      ['lg', 'var(--radius-lg)'],
+      ['full', 'var(--radius-full)']
+    ];
+    items.forEach(function (item) {
+      const wrap = document.createElement('div');
+      wrap.className = 'doc-swatch';
+      wrap.innerHTML =
+        '<div style="width:56px;height:56px;background:var(--color-blue-100);border:1px solid var(--color-blue-300);border-radius:' + item[1] + ';"></div>' +
+        '<div class="doc-swatch__label">radius-' + item[0] + '</div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  // 타이포그래피 스케일
+  (function () {
+    const el = document.getElementById('type-demo');
+    const items = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'];
+    items.forEach(function (s) {
+      const row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.alignItems = 'baseline';
+      row.style.gap = '16px';
+      row.innerHTML =
+        '<span class="doc-swatch__label" style="width:64px;flex-shrink:0;">Body/' + s.toUpperCase() + '</span>' +
+        '<span style="font-size:var(--font-size-body-' + s + ');line-height:var(--font-leading-body-' + s + ');">Pretendard 타이포그래피 Ag가나다</span>';
+      el.appendChild(row);
+    });
+  })();
+
+  // 사이드바 스크롤 스파이
+  const links = document.querySelectorAll('.doc-nav-link');
+  const sections = document.querySelectorAll('.doc-section');
+  window.addEventListener('scroll', function () {
+    let current = sections[0].id;
+    sections.forEach(function (s) {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    links.forEach(function (l) {
+      l.classList.toggle('is-active', l.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+</body>
+</html>
