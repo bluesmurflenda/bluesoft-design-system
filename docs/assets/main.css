@@ -1404,6 +1404,95 @@ table {
   background-color: var(--chip-info-fg);
 }
 
+.chip-dot {
+  display: inline-flex;
+  align-items: center;
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+.chip-dot__dot {
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.chip-dot-sm {
+  height: 22px;
+  padding-inline: 8px;
+  gap: var(--space-1);
+  font-size: var(--font-size-body-2xs);
+  line-height: var(--font-leading-body-2xs);
+}
+.chip-dot-sm .chip-dot__dot {
+  width: 6px;
+  height: 6px;
+}
+
+.chip-dot-md {
+  height: 24px;
+  padding-inline: 8px;
+  gap: var(--space-1);
+  font-size: var(--font-size-body-sm);
+  line-height: var(--font-leading-body-sm);
+}
+.chip-dot-md .chip-dot__dot {
+  width: 8px;
+  height: 8px;
+}
+
+.chip-dot-lg {
+  height: 28px;
+  padding-inline: 9px;
+  gap: 6px;
+  font-size: var(--font-size-body-sm);
+  line-height: var(--font-leading-body-sm);
+}
+.chip-dot-lg .chip-dot__dot {
+  width: 10px;
+  height: 10px;
+}
+
+.chip-dot-brand {
+  color: var(--chip-brand-fg);
+}
+.chip-dot-brand .chip-dot__dot {
+  background-color: var(--chip-brand-fg);
+}
+
+.chip-dot-neutral {
+  color: var(--chip-neutral-fg);
+}
+.chip-dot-neutral .chip-dot__dot {
+  background-color: var(--chip-neutral-fg);
+}
+
+.chip-dot-success {
+  color: var(--chip-success-fg);
+}
+.chip-dot-success .chip-dot__dot {
+  background-color: var(--chip-success-fg);
+}
+
+.chip-dot-warning {
+  color: var(--chip-warning-fg);
+}
+.chip-dot-warning .chip-dot__dot {
+  background-color: var(--chip-warning-fg);
+}
+
+.chip-dot-error {
+  color: var(--chip-error-fg);
+}
+.chip-dot-error .chip-dot__dot {
+  background-color: var(--chip-error-fg);
+}
+
+.chip-dot-info {
+  color: var(--chip-info-fg);
+}
+.chip-dot-info .chip-dot__dot {
+  background-color: var(--chip-info-fg);
+}
+
 :root {
   --tabs-fg: #475569;
   --tabs-fg-hover: #334155;

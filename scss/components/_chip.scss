@@ -95,3 +95,49 @@ $chip-colors: (
     }
   }
 }
+
+// Chip/dot(node 1010:1783) — Chip과 별개 컴포넌트. 배경 없이 점+텍스트만 있다(2026-08-28 확인,
+// status-spec 2장). height·텍스트 스케일은 Chip과 같지만 padding-x(8/8/9)·점 크기(6/8/10)가 다르다
+// — .chip__dot(위, Chip 내부 Dot 슬롯)과는 별개라 이름 충돌을 피해 .chip-dot__dot으로 둔다.
+$chip-dot-sizes: (
+  sm: (height: 22px, padding-x: 8px, gap: $space-1, font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, dot: 6px),
+  md: (height: 24px, padding-x: 8px, gap: $space-1, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, dot: 8px),
+  lg: (height: 28px, padding-x: 9px, gap: 6px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, dot: 10px),
+);
+
+.chip-dot {
+  display: inline-flex;
+  align-items: center;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+
+  &__dot {
+    border-radius: $radius-full;
+    flex-shrink: 0;
+  }
+}
+
+@each $size, $props in $chip-dot-sizes {
+  .chip-dot-#{$size} {
+    height: map.get($props, height);
+    padding-inline: map.get($props, padding-x);
+    gap: map.get($props, gap);
+    font-size: map.get($props, font-size);
+    line-height: map.get($props, line-height);
+
+    .chip-dot__dot {
+      width: map.get($props, dot);
+      height: map.get($props, dot);
+    }
+  }
+}
+
+@each $color, $c in $chip-colors {
+  .chip-dot-#{$color} {
+    color: map.get($c, fg);
+
+    .chip-dot__dot {
+      background-color: map.get($c, fg);
+    }
+  }
+}
