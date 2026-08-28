@@ -1,10 +1,38 @@
-// bluesoft-token-scss-design.md 재설계안 — mq() 믹스인이 참조하는 breakpoint 맵.
-// 실제 px 값의 단일 소스는 tokens/_breakpoint.scss(Figma Breakpoint 컬렉션) — 여기서는 값을 복제하지 않고 그대로 가져온다.
+// bluesoft-token-scss-design.md 재설계안 — mq()/text() 믹스인이 참조하는 맵.
+// 실제 값의 단일 소스는 tokens/_breakpoint.scss·tokens/_primitive.scss — 여기서는 값을 복제하지
+// 않고 그대로 가져온다.
 
 @use '../tokens/breakpoint' as bp;
+@use '../tokens/primitive' as *;
 
 $breakpoints: (
   sm: bp.$css-breakpoint-sm,
   md: bp.$css-breakpoint-md,
   lg: bp.$css-breakpoint-lg,
+);
+
+// 2026-08-29 신설: text() 믹스인용 타입 스케일. 지금은 primitive의 고정값을 그대로 참조한다 —
+// Display 계열의 브레이크포인트별 반응형 크기는 아직 실측이 없어 보류(값이 생기면 이 맵의
+// size/lh를 breakpoint별 var()로 바꾸기만 하면 되고, text() 자체는 그대로 쓸 수 있다).
+$type-scale: (
+  body-2xs: (size: $font-size-body-2xs, lh: $font-leading-body-2xs),
+  body-xs: (size: $font-size-body-xs, lh: $font-leading-body-xs),
+  body-sm: (size: $font-size-body-sm, lh: $font-leading-body-sm),
+  body-md: (size: $font-size-body-md, lh: $font-leading-body-md),
+  body-lg: (size: $font-size-body-lg, lh: $font-leading-body-lg),
+  body-xl: (size: $font-size-body-xl, lh: $font-leading-body-xl),
+  body-2xl: (size: $font-size-body-2xl, lh: $font-leading-body-2xl),
+  display-xs: (size: $font-size-display-xs, lh: $font-leading-display-xs, family: $font-family-display),
+  display-sm: (size: $font-size-display-sm, lh: $font-leading-display-sm, family: $font-family-display),
+  display-md: (size: $font-size-display-md, lh: $font-leading-display-md, family: $font-family-display),
+  display-lg: (size: $font-size-display-lg, lh: $font-leading-display-lg, family: $font-family-display),
+  display-xl: (size: $font-size-display-xl, lh: $font-leading-display-xl, family: $font-family-display),
+  display-2xl: (size: $font-size-display-2xl, lh: $font-leading-display-2xl, family: $font-family-display),
+);
+
+$font-weight-scale: (
+  regular: $font-weight-regular,
+  medium: $font-weight-medium,
+  semibold: $font-weight-semibold,
+  bold: $font-weight-bold,
 );
