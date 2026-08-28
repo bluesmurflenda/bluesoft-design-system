@@ -31,7 +31,7 @@
   width: 100%;
   height: 40px;
   padding: $space-2 $space-3;
-  border-radius: $radius-md;
+  border-radius: $radius-sm; // 2026-08-28 확인(table-nav-spec 0장): default 12/hover·selected 8로 갈리던 결함 — radius/sm(8)로 통일
   font-weight: $font-weight-medium;
   font-size: $font-size-body-lg;
   line-height: $font-leading-body-lg;

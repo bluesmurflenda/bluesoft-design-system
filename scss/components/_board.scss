@@ -23,6 +23,10 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   padding-inline: $space-4;
   border-bottom: $border-hairline solid $board-border;
 
+  &:hover {
+    background-color: var(--table-row-bg-hover); // table과 공유하는 토큰(table-nav-spec 확인)
+  }
+
   &__content {
     display: flex;
     align-items: center;
@@ -41,9 +45,12 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
     font-weight: $font-weight-regular;
   }
 
-  // kind=notice일 때 제목이 굵어진다.
+  // 2026-08-28 확인(table-nav-spec): kind=notice는 굵어지는 게 아니라 Body/2Xs/Medium으로 작아진다
+  // (post의 Body/Md/Regular 15px보다 작은 12px) — 공지가 덜 강조되는 것이 실측 사실.
   &-notice &__title {
-    font-weight: $font-weight-semibold;
+    font-size: $font-size-body-2xs;
+    line-height: $font-leading-body-2xs;
+    font-weight: $font-weight-medium;
   }
 
   &__meta {
@@ -79,8 +86,7 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   gap: $space-4;
   padding: $space-4;
   background-color: $board-header-bg;
-  border-top: $border-hairline solid $board-border;
-  border-bottom: $border-hairline solid $board-border;
+  border-bottom: $border-hairline solid $board-border; // 2026-08-28 확인: 하단 테두리만 있음(상단은 없음)
 
   &__title {
     flex: 1 0 0;
@@ -114,6 +120,10 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   padding-block: $space-4;
   padding-inline: $space-3;
   border-bottom: $border-hairline solid $board-border;
+
+  &:hover {
+    background-color: var(--table-row-bg-hover);
+  }
 
   &__title {
     overflow: hidden;

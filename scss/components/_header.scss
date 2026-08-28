@@ -68,6 +68,7 @@ $announcement-fg: $color-white;
   &__main {
     display: flex;
     align-items: center;
+    justify-content: space-between; // 모바일에서 Menu·Right가 숨고 Logo+메뉴버튼만 남을 때 양끝 배치용
     gap: $space-10;
     height: var(--header-height);
     padding-inline: $space-4;

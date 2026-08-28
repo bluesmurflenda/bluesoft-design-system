@@ -57,7 +57,8 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
 
 .table-header {
   display: flex;
-  border-top: $border-hairline solid $table-border;
+  // 2026-08-28 확인(table-nav-spec): Table/Header 자체는 border 없음 — 위쪽 선은 Figma에 없는데
+  // 코드에만 있던 것이라 제거. 헤더-바디 경계는 각 셀의 border-bottom이 담당.
 }
 
 .table-row {
@@ -86,7 +87,9 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
 
 @each $size, $props in $table-cell-sizes {
   .table-cell-#{$size} {
-    height: map.get($props, height);
+    // 2026-08-28 확인(table-nav-spec): counterAxisSizingMode AUTO + minHeight다 — height 고정 금지.
+    // 한 줄이면 이 값과 같고 텍스트가 여러 줄이면 셀이 늘어난다(고정 44라 잘리던 결함의 재발 방지).
+    min-height: map.get($props, height);
     font-size: map.get($props, font-size);
     line-height: map.get($props, line-height);
   }
