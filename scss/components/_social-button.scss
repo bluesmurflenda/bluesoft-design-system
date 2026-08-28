@@ -10,7 +10,7 @@ $social-height: 48px;
 $social-padding-x: $space-5;
 $social-gap: $space-2;
 $social-logo-size: 20px;
-$social-hover-overlay: rgba($color-black, 0.08);
+$social-hover-overlay: rgba(0, 0, 0, 0.08);
 
 // google은 브랜드 테마에서도 outline과 동일 처리(문서·실측 공통) — 별도 브랜드색 없음.
 $social-brand-colors: (
@@ -95,8 +95,11 @@ $social-brand-colors: (
   .social-btn-brand.social-btn-#{$social} {
     background-color: $bg;
     border: none;
-    // kakao는 문서화된 기존 결함: 카카오 공식 가이드는 검정(#191600) 글자인데
-    // 현재 DS 라이브 값은 흰색이다. Figma가 원본이므로 흰색을 그대로 따르되 결함은 남겨둔다.
     color: $color-white;
   }
+}
+
+// 2026-08-28 재실측: kakao만 글자색이 검정으로 바뀌어 있다(카카오 공식 가이드와 일치, 이전 실측의 흰색은 stale).
+.social-btn-brand.social-btn-kakao {
+  color: $color-black;
 }
