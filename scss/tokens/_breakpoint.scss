@@ -56,7 +56,7 @@ $container-padding-x: (
 $container-max-width: 1200px;
 
 $section-gap: (
-  mobile: 40px,
+  mobile: 32px, // 2026-08-28 Figma 변수 패널 스크린샷으로 확인: space/8 (기존 40은 오류)
   tablet: 40px,
   laptop: 40px,
   desktop: 80px,
@@ -72,7 +72,7 @@ $section-gap-sub: (
 );
 
 $section-padding-top: (
-  mobile: 40px,
+  mobile: 32px, // 2026-08-28 확인: space/8 (기존 40은 오류)
   tablet: 40px,
   laptop: 40px,
   desktop: 80px,
@@ -80,9 +80,58 @@ $section-padding-top: (
 );
 
 $section-padding-bottom: (
-  mobile: 64px,
+  mobile: 48px, // 2026-08-28 확인: space/12 (기존 64는 오류)
   tablet: 64px,
   laptop: 80px,
   desktop: 128px,
   wide: 128px,
+);
+
+// 2026-08-28 사용자가 Figma 변수 패널 스크린샷으로 직접 확인해준 신규 변수 6종
+$header-height: (
+  mobile: 64px,
+  tablet: 64px,
+  laptop: 64px,
+  desktop: 80px,
+  wide: 80px,
+);
+
+$sub-visual-height: (
+  mobile: 140px,
+  tablet: 180px,
+  laptop: 220px,
+  desktop: 260px,
+  wide: 260px,
+);
+
+$tabs-height: (
+  mobile: 48px,
+  tablet: 48px,
+  laptop: 56px,
+  desktop: 56px,
+  wide: 56px,
+);
+
+$field-gap: (
+  mobile: 16px,
+  tablet: 20px,
+  laptop: 24px,
+  desktop: 24px,
+  wide: 24px,
+);
+
+$field-body-gap: (
+  mobile: 12px,
+  tablet: 16px,
+  laptop: 16px,
+  desktop: 16px,
+  wide: 16px,
+);
+
+$table-col-label-width: (
+  mobile: 200px,
+  tablet: 240px,
+  laptop: 320px,
+  desktop: 360px,
+  wide: 360px,
 );
