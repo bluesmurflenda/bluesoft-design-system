@@ -3,7 +3,6 @@
 // 게시판형 목록. Notice/New 배지는 chip 컴포넌트를 그대로 재사용한다(.chip .chip-sm .chip-brand 등).
 
 @use '../tokens/primitive' as *;
-@use 'sass:map';
 
 $board-border: $color-neutral-200; // border/default — table의 slate-200과 다른 값이라 별도 정의
 $board-title-fg: $color-neutral-800; // text-primary
@@ -140,54 +139,9 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
 }
 
 // Pagination — board-list(container=no)는 numbers 타입, container=yes는 table과 같은 simple-icon 타입(table-pagination 재사용)
-$pagination-item-fg: $color-slate-600;
-$pagination-current-bg: $color-blue-50;
-$pagination-current-fg: $color-blue-600;
-$pagination-radius: 8px;
-
-.pagination-numbers {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: $space-5;
-  padding-top: $space-10;
-  padding-bottom: $space-3;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
-
-  &__prev,
-  &__next {
-    display: flex;
-    align-items: center;
-    gap: $space-2;
-    color: $pagination-item-fg;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
-    font-weight: $font-weight-medium;
-    cursor: pointer;
-  }
-
-  &__numbers {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-
-  &__page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: $pagination-radius;
-    color: $pagination-item-fg;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
-    font-weight: $font-weight-medium;
-    cursor: pointer;
-
-    &.is-current {
-      background-color: $pagination-current-bg;
-      color: $pagination-current-fg;
-    }
-  }
-}
+// 2026-08-28: 여기 있던 자체 .pagination-numbers 구현을 제거했다. _pagination.scss가 나중에 만들어지면서
+// 같은 클래스명(.pagination-numbers)을 다른 구조(BEM __prev/__next/__page가 아니라 .pagination-number 단일 셀 +
+// .pagination__nav)로 재정의해 로드 순서상 이 블록의 스타일을 덮어써버리는 충돌이 있었다.
+// board-list(container=no)는 이제 _pagination.scss의 .pagination-numbers(sm 사이즈: .pagination-sm 병기) +
+// .pagination-number + .pagination__nav 를 그대로 재사용한다 — 값도 동일해서(fg slate-600, current bg/fg
+// blue-50/blue-600, radius 8, 셀 32×32) 중복 정의였을 뿐 별도 값 손실은 없다.

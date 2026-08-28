@@ -1,0 +1,20 @@
+// Figma DS Master > Navigation 페이지 (node 842:11088 Logo), 2026-08-28 라이브 실측
+// 워드마크 벡터라 색은 CSS로 제어하지 않고 Color별로 내보낸 SVG 3장을 그대로 쓴다 —
+// icons/logo/logo-{light|brand|dark}.svg 참조. 이 파일은 배치 시 크기만 잡아준다.
+//
+// 실측 크기: 데스크톱 헤더 내부 120×15, 로그인 헤더 140×18, 단독 표기 230×30(비율 약 7.67:1 고정).
+
+.logo {
+  display: inline-block;
+  height: 15px;
+  width: auto;
+  aspect-ratio: 120 / 15;
+}
+
+.logo-lg {
+  height: 18px;
+}
+
+.logo-xl {
+  height: 30px;
+}

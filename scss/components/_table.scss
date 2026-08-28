@@ -16,7 +16,6 @@ $table-header-row-fg: $color-neutral-800;
 $table-cell-fg: $color-neutral-700;
 $table-cell-fg-muted: $color-slate-600;
 $table-row-bg-hover: $color-slate-50;
-$pagination-item-fg: $color-slate-600;
 
 $table-cell-sizes: (
   sm: (height: 36px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
@@ -112,17 +111,6 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
   min-width: 0;
 }
 
-.table-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $space-5;
-
-  &__label {
-    color: $pagination-item-fg;
-    font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
-  }
-}
+// 2026-08-28: 자체 .table-pagination 구현을 제거했다 — board.scss와 같은 이유로,
+// 값이 _pagination.scss의 .pagination-simple-icon(패딩 20 고정, "Page 1 of 10" 텍스트)과 완전히 같아서
+// 중복 정의였다. 테이블 하단 페이지네이션은 .pagination-simple-icon(+ .pagination-sm 등 사이즈 클래스)을 그대로 쓴다.

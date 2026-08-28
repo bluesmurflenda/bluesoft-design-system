@@ -1,0 +1,123 @@
+// Figma DS Master > Navigation (Header, Footer) 페이지, 2026-08-28 라이브 인스턴스 실측
+// Header(833:40, Theme×Right action×Width) + _Nav/Menu Item(831:47, Theme×State) + _Nav/Announcement(832:33)
+// 를 한 파일로 묶는다 — 전부 헤더 하나를 구성하는 부품이라 Pagination 때와 같은 이유로 파일을 분리하지 않는다.
+//
+// 높이는 breakpoint 토큰(header/height)을 그대로 쓴다: mobile/tablet/laptop 64, desktop/wide 80.
+// 2026-08-28 확인: 컴포넌트 이름에 "Surface=solid"가 붙어있어 Surface 축이 새로 생긴 것으로 보인다 —
+// 이번 실측은 solid(불투명 배경)만 확인했고, 다른 Surface 값(예: 투명 히어로 오버레이)은 미확인이라 확인 필요.
+
+@use '../tokens/primitive' as *;
+@use '../tokens/breakpoint' as bp;
+@use 'sass:map';
+
+$header-bg-light: $color-white;
+$header-border-light: $color-neutral-200;
+$header-bg-dark: $color-neutral-800;
+
+$nav-menu-fg-light: $color-neutral-800;
+$nav-menu-fg-hover-light: $color-blue-600; // hover/selected 동일 색(실측)
+$nav-menu-fg-dark: $color-white; // dark는 default/hover/selected 전부 흰색 고정(실측)
+
+$announcement-bg: $color-blue-800;
+$announcement-fg: $color-white;
+
+.site-header {
+  width: 100%;
+}
+
+.site-header__announcement {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-2 $space-10;
+  background-color: $announcement-bg;
+  color: $announcement-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+
+  @media (max-width: bp.$css-breakpoint-sm - 1) {
+    padding-inline: $space-4;
+  }
+}
+
+.site-header__main {
+  display: flex;
+  align-items: center;
+  gap: $space-10;
+  height: map.get(bp.$header-height, mobile);
+  padding-inline: $space-4;
+
+  @media (min-width: bp.$css-breakpoint-md) {
+    height: map.get(bp.$header-height, desktop);
+    padding-inline: $space-10;
+  }
+}
+
+.site-header-light .site-header__main {
+  background-color: $header-bg-light;
+  border-bottom: 1px solid $header-border-light;
+}
+
+.site-header-dark .site-header__main {
+  background-color: $header-bg-dark;
+}
+
+.site-header__menu {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex: 1;
+
+  @media (max-width: bp.$css-breakpoint-sm - 1) {
+    display: none;
+  }
+}
+
+.site-header__right {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+
+  @media (max-width: bp.$css-breakpoint-sm - 1) {
+    display: none;
+  }
+}
+
+.site-header__menu-button {
+  display: none;
+  width: 40px;
+  height: 40px;
+
+  @media (max-width: bp.$css-breakpoint-sm - 1) {
+    display: inline-flex;
+  }
+}
+
+.nav-menu-item {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-3 $space-4;
+  color: $nav-menu-fg-light;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-body-xl;
+  line-height: $font-leading-body-xl;
+  cursor: pointer;
+
+  &:hover,
+  &.is-selected {
+    color: $nav-menu-fg-hover-light;
+  }
+}
+
+.site-header-dark .nav-menu-item {
+  color: $nav-menu-fg-dark;
+
+  &:hover,
+  &.is-selected {
+    color: $nav-menu-fg-dark;
+  }
+}

@@ -1,0 +1,265 @@
+// Figma DS Master > Pagination 페이지 (node 359:3155 Pagination, 358:45 _Pagination/Number, 465:6816 Pagination Compact)
+// 2026-08-28 라이브 인스턴스 실측
+//
+// 기본 Pagination(Type 5종: numbers/numbers-buttons/simple/simple-icon/button-group × Size sm/md/lg)과
+// 모바일용 Pagination Compact는 Figma에서 같은 "Pagination" 페이지에 속한 한 묶음이라 이 파일 하나로 구현한다
+// — 이전 세션에서 Compact만 먼저 만들어 _pagination-compact.scss로 떨어져 있던 것을 여기로 합쳤다.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$pagination-sizes: (
+  sm: (item: 32px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, gap: $space-1),
+  md: (item: 40px, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, gap: $space-1),
+  lg: (item: 48px, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, gap: $space-2),
+);
+
+$pagination-border: $color-slate-300; // pagination/group/border
+$pagination-fg: $color-slate-600; // pagination/item/fg
+$pagination-fg-hover: $color-slate-700; // pagination/item/fg-hover
+$pagination-bg-hover: $color-slate-50; // pagination/item/bg-hover
+$pagination-current-bg: $color-blue-50; // pagination/current/bg
+$pagination-current-fg: $color-blue-600; // pagination/current/fg
+$pagination-radius: $radius-sm; // pagination/radius
+$pagination-icon-fg: $color-neutral-600;
+
+// ──────────────────────────────────────────────────────────────
+// 공용 숫자 셀 — .pagination-number, 모든 Type에서 재사용
+// ──────────────────────────────────────────────────────────────
+.pagination-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $pagination-radius;
+  color: $pagination-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+
+  &:hover:not(.pagination-number-current) {
+    background-color: $pagination-bg-hover;
+    color: $pagination-fg-hover;
+  }
+
+  &.pagination-number-current {
+    background-color: $pagination-current-bg;
+    color: $pagination-current-fg;
+    font-weight: $font-weight-semibold;
+    cursor: default;
+  }
+
+  &.pagination-ellipsis {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+// numbers-buttons/button-group 안에서는 사각형(라운드 없음) + 테두리로 서로 붙어있는 형태
+.pagination-number-square {
+  border-radius: 0;
+  border: 1px solid $pagination-border;
+  margin-left: -1px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+@each $size, $props in $pagination-sizes {
+  .pagination-#{$size} {
+    .pagination-number {
+      width: map.get($props, item);
+      height: map.get($props, item);
+      font-size: map.get($props, font-size);
+      line-height: map.get($props, line-height);
+    }
+
+    // "Page 1 of 10" 텍스트, numbers/group의 Prev·Next 라벨도 셀과 같은 사이즈 스케일을 탄다(실측 일치).
+    &.pagination-simple,
+    &.pagination-simple-icon {
+      font-size: map.get($props, font-size);
+      line-height: map.get($props, line-height);
+    }
+
+    .pagination__nav {
+      font-size: map.get($props, font-size);
+      line-height: map.get($props, line-height);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// Type=numbers — 테두리 없는 텍스트 Prev/Next + 번호. 위쪽에 구분선(border-top)이 붙는다.
+// ──────────────────────────────────────────────────────────────
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: $space-12; // 위 콘텐츠와의 구분선 여백(실측: sm 40/md 48/lg 64 — md 기준값, sm·lg는 아래 사이즈 오버라이드)
+  border-top: 1px solid $pagination-border;
+
+  .pagination__nav {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    color: $pagination-fg;
+    font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      color: $pagination-icon-fg;
+    }
+  }
+
+  .pagination__numbers {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+}
+
+.pagination-numbers.pagination-sm {
+  padding-top: $space-10;
+}
+.pagination-numbers.pagination-lg {
+  padding-top: $space-16;
+}
+
+// ──────────────────────────────────────────────────────────────
+// Type=simple — "Page 1 of 10" 텍스트 + Prev/Next 버튼(.btn .btn-outline 재사용)
+// ──────────────────────────────────────────────────────────────
+.pagination-simple {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: $space-12;
+  border-top: 1px solid $pagination-border;
+  color: $pagination-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+
+  .pagination__actions {
+    display: flex;
+    gap: $space-3;
+  }
+}
+
+.pagination-simple.pagination-sm {
+  padding-top: $space-10;
+}
+.pagination-simple.pagination-lg {
+  padding-top: $space-16;
+}
+
+// ──────────────────────────────────────────────────────────────
+// Type=simple-icon — 아이콘 전용 Prev/Next(.icon-btn .icon-btn-outline 재사용) + "Page 1 of 10"
+// 테이블 하단(.table-pagination이었던 것)도 이 클래스를 그대로 쓴다 — 패딩 20px은 sm/md/lg 전부 동일(실측 확인).
+// ──────────────────────────────────────────────────────────────
+.pagination-simple-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: $space-5;
+  color: $pagination-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+}
+
+// ──────────────────────────────────────────────────────────────
+// Type=numbers-buttons / button-group — Prev·번호·Next가 하나의 테두리 그룹으로 붙어있다.
+// numbers-buttons: Prev/Next만 독립 버튼(.btn .btn-outline), 번호만 그룹으로 붙음.
+// button-group: Prev/Next까지 포함해 전부 하나의 그룹으로 붙음.
+// ──────────────────────────────────────────────────────────────
+.pagination-group {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: $radius-md;
+  border: 1px solid $pagination-border;
+  overflow: hidden;
+
+  .pagination-number-square {
+    border-top: none;
+    border-bottom: none;
+    border-radius: 0;
+  }
+
+  .pagination__nav {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding-inline: $space-5;
+    color: $pagination-fg;
+    font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $pagination-bg-hover;
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      color: $pagination-icon-fg;
+    }
+  }
+}
+
+.pagination-numbers-buttons {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+// ──────────────────────────────────────────────────────────────
+// Pagination Compact — 모바일용. Prev/Next 아이콘 버튼(32×32, ghost) + 번호 배지. 상하 테두리.
+// ──────────────────────────────────────────────────────────────
+.pagination-compact {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding-block: $space-3;
+  border-top: 1px solid $pagination-border;
+  border-bottom: 1px solid $pagination-border;
+}
+
+.pagination-compact__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $pagination-radius;
+  background: transparent;
+  color: $pagination-icon-fg;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $pagination-bg-hover;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.pagination-compact__numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
