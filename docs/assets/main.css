@@ -1552,7 +1552,7 @@ table {
 
 .tabs-item-pill {
   border: 1px solid var(--tabs-border);
-  border-radius: var(--shape-tabs-radius);
+  border-radius: var(--tabs-radius);
   color: var(--tabs-fg);
   background-color: transparent;
 }
@@ -1591,7 +1591,7 @@ table {
 }
 
 .tabs-item-segmented {
-  border-radius: var(--shape-tabs-radius);
+  border-radius: var(--tabs-radius);
   color: var(--tabs-fg);
   background-color: transparent;
 }
@@ -1633,7 +1633,7 @@ table {
   gap: 2px;
   padding: 2px;
   border: 1px solid var(--tabs-border);
-  border-radius: var(--shape-tabs-radius);
+  border-radius: var(--tabs-radius);
   background-color: var(--tabs-track-bg);
 }
 
@@ -1905,7 +1905,7 @@ table {
   min-height: 354px;
   max-height: 474px;
   padding: var(--space-5);
-  border-radius: var(--shape-calendar-radius);
+  border-radius: var(--calendar-radius);
 }
 .calendar-card {
   background-color: var(--calendar-bg);
@@ -1963,7 +1963,7 @@ table {
   aspect-ratio: 1/1;
   align-items: center;
   justify-content: center;
-  border-radius: var(--shape-calendar-cell-radius);
+  border-radius: var(--calendar-cell-radius);
   background-color: transparent;
   font-weight: var(--font-weight-medium);
   font-size: var(--font-size-body-sm);
@@ -3243,7 +3243,7 @@ table {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--shape-pagination-radius);
+  border-radius: var(--pagination-radius);
   color: var(--pagination-fg);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
@@ -3435,7 +3435,7 @@ table {
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: var(--shape-pagination-radius);
+  border-radius: var(--pagination-radius);
   background: transparent;
   color: var(--color-neutral-600);
   cursor: pointer;

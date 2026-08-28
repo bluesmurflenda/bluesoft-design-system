@@ -65,7 +65,7 @@ $tabs-segmented-sizes: (
 );
 
 $tabs-gap: $space-2; // Shape 컬렉션 tabs-gap-pill/underline — 3모드 전부 동일해 모드 무관 상수로 취급
-$tabs-radius: var(--shape-tabs-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
+$tabs-radius: var(--tabs-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
 $tabs-segment-container-padding: 2px;
 $tabs-segment-items-gap: 2px;
 $tabs-segment-track-bg: var(--tabs-track-bg);
