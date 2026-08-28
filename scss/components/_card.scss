@@ -2,16 +2,20 @@
 // Orientation(Vertical|Horizontal) × Style(Default|Outline|Tinted) × State(Default|Hover|Disabled)
 // 컴포넌트 설명(node 5b90d8f5..)에 Tokens Used가 명시돼 있어 그대로 따름:
 // card/bg·border·fg·fg-supporting·border-hover, surface/subtle, space/4(패딩)·space/3(섹션 gap)·space/2(텍스트 gap), radius/lg, Shadow/sm·md
+//
+// 2026-08-28 Figma 변수 신규 확인: card/bg-tinted(#fafafa, Theme 컬렉션) — 설명에 3-Style 구분 방식이 명시돼 있다.
+// Default=card/bg+Shadow, Outline=card/bg+card/border, Tinted=card/bg-tinted만(보더·섀도 없음).
+// hover는 3 Style 공통으로 card/border-hover(#38bdf8) 1px가 추가된다(Default·Tinted는 평소 보더가 없다가 hover에서만 생김).
 
 @use '../tokens/primitive' as *;
 
 $card-radius: $radius-lg;
 $card-bg: $color-white;
+$card-bg-tinted: $color-neutral-50; // card/bg-tinted
 $card-border: $color-neutral-200;
 $card-border-hover: $color-sky-400;
 $card-fg: $color-neutral-800;
 $card-fg-supporting: $color-neutral-600;
-$card-tinted-bg: $color-neutral-50;
 // 2026-08-28 라이브 실측: Default 상태는 레이어 2개 중 1개만 보임(2번째 alpha=0), Hover는 둘 다 보임.
 $card-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
 $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.1);
@@ -43,9 +47,11 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 }
 
 .card-default {
+  border: 1px solid transparent;
   box-shadow: $card-shadow-sm;
 
   &:hover {
+    border-color: $card-border-hover;
     box-shadow: $card-shadow-md;
   }
 }
@@ -59,7 +65,12 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 }
 
 .card-tinted {
-  background-color: $card-tinted-bg;
+  border: 1px solid transparent;
+  background-color: $card-bg-tinted;
+
+  &:hover {
+    border-color: $card-border-hover;
+  }
 }
 
 .card[aria-disabled='true'],

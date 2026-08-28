@@ -13,12 +13,19 @@ $con-sizes: (
 );
 
 $con-fg: $color-neutral-700;
+// 2026-08-28 재실측: selected는 color·gray가 공유(bg blue-100/border blue-200/fg blue-600),
+// white만 반전된 solid pill(bg·border blue-600, fg white)을 쓴다 — 3테마 공용 아님.
 $con-fg-selected: $color-blue-600;
+$con-bg-selected-shared: $color-blue-100;
+$con-border-selected-shared: $color-blue-200;
 
 $con-themes: (
-  'color': (bg: $color-blue-50, bg-hover: $color-blue-100, border: $color-blue-200, fg-hover: null),
-  'gray': (bg: transparent, bg-hover: $color-neutral-100, border: $color-neutral-200, fg-hover: null),
-  'white': (bg: $color-white, bg-hover: $color-blue-100, border: $color-neutral-200, fg-hover: $color-blue-600),
+  'color': (bg: $color-blue-50, bg-hover: $color-blue-100, border: $color-blue-200, fg-hover: null,
+    bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
+  'gray': (bg: transparent, bg-hover: $color-neutral-100, border: $color-neutral-200, fg-hover: null,
+    bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
+  'white': (bg: $color-white, bg-hover: $color-blue-100, border: $color-neutral-200, fg-hover: $color-blue-600,
+    bg-selected: $color-blue-600, border-selected: $color-blue-600, fg-selected: $color-white),
 );
 
 .con {
@@ -64,12 +71,13 @@ $con-themes: (
     }
 
     &.con-selected {
-      background-color: map.get($c, bg-hover);
-      color: $con-fg-selected;
+      background-color: map.get($c, bg-selected);
+      border-color: map.get($c, border-selected);
+      color: map.get($c, fg-selected);
     }
 
     &:focus-visible {
-      box-shadow: 0 0 0 3px $effect-focus-ring;
+      box-shadow: 0 0 0 2px $effect-focus-ring;
     }
   }
 }

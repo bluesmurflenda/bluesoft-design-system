@@ -44,7 +44,7 @@ $list-item-fg-selected: $color-blue-600;
 
   &[aria-expanded='true'] {
     border-color: $color-blue-500;
-    box-shadow: 0 0 0 3px $effect-focus-ring;
+    box-shadow: 0 0 0 2px $effect-focus-ring;
 
     .dropdown__chevron {
       transform: rotate(180deg);

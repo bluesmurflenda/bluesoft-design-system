@@ -10,7 +10,8 @@
 $select-sizes: (
   sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs),
   md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
-  lg: (height: 48px, padding-x: $space-5, font-size: $font-size-body-md, line-height: $font-leading-body-md),
+  // 2026-08-28 재실측: lg·xl 모두 Body/Lg(16/24)에서 멈춘다 — dropdown 트리거와 동일 패턴, 15/22 아님.
+  lg: (height: 48px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
   xl: (height: 56px, padding-x: $space-6, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
 );
 
@@ -20,10 +21,12 @@ $select-fg: $color-neutral-700;
 $select-icon-fg: $color-neutral-600;
 $select-disabled-bg: $color-neutral-100;
 
+// 2026-08-28 재실측: 포커스 링은 rgba 반투명이 아니라 solid 색 그대로다.
+// normal은 기존 공용 $effect-focus-ring(blue-500 alpha .30) 유지, invalid=red-200, valid=green-100. spread 2px(버튼·소셜버튼과 동일 컨벤션).
 $select-validation-colors: (
   normal: (border: $color-neutral-300, border-hover: $color-neutral-400, border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: $color-neutral-300),
-  invalid: (border: $color-red-500, border-hover: $color-red-600, border-focus: $color-red-500, ring: rgba(239, 68, 68, 0.3), border-disabled: $color-red-200),
-  valid: (border: $color-green-600, border-hover: $color-green-700, border-focus: $color-green-600, ring: rgba(22, 163, 74, 0.3), border-disabled: $color-green-200),
+  invalid: (border: $color-red-500, border-hover: $color-red-600, border-focus: $color-red-500, ring: $color-red-200, border-disabled: $color-red-200),
+  valid: (border: $color-green-600, border-hover: $color-green-700, border-focus: $color-green-600, ring: $color-green-100, border-disabled: $color-green-200),
 );
 
 .select {
@@ -104,7 +107,7 @@ $select-validation-colors: (
 
       &:focus-within {
         border-color: map.get($c, border-focus);
-        box-shadow: 0 0 0 3px map.get($c, ring);
+        box-shadow: 0 0 0 2px map.get($c, ring);
       }
     }
   }
