@@ -1,0 +1,156 @@
+// Figma DS Master > Calendar(954:5704, Type=default/Card) + Day Cell(947:95), 2026-08-27 라이브 실측
+// 셀은 44×44 원형(radius full), gap 4(행·열 공통). Type=Card만 배경(neutral-50)이 있고
+// Type=default는 투명 — 둘 다 패딩·라운드는 동일.
+
+@use '../tokens/primitive' as *;
+
+$calendar-radius: $radius-lg; // 16 — Shape Rounded 모드 값과 일치(재검증 완료)
+$calendar-bg: $color-neutral-50;
+$calendar-header-fg: $color-neutral-800;
+$calendar-weekday-fg: $color-neutral-600;
+$calendar-saturday-fg: $color-blue-600;
+$calendar-sunday-fg: $color-red-700;
+$calendar-day-fg: $color-neutral-800;
+$calendar-gap-cell: 4px;
+$calendar-gap-row: 4px;
+$calendar-cell-size: 44px;
+
+$calendar-cell-selected-bg: $color-blue-600;
+$calendar-cell-selected-fg: $color-white;
+$calendar-cell-available-bg: $color-blue-100;
+$calendar-cell-unavailable-bg: $color-neutral-100;
+$calendar-cell-unavailable-fg: $color-neutral-400;
+$calendar-cell-past-fg: $color-neutral-400;
+$calendar-today-border: $color-blue-400;
+$calendar-today-fg: $color-blue-600;
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  width: 354px;
+  min-width: 280px;
+  max-width: 420px;
+  min-height: 354px;
+  max-height: 474px;
+  padding: $space-5;
+  border-radius: $calendar-radius;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.calendar-card {
+  background-color: $calendar-bg;
+}
+
+.calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar__month-label {
+  font-weight: $font-weight-bold;
+  font-size: $font-size-body-xl;
+  line-height: $font-leading-body-xl;
+  color: $calendar-header-fg;
+}
+
+.calendar__nav {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+// nav 버튼은 icon-btn-ghost icon-btn-sm 재사용(32×32, ghost 배경)을 그대로 쓴다.
+
+.calendar__weekday-row {
+  display: flex;
+  gap: $calendar-gap-cell;
+}
+
+.calendar__weekday {
+  display: flex;
+  flex: 1 0 0;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $calendar-weekday-fg;
+
+  &.is-saturday {
+    color: $calendar-saturday-fg;
+  }
+  &.is-sunday {
+    color: $calendar-sunday-fg;
+  }
+}
+
+.calendar__weeks {
+  display: flex;
+  flex-direction: column;
+  gap: $calendar-gap-row;
+}
+
+.calendar__week {
+  display: flex;
+  gap: $calendar-gap-cell;
+}
+
+.calendar-day {
+  display: flex;
+  flex: 1 0 0;
+  aspect-ratio: 1 / 1;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  background-color: transparent;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $calendar-day-fg;
+
+  &.is-saturday {
+    color: $calendar-saturday-fg;
+  }
+  &.is-sunday {
+    color: $calendar-sunday-fg;
+  }
+
+  &.is-empty {
+    visibility: hidden;
+  }
+
+  &.is-past {
+    color: $calendar-cell-past-fg;
+  }
+
+  // available은 배경만 추가되고 글자색은 default와 동일하게 요일별 색을 따른다(실측 확인).
+  &.is-available {
+    background-color: $calendar-cell-available-bg;
+  }
+
+  &.is-unavailable {
+    background-color: $calendar-cell-unavailable-bg;
+    color: $calendar-cell-unavailable-fg;
+  }
+
+  &.is-today {
+    border: $border-hairline solid $calendar-today-border;
+    font-weight: $font-weight-semibold;
+    color: $calendar-today-fg; // 평일 today는 파랑으로 덮임. 토·일은 아래에서 다시 덮는다.
+
+    &.is-saturday {
+      color: $calendar-saturday-fg;
+    }
+    &.is-sunday {
+      color: $calendar-sunday-fg;
+    }
+  }
+
+  &.is-selected {
+    background-color: $calendar-cell-selected-bg;
+    color: $calendar-cell-selected-fg;
+    font-weight: $font-weight-semibold;
+  }
+}
