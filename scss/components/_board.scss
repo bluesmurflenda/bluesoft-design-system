@@ -1,0 +1,193 @@
+// Figma DS Master > board-row(1028:5850) · board-header(1030:37) · board-card(1031:9664)
+// board-cell(1038:889) · board-list(1040:830), 2026-08-27 라이브 실측
+// 게시판형 목록. Notice/New 배지는 chip 컴포넌트를 그대로 재사용한다(.chip .chip-sm .chip-brand 등).
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$board-border: $color-neutral-200; // border/default — table의 slate-200과 다른 값이라 별도 정의
+$board-title-fg: $color-neutral-800; // text-primary
+$board-meta-fg: $color-neutral-600; // text-tertiary
+$board-header-bg: $color-neutral-50; // table-header-bg
+$board-header-fg: $color-neutral-800;
+$board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 컬럼 폭이 동일(120)로 확인.
+                          // Shape 컬렉션 미리보기 보드엔 조회수 컬럼이 100으로 나와 있었으나
+                          // board-row 라이브 인스턴스 전부 120이라 이 값이 최신으로 판단, _shape.scss도 함께 수정.
+
+.board-row {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding-block: $space-5;
+  padding-inline: $space-4;
+  border-bottom: $border-hairline solid $board-border;
+}
+
+.board-row__content {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.board-row__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-body-md;
+  line-height: $font-leading-body-md;
+  color: $board-title-fg;
+  font-weight: $font-weight-regular;
+}
+
+// kind=notice일 때 제목이 굵어진다.
+.board-row-notice .board-row__title {
+  font-weight: $font-weight-semibold;
+}
+
+.board-row__meta {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.board-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $board-col-width;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  text-align: center;
+}
+
+.board-cell-body {
+  color: $board-meta-fg;
+  font-weight: $font-weight-regular;
+}
+
+.board-cell-header {
+  color: $board-header-fg;
+  font-weight: $font-weight-medium;
+}
+
+.board-header {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-4;
+  background-color: $board-header-bg;
+  border-top: $border-hairline solid $board-border;
+  border-bottom: $border-hairline solid $board-border;
+}
+
+.board-header__title {
+  flex: 1 0 0;
+  min-width: 0;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $board-header-fg;
+}
+
+.board-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+// container=yes — 카드형으로 감싼 목록
+.board-list-container {
+  background-color: $color-white; // surface/default
+  border: $border-hairline solid $board-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+// board-card — 모바일용 카드형 게시글
+.board-card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding-block: $space-4;
+  padding-inline: $space-3;
+  border-bottom: $border-hairline solid $board-border;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.board-card__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: $font-size-body-md;
+  line-height: $font-leading-body-md;
+  font-weight: $font-weight-regular;
+  color: $board-title-fg;
+}
+
+.board-card__meta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $board-meta-fg;
+  white-space: nowrap;
+}
+
+// Pagination — board-list(container=no)는 numbers 타입, container=yes는 table과 같은 simple-icon 타입(table-pagination 재사용)
+$pagination-item-fg: $color-slate-600;
+$pagination-current-bg: $color-blue-50;
+$pagination-current-fg: $color-blue-600;
+$pagination-radius: 8px;
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: $space-5;
+  padding-top: $space-10;
+  padding-bottom: $space-3;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  &__prev,
+  &__next {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    color: $pagination-item-fg;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+  }
+
+  &__numbers {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  &__page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $pagination-radius;
+    color: $pagination-item-fg;
+    font-size: $font-size-body-sm;
+    line-height: $font-leading-body-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+
+    &.is-current {
+      background-color: $pagination-current-bg;
+      color: $pagination-current-fg;
+    }
+  }
+}

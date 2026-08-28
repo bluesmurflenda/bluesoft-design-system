@@ -4,8 +4,8 @@
 @use 'primitive' as *;
 
 // Shape 컬렉션에 포함돼 있지만 모드에 따라 값이 변하지 않는 항목 (참고 — 실제로는 각 컴포넌트 SCSS에서 직접 사용)
-$board-col-date: 120px;
-$board-col-views: 100px;
+// board-col-date/views는 2026-08-27 board-row 라이브 재검증 결과 둘 다 120으로 확인(미리보기 보드는 views만 100으로 stale) —
+// 실제 값은 components/_board.scss의 $board-col-width에서 정의한다.
 $modal-width-sm: 300px;
 $modal-width-md: 500px;
 $modal-width-lg: 800px;
@@ -20,12 +20,16 @@ $shape-rounded: (
   calendar-radius: $radius-lg,
   calendar-cell-radius: $radius-full,
   con-radius: $radius-full,
-  pagination-radius: $radius-lg,
-  tabs-radius: $radius-lg,
+  pagination-radius: $radius-sm, // 2026-08-27 재검증: 8(radius-sm) — 미리보기 보드는 16(stale)이었음
+  tabs-radius: $radius-full, // 2026-08-27 재검증: 999(radius-full) — 미리보기 보드는 16(stale)이었음
   tabs-gap-pill: $space-2,
   tabs-gap-underline: $space-2,
 );
 
+// Square/Pill 모드는 Rounded처럼 라이브 인스턴스로 직접 재검증할 방법이 없다(도구 제약 —
+// 현재 파일에 활성화된 모드만 인스턴스로 조회 가능, button-padding-x 때와 동일한 한계).
+// 다만 button-radius/con-radius/calendar-radius처럼 극단값(0 또는 full)인 항목은
+// 미리보기 보드가 stale이어도 어긋날 가능성이 낮아 그대로 유지한다.
 $shape-square: (
   button-radius: $radius-none,
   calendar-radius: $radius-none,
