@@ -16,65 +16,61 @@
     min-height: 100vh;
   }
 
-  /* ---------- Sidebar (Figma "Sidebar navigation" 샘플 구조 기반) ---------- */
+  /* ---------- Sidebar — Figma "Sidebar navigation" 샘플(node 1240:11809) 구조 그대로.
+     시각 스타일(라운드·색·간격)은 컴포넌트 CSS(.side-nav-item, .input, .logo)가 담당하고
+     여기서는 레이아웃(배치·패딩·스크롤)만 잡는다. */
   .doc-sidebar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 280px;
+    width: 312px;
     height: 100vh;
     overflow-y: auto;
     background-color: #fff;
     border-right: 1px solid var(--color-neutral-200, #e5e5e5);
     display: flex;
     flex-direction: column;
-    padding: 24px 0;
   }
-  .doc-logo {
-    padding: 0 20px 20px;
-    font-weight: 800;
-    font-size: 16px;
-    letter-spacing: 0.06em;
-    color: var(--color-blue-600, #2563eb);
+  .doc-sidebar__header {
+    padding: 32px 20px 20px 24px;
   }
-  .doc-search {
-    padding: 0 20px 20px;
+  .doc-sidebar__search {
+    padding: 0 24px 24px;
   }
-  .doc-search input {
-    width: 100%;
-    height: 36px;
-    padding-inline: 12px;
-    border: 1px solid var(--color-neutral-300, #d4d4d4);
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: inherit;
+  .doc-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    flex: 1;
   }
-  .doc-nav-group {
-    padding: 4px 12px;
+  .doc-nav-group + .doc-nav-group {
+    margin-top: 16px;
   }
-  .doc-nav-group__title {
-    padding: 8px 8px 4px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-neutral-400, #a3a3a3);
+  .doc-sidebar__nav .side-nav-item {
+    text-decoration: none;
+    cursor: pointer;
   }
-  .doc-nav-link {
-    display: block;
-    padding: 7px 8px;
-    border-radius: 6px;
-    font-size: 13px;
+  .doc-sidebar__nav .side-nav-item + .side-nav-item {
+    margin-top: 2px;
+  }
+  .doc-sidebar__nav .side-nav-item-sub {
     font-weight: 500;
-    color: var(--color-neutral-700, #404040);
+    font-size: 14px;
+  }
+  .doc-sidebar__footer {
+    padding: 16px;
+    border-top: 1px solid var(--color-neutral-200, #e5e5e5);
+  }
+  .doc-sidebar__footer .side-nav-item {
     text-decoration: none;
   }
-  .doc-nav-link:hover { background-color: var(--color-neutral-50, #fafafa); color: var(--color-blue-600, #2563eb); }
-  .doc-nav-link.is-active { background-color: var(--color-blue-50, #eff6ff); color: var(--color-blue-600, #2563eb); }
+  .doc-search-hidden {
+    display: none !important;
+  }
 
   /* ---------- Main ---------- */
   .doc-main {
-    margin-left: 280px;
+    margin-left: 312px;
     flex: 1;
     min-width: 0;
     padding: 40px 48px 120px;
@@ -176,65 +172,120 @@
 <body>
 
 <nav class="doc-sidebar">
-  <div class="doc-logo">BLUESOFT DS</div>
-  <div class="doc-search">
-    <input type="text" placeholder="컴포넌트 검색..." disabled />
+  <div class="doc-sidebar__header">
+    <img class="logo" src="assets/logo/logo-brand.svg" alt="BLUESOFT" />
   </div>
 
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">시작하기</div>
-    <a class="doc-nav-link is-active" href="#intro">소개</a>
+  <div class="doc-sidebar__search">
+    <div class="input input-md input-normal">
+      <div class="input__field">
+        <div class="input__content">
+          <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-search"></use></svg>
+          <input class="input__control" id="doc-search" placeholder="컴포넌트 검색" autocomplete="off" />
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">토큰</div>
-    <a class="doc-nav-link" href="#tokens-color">색상</a>
-    <a class="doc-nav-link" href="#tokens-space">간격 &amp; Radius</a>
-    <a class="doc-nav-link" href="#tokens-type">타이포그래피</a>
+  <div class="doc-sidebar__nav">
+    <div class="doc-nav-group">
+      <a class="side-nav-item side-nav-item-light" data-nav href="#intro">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-home"></use></svg>
+          <span class="side-nav-item__label">소개</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="doc-nav-group" data-nav-group>
+      <a class="side-nav-item side-nav-item-light" data-nav href="#tokens-color">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-grid"></use></svg>
+          <span class="side-nav-item__label">토큰</span>
+        </span>
+      </a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#tokens-color">색상</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#tokens-space">간격 &amp; Radius</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#tokens-type">타이포그래피</a>
+    </div>
+
+    <div class="doc-nav-group" data-nav-group>
+      <a class="side-nav-item side-nav-item-light" data-nav href="#button">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-layout"></use></svg>
+          <span class="side-nav-item__label">기본 컴포넌트</span>
+        </span>
+      </a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#button">Button</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#icon-button">Icon Button</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#social-button">Social Button</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#chip">Chip</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#con">Con</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#tabs">Tabs</a>
+    </div>
+
+    <div class="doc-nav-group" data-nav-group>
+      <a class="side-nav-item side-nav-item-light" data-nav href="#input">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-edit"></use></svg>
+          <span class="side-nav-item__label">폼 컴포넌트</span>
+        </span>
+      </a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#input">Input</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#textarea">Textarea</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#checkbox-radio">Checkbox &amp; Radio &amp; Toggle</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#dropdown-select">Dropdown &amp; Select</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#upload">Upload</a>
+    </div>
+
+    <div class="doc-nav-group" data-nav-group>
+      <a class="side-nav-item side-nav-item-light" data-nav href="#alert">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-bell"></use></svg>
+          <span class="side-nav-item__label">피드백 컴포넌트</span>
+        </span>
+      </a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#alert">Alert</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#modal">Modal</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#tooltip">Tooltip &amp; Help Icon</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#progress-bar">Progress Bar</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#featured-icon">Featured Icon</a>
+    </div>
+
+    <div class="doc-nav-group" data-nav-group>
+      <a class="side-nav-item side-nav-item-light" data-nav href="#table">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-bar-chart"></use></svg>
+          <span class="side-nav-item__label">데이터 컴포넌트</span>
+        </span>
+      </a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#table">Table</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#board">Board</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#calendar">Calendar</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#card">Card</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#avatar-group">Avatar Group</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#pagination-compact">Pagination</a>
+    </div>
+
+    <div class="doc-nav-group" data-nav-group>
+      <a class="side-nav-item side-nav-item-light" data-nav href="#side-nav-item">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-menu"></use></svg>
+          <span class="side-nav-item__label">네비게이션 컴포넌트</span>
+        </span>
+      </a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#side-nav-item">Side Nav Item</a>
+      <a class="side-nav-item side-nav-item-light side-nav-item-sub" data-nav data-nav-child href="#scrollbar">Scrollbar</a>
+    </div>
   </div>
 
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">컴포넌트 · 기본</div>
-    <a class="doc-nav-link" href="#button">Button</a>
-    <a class="doc-nav-link" href="#icon-button">Icon Button</a>
-    <a class="doc-nav-link" href="#social-button">Social Button</a>
-    <a class="doc-nav-link" href="#chip">Chip</a>
-    <a class="doc-nav-link" href="#con">Con</a>
-    <a class="doc-nav-link" href="#tabs">Tabs</a>
-  </div>
-
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">컴포넌트 · 폼</div>
-    <a class="doc-nav-link" href="#input">Input</a>
-    <a class="doc-nav-link" href="#textarea">Textarea</a>
-    <a class="doc-nav-link" href="#checkbox-radio">Checkbox &amp; Radio &amp; Toggle</a>
-    <a class="doc-nav-link" href="#dropdown-select">Dropdown &amp; Select</a>
-    <a class="doc-nav-link" href="#upload">Upload</a>
-  </div>
-
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">컴포넌트 · 피드백</div>
-    <a class="doc-nav-link" href="#alert">Alert</a>
-    <a class="doc-nav-link" href="#modal">Modal</a>
-    <a class="doc-nav-link" href="#tooltip">Tooltip &amp; Help Icon</a>
-    <a class="doc-nav-link" href="#progress-bar">Progress Bar</a>
-    <a class="doc-nav-link" href="#featured-icon">Featured Icon</a>
-  </div>
-
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">컴포넌트 · 데이터</div>
-    <a class="doc-nav-link" href="#table">Table</a>
-    <a class="doc-nav-link" href="#board">Board</a>
-    <a class="doc-nav-link" href="#calendar">Calendar</a>
-    <a class="doc-nav-link" href="#card">Card</a>
-    <a class="doc-nav-link" href="#avatar-group">Avatar Group</a>
-    <a class="doc-nav-link" href="#pagination-compact">Pagination Compact</a>
-  </div>
-
-  <div class="doc-nav-group">
-    <div class="doc-nav-group__title">컴포넌트 · 네비게이션</div>
-    <a class="doc-nav-link" href="#side-nav-item">Side Nav Item</a>
-    <a class="doc-nav-link" href="#scrollbar">Scrollbar</a>
+  <div class="doc-sidebar__footer">
+    <a class="side-nav-item side-nav-item-light" href="https://github.com/bluesmurflenda/bluesoft-design-system" target="_blank" rel="noopener">
+      <span class="side-nav-item__content">
+        <svg class="side-nav-item__icon"><use href="assets/icons/sprite.svg#icon-base-external-link"></use></svg>
+        <span class="side-nav-item__label">GitHub 저장소</span>
+      </span>
+    </a>
   </div>
 </nav>
 
@@ -1092,15 +1143,32 @@
   })();
 
   // 사이드바 스크롤 스파이
-  const links = document.querySelectorAll('.doc-nav-link');
+  const navLinks = document.querySelectorAll('[data-nav]');
   const sections = document.querySelectorAll('.doc-section');
   window.addEventListener('scroll', function () {
     let current = sections[0].id;
     sections.forEach(function (s) {
       if (window.scrollY >= s.offsetTop - 80) current = s.id;
     });
-    links.forEach(function (l) {
-      l.classList.toggle('is-active', l.getAttribute('href') === '#' + current);
+    navLinks.forEach(function (l) {
+      l.classList.toggle('side-nav-item-selected', l.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // 사이드바 검색 — 하위 항목 텍스트로 필터링, 전부 숨겨진 그룹은 그룹째로 숨김
+  const searchInput = document.getElementById('doc-search');
+  const navGroups = document.querySelectorAll('[data-nav-group]');
+  searchInput.addEventListener('input', function () {
+    const q = searchInput.value.trim().toLowerCase();
+    navGroups.forEach(function (group) {
+      const children = group.querySelectorAll('[data-nav-child]');
+      let anyVisible = false;
+      children.forEach(function (child) {
+        const match = !q || child.textContent.toLowerCase().includes(q);
+        child.classList.toggle('doc-search-hidden', !match);
+        if (match) anyVisible = true;
+      });
+      group.classList.toggle('doc-search-hidden', q && !anyVisible);
     });
   });
 </script>
