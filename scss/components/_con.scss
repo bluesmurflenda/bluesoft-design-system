@@ -50,9 +50,9 @@
 }
 
 $con-sizes: (
-  sm: (height: 32px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px),
-  md: (height: 40px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, icon: 20px),
-  lg: (height: 48px, padding-x: $space-6, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, icon: 24px),
+  sm: (height: 32px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
+  md: (height: 40px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
+  lg: (height: 48px, padding-x: $space-6, font-size: $font-size-body-xl, line-height: $font-leading-body-xl),
 );
 
 $con-fg: var(--con-fg);
@@ -81,6 +81,8 @@ $con-themes: (
 
   .con__icon {
     flex-shrink: 0;
+    width: 20px; // 2026-08-28 확인: Leading·Close 아이콘은 전 사이즈 20×20 고정(사이즈별 가변 아님)
+    height: 20px;
   }
 }
 
@@ -90,11 +92,6 @@ $con-themes: (
     padding-inline: map.get($props, padding-x);
     font-size: map.get($props, font-size);
     line-height: map.get($props, line-height);
-
-    .con__icon {
-      width: map.get($props, icon);
-      height: map.get($props, icon);
-    }
   }
 }
 

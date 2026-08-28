@@ -2359,8 +2359,8 @@ table {
   scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
 }
 .scroll-area::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 .scroll-area::-webkit-scrollbar-track {
   background: var(--scrollbar-track-bg);
@@ -2594,32 +2594,6 @@ table {
   color: var(--alert-info-fg);
 }
 
-:root {
-  --featured-icon-brand-bg: #eff6ff;
-  --featured-icon-brand-fg: #1d4ed8;
-  --featured-icon-neutral-bg: #f8fafc;
-  --featured-icon-neutral-fg: #475569;
-  --featured-icon-success-bg: #f0fdf4;
-  --featured-icon-success-fg: #15803d;
-  --featured-icon-warning-bg: #fefce8;
-  --featured-icon-warning-fg: #a16207;
-  --featured-icon-error-bg: #fef2f2;
-  --featured-icon-error-fg: #b91c1c;
-}
-
-[data-theme=dark] {
-  --featured-icon-brand-bg: #172554;
-  --featured-icon-brand-fg: #93c5fd;
-  --featured-icon-neutral-bg: #020617;
-  --featured-icon-neutral-fg: #94a3b8;
-  --featured-icon-success-bg: #052e16;
-  --featured-icon-success-fg: #4ade80;
-  --featured-icon-warning-bg: #422006;
-  --featured-icon-warning-fg: #facc15;
-  --featured-icon-error-bg: #450a0a;
-  --featured-icon-error-fg: #f87171;
-}
-
 .featured-icon {
   display: inline-flex;
   align-items: center;
@@ -2649,28 +2623,28 @@ table {
 }
 
 .featured-icon-brand {
-  background-color: var(--featured-icon-brand-bg);
-  color: var(--featured-icon-brand-fg);
+  background-color: var(--chip-brand-bg);
+  color: var(--chip-brand-fg);
 }
 
 .featured-icon-neutral {
-  background-color: var(--featured-icon-neutral-bg);
-  color: var(--featured-icon-neutral-fg);
+  background-color: var(--chip-neutral-bg);
+  color: var(--chip-neutral-fg);
 }
 
 .featured-icon-success {
-  background-color: var(--featured-icon-success-bg);
-  color: var(--featured-icon-success-fg);
+  background-color: var(--chip-success-bg);
+  color: var(--chip-success-fg);
 }
 
 .featured-icon-warning {
-  background-color: var(--featured-icon-warning-bg);
-  color: var(--featured-icon-warning-fg);
+  background-color: var(--chip-warning-bg);
+  color: var(--chip-warning-fg);
 }
 
 .featured-icon-error {
-  background-color: var(--featured-icon-error-bg);
-  color: var(--featured-icon-error-fg);
+  background-color: var(--chip-error-bg);
+  color: var(--chip-error-fg);
 }
 
 :root {
@@ -3477,6 +3451,8 @@ table {
 }
 .con .con__icon {
   flex-shrink: 0;
+  width: 20px;
+  height: 20px;
 }
 
 .con-sm {
@@ -3485,10 +3461,6 @@ table {
   font-size: var(--font-size-body-sm);
   line-height: var(--font-leading-body-sm);
 }
-.con-sm .con__icon {
-  width: 16px;
-  height: 16px;
-}
 
 .con-md {
   height: 40px;
@@ -3496,20 +3468,12 @@ table {
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
-.con-md .con__icon {
-  width: 20px;
-  height: 20px;
-}
 
 .con-lg {
   height: 48px;
   padding-inline: var(--space-6);
   font-size: var(--font-size-body-xl);
   line-height: var(--font-leading-body-xl);
-}
-.con-lg .con__icon {
-  width: 24px;
-  height: 24px;
 }
 
 .con-color {

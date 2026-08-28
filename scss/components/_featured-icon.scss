@@ -1,39 +1,13 @@
 // Figma DS Master > Featured Icon (node 429:2267), 2026-08-28 라이브 인스턴스 실측
-// Color 5종(brand/neutral/success/warning/error) × Size 2종(sm/md). Alert와 동일한 색 스케일 재사용(실측 일치).
+// Color 5종(brand/neutral/success/warning/error) × Size 2종(sm/md).
 // sm: 40×40, 아이콘 20×20, 패딩 10 / md: 48×48, 아이콘 24×24, 패딩 12 — 원형(radius full), 패딩=(size-icon)/2 실측 확인.
+//
+// 2026-08-28 재확인(bluesoft-missing-measurements.md G5): 배경·아이콘 색 모두 전용 토큰이 없고
+// chip/* 토큰을 그대로 재사용한다 — 이전에 별도로 뒀던 --featured-icon-* 커스텀 프로퍼티(값이
+// chip과 라이트·다크 전부 우연이 아니라 완전히 동일했다)는 중복이라 제거하고 chip 쪽을 직접 참조한다.
 
 @use '../tokens/primitive' as *;
 @use 'sass:map';
-
-// 2026-08-28 Dark 모드: Figma에 featured-icon 전용 Theme 변수가 없어(Alert와 bg/fg 값만 우연히 겹침),
-// brand/success/warning/error는 alert의 실측 다크값을 그대로 가져왔다. neutral만 fg가 alert-neutral(slate-700)과
-//달리 slate-600이라 별도 값 필요 — table/cell/fg-muted가 정확히 같은 라이트값(slate-600)에 slate-400을 다크값으로
-//쓰고 있어 같은 패턴으로 간주해 채웠다(직접 측정된 featured-icon 전용 값은 아님 — 확인 필요).
-:root {
-  --featured-icon-brand-bg: #eff6ff;
-  --featured-icon-brand-fg: #1d4ed8;
-  --featured-icon-neutral-bg: #f8fafc;
-  --featured-icon-neutral-fg: #475569;
-  --featured-icon-success-bg: #f0fdf4;
-  --featured-icon-success-fg: #15803d;
-  --featured-icon-warning-bg: #fefce8;
-  --featured-icon-warning-fg: #a16207;
-  --featured-icon-error-bg: #fef2f2;
-  --featured-icon-error-fg: #b91c1c;
-}
-
-[data-theme='dark'] {
-  --featured-icon-brand-bg: #172554;
-  --featured-icon-brand-fg: #93c5fd;
-  --featured-icon-neutral-bg: #020617;
-  --featured-icon-neutral-fg: #94a3b8; // 추정(패턴 매칭) — 확인 필요
-  --featured-icon-success-bg: #052e16;
-  --featured-icon-success-fg: #4ade80;
-  --featured-icon-warning-bg: #422006;
-  --featured-icon-warning-fg: #facc15;
-  --featured-icon-error-bg: #450a0a;
-  --featured-icon-error-fg: #f87171;
-}
 
 $featured-icon-sizes: (
   sm: (box: 40px, icon: 20px, padding: 10px),
@@ -41,11 +15,11 @@ $featured-icon-sizes: (
 );
 
 $featured-icon-colors: (
-  brand: (bg: var(--featured-icon-brand-bg), fg: var(--featured-icon-brand-fg)),
-  neutral: (bg: var(--featured-icon-neutral-bg), fg: var(--featured-icon-neutral-fg)),
-  success: (bg: var(--featured-icon-success-bg), fg: var(--featured-icon-success-fg)),
-  warning: (bg: var(--featured-icon-warning-bg), fg: var(--featured-icon-warning-fg)),
-  error: (bg: var(--featured-icon-error-bg), fg: var(--featured-icon-error-fg)),
+  brand: (bg: var(--chip-brand-bg), fg: var(--chip-brand-fg)),
+  neutral: (bg: var(--chip-neutral-bg), fg: var(--chip-neutral-fg)),
+  success: (bg: var(--chip-success-bg), fg: var(--chip-success-fg)),
+  warning: (bg: var(--chip-warning-bg), fg: var(--chip-warning-fg)),
+  error: (bg: var(--chip-error-bg), fg: var(--chip-error-fg)),
 );
 
 .featured-icon {

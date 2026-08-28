@@ -25,8 +25,8 @@ $scrollbar-thumb-bg-hover: $color-neutral-500;
   scrollbar-color: $scrollbar-thumb-bg $scrollbar-track-bg;
 
   &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px; // 2026-08-28 확인(bluesoft-missing-measurements.md G6): 전 방향 6px, 8px는 오류
+    height: 6px;
   }
 
   &::-webkit-scrollbar-track {
