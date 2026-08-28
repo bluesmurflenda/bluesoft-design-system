@@ -2214,14 +2214,6 @@ table {
 .choice--valid .choice__input:focus-visible + .choice__box {
   box-shadow: 0 0 0 2px var(--color-green-100);
 }
-.choice--valid .choice__input:checked + .choice__box,
-.choice--valid .choice__input:indeterminate + .choice__box {
-  background-color: var(--color-green-600);
-}
-.choice--valid .choice__input:checked:hover:not(:disabled) + .choice__box,
-.choice--valid .choice__input:indeterminate:hover:not(:disabled) + .choice__box {
-  background-color: var(--color-green-700);
-}
 .choice--valid .choice__label {
   color: var(--choice-label-fg-valid);
 }
@@ -2233,14 +2225,6 @@ table {
 }
 .choice--invalid .choice__input:focus-visible + .choice__box {
   box-shadow: 0 0 0 2px var(--color-red-200);
-}
-.choice--invalid .choice__input:checked + .choice__box,
-.choice--invalid .choice__input:indeterminate + .choice__box {
-  background-color: var(--color-red-500);
-}
-.choice--invalid .choice__input:checked:hover:not(:disabled) + .choice__box,
-.choice--invalid .choice__input:indeterminate:hover:not(:disabled) + .choice__box {
-  background-color: var(--color-red-600);
 }
 .choice--invalid .choice__label {
   color: var(--choice-label-fg-invalid);
@@ -2834,11 +2818,16 @@ table {
 .dropdown-sm .dropdown__trigger {
   height: 32px;
   padding-inline: var(--space-3);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   font-size: var(--font-size-body-xs);
   line-height: var(--font-leading-body-xs);
 }
+.dropdown-sm .dropdown__chevron {
+  width: 12px;
+  height: 12px;
+}
 .dropdown-sm .list-item {
+  height: 32px;
   font-size: var(--font-size-body-sm);
   line-height: var(--font-leading-body-sm);
 }
@@ -2846,11 +2835,16 @@ table {
 .dropdown-md .dropdown__trigger {
   height: 40px;
   padding-inline: var(--space-4);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   font-size: var(--font-size-body-sm);
   line-height: var(--font-leading-body-sm);
 }
+.dropdown-md .dropdown__chevron {
+  width: 16px;
+  height: 16px;
+}
 .dropdown-md .list-item {
+  height: 40px;
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
@@ -2858,11 +2852,16 @@ table {
 .dropdown-lg .dropdown__trigger {
   height: 48px;
   padding-inline: var(--space-5);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
+.dropdown-lg .dropdown__chevron {
+  width: 20px;
+  height: 20px;
+}
 .dropdown-lg .list-item {
+  height: 48px;
   font-size: var(--font-size-body-xl);
   line-height: var(--font-leading-body-xl);
 }
@@ -2870,11 +2869,16 @@ table {
 .dropdown-xl .dropdown__trigger {
   height: 56px;
   padding-inline: var(--space-6);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
+.dropdown-xl .dropdown__chevron {
+  width: 20px;
+  height: 20px;
+}
 .dropdown-xl .list-item {
+  height: 56px;
   font-size: var(--font-size-body-xl);
   line-height: var(--font-leading-body-xl);
 }
@@ -2883,7 +2887,7 @@ table {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: var(--space-1);
+  padding-block: var(--space-1);
   border: 1px solid var(--list-panel-border);
   border-radius: var(--radius-md);
   background-color: var(--list-panel-bg);
@@ -2893,7 +2897,7 @@ table {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  padding-inline: var(--space-3);
   border-radius: var(--radius-sm);
   color: var(--list-item-fg);
   font-weight: var(--font-weight-medium);
@@ -2957,7 +2961,7 @@ table {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   background-color: var(--field-bg);
   color: var(--list-item-fg);
   cursor: pointer;
@@ -2987,7 +2991,12 @@ table {
   font-size: var(--font-size-body-xs);
   line-height: var(--font-leading-body-xs);
 }
+.select-sm .select__chevron {
+  width: 12px;
+  height: 12px;
+}
 .select-sm .list-item {
+  height: 32px;
   font-size: var(--font-size-body-sm);
   line-height: var(--font-leading-body-sm);
 }
@@ -2998,7 +3007,12 @@ table {
   font-size: var(--font-size-body-sm);
   line-height: var(--font-leading-body-sm);
 }
+.select-md .select__chevron {
+  width: 16px;
+  height: 16px;
+}
 .select-md .list-item {
+  height: 40px;
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
@@ -3009,7 +3023,12 @@ table {
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
+.select-lg .select__chevron {
+  width: 20px;
+  height: 20px;
+}
 .select-lg .list-item {
+  height: 48px;
   font-size: var(--font-size-body-xl);
   line-height: var(--font-leading-body-xl);
 }
@@ -3020,7 +3039,12 @@ table {
   font-size: var(--font-size-body-lg);
   line-height: var(--font-leading-body-lg);
 }
+.select-xl .select__chevron {
+  width: 20px;
+  height: 20px;
+}
 .select-xl .list-item {
+  height: 56px;
   font-size: var(--font-size-body-xl);
   line-height: var(--font-leading-body-xl);
 }
@@ -3564,7 +3588,7 @@ table {
   gap: var(--space-3);
   width: 100%;
   padding: var(--space-4) var(--space-6);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--field-border);
   border-radius: var(--radius-sm);
   background-color: var(--surface-default);
   text-align: center;
@@ -3597,7 +3621,7 @@ table {
   background-color: var(--surface-default);
 }
 .upload-item-uploading {
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--field-border);
 }
 .upload-item-done {
   border: 1px solid var(--border-brand);
@@ -3758,7 +3782,7 @@ table {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   background-color: var(--color-white);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
@@ -3930,7 +3954,7 @@ table {
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  border-radius: var(--radius-sm);
+  border-radius: var(--button-radius);
   background-color: var(--color-white);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: border-color var(--motion-fast), box-shadow var(--motion-fast);

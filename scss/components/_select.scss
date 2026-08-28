@@ -34,11 +34,12 @@
 }
 
 $select-sizes: (
-  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs),
-  md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
+  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs, chevron: 12px),
+  md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, chevron: 16px),
   // 2026-08-28 재실측: lg·xl 모두 Body/Lg(16/24)에서 멈춘다 — dropdown 트리거와 동일 패턴, 15/22 아님.
-  lg: (height: 48px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
-  xl: (height: 56px, padding-x: $space-6, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
+  // 셰브론도 lg·xl 둘 다 20으로 동일(재확인).
+  lg: (height: 48px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, chevron: 20px),
+  xl: (height: 56px, padding-x: $space-6, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, chevron: 20px),
 );
 
 $select-label-fg: var(--field-label-fg);
@@ -74,7 +75,7 @@ $select-validation-colors: (
     display: flex;
     align-items: center;
     gap: $space-2;
-    border-radius: $radius-sm;
+    border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
     background-color: $select-bg;
     color: $select-fg;
     cursor: pointer;
@@ -112,9 +113,15 @@ $select-validation-colors: (
       line-height: map.get($props, line-height);
     }
 
-    // dropdown.scss의 _List/Item 폰트 맵 재사용(패널·옵션을 그대로 재사용하므로) — 미검증, dropdown과
-    // 동일 컴포넌트 기반이라는 전제로 적용. select 자체 사이즈 실측은 아직 안 함.
+    .select__chevron {
+      width: map.get($props, chevron);
+      height: map.get($props, chevron);
+    }
+
+    // dropdown.scss의 _List/Item 폰트·높이 맵 재사용(패널·옵션을 그대로 재사용하므로) — dropdown과
+    // 동일 컴포넌트 기반이라는 전제로 적용.
     .list-item {
+      height: map.get(dd.$list-item-heights, $size);
       font-size: map.get(map.get(dd.$list-item-font, $size), size);
       line-height: map.get(map.get(dd.$list-item-font, $size), lh);
     }

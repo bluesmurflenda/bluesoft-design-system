@@ -25,11 +25,22 @@
   --list-item-bg-hover: #0a0a0a;
 }
 
+// 2026-08-28 확인(inputs-spec): 트리거 radius는 field/radius가 아니라 button/radius 공유.
+// 셰브론도 Select와 동일하게 12/16/20/20으로 사이즈별로 갈린다(문서: "트리거 규격은 _Select base와 동일").
 $dropdown-sizes: (
-  sm: (height: 32px, padding-x: $space-3, radius: $radius-sm),
-  md: (height: 40px, padding-x: $space-4, radius: $radius-sm),
-  lg: (height: 48px, padding-x: $space-5, radius: $radius-sm),
-  xl: (height: 56px, padding-x: $space-6, radius: $radius-sm),
+  sm: (height: 32px, padding-x: $space-3, radius: var(--button-radius), chevron: 12px),
+  md: (height: 40px, padding-x: $space-4, radius: var(--button-radius), chevron: 16px),
+  lg: (height: 48px, padding-x: $space-5, radius: var(--button-radius), chevron: 20px),
+  xl: (height: 56px, padding-x: $space-6, radius: var(--button-radius), chevron: 20px),
+);
+
+// _List/Item 높이 — 사이즈별 32/40/48/56. 문서 권고대로 padding-y(6/8/11/15, 폰트에서 파생된 값이라
+// 폰트가 바뀌면 어긋남) 대신 height + align-items:center로 구현한다.
+$list-item-heights: (
+  sm: 32px,
+  md: 40px,
+  lg: 48px,
+  xl: 56px,
 );
 
 $dropdown-border: var(--field-border);
@@ -109,7 +120,13 @@ $list-item-font: (
       line-height: map.get(map.get($dropdown-font, $size), lh);
     }
 
+    .dropdown__chevron {
+      width: map.get($props, chevron);
+      height: map.get($props, chevron);
+    }
+
     .list-item {
+      height: map.get($list-item-heights, $size);
       font-size: map.get(map.get($list-item-font, $size), size);
       line-height: map.get(map.get($list-item-font, $size), lh);
     }
@@ -120,7 +137,7 @@ $list-item-font: (
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: $space-1;
+  padding-block: $space-1; // 문서 실측: padding-y만 4 — 좌우는 list-item 자체 padding-inline이 담당
   border: 1px solid $list-panel-border;
   border-radius: $radius-md;
   background-color: $list-panel-bg;
@@ -130,7 +147,7 @@ $list-item-font: (
   display: flex;
   align-items: center;
   gap: $space-2;
-  padding: $space-2 $space-3;
+  padding-inline: $space-3; // 문서 권고: padding-y(6/8/11/15, 폰트 파생값) 대신 height로 세로 크기 고정
   border-radius: $radius-sm;
   color: $list-item-fg;
   font-weight: $font-weight-medium;

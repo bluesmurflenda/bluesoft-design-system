@@ -20,7 +20,9 @@
 
 // 2026-08-28: 각 값에 이미 시맨틱 역할이 주석으로 달려 있어, 그 역할에 대응하는 semantic.scss의
 // 다크 모드 대응 변수로 교체했다(원래 primitive 직접 참조라 다크에서 안 바뀌는 문제가 있었음).
-$upload-border: $border-default;
+// 2026-08-28 재확인(inputs-spec): dropzone·uploading 테두리는 border/default가 아니라 field/border다
+// (Input·Select·Dropdown이 쓰는 것과 같은 토큰) — border/default(#e5e5e5)와 field/border(#d4d4d4)는 값이 다르다.
+$upload-border: var(--field-border);
 $upload-fg-title: $text-primary;
 $upload-fg-supporting: $text-secondary; // 2026-08-28 재실측: neutral-600 아니라 700(#404040)
 $upload-icon-badge-bg: $surface-brand-subtle;
@@ -28,7 +30,7 @@ $upload-icon-badge-border: $brand-100; // outside 링이 아니라 32px 안쪽�
 $upload-icon-fg: $brand-600;
 
 $upload-item-state-border: (
-  uploading: $border-default,
+  uploading: var(--field-border),
   done: $border-brand,
   error: $border-danger,
 );

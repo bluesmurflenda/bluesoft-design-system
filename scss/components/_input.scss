@@ -44,7 +44,7 @@ $input-validation-colors: (
     display: flex;
     align-items: center;
     gap: $space-2;
-    border-radius: $radius-sm;
+    border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
     background-color: $color-white;
     box-shadow: $input-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;

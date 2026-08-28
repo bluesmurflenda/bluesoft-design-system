@@ -39,7 +39,7 @@ $textarea-validation-colors: (
     display: flex;
     align-items: flex-start;
     gap: $space-2;
-    border-radius: $radius-sm;
+    border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
     background-color: $color-white;
     box-shadow: $textarea-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;
