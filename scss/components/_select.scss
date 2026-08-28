@@ -4,6 +4,7 @@
 // 패널·옵션(list-panel/list-item)은 _dropdown.scss 의 클래스를 그대로 재사용한다.
 
 @use '../tokens/primitive' as *;
+@use 'dropdown' as dd;
 @use 'sass:map';
 
 $select-sizes: (
@@ -81,6 +82,13 @@ $select-validation-colors: (
       padding-inline: map.get($props, padding-x);
       font-size: map.get($props, font-size);
       line-height: map.get($props, line-height);
+    }
+
+    // dropdown.scss의 _List/Item 폰트 맵 재사용(패널·옵션을 그대로 재사용하므로) — 미검증, dropdown과
+    // 동일 컴포넌트 기반이라는 전제로 적용. select 자체 사이즈 실측은 아직 안 함.
+    .list-item {
+      font-size: map.get(map.get(dd.$list-item-font, $size), size);
+      line-height: map.get(map.get(dd.$list-item-font, $size), lh);
     }
   }
 }
