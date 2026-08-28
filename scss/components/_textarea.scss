@@ -1,6 +1,6 @@
 // Figma DS Master > Inputs & Textarea & File 페이지 (node 340:298 _Textarea base, 344:381 Textarea),
-// 2026-08-28 라이브 실측. Size(sm/md/lg) × State(default/hover/focus/disabled) × Validation(normal/invalid/valid).
-// Input과 거의 동일한 구조지만 포커스 링 스프레드가 2px가 아니라 3px, 사이즈 축도 3개뿐(xl 없음).
+// 2026-08-28 라이브 실측(사이즈 축 3개뿐, xl 없음). 재실측: 라벨 색은 사이즈 무관 text-primary로 통일됐고
+// 포커스 링 스프레드도 input과 동일한 2px로 확인됨(이전 재실측 당시의 sm-neutral-700/3px는 stale).
 
 @use '../tokens/primitive' as *;
 @use 'sass:map';
@@ -11,12 +11,7 @@ $textarea-sizes: (
   lg: (height: 160px, padding-x: $space-5, padding-y: $space-3, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
 );
 
-// 2026-08-28 실측: sm 라벨만 neutral-700, md·lg는 text-primary(neutral-800) — Figma 원본 그대로(추정 아님).
-$textarea-label-fg: (
-  sm: $color-neutral-700,
-  md: $color-neutral-800,
-  lg: $color-neutral-800,
-);
+$textarea-label-fg: $color-neutral-800; // text-primary
 $textarea-placeholder-fg: $color-neutral-400;
 $textarea-disabled-bg: $color-neutral-100;
 $textarea-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs, input과 공용
@@ -39,6 +34,7 @@ $textarea-validation-colors: (
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
+  color: $textarea-label-fg;
 }
 
 .textarea__field {
@@ -77,10 +73,6 @@ $textarea-validation-colors: (
 
 @each $size, $props in $textarea-sizes {
   .textarea-#{$size} {
-    .textarea__label {
-      color: map.get($textarea-label-fg, $size);
-    }
-
     .textarea__field {
       height: map.get($props, height);
       padding: map.get($props, padding-y) map.get($props, padding-x);
@@ -104,7 +96,7 @@ $textarea-validation-colors: (
 
       &:focus-within {
         border-color: map.get($c, border-focus);
-        box-shadow: 0 0 0 3px map.get($c, ring); // 2026-08-28 실측: input은 2px, textarea는 3px
+        box-shadow: 0 0 0 2px map.get($c, ring);
       }
     }
 
