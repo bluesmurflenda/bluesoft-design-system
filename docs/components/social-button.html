@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Social Button · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">기본 컴포넌트</a> / Social Button</div>
+  <div class="doc-page-header">
+    <h1>Social Button</h1>
+    <p>Social 3종(naver/kakao/apple) × Theme 2(brand/outline) × Type 2(label/icon) = 12, + Google 전용(outline과 동일 스타일 공유, Type 2) = 2. 총 14. Disabled 축 자체가 없는 컴포넌트라(hover는 8% 검정 오버레이일 뿐) default 상태만 나열합니다. 로고는 스프라이트에 실제 브랜드 마크가 없어 placeholder 아이콘(message-circle/smile/globe)을 사용합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Naver / Kakao / Apple — Brand × Outline × Type</h2>
+    <p class="doc-desc">brand는 소셜별 브랜드색 배경, outline은 3사 공통(흰 배경 + 회색 보더) — 로고만 다릅니다.</p>
+    <div class="doc-matrix" id="social-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Google</h2>
+    <p class="doc-desc">별도 브랜드 테마가 없어 outline과 동일 규칙(<code>.social-btn-outline, .social-btn-google</code>)을 공유합니다.</p>
+    <div class="doc-matrix" id="social-google-matrix"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var SOCIALS = ['naver', 'kakao', 'apple'];
+  var THEMES = ['brand', 'outline'];
+  var TYPES = ['label', 'icon'];
+  var LOGO = { naver: 'message-circle', kakao: 'message-circle', apple: 'smile', google: 'globe' };
+  var LABEL_TEXT = { naver: '네이버 로그인', kakao: '카카오 로그인', apple: '애플 로그인', google: '구글 로그인' };
+
+  function socialBtnHtml(social, theme, type) {
+    var classes = ['social-btn', 'social-btn-' + type];
+    if (theme) classes.push('social-btn-' + theme);
+    classes.push('social-btn-' + social);
+    var logo = '<svg class="icon social-btn__logo"><use href="../assets/icons/sprite.svg#icon-base-' + LOGO[social] + '"></use></svg>';
+    var text = type === 'label' ? '<span>' + LABEL_TEXT[social] + '</span>' : '';
+    return '<button class="' + classes.join(' ') + '">' + logo + text + '</button>';
+  }
+
+  (function () {
+    var el = document.getElementById('social-matrix');
+    SOCIALS.forEach(function (social) {
+      THEMES.forEach(function (theme) {
+        TYPES.forEach(function (type) {
+          var cell = document.createElement('div');
+          cell.className = 'doc-cell';
+          cell.innerHTML = socialBtnHtml(social, theme, type) +
+            '<span class="doc-cell__caption">social-btn-' + type + ' social-btn-' + theme + ' social-btn-' + social + '</span>';
+          el.appendChild(cell);
+        });
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('social-google-matrix');
+    TYPES.forEach(function (type) {
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      cell.innerHTML = socialBtnHtml('google', null, type) +
+        '<span class="doc-cell__caption">social-btn-' + type + ' social-btn-google</span>';
+      el.appendChild(cell);
+    });
+  })();
+</script>
+</body>
+</html>

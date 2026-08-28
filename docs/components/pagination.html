@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pagination · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Pagination</div>
+  <div class="doc-page-header">
+    <h1>Pagination</h1>
+    <p>숫자 셀 프리미티브 18(형태 2 원형/사각형 × 상태 3 default/current/ellipsis × 사이즈 3 sm/md/lg) + 캐노니컬 Type 5종(numbers/simple/simple-icon/numbers-buttons/button-group) × 사이즈 3 = 15 + Pagination Compact(모바일, 자체 사이즈 축 없음) 1 = 총 34 조합. hover는 정적 페이지로 재현할 수 없어 제외합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Number 셀 프리미티브</h2>
+    <p class="doc-desc"><code>.pagination-number</code>(원형)와 <code>.pagination-number-square</code>(사각형, numbers-buttons·button-group 전용)는 모든 Type이 공유하는 셀입니다. 사이즈는 조상 요소의 <code>.pagination-sm/md/lg</code>가 결정합니다.</p>
+    <div class="doc-matrix" id="number-cell-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Type = numbers</h2>
+    <p class="doc-desc">테두리 없는 텍스트 Prev/Next + 번호. 위쪽 구분선(border-top). <code>.pagination-numbers.pagination-{size}</code> 조합.</p>
+    <div class="doc-col" id="type-numbers"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Type = simple</h2>
+    <p class="doc-desc">"Page N of M" 텍스트 + Prev/Next 버튼(<code>.btn .btn-outline</code> 재사용). <code>.pagination-simple.pagination-{size}</code> 조합.</p>
+    <div class="doc-col" id="type-simple"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Type = simple-icon</h2>
+    <p class="doc-desc">아이콘 전용 Prev/Next(<code>.icon-btn .icon-btn-outline</code> 재사용) + "Page N of M". 테이블 하단 페이지네이션도 이 클래스를 재사용합니다. <code>.pagination-simple-icon.pagination-{size}</code> 조합.</p>
+    <div class="doc-col" id="type-simple-icon"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Type = numbers-buttons</h2>
+    <p class="doc-desc">Prev/Next는 독립 버튼(<code>.btn .btn-outline</code>), 번호만 <code>.pagination-group.pagination-{size}</code>로 테두리 그룹에 묶입니다.</p>
+    <div class="doc-col" id="type-numbers-buttons"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Type = button-group</h2>
+    <p class="doc-desc">Prev/Next까지 번호와 함께 <code>.pagination-group.pagination-{size}</code> 하나의 테두리 그룹에 묶입니다. Prev/Next는 <code>.pagination__nav</code>(아이콘+텍스트).</p>
+    <div class="doc-col" id="type-button-group"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Pagination Compact(모바일)</h2>
+    <p class="doc-desc">Prev/Next 아이콘 버튼(<code>.pagination-compact__nav</code>, 32×32 고정, 사이즈 축 없음) + 번호 배지. <code>.pagination-compact__numbers</code>에는 전용 숫자 셀 클래스가 없어 <code>.pagination-number</code>를 그대로 재사용하며, 32px 크기를 맞추기 위해 <code>.pagination-sm</code>을 함께 얹었습니다.</p>
+    <div class="doc-card" style="display:inline-block;">
+      <div class="pagination-compact pagination-sm" style="width:280px;">
+        <button class="pagination-compact__nav" aria-label="이전 페이지">
+          <svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-chevron-left"></use></svg>
+        </button>
+        <div class="pagination-compact__numbers">
+          <span class="pagination-number pagination-number-current">3</span>
+          <span style="color:var(--pagination-fg);align-self:center;">/ 12</span>
+        </div>
+        <button class="pagination-compact__nav" aria-label="다음 페이지">
+          <svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-chevron-right"></use></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var SIZES = ['sm', 'md', 'lg'];
+
+  function iconUse(name, cls) {
+    return '<svg class="' + (cls || 'icon') + '"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
+  }
+
+  // ── Number 셀 프리미티브 매트릭스 ──
+  var SHAPES = [
+    ['원형', ''],
+    ['사각형', ' pagination-number-square'],
+  ];
+  var STATES = [
+    ['default', '', '4'],
+    ['current', ' pagination-number-current', '3'],
+    ['ellipsis', ' pagination-ellipsis', '…'],
+  ];
+
+  (function () {
+    var el = document.getElementById('number-cell-matrix');
+    SHAPES.forEach(function (shape) {
+      STATES.forEach(function (state) {
+        SIZES.forEach(function (size) {
+          var cell = document.createElement('div');
+          cell.className = 'doc-cell';
+          var cls = 'pagination-number' + shape[1] + state[1];
+          cell.innerHTML =
+            '<div class="pagination-' + size + '" style="display:inline-flex;">' +
+            '<span class="' + cls + '">' + state[2] + '</span>' +
+            '</div>' +
+            '<span class="doc-cell__caption">' + cls + ' (' + size + ')</span>';
+          el.appendChild(cell);
+        });
+      });
+    });
+  })();
+
+  // ── Type = numbers ──
+  (function () {
+    var el = document.getElementById('type-numbers');
+    SIZES.forEach(function (size) {
+      var wrap = document.createElement('div');
+      wrap.innerHTML =
+        '<div class="doc-label">pagination-numbers pagination-' + size + '</div>' +
+        '<div class="doc-card">' +
+        '<div class="pagination-numbers pagination-' + size + '">' +
+        '<div class="pagination__nav">' + iconUse('chevron-left') + '<span>Prev</span></div>' +
+        '<div class="pagination__numbers">' +
+        '<span class="pagination-number pagination-number-current">1</span>' +
+        '<span class="pagination-number">2</span>' +
+        '<span class="pagination-number">3</span>' +
+        '<span class="pagination-number pagination-ellipsis">…</span>' +
+        '<span class="pagination-number">10</span>' +
+        '</div>' +
+        '<div class="pagination__nav"><span>Next</span>' + iconUse('chevron-right') + '</div>' +
+        '</div></div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  // ── Type = simple ──
+  (function () {
+    var el = document.getElementById('type-simple');
+    SIZES.forEach(function (size) {
+      var wrap = document.createElement('div');
+      wrap.innerHTML =
+        '<div class="doc-label">pagination-simple pagination-' + size + '</div>' +
+        '<div class="doc-card">' +
+        '<div class="pagination-simple pagination-' + size + '">' +
+        '<span>Page 1 of 12</span>' +
+        '<div class="pagination__actions">' +
+        '<button class="btn btn-' + size + ' btn-outline">Prev</button>' +
+        '<button class="btn btn-' + size + ' btn-outline">Next</button>' +
+        '</div></div></div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  // ── Type = simple-icon ──
+  (function () {
+    var el = document.getElementById('type-simple-icon');
+    SIZES.forEach(function (size) {
+      var wrap = document.createElement('div');
+      wrap.innerHTML =
+        '<div class="doc-label">pagination-simple-icon pagination-' + size + '</div>' +
+        '<div class="doc-card">' +
+        '<div class="pagination-simple-icon pagination-' + size + '">' +
+        '<button class="icon-btn icon-btn-' + size + ' icon-btn-outline" aria-label="이전 페이지">' + iconUse('chevron-left') + '</button>' +
+        '<span>Page 1 of 12</span>' +
+        '<button class="icon-btn icon-btn-' + size + ' icon-btn-outline" aria-label="다음 페이지">' + iconUse('chevron-right') + '</button>' +
+        '</div></div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  // ── Type = numbers-buttons ──
+  (function () {
+    var el = document.getElementById('type-numbers-buttons');
+    SIZES.forEach(function (size) {
+      var wrap = document.createElement('div');
+      wrap.innerHTML =
+        '<div class="doc-label">pagination-numbers-buttons — btn-' + size + ' + pagination-group pagination-' + size + '</div>' +
+        '<div class="doc-card">' +
+        '<div class="pagination-numbers-buttons">' +
+        '<button class="btn btn-' + size + ' btn-outline">Prev</button>' +
+        '<div class="pagination-group pagination-' + size + '">' +
+        '<span class="pagination-number pagination-number-square pagination-number-current">1</span>' +
+        '<span class="pagination-number pagination-number-square">2</span>' +
+        '<span class="pagination-number pagination-number-square">3</span>' +
+        '<span class="pagination-number pagination-number-square">4</span>' +
+        '<span class="pagination-number pagination-number-square">5</span>' +
+        '</div>' +
+        '<button class="btn btn-' + size + ' btn-outline">Next</button>' +
+        '</div></div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  // ── Type = button-group ──
+  (function () {
+    var el = document.getElementById('type-button-group');
+    SIZES.forEach(function (size) {
+      var wrap = document.createElement('div');
+      wrap.innerHTML =
+        '<div class="doc-label">pagination-group pagination-' + size + '</div>' +
+        '<div class="doc-card">' +
+        '<div class="pagination-group pagination-' + size + '">' +
+        '<div class="pagination__nav">' + iconUse('chevron-left', 'icon icon-sm') + '<span>Prev</span></div>' +
+        '<span class="pagination-number pagination-number-square pagination-number-current">1</span>' +
+        '<span class="pagination-number pagination-number-square">2</span>' +
+        '<span class="pagination-number pagination-number-square">3</span>' +
+        '<span class="pagination-number pagination-number-square">4</span>' +
+        '<span class="pagination-number pagination-number-square">5</span>' +
+        '<div class="pagination__nav"><span>Next</span>' + iconUse('chevron-right', 'icon icon-sm') + '</div>' +
+        '</div></div>';
+      el.appendChild(wrap);
+    });
+  })();
+</script>
+</body>
+</html>

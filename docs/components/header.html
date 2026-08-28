@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Header · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">네비게이션 컴포넌트</a> / Header</div>
+  <div class="doc-page-header">
+    <h1>Header</h1>
+    <p>Theme 2종(light/dark)의 조립 예시(공지 배너 + 로고 + 네비 메뉴 + 우측 액션)입니다. 개별 클래스를 격자로 나열하기보다 실제 조합을 보여주는 조립형 컴포넌트라 Theme별 전체 헤더 2벌로 구성했습니다. ⚠️ 소스 주석에 따르면 컴포넌트 이름에 "Surface=solid"가 붙어 있어 Surface 축이 추가됐을 가능성이 있으나, 이번 실측은 solid(불투명 배경)만 확인했고 다른 Surface 값(예: 투명 히어로 오버레이)은 미확인 상태입니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>조립 예시 — Light</h2>
+    <p class="doc-desc"><code>site-header-light</code> — 흰 배경 + 얇은 하단 보더. nav 아이템은 hover/selected 시 브랜드 블루(<code>is-selected</code>)로 바뀝니다.</p>
+    <div class="doc-card" style="padding:0; overflow:hidden;">
+      <header class="site-header site-header-light">
+        <div class="site-header__announcement">
+          <span>신규 버전 출시 안내 — 대시보드 UI가 개선되었습니다.</span>
+          <button class="icon-btn icon-btn-sm icon-btn-ghost-inverse" aria-label="공지 닫기">
+            <svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-x"></use></svg>
+          </button>
+        </div>
+        <div class="site-header__main">
+          <a href="javascript:void(0)"><img class="logo" src="../assets/logo/logo-brand.svg" alt="BLUESOFT" /></a>
+          <nav class="site-header__menu">
+            <a class="nav-menu-item is-selected" href="javascript:void(0)">홈</a>
+            <a class="nav-menu-item" href="javascript:void(0)">제품</a>
+            <a class="nav-menu-item" href="javascript:void(0)">고객사례</a>
+            <a class="nav-menu-item" href="javascript:void(0)">문의</a>
+          </nav>
+          <div class="site-header__right">
+            <button class="icon-btn icon-btn-md icon-btn-ghost" aria-label="알림">
+              <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-bell"></use></svg>
+            </button>
+            <button class="icon-btn icon-btn-md icon-btn-ghost" aria-label="계정">
+              <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-users"></use></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>조립 예시 — Dark</h2>
+    <p class="doc-desc"><code>site-header-dark</code> — 어두운 배경(#262626). 실측 결과 이 배경 위 nav 아이템은 default/hover/selected 글자색이 모두 흰색으로 동일해, <code>is-selected</code>를 줘도 시각적으로 구분되지 않습니다(실측값 그대로 반영).</p>
+    <div class="doc-card" style="padding:0; overflow:hidden;">
+      <header class="site-header site-header-dark">
+        <div class="site-header__announcement">
+          <span>신규 버전 출시 안내 — 대시보드 UI가 개선되었습니다.</span>
+          <button class="icon-btn icon-btn-sm icon-btn-ghost-inverse" aria-label="공지 닫기">
+            <svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-x"></use></svg>
+          </button>
+        </div>
+        <div class="site-header__main">
+          <a href="javascript:void(0)"><img class="logo" src="../assets/logo/logo-light.svg" alt="BLUESOFT" /></a>
+          <nav class="site-header__menu">
+            <a class="nav-menu-item is-selected" href="javascript:void(0)">홈</a>
+            <a class="nav-menu-item" href="javascript:void(0)">제품</a>
+            <a class="nav-menu-item" href="javascript:void(0)">고객사례</a>
+            <a class="nav-menu-item" href="javascript:void(0)">문의</a>
+          </nav>
+          <div class="site-header__right">
+            <button class="icon-btn icon-btn-md icon-btn-ghost-white" aria-label="알림">
+              <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-bell"></use></svg>
+            </button>
+            <button class="icon-btn icon-btn-md icon-btn-ghost-white" aria-label="계정">
+              <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-users"></use></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>모바일 메뉴 버튼</h2>
+    <p class="doc-desc"><code>.site-header__menu-button</code>은 <code>max-width: 767px</code> 미디어쿼리에서만 노출되는 요소라 이 문서 폭에서는 기본적으로 숨겨집니다(<code>.site-header__menu</code>, <code>.site-header__right</code>도 같은 지점에서 숨겨집니다). 아래는 시연을 위해 인라인 스타일로 강제 노출한 모습입니다.</p>
+    <div class="doc-card doc-row">
+      <button class="site-header__menu-button" style="display:inline-flex; align-items:center; justify-content:center; background:var(--color-neutral-100); border-radius:8px;" aria-label="메뉴 열기">
+        <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-menu"></use></svg>
+      </button>
+      <span class="doc-cell__caption">site-header__menu-button (강제 노출)</span>
+    </div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

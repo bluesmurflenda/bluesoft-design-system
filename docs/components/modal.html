@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modal · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Modal</div>
+  <div class="doc-page-header">
+    <h1>Modal</h1>
+    <p>Layout 3종(form/alert-centered/alert-horizontal) × Breakpoint 4종(sm 300px/md 500px/lg 800px/xl 1000px) = 12. 폭 클래스(<code>.modal-sm</code>~<code>.modal-xl</code>)는 레이아웃과 무관하게 <code>.modal</code>에 직접 붙는 별도 축이라 3개 레이아웃 전부에 4개 breakpoint가 그대로 적용됩니다. 실제로는 <code>open/close</code> 상호작용이 있는 다이얼로그지만, 이 페이지에서는 정적 카드로만 렌더링합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Form</h2>
+    <p class="doc-desc">전용 layout modifier 클래스가 없는 기본형 — <code>.modal</code> + breakpoint 클래스만 사용합니다. 헤더는 <code>.modal-header-left</code>(아이콘 없이 텍스트만), 본문은 <code>.modal__slot</code> 플레이스홀더, 액션은 기본 <code>.modal__actions</code>(가로 배치).</p>
+    <div id="modal-form-rows"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Alert Centered</h2>
+    <p class="doc-desc"><code>.modal-alert-centered</code> + <code>.modal-header-center</code>(아이콘·제목·설명 세로 중앙 정렬) 조합. 아이콘은 <code>.modal-featured-icon</code>(Featured Icon과 색상 커스텀 프로퍼티 공유). 액션은 <code>.modal-actions-stacked</code>로 세로 배치했습니다 — stacked/horizontal 액션 정렬은 레이아웃과 독립된 별도 modifier라 강제 규칙은 아니며, 아래는 자주 쓰이는 조합 예시입니다.</p>
+    <div id="modal-alert-centered-rows"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Alert Horizontal</h2>
+    <p class="doc-desc"><code>.modal-alert-horizontal</code> + <code>.modal__content</code>(Featured Icon과 헤더를 한 줄에 배치하는 wrapper) 조합. 액션은 기본 <code>.modal__actions</code>(가로 배치, stacked 아님).</p>
+    <div id="modal-alert-horizontal-rows"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var BREAKPOINTS = [
+    ['sm', '300px'],
+    ['md', '500px'],
+    ['lg', '800px'],
+    ['xl', '1000px'],
+  ];
+
+  function icon(name) {
+    return '<svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
+  }
+
+  function formModal(bp) {
+    return (
+      '<div class="modal modal-' + bp + '">' +
+      '<div class="modal__header modal-header-left">' +
+      '<div class="modal__text">' +
+      '<div class="modal__title">설정을 변경하시겠습니까?</div>' +
+      '<div class="modal__description">변경 사항은 저장 후 즉시 적용됩니다.</div>' +
+      '</div></div>' +
+      '<div class="modal__slot">Content slot</div>' +
+      '<div class="modal__actions">' +
+      '<button class="btn btn-md btn-outline">취소</button>' +
+      '<button class="btn btn-md btn-primary">확인</button>' +
+      '</div></div>'
+    );
+  }
+
+  function alertCenteredModal(bp) {
+    return (
+      '<div class="modal modal-' + bp + ' modal-alert-centered">' +
+      '<div class="modal__header modal-header-center">' +
+      '<div class="modal-featured-icon modal-featured-icon-md modal-featured-icon-warning">' + icon('alert-triangle') + '</div>' +
+      '<div class="modal__title">정말 삭제하시겠습니까?</div>' +
+      '<div class="modal__description">삭제한 항목은 복구할 수 없습니다.</div>' +
+      '</div>' +
+      '<div class="modal__actions modal-actions-stacked">' +
+      '<button class="btn btn-md btn-primary">삭제</button>' +
+      '<button class="btn btn-md btn-outline">취소</button>' +
+      '</div></div>'
+    );
+  }
+
+  function alertHorizontalModal(bp) {
+    return (
+      '<div class="modal modal-' + bp + ' modal-alert-horizontal">' +
+      '<div class="modal__content">' +
+      '<div class="modal-featured-icon modal-featured-icon-md modal-featured-icon-warning">' + icon('alert-triangle') + '</div>' +
+      '<div class="modal__header modal-header-left">' +
+      '<div class="modal__text">' +
+      '<div class="modal__title">저장하지 않은 변경 사항이 있습니다</div>' +
+      '<div class="modal__description">지금 나가면 변경 사항이 사라집니다.</div>' +
+      '</div></div></div>' +
+      '<div class="modal__actions">' +
+      '<button class="btn btn-md btn-outline">취소</button>' +
+      '<button class="btn btn-md btn-primary">확인</button>' +
+      '</div></div>'
+    );
+  }
+
+  function renderRows(containerId, layoutLabel, classSuffix, buildFn) {
+    var el = document.getElementById(containerId);
+    BREAKPOINTS.forEach(function (bp) {
+      var row = document.createElement('div');
+      row.className = 'doc-col';
+      row.style.marginBottom = '24px';
+
+      var caption = document.createElement('div');
+      caption.className = 'doc-cell__caption';
+      caption.style.marginBottom = '4px';
+      caption.textContent = 'modal modal-' + bp[0] + classSuffix + ' (' + bp[1] + ')';
+      row.appendChild(caption);
+
+      var scroll = document.createElement('div');
+      scroll.className = 'doc-scroll-x';
+      var card = document.createElement('div');
+      card.className = 'doc-card';
+      card.style.display = 'inline-block';
+      card.innerHTML = buildFn(bp[0]);
+      scroll.appendChild(card);
+      row.appendChild(scroll);
+
+      el.appendChild(row);
+    });
+  }
+
+  renderRows('modal-form-rows', 'Form', '', formModal);
+  renderRows('modal-alert-centered-rows', 'Alert Centered', ' modal-alert-centered', alertCenteredModal);
+  renderRows('modal-alert-horizontal-rows', 'Alert Horizontal', ' modal-alert-horizontal', alertHorizontalModal);
+</script>
+</body>
+</html>

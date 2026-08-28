@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alert · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Alert</div>
+  <div class="doc-page-header">
+    <h1>Alert</h1>
+    <p>Color 6종(brand/neutral/success/warning/error/info) × Layout 3종(inline/banner/toast) = 18. info는 brand와 bg/fg/border 값이 완전히 동일합니다(Chip과 동일 패턴, 실측 그대로).</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Inline</h2>
+    <p class="doc-desc">본문 안에 배치하는 기본 레이아웃. 보더 + <code>radius-lg</code>.</p>
+    <div class="doc-matrix" id="alert-inline-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Banner</h2>
+    <p class="doc-desc">화면 상단 등 전체 폭에 걸치는 레이아웃. 보더 없이 배경색만 채워지고 <code>border-radius: 0</code>입니다(실측: inline/toast와 다름).</p>
+    <div class="doc-col" id="alert-banner-list"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Toast</h2>
+    <p class="doc-desc">고정폭 400px + 그림자(Shadow/lg)가 있는 플로팅 카드 레이아웃.</p>
+    <div class="doc-col" id="alert-toast-list"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  // [color, icon-base, 본문 텍스트]
+  var COLORS = [
+    ['brand', 'info', '브랜드 톤의 안내 메시지입니다.'],
+    ['neutral', 'help-circle', '중립적인 안내 메시지입니다.'],
+    ['success', 'check-circle', '작업이 성공적으로 완료되었습니다.'],
+    ['warning', 'alert-triangle', '주의가 필요한 상황입니다.'],
+    ['error', 'alert-circle', '오류가 발생했습니다.'],
+    ['info', 'info', '참고할 정보가 있습니다.'],
+  ];
+
+  function iconSvg(name, cls) {
+    return '<svg class="' + cls + '"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
+  }
+
+  function alertHtml(layout, color, icon, text) {
+    return (
+      '<div class="alert alert-' + layout + ' alert-' + color + '">' +
+      iconSvg(icon, 'icon alert__icon') +
+      '<div class="alert__body">' +
+      '<div class="alert__title">Alert 제목</div>' +
+      '<div class="alert__text">' + text + '</div>' +
+      '</div>' +
+      iconSvg('x', 'icon alert__close') +
+      '</div>'
+    );
+  }
+
+  (function () {
+    var el = document.getElementById('alert-inline-matrix');
+    COLORS.forEach(function (c) {
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      cell.innerHTML = alertHtml('inline', c[0], c[1], c[2]) +
+        '<span class="doc-cell__caption">alert alert-inline alert-' + c[0] + '</span>';
+      el.appendChild(cell);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('alert-banner-list');
+    COLORS.forEach(function (c) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.style.width = '100%';
+      wrap.innerHTML = alertHtml('banner', c[0], c[1], c[2]) +
+        '<span class="doc-cell__caption">alert alert-banner alert-' + c[0] + '</span>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('alert-toast-list');
+    COLORS.forEach(function (c) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.innerHTML = alertHtml('toast', c[0], c[1], c[2]) +
+        '<span class="doc-cell__caption">alert alert-toast alert-' + c[0] + '</span>';
+      el.appendChild(wrap);
+    });
+  })();
+</script>
+</body>
+</html>

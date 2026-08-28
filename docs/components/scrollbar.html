@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scrollbar · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">네비게이션 컴포넌트</a> / Scrollbar</div>
+  <div class="doc-page-header">
+    <h1>Scrollbar</h1>
+    <p>실제 마크업 컴포넌트가 아니라 스크롤 컨테이너에 적용하는 유틸리티 클래스입니다. 세로 스크롤용 <code>.scroll-area</code>, 가로 스크롤용 <code>.scroll-area-x</code> 총 2종입니다. 썸(thumb) hover 상태는 정적 페이지로 재현할 수 없어 제외했고, 썸 길이는 콘텐츠 양에 따라 브라우저가 계산합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>.scroll-area (세로)</h2>
+    <p class="doc-desc">고정 높이 컨테이너에 콘텐츠가 넘칠 때 세로 스크롤바가 나타납니다.</p>
+    <div class="doc-card">
+      <div class="scroll-area" style="height:150px;overflow-y:auto;">
+        <p>BLUESOFT 디자인시스템은 Figma DS Master를 코드화한 master SCSS 라이브러리입니다.</p>
+        <p>토큰은 Primitive → Semantic → Component 3단 구조로 이어집니다.</p>
+        <p>컴포넌트 파일은 유틸리티 클래스 조합만으로 실제 화면을 구성할 수 있도록 설계되었습니다.</p>
+        <p>아이콘은 하나의 스프라이트 SVG에 심볼로 묶여 있어 별도 네트워크 요청 없이 재사용됩니다.</p>
+        <p>다크 모드는 CSS 커스텀 프로퍼티 기반으로 primitive 토큰 단계에서 전환됩니다.</p>
+        <p>이 문단들은 세로 스크롤바를 강제로 보이게 하기 위한 예시 텍스트입니다.</p>
+        <p>스크롤을 내려도 트랙과 썸의 라운드·색상이 테마에 맞게 유지되는지 확인할 수 있습니다.</p>
+        <p>마지막 문단까지 스크롤하면 컨테이너 하단에 도달합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>.scroll-area-x (가로)</h2>
+    <p class="doc-desc">폭이 좁은 컨테이너에 콘텐츠가 가로로 넘칠 때 가로 스크롤바가 나타납니다(<code>overflow-y: hidden</code> 고정).</p>
+    <div class="doc-card">
+      <div class="scroll-area-x">
+        <div style="display:flex; gap:12px; width:max-content;">
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 1</div>
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 2</div>
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 3</div>
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 4</div>
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 5</div>
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 6</div>
+          <div style="width:160px; height:80px; flex-shrink:0; border-radius:8px; background:var(--color-neutral-100); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--color-neutral-600);">카드 7</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

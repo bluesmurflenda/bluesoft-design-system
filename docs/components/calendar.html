@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calendar · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Calendar</div>
+  <div class="doc-page-header">
+    <h1>Calendar</h1>
+    <p>day-cell 상태 한눈에 보기 9종(default 포함 <code>.is-*</code> 모디파이어 1회씩) + 상태 6(default/available/unavailable/today/selected/past) × 요일유형 3(평일/토요일/일요일) = 18 조합 + 조립된 월간 달력 1종(2026년 8월, 오늘=8/28 기준). hover는 정적 페이지로 재현할 수 없어 제외합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>상태 한눈에 보기</h2>
+    <p class="doc-desc">평일 셀 위에 <code>.calendar-day</code> 모디파이어를 하나씩만 올린 레퍼런스입니다.</p>
+    <div class="doc-matrix" id="state-showcase"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>상태 × 요일유형 매트릭스</h2>
+    <p class="doc-desc">is-empty는 요일유형과 무관하게 항상 빈 칸이라 위 showcase에서만 다룹니다.</p>
+    <div class="doc-matrix" id="state-daytype-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>조립 예시 — 2026년 8월</h2>
+    <p class="doc-desc">Type=Card(<code>.calendar-card</code>). 8/1~27은 is-past, 8/28(금)은 is-today, 8/29(토)는 is-available, 8/30(일)은 is-unavailable, 8/31(월)은 is-selected로 구성했습니다. 이전/다음 달 버튼은 <code>icon-btn icon-btn-sm icon-btn-ghost</code>를 재사용합니다.</p>
+    <div class="doc-card" style="display:inline-block;">
+      <div class="calendar calendar-card" id="assembled-calendar"></div>
+    </div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  function iconUse(name) {
+    return '<svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
+  }
+
+  // ── 상태 한눈에 보기 (요일유형은 평일 고정, 모디파이어 1개씩) ──
+  var SHOWCASE = [
+    ['default', '', '24'],
+    ['is-saturday', 'is-saturday', '25'],
+    ['is-sunday', 'is-sunday', '26'],
+    ['is-available', 'is-available', '18'],
+    ['is-unavailable', 'is-unavailable', '19'],
+    ['is-today', 'is-today', '28'],
+    ['is-selected', 'is-selected', '30'],
+    ['is-past', 'is-past', '10'],
+    ['is-empty', 'is-empty', ''],
+  ];
+
+  (function () {
+    var el = document.getElementById('state-showcase');
+    SHOWCASE.forEach(function (item) {
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      var cls = 'calendar-day' + (item[1] ? ' ' + item[1] : '');
+      cell.innerHTML =
+        '<div style="width:44px;height:44px;background:var(--color-neutral-50);border-radius:8px;display:flex;align-items:center;justify-content:center;">' +
+        '<div class="' + cls + '" style="width:44px;height:44px;">' + item[2] + '</div>' +
+        '</div>' +
+        '<span class="doc-cell__caption">' + item[0] + '</span>';
+      el.appendChild(cell);
+    });
+  })();
+
+  // ── 상태 × 요일유형 매트릭스 ──
+  var STATES = [
+    ['default', ''],
+    ['available', 'is-available'],
+    ['unavailable', 'is-unavailable'],
+    ['today', 'is-today'],
+    ['selected', 'is-selected'],
+    ['past', 'is-past'],
+  ];
+  var DAYTYPES = [
+    ['평일', ''],
+    ['토요일', 'is-saturday'],
+    ['일요일', 'is-sunday'],
+  ];
+
+  (function () {
+    var el = document.getElementById('state-daytype-matrix');
+    STATES.forEach(function (state) {
+      DAYTYPES.forEach(function (daytype) {
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        var cls = 'calendar-day' + (state[1] ? ' ' + state[1] : '') + (daytype[1] ? ' ' + daytype[1] : '');
+        cell.innerHTML =
+          '<div style="width:44px;height:44px;background:var(--color-neutral-50);border-radius:8px;display:flex;align-items:center;justify-content:center;">' +
+          '<div class="' + cls + '" style="width:44px;height:44px;">15</div>' +
+          '</div>' +
+          '<span class="doc-cell__caption">' + state[0] + ' / ' + daytype[0] + '</span>';
+        el.appendChild(cell);
+      });
+    });
+  })();
+
+  // ── 조립된 월간 달력 (2026년 8월, 오늘=8/28) ──
+  var WEEKDAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
+  // 각 행: [day, extraClass] · day=null이면 is-empty. 8/1(토)로 시작.
+  var WEEKS = [
+    [null, null, null, null, null, null, [1, 'is-saturday is-past']],
+    [[2, 'is-sunday is-past'], [3, 'is-past'], [4, 'is-past'], [5, 'is-past'], [6, 'is-past'], [7, 'is-past'], [8, 'is-saturday is-past']],
+    [[9, 'is-sunday is-past'], [10, 'is-past'], [11, 'is-past'], [12, 'is-past'], [13, 'is-past'], [14, 'is-past'], [15, 'is-saturday is-past']],
+    [[16, 'is-sunday is-past'], [17, 'is-past'], [18, 'is-past'], [19, 'is-past'], [20, 'is-past'], [21, 'is-past'], [22, 'is-saturday is-past']],
+    [[23, 'is-sunday is-past'], [24, 'is-past'], [25, 'is-past'], [26, 'is-past'], [27, 'is-past'], [28, 'is-today'], [29, 'is-saturday is-available']],
+    [[30, 'is-sunday is-unavailable'], [31, 'is-selected'], null, null, null, null, null],
+  ];
+
+  (function () {
+    var root = document.getElementById('assembled-calendar');
+
+    var header = document.createElement('div');
+    header.className = 'calendar__header';
+    header.innerHTML =
+      '<span class="calendar__month-label">2026년 8월</span>' +
+      '<div class="calendar__nav">' +
+      '<button class="icon-btn icon-btn-sm icon-btn-ghost" aria-label="이전 달">' + iconUse('chevron-left') + '</button>' +
+      '<button class="icon-btn icon-btn-sm icon-btn-ghost" aria-label="다음 달">' + iconUse('chevron-right') + '</button>' +
+      '</div>';
+    root.appendChild(header);
+
+    var weekdayRow = document.createElement('div');
+    weekdayRow.className = 'calendar__weekday-row';
+    WEEKDAY_LABELS.forEach(function (label, i) {
+      var el = document.createElement('div');
+      el.className = 'calendar__weekday' + (i === 0 ? ' is-sunday' : i === 6 ? ' is-saturday' : '');
+      el.textContent = label;
+      weekdayRow.appendChild(el);
+    });
+    root.appendChild(weekdayRow);
+
+    var weeksWrap = document.createElement('div');
+    weeksWrap.className = 'calendar__weeks';
+    WEEKS.forEach(function (week) {
+      var weekEl = document.createElement('div');
+      weekEl.className = 'calendar__week';
+      week.forEach(function (cell) {
+        var dayEl = document.createElement('div');
+        if (!cell) {
+          dayEl.className = 'calendar-day is-empty';
+        } else {
+          dayEl.className = 'calendar-day ' + cell[1];
+          dayEl.textContent = cell[0];
+        }
+        weekEl.appendChild(dayEl);
+      });
+      weeksWrap.appendChild(weekEl);
+    });
+    root.appendChild(weeksWrap);
+  })();
+</script>
+</body>
+</html>

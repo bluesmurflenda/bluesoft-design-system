@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Textarea · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">폼 컴포넌트</a> / Textarea</div>
+  <div class="doc-page-header">
+    <h1>Textarea</h1>
+    <p>Size 3종(sm/md/lg) × Validation 3종(normal/invalid/valid) = 9. 여기에 Disabled를 검증 상태별 3종(md 사이즈, 실제 <code>disabled</code> 속성)으로 추가해 총 12종을 나열합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Size × Validation 매트릭스</h2>
+    <p class="doc-desc">라벨 + 필드(textarea) + 힌트 텍스트로 구성된 기본 조립. 힌트 색상은 검증 상태를 따릅니다.</p>
+    <div class="doc-matrix" id="textarea-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Disabled</h2>
+    <p class="doc-desc">검증 상태별 3종(md 사이즈). 실제 <code>&lt;textarea disabled&gt;</code>를 사용하며 힌트 텍스트는 40% 투명도로 흐려집니다.</p>
+    <div class="doc-matrix" id="textarea-disabled"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var SIZES = ['sm', 'md', 'lg'];
+  var VALIDATIONS = ['normal', 'invalid', 'valid'];
+
+  function textareaHtml(cls, disabled) {
+    return (
+      '<div class="' + cls + '" style="width:100%;">' +
+      '<label class="textarea__label">Label</label>' +
+      '<div class="textarea__field">' +
+      '<textarea class="textarea__control" placeholder="내용을 입력하세요"' + (disabled ? ' disabled' : '') + '></textarea>' +
+      '</div>' +
+      '<span class="textarea__hint">' + (disabled ? '비활성화된 필드입니다' : 'Hint text가 표시되는 영역입니다') + '</span>' +
+      '</div>'
+    );
+  }
+
+  (function () {
+    var el = document.getElementById('textarea-matrix');
+    SIZES.forEach(function (size) {
+      VALIDATIONS.forEach(function (validation) {
+        var cls = 'textarea textarea-' + size + ' textarea-' + validation;
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML = textareaHtml(cls, false) + '<span class="doc-cell__caption">' + cls + '</span>';
+        el.appendChild(cell);
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('textarea-disabled');
+    VALIDATIONS.forEach(function (validation) {
+      var cls = 'textarea textarea-md textarea-' + validation + ' textarea-disabled';
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      cell.innerHTML = textareaHtml(cls, true) + '<span class="doc-cell__caption">' + cls + '</span>';
+      el.appendChild(cell);
+    });
+  })();
+</script>
+</body>
+</html>

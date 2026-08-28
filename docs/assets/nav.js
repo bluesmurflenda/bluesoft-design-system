@@ -31,7 +31,7 @@
         { label: 'Icon Button', href: BASE + 'components/icon-button.html' },
         { label: 'Social Button', href: BASE + 'components/social-button.html' },
         { label: 'Chip', href: BASE + 'components/chip.html' },
-        { label: 'Con', href: BASE + 'components/con.html' },
+        { label: 'Con', href: BASE + 'components/con-chip.html' },
         { label: 'Tabs', href: BASE + 'components/tabs.html' },
       ],
     },

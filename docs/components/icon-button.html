@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Icon Button · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">기본 컴포넌트</a> / Icon Button</div>
+  <div class="doc-page-header">
+    <h1>Icon Button</h1>
+    <p>변형 11종(button과 공유하는 primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light 8종 + 아이콘버튼 전용 ghost-inverse/ghost-brand/ghost-white 3종) × 사이즈 4(sm/md/lg/xl, xs 없음) = 44. hover·pressed·focus는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외하고, 실제 클래스로 켤 수 있는 default/disabled만 나열합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Variant × Size (default)</h2>
+    <p class="doc-desc">scrim-dark·ghost-inverse·ghost-white은 어두운 배경 위에서, scrim-light은 밝은 배경 위에서만 아이콘이 보여 각각 배경을 얹었습니다.</p>
+    <div class="doc-matrix" id="iconbtn-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Disabled</h2>
+    <p class="doc-desc">사이즈 md 기준, 변형 11종 전체.</p>
+    <div class="doc-card doc-row" id="iconbtn-disabled"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var VARIANTS = ['primary', 'secondary', 'tertiary', 'outline', 'ghost', 'danger', 'scrim-dark', 'scrim-light', 'ghost-inverse', 'ghost-brand', 'ghost-white'];
+  var SIZES = ['sm', 'md', 'lg', 'xl'];
+  var DARK_WRAP_VARIANTS = ['scrim-dark', 'ghost-inverse', 'ghost-white'];
+  var LIGHT_WRAP_VARIANTS = ['scrim-light'];
+
+  function darkWrap(html) { return '<div style="background:#111;padding:8px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
+  function lightWrap(html) { return '<div style="background:#ddd;padding:8px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
+
+  function iconBtnHtml(variant, size, disabled) {
+    var cls = 'icon-btn icon-btn-' + size + ' icon-btn-' + variant;
+    var attr = disabled ? ' disabled' : '';
+    var html = '<button class="' + cls + '"' + attr + '><svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-star"></use></svg></button>';
+    if (DARK_WRAP_VARIANTS.indexOf(variant) !== -1) html = darkWrap(html);
+    if (LIGHT_WRAP_VARIANTS.indexOf(variant) !== -1) html = lightWrap(html);
+    return html;
+  }
+
+  (function () {
+    var el = document.getElementById('iconbtn-matrix');
+    VARIANTS.forEach(function (variant) {
+      SIZES.forEach(function (size) {
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML = iconBtnHtml(variant, size, false) +
+          '<span class="doc-cell__caption">icon-btn-' + size + ' icon-btn-' + variant + '</span>';
+        el.appendChild(cell);
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('iconbtn-disabled');
+    VARIANTS.forEach(function (variant) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.innerHTML = iconBtnHtml(variant, 'md', true) +
+        '<span class="doc-cell__caption">icon-btn-md icon-btn-' + variant + '</span>';
+      el.appendChild(wrap);
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Con · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">기본 컴포넌트</a> / Con</div>
+  <div class="doc-page-header">
+    <h1>Con</h1>
+    <p>Theme 3종(color/gray/white) × Size 3(sm/md/lg) × State 3(default/selected/disabled — <code>.con-selected</code>·<code>.con-disabled</code>는 실제 토글 클래스) = 27. hover·focus는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Theme × Size × State</h2>
+    <p class="doc-desc">white 테마는 배경이 흰색이라 밝은 페이지 위에서 보이지 않아, 파란 배경(<code>--color-blue-800</code>) 위에 올렸습니다.</p>
+    <div class="doc-matrix" id="con-matrix"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var THEMES = ['color', 'gray', 'white'];
+  var SIZES = ['sm', 'md', 'lg'];
+  var STATES = ['default', 'selected', 'disabled'];
+
+  function conHtml(theme, size, state) {
+    var classes = ['con', 'con-' + size, 'con-' + theme];
+    if (state === 'selected') classes.push('con-selected');
+    if (state === 'disabled') classes.push('con-disabled');
+    var html = '<span class="' + classes.join(' ') + '">필터</span>';
+    if (theme === 'white') {
+      html = '<div style="background:var(--color-blue-800);padding:10px;border-radius:8px;display:inline-block;">' + html + '</div>';
+    }
+    return html;
+  }
+
+  (function () {
+    var el = document.getElementById('con-matrix');
+    THEMES.forEach(function (theme) {
+      SIZES.forEach(function (size) {
+        STATES.forEach(function (state) {
+          var cell = document.createElement('div');
+          cell.className = 'doc-cell';
+          var caption = 'con-' + size + ' con-' + theme +
+            (state === 'selected' ? ' con-selected' : state === 'disabled' ? ' con-disabled' : '');
+          cell.innerHTML = conHtml(theme, size, state) + '<span class="doc-cell__caption">' + caption + '</span>';
+          el.appendChild(cell);
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

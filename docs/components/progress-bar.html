@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Progress Bar · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Progress Bar</div>
+  <div class="doc-page-header">
+    <h1>Progress Bar</h1>
+    <p>별도 컬러·사이즈 variant 없이 값 하나(0~100%)로 동작합니다. Figma 정의대로 10% 단위 11단계(0/10/20/…/100)를 전부 나열합니다. 값은 <code>--progress-bar-value</code> 커스텀 프로퍼티를 인라인 <code>style</code>로 넘겨 <code>.progress-bar__fill</code> 폭에 반영합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>0~100% (11단계)</h2>
+    <p class="doc-desc">구조: <code>.progress-bar &gt; .progress-bar__track &gt; .progress-bar__fill</code> + <code>.progress-bar__value</code>(텍스트).</p>
+    <div class="doc-col" id="progress-bar-list"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  (function () {
+    var el = document.getElementById('progress-bar-list');
+    for (var value = 0; value <= 100; value += 10) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.style.width = '100%';
+      wrap.innerHTML =
+        '<div class="progress-bar" style="width:100%;">' +
+        '<div class="progress-bar__track">' +
+        '<div class="progress-bar__fill" style="--progress-bar-value: ' + value + '%;"></div>' +
+        '</div>' +
+        '<div class="progress-bar__value">' + value + '%</div>' +
+        '</div>' +
+        '<span class="doc-cell__caption">--progress-bar-value: ' + value + '%</span>';
+      el.appendChild(wrap);
+    }
+  })();
+</script>
+</body>
+</html>

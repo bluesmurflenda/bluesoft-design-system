@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Side Nav Item · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">네비게이션 컴포넌트</a> / Side Nav Item</div>
+  <div class="doc-page-header">
+    <h1>Side Nav Item</h1>
+    <p>Type 3종(default/sub/icon) × Theme 2종(light/dark) × State 2종(default/selected) = 12. hover는 정적 페이지로 재현할 수 없는 pseudo-state라 제외했습니다. 배지 슬롯(<code>.side-nav-item__badge</code>)은 별도로 1개 시연합니다. 이 문서 사이트의 왼쪽 사이드바 자체가 이 컴포넌트(<code>side-nav-item-light</code>)의 실제 사용 예시입니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Type × Theme × State 매트릭스</h2>
+    <p class="doc-desc">dark 테마는 hover/selected 배경이 brand 계열(blue-800/blue-600)로 실측되어, 그보다 어두운 <code>var(--color-blue-900)</code> 배경 위에 올려 자연스러운 밝기 단계를 보여줍니다. light 테마는 흰 배경 위에 올렸습니다.</p>
+    <div class="doc-matrix" id="nav-item-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Badge 슬롯</h2>
+    <p class="doc-desc"><code>.side-nav-item__badge</code>는 콘텐츠 우측에 배치되는 카운트 슬롯입니다(<code>.side-nav-item</code>의 <code>justify-content: space-between</code>이 좌우로 밀어냅니다).</p>
+    <div class="doc-card">
+      <a class="side-nav-item side-nav-item-light" href="javascript:void(0)" style="width:280px;">
+        <span class="side-nav-item__content">
+          <svg class="side-nav-item__icon"><use href="../assets/icons/sprite.svg#icon-base-bell"></use></svg>
+          <span class="side-nav-item__label">알림</span>
+        </span>
+        <span class="side-nav-item__badge">12</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var TYPES = [
+    ['default', '', '대시보드'],
+    ['sub', 'side-nav-item-sub', '하위 메뉴'],
+    ['icon', 'side-nav-item-icon', null],
+  ];
+  var THEMES = [
+    ['light', 'side-nav-item-light'],
+    ['dark', 'side-nav-item-dark'],
+  ];
+  var STATES = [
+    ['default', ''],
+    ['selected', 'side-nav-item-selected'],
+  ];
+
+  function iconHtml() {
+    return '<svg class="side-nav-item__icon"><use href="../assets/icons/sprite.svg#icon-base-home"></use></svg>';
+  }
+
+  function contentHtml(type, label) {
+    if (type === 'icon') return iconHtml();
+    if (type === 'sub') return label;
+    return '<span class="side-nav-item__content">' + iconHtml() + '<span class="side-nav-item__label">' + label + '</span></span>';
+  }
+
+  (function () {
+    var el = document.getElementById('nav-item-matrix');
+    TYPES.forEach(function (t) {
+      THEMES.forEach(function (th) {
+        STATES.forEach(function (s) {
+          var classes = ['side-nav-item'];
+          if (t[1]) classes.push(t[1]);
+          classes.push(th[1]);
+          if (s[1]) classes.push(s[1]);
+          var classStr = classes.join(' ');
+
+          var wrapStyle = th[0] === 'dark'
+            ? 'background:var(--color-blue-900);padding:12px;border-radius:8px;width:100%;'
+            : 'background:#fff;padding:12px;border-radius:8px;width:100%;border:1px solid var(--color-neutral-200);';
+
+          var itemHtml = '<a class="' + classStr + '" href="javascript:void(0)">' + contentHtml(t[0], t[2]) + '</a>';
+
+          var cell = document.createElement('div');
+          cell.className = 'doc-cell';
+          cell.innerHTML =
+            '<div style="' + wrapStyle + '">' + itemHtml + '</div>' +
+            '<span class="doc-cell__caption">' + classStr + '</span>';
+          el.appendChild(cell);
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

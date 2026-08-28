@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Featured Icon · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Featured Icon</div>
+  <div class="doc-page-header">
+    <h1>Featured Icon</h1>
+    <p>Color 5종(brand/neutral/success/warning/error) × Size 2종(sm 40px/md 48px) = 10. Alert와 동일한 색 스케일을 재사용합니다(실측 일치). sm은 아이콘 20px·패딩 10px, md는 아이콘 24px·패딩 12px, 원형(radius-full)입니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Color × Size</h2>
+    <p class="doc-desc">구조: <code>.featured-icon.featured-icon-{size}.featured-icon-{color} &gt; svg.featured-icon__icon</code>.</p>
+    <div class="doc-matrix" id="featured-icon-matrix"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  // [color, icon-base]
+  var COLORS = [
+    ['brand', 'info'],
+    ['neutral', 'help-circle'],
+    ['success', 'check-circle'],
+    ['warning', 'alert-triangle'],
+    ['error', 'alert-circle'],
+  ];
+  var SIZES = ['sm', 'md'];
+
+  (function () {
+    var el = document.getElementById('featured-icon-matrix');
+    SIZES.forEach(function (size) {
+      COLORS.forEach(function (c) {
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML =
+          '<div class="featured-icon featured-icon-' + size + ' featured-icon-' + c[0] + '">' +
+          '<svg class="icon featured-icon__icon"><use href="../assets/icons/sprite.svg#icon-base-' + c[1] + '"></use></svg>' +
+          '</div>' +
+          '<span class="doc-cell__caption">featured-icon featured-icon-' + size + ' featured-icon-' + c[0] + '</span>';
+        el.appendChild(cell);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

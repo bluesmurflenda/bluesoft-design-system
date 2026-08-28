@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Checkbox & Radio & Toggle · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">폼 컴포넌트</a> / Checkbox & Radio & Toggle</div>
+  <div class="doc-page-header">
+    <h1>Checkbox & Radio & Toggle</h1>
+    <p>Checkbox: Validation 3종(normal/valid/invalid) × State 3종(unchecked/checked/indeterminate) = 9 + Disabled 2종(unchecked/checked) = 11. Radio: Validation 3종 × State 2종(unchecked/checked) = 6 + Disabled 1종 = 7. Toggle: on/off/disabled-on/disabled-off = 4. 총 22종.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Checkbox — Validation × State</h2>
+    <p class="doc-desc">normal은 modifier 클래스 없음, valid/invalid는 <code>.choice--valid</code> / <code>.choice--invalid</code>(더블 대시). indeterminate는 HTML 속성이 없어 렌더 후 JS로 <code>el.indeterminate = true</code>를 설정합니다.</p>
+    <div class="doc-matrix" id="checkbox-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Checkbox — Disabled</h2>
+    <p class="doc-desc">실제 <code>&lt;input disabled&gt;</code> — 별도 wrapper 클래스 없이 입력 요소의 상태만으로 흐림 처리됩니다.</p>
+    <div class="doc-matrix" id="checkbox-disabled"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Radio — Validation × State</h2>
+    <p class="doc-desc"><code>.choice-radio</code> modifier로 원형 글리프가 됩니다. Indeterminate 상태는 라디오에 없습니다.</p>
+    <div class="doc-matrix" id="radio-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Radio — Disabled</h2>
+    <div class="doc-matrix" id="radio-disabled"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Toggle</h2>
+    <p class="doc-desc">Checkbox/Radio와 별도 마크업(<code>.toggle</code> &gt; <code>.toggle__input</code> + <code>.toggle__track</code> &gt; <code>.toggle__knob</code>). 검증 상태 modifier는 없습니다.</p>
+    <div class="doc-matrix" id="toggle-matrix"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var VALIDATIONS = [
+    ['normal', ''],
+    ['valid', ' choice--valid'],
+    ['invalid', ' choice--invalid'],
+  ];
+
+  function choiceCell(type, validationCls, labelText, state) {
+    var cls = 'choice choice-' + type + validationCls;
+    var attrs = '';
+    var stateLabel = state;
+    if (state === 'checked') attrs = ' checked';
+    if (state === 'indeterminate') attrs = ' data-indeterminate';
+    var inputType = type === 'radio' ? 'radio' : 'checkbox';
+    return (
+      '<span class="doc-label">' + stateLabel + '</span>' +
+      '<label class="' + cls + '">' +
+      '<input class="choice__input" type="' + inputType + '"' + attrs + '>' +
+      '<span class="choice__box"></span>' +
+      '<span class="choice__text"><span class="choice__label">' + labelText + '</span></span>' +
+      '</label>' +
+      '<span class="doc-cell__caption">' + cls + '</span>'
+    );
+  }
+
+  (function () {
+    var el = document.getElementById('checkbox-matrix');
+    var STATES = ['unchecked', 'checked', 'indeterminate'];
+    VALIDATIONS.forEach(function (v) {
+      STATES.forEach(function (state) {
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML = choiceCell('checkbox', v[1], '항목 선택', state);
+        el.appendChild(cell);
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('checkbox-disabled');
+    ['unchecked', 'checked'].forEach(function (state) {
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      var cls = 'choice choice-checkbox';
+      var attrs = (state === 'checked' ? ' checked' : '') + ' disabled';
+      cell.innerHTML =
+        '<span class="doc-label">' + state + '</span>' +
+        '<label class="' + cls + '">' +
+        '<input class="choice__input" type="checkbox"' + attrs + '>' +
+        '<span class="choice__box"></span>' +
+        '<span class="choice__text"><span class="choice__label">항목 선택</span></span>' +
+        '</label>' +
+        '<span class="doc-cell__caption">' + cls + ' (input disabled)</span>';
+      el.appendChild(cell);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('radio-matrix');
+    var STATES = ['unchecked', 'checked'];
+    VALIDATIONS.forEach(function (v) {
+      STATES.forEach(function (state) {
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML = choiceCell('radio', v[1], '옵션 선택', state);
+        el.appendChild(cell);
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('radio-disabled');
+    var cell = document.createElement('div');
+    cell.className = 'doc-cell';
+    var cls = 'choice choice-radio';
+    cell.innerHTML =
+      '<span class="doc-label">checked</span>' +
+      '<label class="' + cls + '">' +
+      '<input class="choice__input" type="radio" checked disabled>' +
+      '<span class="choice__box"></span>' +
+      '<span class="choice__text"><span class="choice__label">옵션 선택</span></span>' +
+      '</label>' +
+      '<span class="doc-cell__caption">' + cls + ' (input disabled)</span>';
+    el.appendChild(cell);
+  })();
+
+  (function () {
+    var el = document.getElementById('toggle-matrix');
+    var CONFIGS = [
+      ['off', false, false],
+      ['on', true, false],
+      ['disabled-off', false, true],
+      ['disabled-on', true, true],
+    ];
+    CONFIGS.forEach(function (c) {
+      var label = c[0], checked = c[1], disabled = c[2];
+      var attrs = (checked ? ' checked' : '') + (disabled ? ' disabled' : '');
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      cell.innerHTML =
+        '<span class="doc-label">' + label + '</span>' +
+        '<label class="toggle">' +
+        '<input class="toggle__input" type="checkbox"' + attrs + '>' +
+        '<span class="toggle__track"><span class="toggle__knob"></span></span>' +
+        '<span class="toggle__label">Toggle 라벨</span>' +
+        '</label>' +
+        '<span class="doc-cell__caption">toggle</span>';
+      el.appendChild(cell);
+    });
+  })();
+
+  // indeterminate는 HTML 속성이 없으므로 렌더 후 DOM 프로퍼티로 설정한다.
+  document.querySelectorAll('.choice__input[data-indeterminate]').forEach(function (el) {
+    el.indeterminate = true;
+  });
+</script>
+</body>
+</html>
