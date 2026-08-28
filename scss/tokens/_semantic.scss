@@ -1,60 +1,103 @@
-// Figma DS Master > Theme collection (Default 모드) 라이브 조회값
+// Figma DS Master > Theme collection, 2026-08-28 Dark 모드 값 라이브 조회
 // 일반 시맨틱 그룹만 포함: accent, brand, border, surface, text
 // 컴포넌트별 시맨틱(button/chip/tabs 등)은 해당 컴포넌트 SCSS에서 별도로 채운다.
 //
-// 2026-08-28 다크 모드 대비 커스텀 프로퍼티 전환: 시맨틱 토큰도 프리미티브를 직접 대입하지 않고
-// 자체 --변수로 한 단계 더 감싼다(primitive → semantic → component 3단 레이어).
-// 값 자체는 전부 primitive의 var(--color-*)를 그대로 참조하므로 다크 모드는 primitive 레이어에서만 갈아끼우면 된다.
+// 다크 값은 primitive의 다른 스케일을 재사용하는 게 아니라 각 토큰이 실제로 다른 hex를 갖는 구조다
+// (예: brand/600 라이트 #2563eb → 다크 #60a5fa, 톤을 낮춰 다크 배경 대비 확보). 그래서 값은 primitive
+// var() 참조가 아니라 실측 hex를 직접 :root/[data-theme='dark']에 넣는다.
+// $variable ↔ Figma 변수명은 accent-500처럼 값이 라이트·다크 동일한 것도 있다(500이 diff에 없었음 — 원색 유지).
 
 @use 'primitive' as *;
 
 :root {
-  // accent (= primitive sky 별칭)
-  --accent-50: var(--color-sky-50);
-  --accent-100: var(--color-sky-100);
-  --accent-200: var(--color-sky-200);
-  --accent-300: var(--color-sky-300);
-  --accent-400: var(--color-sky-400);
-  --accent-500: var(--color-sky-500);
-  --accent-600: var(--color-sky-600);
-  --accent-700: var(--color-sky-700);
-  --accent-800: var(--color-sky-800);
-  --accent-900: var(--color-sky-900);
+  // accent (= primitive sky 별칭, 500만 라이트·다크 동일)
+  --accent-50: #f0f9ff;
+  --accent-100: #e0f2fe;
+  --accent-200: #bae6fd;
+  --accent-300: #7dd3fc;
+  --accent-400: #38bdf8;
+  --accent-500: #{$color-sky-500};
+  --accent-600: #0284c7;
+  --accent-700: #0369a1;
+  --accent-800: #075985;
+  --accent-900: #0c4a6e;
 
-  // brand (= primitive blue 별칭)
-  --brand-50: var(--color-blue-50);
-  --brand-100: var(--color-blue-100);
-  --brand-200: var(--color-blue-200);
-  --brand-300: var(--color-blue-300);
-  --brand-400: var(--color-blue-400);
-  --brand-500: var(--color-blue-500);
-  --brand-600: var(--color-blue-600);
-  --brand-700: var(--color-blue-700);
-  --brand-800: var(--color-blue-800);
-  --brand-900: var(--color-blue-900);
+  // brand (= primitive blue 별칭, 500만 라이트·다크 동일)
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-400: #60a5fa;
+  --brand-500: #{$color-blue-500};
+  --brand-600: #2563eb;
+  --brand-700: #1d4ed8;
+  --brand-800: #1e40af;
+  --brand-900: #1e3a8a;
 
   // border
-  --border-accent: var(--color-sky-500);
-  --border-brand: var(--color-blue-500);
-  --border-default: var(--color-neutral-200);
-  --border-strong: var(--color-neutral-300);
+  --border-accent: #{$color-sky-500};
+  --border-brand: #{$color-blue-500};
+  --border-default: #e5e5e5;
+  --border-strong: #d4d4d4;
+  --border-danger: #dc2626;
 
   // surface
-  --surface-accent-subtle: var(--color-sky-50);
-  --surface-brand-subtle: var(--color-blue-50);
-  --surface-default: var(--color-white);
-  --surface-inverse: var(--color-neutral-900);
-  --surface-muted: var(--color-neutral-100);
-  --surface-subtle: var(--color-neutral-50);
+  --surface-accent-subtle: #f0f9ff;
+  --surface-brand-subtle: #eff6ff;
+  --surface-default: #ffffff;
+  --surface-inverse: #171717;
+  --surface-muted: #f5f5f5;
+  --surface-subtle: #fafafa;
 
   // text
-  --text-brand: var(--color-blue-600);
-  --text-error: var(--color-red-600);
-  --text-disabled: var(--color-neutral-400);
-  --text-inverse: var(--color-white);
-  --text-primary: var(--color-neutral-800);
-  --text-secondary: var(--color-neutral-700);
-  --text-tertiary: var(--color-neutral-600);
+  --text-brand: #2563eb;
+  --text-danger: #dc2626;
+  --text-disabled: #a3a3a3;
+  --text-inverse: #ffffff;
+  --text-primary: #262626;
+  --text-secondary: #404040;
+  --text-tertiary: #525252;
+}
+
+[data-theme='dark'] {
+  --accent-50: #082f49;
+  --accent-100: #0c4a6e;
+  --accent-200: #075985;
+  --accent-300: #0369a1;
+  --accent-400: #0284c7;
+  --accent-600: #38bdf8;
+  --accent-700: #7dd3fc;
+  --accent-800: #bae6fd;
+  --accent-900: #e0f2fe;
+
+  --brand-50: #172554;
+  --brand-100: #1e3a8a;
+  --brand-200: #1e40af;
+  --brand-300: #1d4ed8;
+  --brand-400: #2563eb;
+  --brand-600: #60a5fa;
+  --brand-700: #93c5fd;
+  --brand-800: #bfdbfe;
+  --brand-900: #dbeafe;
+
+  --border-default: #737373;
+  --border-strong: #a3a3a3;
+  --border-danger: #ef4444;
+
+  --surface-accent-subtle: #082f49;
+  --surface-brand-subtle: #172554;
+  --surface-default: #171717;
+  --surface-inverse: #fafafa;
+  --surface-muted: #262626;
+  --surface-subtle: #0a0a0a;
+
+  --text-brand: #60a5fa;
+  --text-danger: #f87171;
+  --text-disabled: #525252;
+  --text-inverse: #171717;
+  --text-primary: #fafafa;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #a3a3a3;
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -87,6 +130,7 @@ $border-accent: var(--border-accent);
 $border-brand: var(--border-brand);
 $border-default: var(--border-default);
 $border-strong: var(--border-strong);
+$border-danger: var(--border-danger);
 
 $surface-accent-subtle: var(--surface-accent-subtle);
 $surface-brand-subtle: var(--surface-brand-subtle);
@@ -96,7 +140,7 @@ $surface-muted: var(--surface-muted);
 $surface-subtle: var(--surface-subtle);
 
 $text-brand: var(--text-brand);
-$text-error: var(--text-error);
+$text-danger: var(--text-danger);
 $text-disabled: var(--text-disabled);
 $text-inverse: var(--text-inverse);
 $text-primary: var(--text-primary);

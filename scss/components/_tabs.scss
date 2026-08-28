@@ -5,6 +5,41 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
+// 2026-08-28 Dark 모드 실측 — 실제로 쓰는 토큰만(pill border-hover 등 다크값 미확인인 건 primitive 상수 유지).
+:root {
+  --tabs-fg: #475569;
+  --tabs-fg-hover: #334155;
+  --tabs-fg-active: #1e293b;
+  --tabs-fg-disabled: #94a3b8;
+  --tabs-underline-active: #1e293b;
+  --tabs-brand-fg-hover: #1d4ed8;
+  --tabs-brand-fg-active: #2563eb;
+  --tabs-pill-fg-active: #2563eb;
+  --tabs-pill-bg-active: #eff6ff;
+  --tabs-pill-border-active: #bfdbfe;
+  --tabs-segmented-fg-active: #0f172a;
+  --tabs-segmented-bg-active: #ffffff;
+  --tabs-track-bg: #f1f5f9;
+  --tabs-border: #e2e8f0;
+}
+
+[data-theme='dark'] {
+  --tabs-fg: #94a3b8;
+  --tabs-fg-hover: #cbd5e1;
+  --tabs-fg-active: #e2e8f0;
+  --tabs-fg-disabled: #475569;
+  --tabs-underline-active: #e2e8f0;
+  --tabs-brand-fg-hover: #93c5fd;
+  --tabs-brand-fg-active: #60a5fa;
+  --tabs-pill-fg-active: #60a5fa;
+  --tabs-pill-bg-active: #172554;
+  --tabs-pill-border-active: #1e40af;
+  --tabs-segmented-fg-active: #f1f5f9;
+  --tabs-segmented-bg-active: #0a0a0a;
+  --tabs-track-bg: #0f172a;
+  --tabs-border: #334155;
+}
+
 // underline·underline-brand: 고정 높이 + 내부 Content가 FILL, 좌우 패딩은 Content 쪽에.
 $tabs-underline-sizes: (
   sm: (height: 32px, padding-x: $space-3),
@@ -33,43 +68,43 @@ $tabs-gap: $space-2;
 $tabs-radius: $radius-full;
 $tabs-segment-container-padding: 2px;
 $tabs-segment-items-gap: 2px;
-$tabs-segment-track-bg: $color-slate-100;
-$tabs-segment-track-border: $color-slate-200;
+$tabs-segment-track-bg: var(--tabs-track-bg);
+$tabs-segment-track-border: var(--tabs-border);
 
 $tabs-underline-colors: (
-  fg: $color-slate-600,
-  fg-hover: $color-slate-700,
-  fg-active: $color-slate-800,
-  fg-disabled: $color-slate-400,
-  underline-active: $color-slate-800,
+  fg: var(--tabs-fg),
+  fg-hover: var(--tabs-fg-hover),
+  fg-active: var(--tabs-fg-active),
+  fg-disabled: var(--tabs-fg-disabled),
+  underline-active: var(--tabs-underline-active),
 );
 
 $tabs-underline-brand-colors: (
-  fg: $color-slate-600,
-  fg-hover: $color-blue-700,
-  fg-active: $color-blue-600,
-  fg-disabled: $color-slate-400,
-  underline-active: $color-blue-600,
+  fg: var(--tabs-fg),
+  fg-hover: var(--tabs-brand-fg-hover),
+  fg-active: var(--tabs-brand-fg-active),
+  fg-disabled: var(--tabs-fg-disabled),
+  underline-active: var(--tabs-brand-fg-active),
 );
 
 $tabs-pill-colors: (
-  fg: $color-slate-600,
-  fg-hover: $color-slate-700,
-  fg-active: $color-blue-600,
-  fg-disabled: $color-slate-400,
-  border: $color-slate-200,
-  border-hover: $color-slate-300,
-  border-active: $color-blue-200,
-  bg-hover: $color-slate-50,
-  bg-active: $color-blue-50,
+  fg: var(--tabs-fg),
+  fg-hover: var(--tabs-fg-hover),
+  fg-active: var(--tabs-pill-fg-active),
+  fg-disabled: var(--tabs-fg-disabled),
+  border: var(--tabs-border),
+  border-hover: $color-slate-300, // 다크 실측값 없음 — primitive 상수 유지
+  border-active: var(--tabs-pill-border-active),
+  bg-hover: $color-slate-50, // 다크 실측값 없음 — primitive 상수 유지
+  bg-active: var(--tabs-pill-bg-active),
 );
 
 $tabs-segmented-colors: (
-  fg: $color-slate-600,
-  fg-hover: $color-slate-700,
-  fg-active: $color-slate-900,
-  fg-disabled: $color-slate-400,
-  bg-active: $color-white,
+  fg: var(--tabs-fg),
+  fg-hover: var(--tabs-fg-hover),
+  fg-active: var(--tabs-segmented-fg-active),
+  fg-disabled: var(--tabs-fg-disabled),
+  bg-active: var(--tabs-segmented-bg-active),
 );
 
 .tabs-item {

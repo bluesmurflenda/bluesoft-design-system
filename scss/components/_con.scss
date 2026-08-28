@@ -1,10 +1,53 @@
 // Figma DS Master > Chips & Cons 페이지 (node 607:5934 Con), 2026-08-28 라이브 인스턴스 실측
 // Theme(color|gray|white) × Size(sm|md|lg) × State(default|hover|selected|focus|disabled) = 45변형
-// "탭처럼 선택 가능한 필터/세그먼트" 컴포넌트. fg/fg-selected(#404040/#2563eb)는 테마 공용 토큰이고,
-// bg·border만 테마별로 갈린다(실측 변수명: con/fg, con/fg-selected, con/{theme}/bg 등). white만 hover 시 글자색도 바뀐다.
+// "탭처럼 선택 가능한 필터/세그먼트" 컴포넌트. fg/fg-selected는 테마 공용 토큰이고,
+// bg·border만 테마별로 갈린다. white만 hover 시 글자색도 바뀐다.
+//
+// 2026-08-28 Dark 모드 실측: white 테마의 selected pill은 다크에서 bg가 밝은 blue-400으로 바뀌면서
+// fg도 흰색이 아니라 거의 검정(#0a0a0a)으로 반전된다 — 대비 확보 목적, 추정 아니라 실측값 그대로.
 
 @use '../tokens/primitive' as *;
 @use 'sass:map';
+
+:root {
+  --con-fg: #404040;
+  --con-fg-selected: #2563eb;
+  --con-bg-selected: #dbeafe;
+  --con-border-selected: #bfdbfe;
+  --con-gray-border: #e5e5e5;
+  --con-gray-bg-hover: #f5f5f5;
+  --con-color-bg: #eff6ff;
+  --con-color-bg-hover: #dbeafe;
+  --con-color-border: #bfdbfe;
+  --con-white-bg: #ffffff;
+  --con-white-border: #e5e5e5;
+  --con-white-bg-hover: #dbeafe;
+  --con-white-fg-hover: #2563eb;
+  --con-white-border-hover: #bfdbfe;
+  --con-white-fg-selected: #ffffff;
+  --con-white-bg-selected: #2563eb;
+  --con-white-border-selected: #2563eb;
+}
+
+[data-theme='dark'] {
+  --con-fg: #d4d4d4;
+  --con-fg-selected: #60a5fa;
+  --con-bg-selected: #1e3a8a;
+  --con-border-selected: #1e40af;
+  --con-gray-border: #404040;
+  --con-gray-bg-hover: #171717;
+  --con-color-bg: #172554;
+  --con-color-bg-hover: #1e3a8a;
+  --con-color-border: #93c5fd;
+  --con-white-bg: #0a0a0a;
+  --con-white-border: #404040;
+  --con-white-bg-hover: #1e3a8a;
+  --con-white-fg-hover: #60a5fa;
+  --con-white-border-hover: #1e40af;
+  --con-white-fg-selected: #0a0a0a;
+  --con-white-bg-selected: #60a5fa;
+  --con-white-border-selected: #60a5fa;
+}
 
 $con-sizes: (
   sm: (height: 32px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px),
@@ -12,20 +55,18 @@ $con-sizes: (
   lg: (height: 48px, padding-x: $space-6, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, icon: 24px),
 );
 
-$con-fg: $color-neutral-700;
-// 2026-08-28 재실측: selected는 color·gray가 공유(bg blue-100/border blue-200/fg blue-600),
-// white만 반전된 solid pill(bg·border blue-600, fg white)을 쓴다 — 3테마 공용 아님.
-$con-fg-selected: $color-blue-600;
-$con-bg-selected-shared: $color-blue-100;
-$con-border-selected-shared: $color-blue-200;
+$con-fg: var(--con-fg);
+$con-fg-selected: var(--con-fg-selected);
+$con-bg-selected-shared: var(--con-bg-selected);
+$con-border-selected-shared: var(--con-border-selected);
 
 $con-themes: (
-  'color': (bg: $color-blue-50, bg-hover: $color-blue-100, border: $color-blue-200, fg-hover: null,
+  'color': (bg: var(--con-color-bg), bg-hover: var(--con-color-bg-hover), border: var(--con-color-border), fg-hover: null, border-hover: null,
     bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
-  'gray': (bg: transparent, bg-hover: $color-neutral-100, border: $color-neutral-200, fg-hover: null,
+  'gray': (bg: transparent, bg-hover: var(--con-gray-bg-hover), border: var(--con-gray-border), fg-hover: null, border-hover: null,
     bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
-  'white': (bg: $color-white, bg-hover: $color-blue-100, border: $color-neutral-200, fg-hover: $color-blue-600,
-    bg-selected: $color-blue-600, border-selected: $color-blue-600, fg-selected: $color-white),
+  'white': (bg: var(--con-white-bg), bg-hover: var(--con-white-bg-hover), border: var(--con-white-border), fg-hover: var(--con-white-fg-hover), border-hover: var(--con-white-border-hover),
+    bg-selected: var(--con-white-bg-selected), border-selected: var(--con-white-border-selected), fg-selected: var(--con-white-fg-selected)),
 );
 
 .con {
@@ -67,6 +108,9 @@ $con-themes: (
       background-color: map.get($c, bg-hover);
       @if map.get($c, fg-hover) {
         color: map.get($c, fg-hover);
+      }
+      @if map.get($c, border-hover) {
+        border-color: map.get($c, border-hover);
       }
     }
 

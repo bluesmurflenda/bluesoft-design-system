@@ -3,10 +3,11 @@
 // Fill 은 Figma에서 SCALE 제약이라 트랙 폭이 달라져도 비율이 유지된다 — CSS는 width:%로 동일하게 재현.
 
 @use '../tokens/primitive' as *;
+@use '../tokens/semantic' as *;
 
-$progress-bar-track-bg: $color-blue-50; // surface-brand-subtle
-$progress-bar-fill-bg: $color-blue-600;
-$progress-bar-value-fg: $color-neutral-800;
+$progress-bar-track-bg: $surface-brand-subtle;
+$progress-bar-fill-bg: $brand-600;
+$progress-bar-value-fg: $text-primary;
 
 .progress-bar {
   display: flex;

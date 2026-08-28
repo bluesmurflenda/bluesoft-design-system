@@ -4,25 +4,60 @@
 
 @use '../tokens/primitive' as *;
 
+// 2026-08-28 Dark 모드 실측
+:root {
+  --calendar-bg: #fafafa;
+  --calendar-header-fg: #262626;
+  --calendar-weekday-fg: #525252;
+  --calendar-saturday-fg: #2563eb;
+  --calendar-sunday-fg: #b91c1c;
+  --calendar-day-fg: #262626;
+  --calendar-cell-selected-bg: #2563eb;
+  --calendar-cell-selected-fg: #ffffff;
+  --calendar-cell-available-bg: #dbeafe;
+  --calendar-cell-unavailable-bg: #f5f5f5;
+  --calendar-cell-unavailable-fg: #a3a3a3;
+  --calendar-cell-past-fg: #a3a3a3;
+  --calendar-today-border: #60a5fa;
+  --calendar-today-fg: #2563eb;
+}
+
+[data-theme='dark'] {
+  --calendar-bg: #0a0a0a;
+  --calendar-header-fg: #fafafa;
+  --calendar-weekday-fg: #a3a3a3;
+  --calendar-saturday-fg: #60a5fa;
+  --calendar-sunday-fg: #f87171;
+  --calendar-day-fg: #fafafa;
+  --calendar-cell-selected-bg: #60a5fa;
+  --calendar-cell-selected-fg: #171717;
+  --calendar-cell-available-bg: #1e3a8a;
+  --calendar-cell-unavailable-bg: #171717;
+  --calendar-cell-unavailable-fg: #525252;
+  --calendar-cell-past-fg: #525252;
+  --calendar-today-border: #2563eb;
+  --calendar-today-fg: #60a5fa;
+}
+
 $calendar-radius: $radius-lg; // 16 — Shape Rounded 모드 값과 일치(재검증 완료)
-$calendar-bg: $color-neutral-50;
-$calendar-header-fg: $color-neutral-800;
-$calendar-weekday-fg: $color-neutral-600;
-$calendar-saturday-fg: $color-blue-600;
-$calendar-sunday-fg: $color-red-700;
-$calendar-day-fg: $color-neutral-800;
+$calendar-bg: var(--calendar-bg);
+$calendar-header-fg: var(--calendar-header-fg);
+$calendar-weekday-fg: var(--calendar-weekday-fg);
+$calendar-saturday-fg: var(--calendar-saturday-fg);
+$calendar-sunday-fg: var(--calendar-sunday-fg);
+$calendar-day-fg: var(--calendar-day-fg);
 $calendar-gap-cell: 4px;
 $calendar-gap-row: 4px;
 $calendar-cell-size: 44px;
 
-$calendar-cell-selected-bg: $color-blue-600;
-$calendar-cell-selected-fg: $color-white;
-$calendar-cell-available-bg: $color-blue-100;
-$calendar-cell-unavailable-bg: $color-neutral-100;
-$calendar-cell-unavailable-fg: $color-neutral-400;
-$calendar-cell-past-fg: $color-neutral-400;
-$calendar-today-border: $color-blue-400;
-$calendar-today-fg: $color-blue-600;
+$calendar-cell-selected-bg: var(--calendar-cell-selected-bg);
+$calendar-cell-selected-fg: var(--calendar-cell-selected-fg);
+$calendar-cell-available-bg: var(--calendar-cell-available-bg);
+$calendar-cell-unavailable-bg: var(--calendar-cell-unavailable-bg);
+$calendar-cell-unavailable-fg: var(--calendar-cell-unavailable-fg);
+$calendar-cell-past-fg: var(--calendar-cell-past-fg);
+$calendar-today-border: var(--calendar-today-border);
+$calendar-today-fg: var(--calendar-today-fg);
 
 .calendar {
   display: flex;

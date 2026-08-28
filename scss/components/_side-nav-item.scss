@@ -5,6 +5,24 @@
 
 @use '../tokens/primitive' as *;
 
+// 2026-08-28 Dark 모드 실측 — ⚠️ 확인 필요: nav/dark/item/bg-hover가 다크 모드에서 밝은 하늘색(#bfdbfe)으로
+// 바뀌는데, 다크 테마 아이템의 글자색(nav-dark-fg)은 여전히 흰색 고정으로 실측돼 있다(2026-08-28 별도 측정).
+// 흰 배경에 가까운 색 위에 흰 글자라 대비가 거의 없어 보인다 — Figma 쪽 다크 모드 설정 누락일 가능성이 있어
+// 값은 실측 그대로 반영하되 시각 확인 후 알려달라고 요청할 것.
+:root {
+  --nav-item-bg-hover: #fafafa;
+  --nav-item-bg-selected: #f5f5f5;
+  --nav-dark-item-bg-hover: #1e40af;
+  --nav-dark-item-bg-selected: #2563eb;
+}
+
+[data-theme='dark'] {
+  --nav-item-bg-hover: #0a0a0a;
+  --nav-item-bg-selected: #262626;
+  --nav-dark-item-bg-hover: #bfdbfe;
+  --nav-dark-item-bg-selected: #60a5fa;
+}
+
 .side-nav-item {
   display: flex;
   align-items: center;
@@ -68,23 +86,23 @@
 }
 
 .side-nav-item-light {
-  color: $color-neutral-800;
+  color: var(--nav-fg);
 
   .side-nav-item__icon {
-    color: $color-neutral-800;
+    color: var(--nav-fg);
   }
 
   &:hover {
-    background-color: $color-neutral-50;
-    color: $color-blue-600;
+    background-color: var(--nav-item-bg-hover);
+    color: var(--nav-fg-hover);
 
     .side-nav-item__icon {
-      color: $color-blue-600;
+      color: var(--nav-fg-hover);
     }
   }
 
   &.side-nav-item-selected {
-    background-color: $color-neutral-100;
+    background-color: var(--nav-item-bg-selected);
   }
 }
 
@@ -96,10 +114,10 @@
   }
 
   &:hover {
-    background-color: $color-blue-800;
+    background-color: var(--nav-dark-item-bg-hover);
   }
 
   &.side-nav-item-selected {
-    background-color: $color-blue-600;
+    background-color: var(--nav-dark-item-bg-selected);
   }
 }

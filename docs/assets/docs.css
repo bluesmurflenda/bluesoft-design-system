@@ -203,5 +203,8 @@ body {
   padding-bottom: 4px;
 }
 
-.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+/* 스프라이트 아이콘은 path에 fill이 이미 박혀 있는 solid 아이콘이다(stroke 기반 아님).
+   부모(.icon)에 stroke를 얹으면 path 자체엔 stroke 지정이 없어 그대로 상속돼 버려서
+   채워진 도형 위에 불필요한 2px 윤곽선이 겹쳐 보이는 버그가 있었다 — 사이즈만 지정한다. */
+.icon { width: 20px; height: 20px; }
 .icon-sm { width: 16px; height: 16px; }

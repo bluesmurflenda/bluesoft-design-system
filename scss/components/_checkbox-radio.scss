@@ -6,18 +6,51 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
+// 2026-08-28 Dark 모드 실측 — selected-bg 계열(blue-500/700, green/red)은 라이트·다크 동일해 그대로 둔다.
+:root {
+  --choice-box-bg: #ffffff;
+  --choice-box-border: #d4d4d4;
+  --choice-box-bg-hover: #e5e5e5;
+  --choice-box-border-hover: #a3a3a3;
+  --choice-label-fg: #262626;
+  --choice-label-fg-invalid: #dc2626;
+  --choice-label-fg-valid: #16a34a;
+  --choice-description-fg: #525252;
+  --toggle-track-bg-off: #d4d4d4;
+  --toggle-track-bg-off-hover: #a3a3a3;
+  --toggle-track-bg-on-hover: #2563eb;
+  --toggle-knob-bg: #ffffff;
+  --toggle-fg: #262626;
+}
+
+[data-theme='dark'] {
+  --choice-box-bg: #171717;
+  --choice-box-border: #525252;
+  --choice-box-bg-hover: #404040;
+  --choice-box-border-hover: #737373;
+  --choice-label-fg: #fafafa;
+  --choice-label-fg-invalid: #f87171;
+  --choice-label-fg-valid: #4ade80;
+  --choice-description-fg: #a3a3a3;
+  --toggle-track-bg-off: #404040;
+  --toggle-track-bg-off-hover: #525252;
+  --toggle-track-bg-on-hover: #60a5fa;
+  --toggle-knob-bg: #0a0a0a;
+  --toggle-fg: #e5e5e5;
+}
+
 $choice-size: 20px;
 $choice-border-width: 2px;
 $checkbox-radius: 6px;
 
 $choice-colors: (
   normal: (
-    border: $color-neutral-300,
-    border-hover: $color-neutral-400,
+    border: var(--choice-box-border),
+    border-hover: var(--choice-box-border-hover),
     ring: $effect-focus-ring,
     selected-bg: $color-blue-500,
     selected-bg-hover: $color-blue-700,
-    label-fg: $color-neutral-800,
+    label-fg: var(--choice-label-fg),
   ),
   valid: (
     border: $color-green-600,
@@ -25,7 +58,7 @@ $choice-colors: (
     ring: $color-green-100,
     selected-bg: $color-green-600,
     selected-bg-hover: $color-green-700,
-    label-fg: $color-green-600,
+    label-fg: var(--choice-label-fg-valid),
   ),
   invalid: (
     border: $color-red-500,
@@ -33,12 +66,12 @@ $choice-colors: (
     ring: $color-red-200,
     selected-bg: $color-red-500,
     selected-bg-hover: $color-red-600,
-    label-fg: $color-red-600,
+    label-fg: var(--choice-label-fg-invalid),
   ),
 );
 
-$choice-bg-hover: $color-neutral-200; // unselected hover 배경(검증 상태 무관 공통)
-$choice-description-fg: $color-neutral-600;
+$choice-bg-hover: var(--choice-box-bg-hover); // unselected hover 배경(검증 상태 무관 공통)
+$choice-description-fg: var(--choice-description-fg);
 
 // 체크박스·라디오 공용 글리프
 .choice__box {
@@ -48,7 +81,7 @@ $choice-description-fg: $color-neutral-600;
   width: $choice-size;
   height: $choice-size;
   border: $choice-border-width solid map.get(map.get($choice-colors, normal), border);
-  background-color: $color-white;
+  background-color: var(--choice-box-bg);
   transition: background-color $motion-fast, border-color $motion-fast, box-shadow $motion-fast;
 }
 
@@ -185,7 +218,7 @@ $choice-description-fg: $color-neutral-600;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-md;
   line-height: $font-leading-body-md;
-  color: $color-neutral-800; // choice/label/fg
+  color: var(--choice-label-fg);
 }
 
 .choice__description {
@@ -204,10 +237,10 @@ $toggle-knob-inset: 2px;
 
 $toggle-colors: (
   bg-on: $color-blue-500,
-  bg-on-hover: $color-blue-600,
-  bg-off: $color-neutral-300,
-  bg-off-hover: $color-neutral-400,
-  knob: $color-white,
+  bg-on-hover: var(--toggle-track-bg-on-hover),
+  bg-off: var(--toggle-track-bg-off),
+  bg-off-hover: var(--toggle-track-bg-off-hover),
+  knob: var(--toggle-knob-bg),
 );
 
 .toggle {
@@ -284,5 +317,5 @@ $toggle-colors: (
   font-weight: $font-weight-regular;
   font-size: $font-size-body-md;
   line-height: $font-leading-body-md;
-  color: $color-neutral-800; // toggle-fg
+  color: var(--toggle-fg);
 }

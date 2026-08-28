@@ -5,13 +5,60 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
+// 2026-08-28 Dark 모드 실측
+:root {
+  --alert-brand-bg: #eff6ff;
+  --alert-brand-border: #bfdbfe;
+  --alert-brand-fg: #1d4ed8;
+  --alert-neutral-bg: #f8fafc;
+  --alert-neutral-border: #e2e8f0;
+  --alert-neutral-fg: #334155;
+  --alert-success-bg: #f0fdf4;
+  --alert-success-border: #bbf7d0;
+  --alert-success-fg: #15803d;
+  --alert-warning-bg: #fefce8;
+  --alert-warning-border: #fef08a;
+  --alert-warning-fg: #a16207;
+  --alert-error-bg: #fef2f2;
+  --alert-error-border: #fecaca;
+  --alert-error-fg: #b91c1c;
+  --alert-info-bg: #eff6ff;
+  --alert-info-border: #bfdbfe;
+  --alert-info-fg: #1d4ed8;
+  --alert-fg-supporting: #525252;
+}
+
+[data-theme='dark'] {
+  --alert-brand-bg: #172554;
+  --alert-brand-border: #1e40af;
+  --alert-brand-fg: #93c5fd;
+  --alert-neutral-bg: #020617;
+  --alert-neutral-border: #334155;
+  --alert-neutral-fg: #cbd5e1;
+  --alert-success-bg: #052e16;
+  --alert-success-border: #15803d;
+  --alert-success-fg: #4ade80;
+  --alert-warning-bg: #422006;
+  --alert-warning-border: #a16207;
+  --alert-warning-fg: #facc15;
+  --alert-error-bg: #450a0a;
+  --alert-error-border: #b91c1c;
+  --alert-error-fg: #f87171;
+  --alert-info-bg: #172554;
+  --alert-info-border: #1d4ed8;
+  --alert-info-fg: #60a5fa;
+  --alert-fg-supporting: #a3a3a3;
+}
+
+$alert-fg-supporting: var(--alert-fg-supporting);
+
 $alert-colors: (
-  brand: (bg: $color-blue-50, fg: $color-blue-700, border: $color-blue-200),
-  neutral: (bg: $color-slate-50, fg: $color-slate-700, border: $color-slate-200),
-  success: (bg: $color-green-50, fg: $color-green-700, border: $color-green-200),
-  warning: (bg: $color-yellow-50, fg: $color-yellow-700, border: $color-yellow-200),
-  error: (bg: $color-red-50, fg: $color-red-700, border: $color-red-200),
-  info: (bg: $color-blue-50, fg: $color-blue-700, border: $color-blue-200),
+  brand: (bg: var(--alert-brand-bg), fg: var(--alert-brand-fg), border: var(--alert-brand-border)),
+  neutral: (bg: var(--alert-neutral-bg), fg: var(--alert-neutral-fg), border: var(--alert-neutral-border)),
+  success: (bg: var(--alert-success-bg), fg: var(--alert-success-fg), border: var(--alert-success-border)),
+  warning: (bg: var(--alert-warning-bg), fg: var(--alert-warning-fg), border: var(--alert-warning-border)),
+  error: (bg: var(--alert-error-bg), fg: var(--alert-error-fg), border: var(--alert-error-border)),
+  info: (bg: var(--alert-info-bg), fg: var(--alert-info-fg), border: var(--alert-info-border)),
 );
 
 .alert {
@@ -68,6 +115,7 @@ $alert-colors: (
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
+  color: $alert-fg-supporting; // 실측: alert/fg-supporting은 색상과 무관한 공용 톤
 }
 
 .alert__actions {

@@ -8,18 +8,37 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
+// 2026-08-28 Dark 모드 실측
+:root {
+  --pagination-fg: #475569;
+  --pagination-fg-hover: #334155;
+  --pagination-bg-hover: #f8fafc;
+  --pagination-current-fg: #2563eb;
+  --pagination-current-bg: #eff6ff;
+  --pagination-border: #cbd5e1;
+}
+
+[data-theme='dark'] {
+  --pagination-fg: #94a3b8;
+  --pagination-fg-hover: #cbd5e1;
+  --pagination-bg-hover: #020617;
+  --pagination-current-fg: #60a5fa;
+  --pagination-current-bg: #172554;
+  --pagination-border: #475569;
+}
+
 $pagination-sizes: (
   sm: (item: 32px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, gap: $space-1),
   md: (item: 40px, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, gap: $space-1),
   lg: (item: 48px, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, gap: $space-2),
 );
 
-$pagination-border: $color-slate-300; // pagination/group/border
-$pagination-fg: $color-slate-600; // pagination/item/fg
-$pagination-fg-hover: $color-slate-700; // pagination/item/fg-hover
-$pagination-bg-hover: $color-slate-50; // pagination/item/bg-hover
-$pagination-current-bg: $color-blue-50; // pagination/current/bg
-$pagination-current-fg: $color-blue-600; // pagination/current/fg
+$pagination-border: var(--pagination-border);
+$pagination-fg: var(--pagination-fg);
+$pagination-fg-hover: var(--pagination-fg-hover);
+$pagination-bg-hover: var(--pagination-bg-hover);
+$pagination-current-bg: var(--pagination-current-bg);
+$pagination-current-fg: var(--pagination-current-fg);
 $pagination-radius: $radius-sm; // pagination/radius
 $pagination-icon-fg: $color-neutral-600;
 

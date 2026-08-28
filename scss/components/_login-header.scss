@@ -2,9 +2,10 @@
 // 로그인 폼 상단 전용 — 사이트 Header와 별개 컴포넌트. Align(center|left) 2변형.
 
 @use '../tokens/primitive' as *;
+@use '../tokens/semantic' as *;
 
-$login-header-title-fg: $color-neutral-800;
-$login-header-supporting-fg: $color-neutral-700;
+$login-header-title-fg: $text-primary;
+$login-header-supporting-fg: $text-secondary;
 
 .login-header {
   display: flex;

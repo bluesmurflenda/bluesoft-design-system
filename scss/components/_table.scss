@@ -5,17 +5,41 @@
 // Align은 Figma의 center(국문 게시판형)/left(데이터 테이블형) — 텍스트 정렬만 다르다.
 
 @use '../tokens/primitive' as *;
+@use '../tokens/semantic' as *;
 @use 'sass:map';
 
-$table-border: $color-slate-200;
+// 2026-08-28 Dark 모드 실측
+:root {
+  --table-border: #e2e8f0;
+  --table-header-bg: #f8fafc;
+  --table-header-fg: #262626;
+  --table-header-row-bg: #fafafa;
+  --table-header-row-fg: #262626;
+  --table-cell-fg: #404040;
+  --table-cell-fg-muted: #475569;
+  --table-row-bg-hover: #f8fafc;
+}
+
+[data-theme='dark'] {
+  --table-border: #64748b;
+  --table-header-bg: #020617;
+  --table-header-fg: #fafafa;
+  --table-header-row-bg: #0a0a0a;
+  --table-header-row-fg: #fafafa;
+  --table-cell-fg: #d4d4d4;
+  --table-cell-fg-muted: #94a3b8;
+  --table-row-bg-hover: #020617;
+}
+
 // 2026-08-28 재실측: header-bg와 header-row-bg가 서로 바뀌어 있었음(neutral-50=#fafafa / slate-50=#f8fafc 혼동).
-$table-header-bg: $color-slate-50;
-$table-header-fg: $color-neutral-800;
-$table-header-row-bg: $color-neutral-50;
-$table-header-row-fg: $color-neutral-800;
-$table-cell-fg: $color-neutral-700;
-$table-cell-fg-muted: $color-slate-600;
-$table-row-bg-hover: $color-slate-50;
+$table-border: var(--table-border);
+$table-header-bg: var(--table-header-bg);
+$table-header-fg: var(--table-header-fg);
+$table-header-row-bg: var(--table-header-row-bg);
+$table-header-row-fg: var(--table-header-row-fg);
+$table-cell-fg: var(--table-cell-fg);
+$table-cell-fg-muted: var(--table-cell-fg-muted);
+$table-row-bg-hover: var(--table-row-bg-hover);
 
 $table-cell-sizes: (
   sm: (height: 36px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
@@ -28,7 +52,7 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: $color-white; // surface/default
+  background-color: $surface-default;
 }
 
 .table-header {

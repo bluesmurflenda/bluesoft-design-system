@@ -10,15 +10,37 @@
 @use '../tokens/breakpoint' as bp;
 @use 'sass:map';
 
-$header-bg-light: $color-white;
-$header-border-light: $color-neutral-200;
-$header-bg-dark: $color-neutral-800;
+// 2026-08-28 Dark 모드 실측 — Tooltip과 같은 반전 패턴: site-header-dark(원래 어두운 헤더, 밝은 배경 위에서 쓰는 용도)가
+// 페이지 다크 모드에서는 오히려 밝은 배경(#e5e5e5)+어두운 글자로 뒤집힌다. 추정 아니라 실측값 그대로.
+:root {
+  --nav-bg: #ffffff;
+  --nav-fg: #262626;
+  --nav-fg-hover: #2563eb;
+  --nav-border: #e5e5e5;
+  --nav-dark-bg: #262626;
+  --nav-dark-fg: #ffffff;
+  --nav-announcement-bg: #1e40af;
+}
 
-$nav-menu-fg-light: $color-neutral-800;
-$nav-menu-fg-hover-light: $color-blue-600; // hover/selected 동일 색(실측)
-$nav-menu-fg-dark: $color-white; // dark는 default/hover/selected 전부 흰색 고정(실측)
+[data-theme='dark'] {
+  --nav-bg: #171717;
+  --nav-fg: #fafafa;
+  --nav-fg-hover: #60a5fa;
+  --nav-border: #737373;
+  --nav-dark-bg: #e5e5e5;
+  --nav-dark-fg: #0a0a0a;
+  --nav-announcement-bg: #3b82f6;
+}
 
-$announcement-bg: $color-blue-800;
+$header-bg-light: var(--nav-bg);
+$header-border-light: var(--nav-border);
+$header-bg-dark: var(--nav-dark-bg);
+
+$nav-menu-fg-light: var(--nav-fg);
+$nav-menu-fg-hover-light: var(--nav-fg-hover); // hover/selected 동일 색(실측)
+$nav-menu-fg-dark: var(--nav-dark-fg); // dark는 default/hover/selected 전부 동일 고정(실측)
+
+$announcement-bg: var(--nav-announcement-bg);
 $announcement-fg: $color-white;
 
 .site-header {

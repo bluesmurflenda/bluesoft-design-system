@@ -6,20 +6,51 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
+// 2026-08-28 Dark 모드 실측: info는 라이트에선 brand와 완전히 같은 값이었는데, 다크에서는 fg만 갈린다
+// (brand dark #93c5fd / info dark #60a5fa) — bg는 다크에서도 여전히 공유. 우연히 라이트만 같았던 것.
+:root {
+  --chip-brand-bg: #eff6ff;
+  --chip-brand-fg: #1d4ed8;
+  --chip-neutral-bg: #f8fafc;
+  --chip-neutral-fg: #475569;
+  --chip-success-bg: #f0fdf4;
+  --chip-success-fg: #15803d;
+  --chip-warning-bg: #fefce8;
+  --chip-warning-fg: #a16207;
+  --chip-error-bg: #fef2f2;
+  --chip-error-fg: #b91c1c;
+  --chip-info-bg: #eff6ff;
+  --chip-info-fg: #1d4ed8;
+}
+
+[data-theme='dark'] {
+  --chip-brand-bg: #172554;
+  --chip-brand-fg: #93c5fd;
+  --chip-neutral-bg: #020617;
+  --chip-neutral-fg: #94a3b8;
+  --chip-success-bg: #052e16;
+  --chip-success-fg: #4ade80;
+  --chip-warning-bg: #422006;
+  --chip-warning-fg: #facc15;
+  --chip-error-bg: #450a0a;
+  --chip-error-fg: #f87171;
+  --chip-info-bg: #172554;
+  --chip-info-fg: #60a5fa;
+}
+
 $chip-sizes: (
   sm: (height: 22px, padding-x: $space-2, gap: $space-1, font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, icon: 12px, dot: 6px),
   md: (height: 24px, padding-x: 10px, gap: $space-1, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 14px, dot: 6px),
   lg: (height: 28px, padding-x: $space-3, gap: 6px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px, dot: 8px),
 );
 
-// info는 라이브 실측상 brand와 완전히 동일한 값(#eff6ff/#1d4ed8)이다 — 추정 아님, 그대로 반영.
 $chip-colors: (
-  brand: (bg: $color-blue-50, fg: $color-blue-700),
-  neutral: (bg: $color-slate-50, fg: $color-slate-600),
-  success: (bg: $color-green-50, fg: $color-green-700),
-  warning: (bg: $color-yellow-50, fg: $color-yellow-700),
-  error: (bg: $color-red-50, fg: $color-red-700),
-  info: (bg: $color-blue-50, fg: $color-blue-700),
+  brand: (bg: var(--chip-brand-bg), fg: var(--chip-brand-fg)),
+  neutral: (bg: var(--chip-neutral-bg), fg: var(--chip-neutral-fg)),
+  success: (bg: var(--chip-success-bg), fg: var(--chip-success-fg)),
+  warning: (bg: var(--chip-warning-bg), fg: var(--chip-warning-fg)),
+  error: (bg: var(--chip-error-bg), fg: var(--chip-error-fg)),
+  info: (bg: var(--chip-info-bg), fg: var(--chip-info-fg)),
 );
 
 .chip {

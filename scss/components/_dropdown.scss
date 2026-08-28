@@ -5,6 +5,26 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
+// 2026-08-28 Dark 모드 실측. dropdown 트리거 글자색(dropdown-fg)은 list/item/fg와 값이 같아 그 토큰을 공유한다.
+// chevron 색은 대응하는 Theme 변수를 못 찾아 primitive 상수로 유지(다크값 미확인).
+:root {
+  --field-border: #d4d4d4;
+  --list-item-fg: #404040;
+  --list-item-fg-selected: #2563eb;
+  --list-panel-border: #e5e5e5;
+  --list-panel-bg: #ffffff;
+  --list-item-bg-hover: #fafafa;
+}
+
+[data-theme='dark'] {
+  --field-border: #404040;
+  --list-item-fg: #d4d4d4;
+  --list-item-fg-selected: #60a5fa;
+  --list-panel-border: #404040;
+  --list-panel-bg: #262626;
+  --list-item-bg-hover: #0a0a0a;
+}
+
 $dropdown-sizes: (
   sm: (height: 32px, padding-x: $space-3, radius: $radius-sm),
   md: (height: 40px, padding-x: $space-4, radius: $radius-sm),
@@ -12,14 +32,14 @@ $dropdown-sizes: (
   xl: (height: 56px, padding-x: $space-6, radius: $radius-sm),
 );
 
-$dropdown-border: $color-neutral-300;
-$dropdown-fg: $color-neutral-700;
+$dropdown-border: var(--field-border);
+$dropdown-fg: var(--list-item-fg);
 $dropdown-chevron: $color-neutral-600;
-$list-panel-border: $color-neutral-200;
-$list-panel-bg: $color-white;
-$list-item-bg-hover: $color-neutral-50;
-$list-item-fg: $color-neutral-700;
-$list-item-fg-selected: $color-blue-600;
+$list-panel-border: var(--list-panel-border);
+$list-panel-bg: var(--list-panel-bg);
+$list-item-bg-hover: var(--list-item-bg-hover);
+$list-item-fg: var(--list-item-fg);
+$list-item-fg-selected: var(--list-item-fg-selected);
 
 .dropdown {
   display: inline-flex;
@@ -32,7 +52,7 @@ $list-item-fg-selected: $color-blue-600;
   align-items: center;
   gap: $space-2;
   border: 1px solid $dropdown-border;
-  background-color: $color-white;
+  background-color: var(--field-bg);
   color: $dropdown-fg;
   font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;

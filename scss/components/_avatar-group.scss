@@ -3,12 +3,24 @@
 // initials 원형(sm=32) 하나만 이 파일 안에 최소 구현한다. 겹침은 -8, 링은 surface/default 2px.
 
 @use '../tokens/primitive' as *;
+@use '../tokens/semantic' as *;
+
+// 2026-08-28 Dark 모드 실측
+:root {
+  --avatar-bg: #f5f5f5;
+  --avatar-fg: #525252;
+}
+
+[data-theme='dark'] {
+  --avatar-bg: #171717;
+  --avatar-fg: #a3a3a3;
+}
 
 $avatar-group-size: 32px;
 $avatar-group-overlap: -8px;
-$avatar-group-ring: 0 0 0 2px $color-white; // outside 스트로크 — border 대신 box-shadow로(box-sizing:border-box에서 border는 32px 안쪽을 파먹는다)
-$avatar-bg: $color-neutral-100;
-$avatar-fg: $color-neutral-600;
+$avatar-group-ring: 0 0 0 2px $surface-default; // outside 스트로크 — border 대신 box-shadow로(box-sizing:border-box에서 border는 32px 안쪽을 파먹는다)
+$avatar-bg: var(--avatar-bg);
+$avatar-fg: var(--avatar-fg);
 
 .avatar-group {
   display: inline-flex;

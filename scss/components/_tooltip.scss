@@ -4,12 +4,33 @@
 
 @use '../tokens/primitive' as *;
 
-$tooltip-dark-bg: $color-neutral-900;
-$tooltip-dark-fg: $color-white;
-$tooltip-dark-fg-supporting: $color-white;
-$tooltip-light-bg: $color-white;
-$tooltip-light-fg: $color-neutral-700;
-$tooltip-light-fg-supporting: $color-neutral-600;
+// 2026-08-28 Dark 모드 실측 — 특이사항: 페이지가 다크 모드가 되면 Tooltip의 Theme=dark 변형(원래 검정 배경)이
+// 오히려 밝은 배경으로, Theme=light 변형이 어두운 배경으로 반전된다. 추정 아니라 Figma 실측값 그대로다
+// (상대적 대비 관계를 유지하려는 의도로 보인다).
+:root {
+  --tooltip-dark-bg: #171717;
+  --tooltip-dark-fg: #ffffff;
+  --tooltip-dark-fg-supporting: #ffffff;
+  --tooltip-light-bg: #ffffff;
+  --tooltip-light-fg: #404040;
+  --tooltip-light-fg-supporting: #525252;
+}
+
+[data-theme='dark'] {
+  --tooltip-dark-bg: #f5f5f5;
+  --tooltip-dark-fg: #0a0a0a;
+  --tooltip-dark-fg-supporting: #0a0a0a;
+  --tooltip-light-bg: #0a0a0a;
+  --tooltip-light-fg: #d4d4d4;
+  --tooltip-light-fg-supporting: #a3a3a3;
+}
+
+$tooltip-dark-bg: var(--tooltip-dark-bg);
+$tooltip-dark-fg: var(--tooltip-dark-fg);
+$tooltip-dark-fg-supporting: var(--tooltip-dark-fg-supporting);
+$tooltip-light-bg: var(--tooltip-light-bg);
+$tooltip-light-fg: var(--tooltip-light-fg);
+$tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
 
 .tooltip {
   position: relative;

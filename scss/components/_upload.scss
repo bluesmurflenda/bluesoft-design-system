@@ -15,19 +15,22 @@
 //     (uploading|error)  .upload-item__action > button.icon-btn.icon-btn-sm.icon-btn-ghost
 
 @use '../tokens/primitive' as *;
+@use '../tokens/semantic' as *;
 @use 'sass:map';
 
-$upload-border: $color-neutral-200; // border/default
-$upload-fg-title: $color-neutral-800; // text-primary
-$upload-fg-supporting: $color-neutral-700; // text-secondary — 2026-08-28 재실측: neutral-600 아니라 700(#404040)
-$upload-icon-badge-bg: $color-blue-50; // surface/brand-subtle
-$upload-icon-badge-border: $color-blue-100; // brand/100 — outside 링이 아니라 32px 안쪽을 파먹는 border-4(실측)
-$upload-icon-fg: $color-blue-600;
+// 2026-08-28: 각 값에 이미 시맨틱 역할이 주석으로 달려 있어, 그 역할에 대응하는 semantic.scss의
+// 다크 모드 대응 변수로 교체했다(원래 primitive 직접 참조라 다크에서 안 바뀌는 문제가 있었음).
+$upload-border: $border-default;
+$upload-fg-title: $text-primary;
+$upload-fg-supporting: $text-secondary; // 2026-08-28 재실측: neutral-600 아니라 700(#404040)
+$upload-icon-badge-bg: $surface-brand-subtle;
+$upload-icon-badge-border: $brand-100; // outside 링이 아니라 32px 안쪽을 파먹는 border-4(실측)
+$upload-icon-fg: $brand-600;
 
 $upload-item-state-border: (
-  uploading: $color-neutral-200, // border/default
-  done: $color-blue-500, // border/brand
-  error: $color-red-600, // border/danger
+  uploading: $border-default,
+  done: $border-brand,
+  error: $border-danger,
 );
 
 .upload-dropzone {
@@ -39,7 +42,7 @@ $upload-item-state-border: (
   padding: $space-4 $space-6;
   border: 1px solid $upload-border;
   border-radius: $radius-sm;
-  background-color: $color-white;
+  background-color: $surface-default;
   text-align: center;
 }
 
@@ -71,7 +74,7 @@ $upload-item-state-border: (
   width: 100%;
   padding: $space-4;
   border-radius: $radius-sm;
-  background-color: $color-white;
+  background-color: $surface-default;
 
   @each $state, $border in $upload-item-state-border {
     &-#{$state} {

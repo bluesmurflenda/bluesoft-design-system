@@ -3,12 +3,14 @@
 // 게시판형 목록. Notice/New 배지는 chip 컴포넌트를 그대로 재사용한다(.chip .chip-sm .chip-brand 등).
 
 @use '../tokens/primitive' as *;
+@use '../tokens/semantic' as *;
 
-$board-border: $color-neutral-200; // border/default — table의 slate-200과 다른 값이라 별도 정의
-$board-title-fg: $color-neutral-800; // text-primary
-$board-meta-fg: $color-neutral-600; // text-tertiary
-$board-header-bg: $color-slate-50; // table-header-bg 재사용 — 2026-08-28 재실측: #f8fafc(slate-50), neutral-50(#fafafa) 아니었음
-$board-header-fg: $color-neutral-800;
+// 2026-08-28: 주석에 이미 명시된 시맨틱 역할대로 semantic.scss/table.scss의 다크 대응 변수로 교체.
+$board-border: $border-default; // border/default — table의 slate-200과 다른 값이라 별도 정의
+$board-title-fg: $text-primary;
+$board-meta-fg: $text-tertiary;
+$board-header-bg: var(--table-header-bg); // table-header-bg 재사용 — 2026-08-28 재실측: #f8fafc(slate-50), neutral-50(#fafafa) 아니었음
+$board-header-fg: var(--table-header-fg);
 $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 컬럼 폭이 동일(120)로 확인.
                           // Shape 컬렉션 미리보기 보드엔 조회수 컬럼이 100으로 나와 있었으나
                           // board-row 라이브 인스턴스 전부 120이라 이 값이 최신으로 판단, _shape.scss도 함께 수정.
@@ -101,7 +103,7 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
 
 // container=yes — 카드형으로 감싼 목록
 .board-list-container {
-  background-color: $color-white; // surface/default
+  background-color: $surface-default;
   border: $border-hairline solid $board-border;
   border-radius: $radius-lg;
   overflow: hidden;
