@@ -16,7 +16,8 @@ $modal-widths: (
 
 $modal-title-fg: $color-slate-900;
 $modal-description-fg: $color-slate-600;
-$modal-shadow: 0 20px 12px rgba($color-black, 0.08), 0 8px 4px rgba($color-black, 0.03); // Shadow/xl
+// Shadow/xl — 2026-08-28 재실측: blur·spread 값이 부정확했음(12→24, 4→8, spread -4px 누락)
+$modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0, 0.03);
 
 .modal {
   display: flex;
