@@ -1,27 +1,40 @@
-// Figma DS Master > Inputs & Textarea & File 페이지 (node 1366:17664 Dropzone, 1366:17718 Item), 2026-08-28 라이브 인스턴스 실측
-// Dropzone: 정적 업로드 유도 박스. Item: State(uploading|done|error) — 진행률은 progress-bar 컴포넌트를 그대로 인스턴스한다.
-// 파일 아이콘 배지(원형 링)는 상태와 무관하게 항상 brand 톤 고정(실측: uploading/done/error 전부 동일 색).
+// Figma DS Master > Inputs & Textarea & File 페이지 (node 1366:17664 Dropzone, 1366:17718 Item), 2026-08-28 재실측
+// 2026-08-28 전체 재구성: 실제 Figma 구조는 Featured Icon(.featured-icon)·Progress Bar(.progress-bar)·
+// Checkbox(.choice)·Icon Button(.icon-btn)을 조합한 것이라, 이 파일은 그 조합에 필요한 레이아웃/오버라이드만
+// 담당한다. 각 부품 자체 색상·크기는 해당 컴포넌트 파일이 단일 소스다(중복 토큰 두지 않음).
+//
+// 마크업 조합 예:
+//   .upload-dropzone
+//     .featured-icon.featured-icon-sm.featured-icon-neutral > .featured-icon__icon(아이콘)
+//     .upload-dropzone__action > button.btn.btn-link.btn-md("Click to upload") + span(hint)
+//     .upload-dropzone__supporting(안내문구)
+//   .upload-item.upload-item-{uploading|done|error}
+//     .upload-item__icon > .icon(16px, 파일타입 아이콘)
+//     .upload-item__content > .upload-item__title/.upload-item__supporting + .progress-bar
+//     (done)             .choice.choice-checkbox (showLabel 없이 box만)
+//     (uploading|error)  .upload-item__action > button.icon-btn.icon-btn-sm.icon-btn-ghost
 
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
-$upload-border: $color-neutral-200;
-$upload-fg: $color-neutral-700;
-$upload-fg-title: $color-neutral-800;
-$upload-icon-badge-bg: $color-blue-50;
-$upload-icon-badge-ring: $color-blue-100;
+$upload-border: $color-neutral-200; // border/default
+$upload-fg-title: $color-neutral-800; // text-primary
+$upload-fg-supporting: $color-neutral-700; // text-secondary — 2026-08-28 재실측: neutral-600 아니라 700(#404040)
+$upload-icon-badge-bg: $color-blue-50; // surface/brand-subtle
+$upload-icon-badge-border: $color-blue-100; // brand/100 — outside 링이 아니라 32px 안쪽을 파먹는 border-4(실측)
+$upload-icon-fg: $color-blue-600;
 
 $upload-item-state-border: (
-  uploading: $color-neutral-200,
-  done: $color-blue-500,
-  error: $color-red-600,
+  uploading: $color-neutral-200, // border/default
+  done: $color-blue-500, // border/brand
+  error: $color-red-600, // border/danger
 );
 
 .upload-dropzone {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $space-1;
+  gap: $space-3;
   width: 100%;
   padding: $space-4 $space-6;
   border: 1px solid $upload-border;
@@ -30,18 +43,12 @@ $upload-item-state-border: (
   text-align: center;
 }
 
-.upload-dropzone__content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $space-3;
-}
-
 .upload-dropzone__action {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $space-1;
-  color: $upload-fg-title;
+  color: $upload-fg-supporting;
   font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
@@ -49,7 +56,7 @@ $upload-item-state-border: (
 }
 
 .upload-dropzone__supporting {
-  color: $upload-fg-title;
+  color: $upload-fg-supporting;
   font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-2xs;
@@ -57,8 +64,9 @@ $upload-item-state-border: (
 }
 
 .upload-item {
+  position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: $space-4;
   width: 100%;
   padding: $space-4;
@@ -80,13 +88,13 @@ $upload-item-state-border: (
   width: 32px;
   height: 32px;
   border-radius: $radius-full;
+  border: 4px solid $upload-icon-badge-border;
   background-color: $upload-icon-badge-bg;
-  box-shadow: 0 0 0 4px $upload-icon-badge-ring;
 
   .icon {
     width: 16px;
     height: 16px;
-    color: $color-blue-600;
+    color: $upload-icon-fg;
   }
 }
 
@@ -107,31 +115,18 @@ $upload-item-state-border: (
 }
 
 .upload-item__supporting {
-  color: $upload-fg;
+  color: $upload-fg-supporting;
   font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
 }
 
-// done 상태 전용 체크 표시 — choice-checkbox 시각 규칙(radius 6, blue-500, 흰 체크)과 동일하게 재현.
-.upload-item__check {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: $radius-xsm;
-  background-color: $color-blue-500;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: 10px;
-    height: 6px;
-    border-left: 2px solid $color-white;
-    border-bottom: 2px solid $color-white;
-    transform: rotate(-45deg) translateY(-1px);
-  }
+// uploading/error 상태의 취소·설정 아이콘버튼 — 콘텐츠 우상단 모서리에 -8px 겹침(실측)
+.upload-item__action {
+  position: absolute;
+  top: -8px;
+  right: -8px;
 }
+
+// done 상태의 체크박스는 .choice.choice-checkbox(showLabel 없이 box만)를 그대로 배치한다.
