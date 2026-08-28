@@ -5,7 +5,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* font-family는 main.css의 reset(body 셀렉터)이 이미 선언 + 상속되므로 여기서 다시 안 씀 */
   background-color: var(--color-neutral-50, #fafafa);
   color: var(--color-neutral-800, #262626);
   display: flex;
@@ -48,10 +48,6 @@ body {
 }
 .doc-sidebar__nav .side-nav-item + .side-nav-item {
   margin-top: 2px;
-}
-.doc-sidebar__nav .side-nav-item-sub {
-  font-weight: 500;
-  font-size: 14px;
 }
 .doc-sidebar__footer {
   padding: 16px;

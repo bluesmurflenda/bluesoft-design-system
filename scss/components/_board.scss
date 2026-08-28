@@ -36,7 +36,6 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: $font-size-body-md;
   line-height: $font-leading-body-md;
   color: $board-title-fg;
@@ -59,7 +58,6 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   align-items: center;
   justify-content: center;
   width: $board-col-width;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
   text-align: center;
@@ -88,7 +86,6 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
 .board-header__title {
   flex: 1 0 0;
   min-width: 0;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -117,7 +114,6 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   padding-block: $space-4;
   padding-inline: $space-3;
   border-bottom: $border-hairline solid $board-border;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .board-card__title {

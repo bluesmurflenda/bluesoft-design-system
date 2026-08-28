@@ -32,7 +32,6 @@ $progress-bar-value-fg: $text-primary;
 
 .progress-bar__value {
   flex-shrink: 0;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;

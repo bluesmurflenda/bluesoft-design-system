@@ -65,7 +65,6 @@ $select-validation-colors: (
 }
 
 .select__label {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -79,7 +78,6 @@ $select-validation-colors: (
   border-radius: $radius-sm;
   background-color: $select-bg;
   color: $select-fg;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   cursor: pointer;
 }
 
@@ -99,7 +97,6 @@ $select-validation-colors: (
 }
 
 .select__hint {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;

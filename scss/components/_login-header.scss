@@ -30,7 +30,6 @@ $login-header-supporting-fg: $text-secondary;
 }
 
 .login-header__title {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-semibold;
   font-size: $font-size-display-sm;
   line-height: $font-leading-display-sm;
@@ -38,7 +37,6 @@ $login-header-supporting-fg: $text-secondary;
 }
 
 .login-header__supporting {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-lg;
   line-height: $font-leading-body-lg;

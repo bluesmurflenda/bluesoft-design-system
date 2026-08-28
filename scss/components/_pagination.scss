@@ -51,7 +51,6 @@ $pagination-icon-fg: $color-neutral-600;
   justify-content: center;
   border-radius: $pagination-radius;
   color: $pagination-fg;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   cursor: pointer;
 
@@ -123,7 +122,6 @@ $pagination-icon-fg: $color-neutral-600;
     align-items: center;
     gap: $space-2;
     color: $pagination-fg;
-    font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: $font-weight-medium;
     cursor: pointer;
 
@@ -159,7 +157,6 @@ $pagination-icon-fg: $color-neutral-600;
   padding-top: $space-12;
   border-top: 1px solid $pagination-border;
   color: $pagination-fg;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
 
   .pagination__actions {
@@ -186,7 +183,6 @@ $pagination-icon-fg: $color-neutral-600;
   width: 100%;
   padding: $space-5;
   color: $pagination-fg;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
 }
 
@@ -214,7 +210,6 @@ $pagination-icon-fg: $color-neutral-600;
     gap: $space-2;
     padding-inline: $space-5;
     color: $pagination-fg;
-    font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight: $font-weight-medium;
     cursor: pointer;
 

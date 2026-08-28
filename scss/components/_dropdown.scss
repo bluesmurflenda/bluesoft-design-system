@@ -54,7 +54,6 @@ $list-item-fg-selected: var(--list-item-fg-selected);
   border: 1px solid $dropdown-border;
   background-color: var(--field-bg);
   color: $dropdown-fg;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   cursor: pointer;
 
@@ -132,7 +131,6 @@ $list-item-font: (
   padding: $space-2 $space-3;
   border-radius: $radius-sm;
   color: $list-item-fg;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-lg; // 기본값(md 상당). 사이즈별 실제값은 .dropdown-{size}/.select-{size} 스코프에서 덮어씀
   line-height: $font-leading-body-lg;

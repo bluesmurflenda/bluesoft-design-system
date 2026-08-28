@@ -77,7 +77,6 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
   min-width: 0;
   padding-inline: $table-cell-padding-x;
   border-bottom: $border-hairline solid $table-border;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
 
   &.align-left {
     justify-content: flex-start;

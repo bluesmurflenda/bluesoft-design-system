@@ -35,7 +35,6 @@ $input-validation-colors: (
 }
 
 .input__label {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -67,7 +66,6 @@ $input-validation-colors: (
   outline: none;
   background: none;
   padding: 0;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   color: $color-neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
 
@@ -89,7 +87,6 @@ $input-validation-colors: (
 }
 
 .input__hint {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
 }
 

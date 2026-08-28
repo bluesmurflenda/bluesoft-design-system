@@ -51,14 +51,12 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
 }
 
 .tooltip__title {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-semibold;
   font-size: $font-size-body-2xs;
   line-height: $font-leading-body-2xs;
 }
 
 .tooltip__supporting {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-2xs;
   line-height: $font-leading-body-2xs;

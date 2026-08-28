@@ -29,7 +29,6 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
   background-color: $color-white;
   border-radius: $radius-lg;
   box-shadow: $modal-shadow;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
 
   // 핸드오프 시 고정폭 대신 계산식으로 전달한다: mobile calc(100% - 32px), 그 외는 min(토큰폭, 100% - 32px)
   @each $bp, $width in $modal-widths {

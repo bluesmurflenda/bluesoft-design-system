@@ -118,7 +118,6 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 }
 
 .card__eyebrow {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-2xs;
   line-height: $font-leading-body-2xs;
@@ -126,14 +125,12 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 }
 
 .card__title {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-semibold;
   font-size: $font-size-body-lg;
   line-height: $font-leading-body-lg;
 }
 
 .card__description {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -141,7 +138,6 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 }
 
 .card__meta {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-2xs;
   line-height: $font-leading-body-2xs;

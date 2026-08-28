@@ -52,7 +52,6 @@ $upload-item-state-border: (
   justify-content: center;
   gap: $space-1;
   color: $upload-fg-supporting;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -60,7 +59,6 @@ $upload-item-state-border: (
 
 .upload-dropzone__supporting {
   color: $upload-fg-supporting;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-2xs;
   line-height: $font-leading-body-2xs;
@@ -111,7 +109,6 @@ $upload-item-state-border: (
 
 .upload-item__title {
   color: $upload-fg-title;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-medium;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -119,7 +116,6 @@ $upload-item-state-border: (
 
 .upload-item__supporting {
   color: $upload-fg-supporting;
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;

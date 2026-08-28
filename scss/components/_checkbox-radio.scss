@@ -214,7 +214,6 @@ $choice-description-fg: var(--choice-description-fg);
 }
 
 .choice__label {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-md;
   line-height: $font-leading-body-md;
@@ -222,7 +221,6 @@ $choice-description-fg: var(--choice-description-fg);
 }
 
 .choice__description {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-sm;
   line-height: $font-leading-body-sm;
@@ -313,7 +311,6 @@ $toggle-colors: (
 }
 
 .toggle__label {
-  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: $font-weight-regular;
   font-size: $font-size-body-md;
   line-height: $font-leading-body-md;
