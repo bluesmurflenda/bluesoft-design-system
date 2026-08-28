@@ -1,0 +1,150 @@
+// Figma DS Master > Inputs & Textarea & File 페이지 (node 281:1069 _Input base, 293:855 Input),
+// 2026-08-28 라이브 실측. Size(sm/md/lg/xl) × State(default/hover/focus/disabled) × Validation(normal/invalid/valid).
+// filled은 border/bg가 normal과 동일(값이 채워졌다는 의미만 가짐) — 실제 <input> 엘리먼트를 쓰므로
+// ::placeholder로 자연히 구분되고 별도 클래스가 필요 없다(select.scss와 동일 패턴).
+// lg·xl 모두 Body/Lg(16/24)에서 멈춘다 — button/dropdown/select와 동일한 사이즈 진행 패턴.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$input-sizes: (
+  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs, icon: 16px),
+  md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px),
+  lg: (height: 48px, padding-x: $space-4, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, icon: 20px),
+  xl: (height: 56px, padding-x: $space-4, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, icon: 20px),
+);
+
+$input-label-fg: $color-neutral-800; // text-primary
+$input-placeholder-fg: $color-neutral-400;
+$input-disabled-bg: $color-neutral-100;
+$input-disabled-placeholder-fg: $color-neutral-300;
+// 2026-08-28 실측: Shadow/xs — hover·disabled까지 공통, focus에서는 포커스 링으로 완전히 대체된다(합쳐지지 않음).
+$input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+$input-validation-colors: (
+  normal: (border: $color-neutral-300, border-hover: $color-neutral-400, border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: $color-neutral-300, hint-fg: $color-neutral-600),
+  invalid: (border: $color-red-500, border-hover: $color-red-500, border-focus: $color-red-500, ring: $color-red-200, border-disabled: $color-red-200, hint-fg: $color-red-500),
+  valid: (border: $color-green-600, border-hover: $color-green-600, border-focus: $color-green-600, ring: $color-green-100, border-disabled: $color-green-200, hint-fg: $color-neutral-600),
+);
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; // 2026-08-28 실측: space 토큰(4/8)에 안 맞는 리터럴 값
+  width: 100%;
+}
+
+.input__label {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $input-label-fg;
+}
+
+.input__field {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+  box-shadow: $input-shadow;
+  transition: border-color $motion-fast, box-shadow $motion-fast;
+}
+
+.input__content {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  gap: $space-2;
+  min-width: 0;
+}
+
+.input__control {
+  flex: 1 0 0;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
+
+  &::placeholder {
+    color: $input-placeholder-fg;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &::placeholder {
+      color: $input-disabled-placeholder-fg;
+    }
+  }
+}
+
+.input__icon {
+  flex-shrink: 0;
+}
+
+.input__hint {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+}
+
+@each $size, $props in $input-sizes {
+  .input-#{$size} {
+    .input__field {
+      height: map.get($props, height);
+      padding-inline: map.get($props, padding-x);
+    }
+
+    .input__control,
+    .input__hint {
+      font-size: map.get($props, font-size);
+      line-height: map.get($props, line-height);
+    }
+
+    .input__icon {
+      width: map.get($props, icon);
+      height: map.get($props, icon);
+    }
+  }
+}
+
+@each $validation, $c in $input-validation-colors {
+  .input-#{$validation} {
+    .input__field {
+      border: 1px solid map.get($c, border);
+
+      &:hover {
+        border-color: map.get($c, border-hover);
+      }
+
+      &:focus-within {
+        border-color: map.get($c, border-focus);
+        box-shadow: 0 0 0 2px map.get($c, ring);
+      }
+    }
+
+    .input__hint {
+      color: map.get($c, hint-fg);
+    }
+  }
+
+  .input-#{$validation}.input-disabled .input__field {
+    border-color: map.get($c, border-disabled);
+  }
+}
+
+.input-disabled {
+  .input__field {
+    background-color: $input-disabled-bg;
+    box-shadow: $input-shadow;
+  }
+
+  .input__hint {
+    opacity: 0.4; // 2026-08-28 실측: disabled+invalid/valid 조합에서 힌트 텍스트만 40%로 흐려짐
+  }
+}

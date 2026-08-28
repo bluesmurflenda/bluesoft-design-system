@@ -205,6 +205,8 @@
 
   <div class="doc-nav-group">
     <div class="doc-nav-group__title">컴포넌트 · 폼</div>
+    <a class="doc-nav-link" href="#input">Input</a>
+    <a class="doc-nav-link" href="#textarea">Textarea</a>
     <a class="doc-nav-link" href="#checkbox-radio">Checkbox &amp; Radio &amp; Toggle</a>
     <a class="doc-nav-link" href="#dropdown-select">Dropdown &amp; Select</a>
     <a class="doc-nav-link" href="#upload">Upload</a>
@@ -433,6 +435,82 @@
           <span class="tabs-item tabs-item-segmented tabs-item-md">주간</span>
           <span class="tabs-item tabs-item-segmented tabs-item-md">월간</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INPUT ============ -->
+  <section class="doc-section" id="input">
+    <h2>Input</h2>
+    <p class="doc-desc">Size 4종 × State(default/hover/focus/disabled) × Validation(normal/invalid/valid).</p>
+    <div class="doc-card doc-row" style="align-items:flex-start;">
+      <div class="input input-md input-normal">
+        <label class="input__label">Label</label>
+        <div class="input__field">
+          <div class="input__content">
+            <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-mail"></use></svg>
+            <input class="input__control" placeholder="Placeholder" />
+          </div>
+          <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-help-circle"></use></svg>
+        </div>
+        <div class="input__hint">This is a hint text to help user.</div>
+      </div>
+
+      <div class="input input-md input-invalid">
+        <label class="input__label">Label</label>
+        <div class="input__field">
+          <div class="input__content">
+            <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-mail"></use></svg>
+            <input class="input__control" value="blue@bluesoft.co.kr" />
+          </div>
+          <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-alert-circle"></use></svg>
+        </div>
+        <div class="input__hint">This is a hint text to help user.</div>
+      </div>
+
+      <div class="input input-md input-valid">
+        <label class="input__label">Label</label>
+        <div class="input__field">
+          <div class="input__content">
+            <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-mail"></use></svg>
+            <input class="input__control" value="blue@bluesoft.co.kr" />
+          </div>
+          <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-check"></use></svg>
+        </div>
+        <div class="input__hint">This is a hint text to help user.</div>
+      </div>
+
+      <div class="input input-md input-normal input-disabled">
+        <label class="input__label">Label</label>
+        <div class="input__field">
+          <div class="input__content">
+            <svg class="input__icon"><use href="assets/icons/sprite.svg#icon-base-mail"></use></svg>
+            <input class="input__control" placeholder="Placeholder" disabled />
+          </div>
+        </div>
+        <div class="input__hint">This is a hint text to help user.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEXTAREA ============ -->
+  <section class="doc-section" id="textarea">
+    <h2>Textarea</h2>
+    <p class="doc-desc">Size 3종(sm/md/lg) × State × Validation. 포커스 링 스프레드가 Input(2px)과 다르게 3px입니다.</p>
+    <div class="doc-card doc-row" style="align-items:flex-start;">
+      <div class="textarea textarea-md textarea-normal" style="max-width:280px;">
+        <label class="textarea__label">Label</label>
+        <div class="textarea__field">
+          <textarea class="textarea__control" placeholder="Placeholder"></textarea>
+        </div>
+        <div class="textarea__hint">This is a hint text to help user.</div>
+      </div>
+      <div class="textarea textarea-md textarea-invalid" style="max-width:280px;">
+        <label class="textarea__label">Label</label>
+        <div class="textarea__field">
+          <textarea class="textarea__control" placeholder="Placeholder"></textarea>
+        </div>
+        <div class="textarea__hint">This is a hint text to help user.</div>
       </div>
     </div>
   </section>

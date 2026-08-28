@@ -1,0 +1,130 @@
+// Figma DS Master > Inputs & Textarea & File 페이지 (node 340:298 _Textarea base, 344:381 Textarea),
+// 2026-08-28 라이브 실측. Size(sm/md/lg) × State(default/hover/focus/disabled) × Validation(normal/invalid/valid).
+// Input과 거의 동일한 구조지만 포커스 링 스프레드가 2px가 아니라 3px, 사이즈 축도 3개뿐(xl 없음).
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$textarea-sizes: (
+  sm: (height: 96px, padding-x: $space-3, padding-y: $space-2, font-size: $font-size-body-xs, line-height: $font-leading-body-xs),
+  md: (height: 128px, padding-x: $space-4, padding-y: $space-3, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
+  lg: (height: 160px, padding-x: $space-5, padding-y: $space-3, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
+);
+
+// 2026-08-28 실측: sm 라벨만 neutral-700, md·lg는 text-primary(neutral-800) — Figma 원본 그대로(추정 아님).
+$textarea-label-fg: (
+  sm: $color-neutral-700,
+  md: $color-neutral-800,
+  lg: $color-neutral-800,
+);
+$textarea-placeholder-fg: $color-neutral-400;
+$textarea-disabled-bg: $color-neutral-100;
+$textarea-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs, input과 공용
+
+$textarea-validation-colors: (
+  normal: (border: $color-neutral-300, border-hover: $color-neutral-400, border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: $color-neutral-300, hint-fg: $color-neutral-600),
+  invalid: (border: $color-red-500, border-hover: $color-red-500, border-focus: $color-red-500, ring: $color-red-200, border-disabled: $color-red-200, hint-fg: $color-red-500),
+  valid: (border: $color-green-600, border-hover: $color-green-600, border-focus: $color-green-600, ring: $color-green-100, border-disabled: $color-green-200, hint-fg: $color-neutral-600),
+);
+
+.textarea {
+  display: flex;
+  flex-direction: column;
+  gap: 6px; // input과 동일한 실측 리터럴
+  width: 100%;
+}
+
+.textarea__label {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+.textarea__field {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-2;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+  box-shadow: $textarea-shadow;
+  transition: border-color $motion-fast, box-shadow $motion-fast;
+}
+
+.textarea__control {
+  flex: 1 0 0;
+  min-width: 0;
+  resize: none;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  color: $color-neutral-700;
+
+  &::placeholder {
+    color: $textarea-placeholder-fg;
+  }
+}
+
+.textarea__hint {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+@each $size, $props in $textarea-sizes {
+  .textarea-#{$size} {
+    .textarea__label {
+      color: map.get($textarea-label-fg, $size);
+    }
+
+    .textarea__field {
+      height: map.get($props, height);
+      padding: map.get($props, padding-y) map.get($props, padding-x);
+    }
+
+    .textarea__control {
+      font-size: map.get($props, font-size);
+      line-height: map.get($props, line-height);
+    }
+  }
+}
+
+@each $validation, $c in $textarea-validation-colors {
+  .textarea-#{$validation} {
+    .textarea__field {
+      border: 1px solid map.get($c, border);
+
+      &:hover {
+        border-color: map.get($c, border-hover);
+      }
+
+      &:focus-within {
+        border-color: map.get($c, border-focus);
+        box-shadow: 0 0 0 3px map.get($c, ring); // 2026-08-28 실측: input은 2px, textarea는 3px
+      }
+    }
+
+    .textarea__hint {
+      color: map.get($c, hint-fg);
+    }
+  }
+
+  .textarea-#{$validation}.textarea-disabled .textarea__field {
+    border-color: map.get($c, border-disabled);
+  }
+}
+
+.textarea-disabled {
+  .textarea__field {
+    background-color: $textarea-disabled-bg;
+    box-shadow: $textarea-shadow;
+  }
+
+  .textarea__hint {
+    opacity: 0.4;
+  }
+}
