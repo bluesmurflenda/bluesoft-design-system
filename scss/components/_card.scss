@@ -1,0 +1,123 @@
+// Figma DS Master > Card (node 821:9373), 2026-08-28 라이브 인스턴스 실측
+// Orientation(Vertical|Horizontal) × Style(Default|Outline|Tinted) × State(Default|Hover|Disabled)
+// 컴포넌트 설명(node 5b90d8f5..)에 Tokens Used가 명시돼 있어 그대로 따름:
+// card/bg·border·fg·fg-supporting·border-hover, surface/subtle, space/4(패딩)·space/3(섹션 gap)·space/2(텍스트 gap), radius/lg, Shadow/sm·md
+
+@use '../tokens/primitive' as *;
+
+$card-radius: $radius-lg;
+$card-bg: $color-white;
+$card-border: $color-neutral-200;
+$card-border-hover: $color-sky-400;
+$card-fg: $color-neutral-800;
+$card-fg-supporting: $color-neutral-600;
+$card-tinted-bg: $color-neutral-50;
+// 2026-08-28 라이브 실측: Default 상태는 레이어 2개 중 1개만 보임(2번째 alpha=0), Hover는 둘 다 보임.
+$card-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+$card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.1);
+
+.card {
+  display: flex;
+  border-radius: $card-radius;
+  background-color: $card-bg;
+  color: $card-fg;
+  overflow: hidden;
+  transition: box-shadow $motion-fast, border-color $motion-fast;
+}
+
+.card-vertical {
+  flex-direction: column;
+}
+
+.card-horizontal {
+  flex-direction: row;
+
+  .card__media {
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .card__body {
+    flex: 1;
+  }
+}
+
+.card-default {
+  box-shadow: $card-shadow-sm;
+
+  &:hover {
+    box-shadow: $card-shadow-md;
+  }
+}
+
+.card-outline {
+  border: 1px solid $card-border;
+
+  &:hover {
+    border-color: $card-border-hover;
+  }
+}
+
+.card-tinted {
+  background-color: $card-tinted-bg;
+}
+
+.card[aria-disabled='true'],
+.card-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.card__media {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-4;
+}
+
+.card__content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.card__eyebrow {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+  color: $card-fg-supporting;
+}
+
+.card__title {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-body-lg;
+  line-height: $font-leading-body-lg;
+}
+
+.card__description {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $card-fg-supporting;
+}
+
+.card__meta {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+  color: $card-fg-supporting;
+}
+
+.card__action {
+  display: flex;
+}

@@ -1,0 +1,82 @@
+// Figma DS Master > Pagination Compact (node 465:6816), 2026-08-28 라이브 인스턴스 실측
+// Prev/Next 아이콘 버튼(32×32, ghost) + 번호 배지(32×32, radius 8) 조합. 상단·하단 보더 1px.
+
+@use '../tokens/primitive' as *;
+
+$pagination-border: $color-slate-300;
+$pagination-fg: $color-slate-600;
+$pagination-fg-hover: $color-slate-700;
+$pagination-bg-hover: $color-slate-50;
+$pagination-current-bg: $color-blue-50;
+$pagination-current-fg: $color-blue-600;
+$pagination-icon-fg: $color-neutral-700;
+
+.pagination-compact {
+  display: inline-flex;
+  align-items: center;
+  padding-block: $space-3;
+  border-top: 1px solid $pagination-border;
+  border-bottom: 1px solid $pagination-border;
+  gap: 0;
+}
+
+.pagination-compact__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $pagination-icon-fg;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $pagination-bg-hover;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  svg,
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.pagination-compact__numbers {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.pagination-compact__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding-inline: $space-2;
+  border-radius: $radius-sm;
+  color: $pagination-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  cursor: pointer;
+
+  &:hover {
+    color: $pagination-fg-hover;
+  }
+
+  &.pagination-compact__number-current {
+    background-color: $pagination-current-bg;
+    color: $pagination-current-fg;
+    cursor: default;
+  }
+}

@@ -1,0 +1,47 @@
+// Figma DS Master > Featured Icon (node 429:2267), 2026-08-28 라이브 인스턴스 실측
+// Color 5종(brand/neutral/success/warning/error) × Size 2종(sm/md). Alert와 동일한 색 스케일 재사용(실측 일치).
+// sm: 40×40, 아이콘 20×20, 패딩 10 / md: 48×48, 아이콘 24×24, 패딩 12 — 원형(radius full), 패딩=(size-icon)/2 실측 확인.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$featured-icon-sizes: (
+  sm: (box: 40px, icon: 20px, padding: 10px),
+  md: (box: 48px, icon: 24px, padding: 12px),
+);
+
+$featured-icon-colors: (
+  brand: (bg: $color-blue-50, fg: $color-blue-700),
+  neutral: (bg: $color-slate-50, fg: $color-slate-600),
+  success: (bg: $color-green-50, fg: $color-green-700),
+  warning: (bg: $color-yellow-50, fg: $color-yellow-700),
+  error: (bg: $color-red-50, fg: $color-red-700),
+);
+
+.featured-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-full;
+  flex-shrink: 0;
+}
+
+@each $size, $props in $featured-icon-sizes {
+  .featured-icon-#{$size} {
+    width: map.get($props, box);
+    height: map.get($props, box);
+    padding: map.get($props, padding);
+
+    .featured-icon__icon {
+      width: map.get($props, icon);
+      height: map.get($props, icon);
+    }
+  }
+}
+
+@each $color, $c in $featured-icon-colors {
+  .featured-icon-#{$color} {
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
+  }
+}

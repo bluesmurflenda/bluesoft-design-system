@@ -1,0 +1,39 @@
+// Figma DS Master > Progress bar (node 1360:23347), 2026-08-28 라이브 인스턴스 실측
+// Progress 축(0~100, 11단계)은 값 자체라 컴포넌트가 아니라 인라인 style(--progress-bar-value)로 받는다.
+// Fill 은 Figma에서 SCALE 제약이라 트랙 폭이 달라져도 비율이 유지된다 — CSS는 width:%로 동일하게 재현.
+
+@use '../tokens/primitive' as *;
+
+$progress-bar-track-bg: $color-blue-50; // surface-brand-subtle
+$progress-bar-fill-bg: $color-blue-600;
+$progress-bar-value-fg: $color-neutral-800;
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.progress-bar__track {
+  flex: 1;
+  height: 8px;
+  border-radius: $radius-full;
+  background-color: $progress-bar-track-bg;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  border-radius: $radius-full;
+  background-color: $progress-bar-fill-bg;
+  width: var(--progress-bar-value, 0%);
+}
+
+.progress-bar__value {
+  flex-shrink: 0;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $progress-bar-value-fg;
+}

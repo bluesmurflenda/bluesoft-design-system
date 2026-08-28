@@ -1,0 +1,82 @@
+// Figma DS Master > Alert (node 756:4134), 2026-08-28 라이브 인스턴스 실측
+// Color 6종(brand/neutral/success/warning/error/info) × Layout 3종(inline/banner/toast)
+// info는 brand와 bg/fg/border가 완전히 동일한 값이다(Chip과 동일 패턴) — 추정 아님, 실측 그대로.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$alert-colors: (
+  brand: (bg: $color-blue-50, fg: $color-blue-700, border: $color-blue-200),
+  neutral: (bg: $color-slate-50, fg: $color-slate-700, border: $color-slate-200),
+  success: (bg: $color-green-50, fg: $color-green-700, border: $color-green-200),
+  warning: (bg: $color-yellow-50, fg: $color-yellow-700, border: $color-yellow-200),
+  error: (bg: $color-red-50, fg: $color-red-700, border: $color-red-200),
+  info: (bg: $color-blue-50, fg: $color-blue-700, border: $color-blue-200),
+);
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  .alert__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .alert__close {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+}
+
+.alert-inline,
+.alert-toast {
+  padding: $space-4;
+  border-radius: $radius-lg;
+}
+
+.alert-banner {
+  padding: $space-4 $space-6;
+  border-radius: 0;
+}
+
+.alert__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.alert__title {
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+.alert__text {
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+}
+
+.alert__actions {
+  display: flex;
+  gap: $space-3;
+  padding-top: $space-2;
+}
+
+@each $color, $c in $alert-colors {
+  .alert-#{$color} {
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
+    border: 1px solid map.get($c, border);
+
+    .alert__title {
+      color: map.get($c, fg);
+    }
+  }
+}

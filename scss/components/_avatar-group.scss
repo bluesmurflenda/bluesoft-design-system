@@ -1,0 +1,45 @@
+// Figma DS Master > Avatar Group (node 584:6107), 2026-08-28 라이브 인스턴스 실측
+// Avatar 자체(Type=image|initials|placeholder)는 별도 요청 범위 밖이라, 그룹이 쓰는
+// initials 원형(sm=32) 하나만 이 파일 안에 최소 구현한다. 겹침은 -8, 링은 surface/default 2px.
+
+@use '../tokens/primitive' as *;
+
+$avatar-group-size: 32px;
+$avatar-group-overlap: -8px;
+$avatar-group-ring: 2px solid $color-white;
+$avatar-bg: $color-neutral-100;
+$avatar-fg: $color-neutral-600;
+
+.avatar-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatar-group > * {
+  margin-left: $avatar-group-overlap;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $avatar-group-size;
+  height: $avatar-group-size;
+  border-radius: $radius-full;
+  border: $avatar-group-ring;
+  background-color: $avatar-bg;
+  color: $avatar-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+}
+
+.avatar-group__more {
+  @extend .avatar;
+  font-weight: $font-weight-semibold;
+}

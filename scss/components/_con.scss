@@ -1,0 +1,80 @@
+// Figma DS Master > Chips & Cons 페이지 (node 607:5934 Con), 2026-08-28 라이브 인스턴스 실측
+// Theme(color|gray|white) × Size(sm|md|lg) × State(default|hover|selected|focus|disabled) = 45변형
+// "탭처럼 선택 가능한 필터/세그먼트" 컴포넌트. fg/fg-selected(#404040/#2563eb)는 테마 공용 토큰이고,
+// bg·border만 테마별로 갈린다(실측 변수명: con/fg, con/fg-selected, con/{theme}/bg 등). white만 hover 시 글자색도 바뀐다.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$con-sizes: (
+  sm: (height: 32px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px),
+  md: (height: 40px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, icon: 20px),
+  lg: (height: 48px, padding-x: $space-6, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, icon: 24px),
+);
+
+$con-fg: $color-neutral-700;
+$con-fg-selected: $color-blue-600;
+
+$con-themes: (
+  'color': (bg: $color-blue-50, bg-hover: $color-blue-100, border: $color-blue-200, fg-hover: null),
+  'gray': (bg: transparent, bg-hover: $color-neutral-100, border: $color-neutral-200, fg-hover: null),
+  'white': (bg: $color-white, bg-hover: $color-blue-100, border: $color-neutral-200, fg-hover: $color-blue-600),
+);
+
+.con {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  border-radius: $radius-full;
+  border: 1px solid transparent;
+  color: $con-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+
+  .con__icon {
+    flex-shrink: 0;
+  }
+}
+
+@each $size, $props in $con-sizes {
+  .con-#{$size} {
+    height: map.get($props, height);
+    padding-inline: map.get($props, padding-x);
+    font-size: map.get($props, font-size);
+    line-height: map.get($props, line-height);
+
+    .con__icon {
+      width: map.get($props, icon);
+      height: map.get($props, icon);
+    }
+  }
+}
+
+@each $theme, $c in $con-themes {
+  .con-#{$theme} {
+    background-color: map.get($c, bg);
+    border-color: map.get($c, border);
+
+    &:hover:not(.con-disabled) {
+      background-color: map.get($c, bg-hover);
+      @if map.get($c, fg-hover) {
+        color: map.get($c, fg-hover);
+      }
+    }
+
+    &.con-selected {
+      background-color: map.get($c, bg-hover);
+      color: $con-fg-selected;
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px $effect-focus-ring;
+    }
+  }
+}
+
+.con-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}

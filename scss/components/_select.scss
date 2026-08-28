@@ -1,0 +1,114 @@
+// Figma DS Master > Select & Dropdown 페이지 (node 316:644 Select, 316:598 _Select base), 2026-08-28 라이브 인스턴스 실측
+// State(default|hover|focus|disabled) × Validation(normal|filled|invalid|valid). filled는 border/bg가
+// normal과 동일(값이 채워졌다는 의미만 가짐) — 별도 클래스 불필요.
+// 패널·옵션(list-panel/list-item)은 _dropdown.scss 의 클래스를 그대로 재사용한다.
+
+@use '../tokens/primitive' as *;
+@use 'sass:map';
+
+$select-sizes: (
+  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs),
+  md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
+  lg: (height: 48px, padding-x: $space-5, font-size: $font-size-body-md, line-height: $font-leading-body-md),
+  xl: (height: 56px, padding-x: $space-6, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
+);
+
+$select-label-fg: $color-neutral-800;
+$select-hint-fg: $color-neutral-400; // validation과 무관하게 항상 neutral-400 (실측 확인)
+$select-fg: $color-neutral-700;
+$select-icon-fg: $color-neutral-600;
+$select-disabled-bg: $color-neutral-100;
+
+$select-validation-colors: (
+  normal: (border: $color-neutral-300, border-hover: $color-neutral-400, border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: $color-neutral-300),
+  invalid: (border: $color-red-500, border-hover: $color-red-600, border-focus: $color-red-500, ring: rgba(239, 68, 68, 0.3), border-disabled: $color-red-200),
+  valid: (border: $color-green-600, border-hover: $color-green-700, border-focus: $color-green-600, ring: rgba(22, 163, 74, 0.3), border-disabled: $color-green-200),
+);
+
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  width: 100%;
+}
+
+.select__label {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $select-label-fg;
+}
+
+.select__field {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  border-radius: $radius-sm;
+  background-color: $color-white;
+  color: $select-fg;
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+}
+
+.select__icon,
+.select__chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: $select-icon-fg;
+}
+
+.select__content {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__hint {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-sm;
+  line-height: $font-leading-body-sm;
+  color: $select-hint-fg;
+}
+
+@each $size, $props in $select-sizes {
+  .select-#{$size} {
+    .select__field {
+      height: map.get($props, height);
+      padding-inline: map.get($props, padding-x);
+      font-size: map.get($props, font-size);
+      line-height: map.get($props, line-height);
+    }
+  }
+}
+
+@each $validation, $c in $select-validation-colors {
+  .select-#{$validation} {
+    .select__field {
+      border: 1px solid map.get($c, border);
+
+      &:hover {
+        border-color: map.get($c, border-hover);
+      }
+
+      &:focus-within {
+        border-color: map.get($c, border-focus);
+        box-shadow: 0 0 0 3px map.get($c, ring);
+      }
+    }
+  }
+
+  .select-#{$validation}.select-disabled .select__field {
+    border-color: map.get($c, border-disabled);
+  }
+}
+
+.select-disabled {
+  .select__field {
+    background-color: $select-disabled-bg;
+    cursor: not-allowed;
+  }
+}

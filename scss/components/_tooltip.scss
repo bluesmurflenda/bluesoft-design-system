@@ -1,0 +1,108 @@
+// Figma DS Master > Tooltips (node 273:1926), 2026-08-28 라이브 인스턴스 실측
+// Theme(light|dark) × Arrow(none|top|bottom|left|right|bottom-left|bottom-right) — Arrow는 위치이므로
+// CSS는 화살표 방향 4종(top/bottom/left/right) + 코너 오프셋(-left/-right)을 data-attr/modifier로 처리한다.
+
+@use '../tokens/primitive' as *;
+
+$tooltip-dark-bg: $color-neutral-900;
+$tooltip-dark-fg: $color-white;
+$tooltip-dark-fg-supporting: $color-white;
+$tooltip-light-bg: $color-white;
+$tooltip-light-fg: $color-neutral-700;
+$tooltip-light-fg-supporting: $color-neutral-600;
+
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  width: 320px;
+  border-radius: $radius-sm;
+}
+
+.tooltip__content {
+  padding: $space-3;
+  border-radius: $radius-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.tooltip__title {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+}
+
+.tooltip__supporting {
+  font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-body-2xs;
+  line-height: $font-leading-body-2xs;
+}
+
+.tooltip__arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+}
+
+.tooltip-dark {
+  .tooltip__content {
+    background-color: $tooltip-dark-bg;
+  }
+  .tooltip__title {
+    color: $tooltip-dark-fg;
+  }
+  .tooltip__supporting {
+    color: $tooltip-dark-fg-supporting;
+  }
+  .tooltip__arrow {
+    background-color: $tooltip-dark-bg;
+  }
+}
+
+.tooltip-light {
+  .tooltip__content {
+    background-color: $tooltip-light-bg;
+  }
+  .tooltip__title {
+    color: $tooltip-light-fg;
+  }
+  .tooltip__supporting {
+    color: $tooltip-light-fg-supporting;
+  }
+  .tooltip__arrow {
+    background-color: $tooltip-light-bg;
+  }
+}
+
+// Arrow 위치 — bottom(위쪽에 툴팁, 화살표 아래) 기준 실측. top/left/right는 대칭 반전.
+.tooltip-arrow-bottom .tooltip__arrow {
+  bottom: -6px;
+  left: 50%;
+  margin-left: -6px;
+}
+
+.tooltip-arrow-top .tooltip__arrow {
+  top: -6px;
+  left: 50%;
+  margin-left: -6px;
+}
+
+.tooltip-arrow-left .tooltip__arrow {
+  left: -6px;
+  top: 50%;
+  margin-top: -6px;
+}
+
+.tooltip-arrow-right .tooltip__arrow {
+  right: -6px;
+  top: 50%;
+  margin-top: -6px;
+}
+
+.tooltip-arrow-none .tooltip__arrow {
+  display: none;
+}
