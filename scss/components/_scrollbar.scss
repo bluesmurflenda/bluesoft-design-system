@@ -1,0 +1,40 @@
+// Figma DS Master > Scrollbar(1114:42) 컴포넌트 설명에 명시된 구현 스펙 그대로.
+// 시안 표시용 컴포넌트라 마크업을 만들지 않는다 — 스크롤 컨테이너에 이 클래스만 적용한다.
+// 썸 길이는 콘텐츠 양에 따라 브라우저가 계산(시안의 40%는 대표 표시값일 뿐).
+
+@use '../tokens/primitive' as *;
+
+$scrollbar-track-bg: $color-neutral-100;
+$scrollbar-thumb-bg: $color-neutral-400;
+$scrollbar-thumb-bg-hover: $color-neutral-500;
+
+.scroll-area {
+  overflow-y: auto;
+  scrollbar-width: thin; // Firefox
+  scrollbar-color: $scrollbar-thumb-bg $scrollbar-track-bg;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $scrollbar-track-bg;
+    border-radius: $radius-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb-bg;
+    border-radius: $radius-full;
+
+    &:hover {
+      background: $scrollbar-thumb-bg-hover;
+    }
+  }
+}
+
+// 가로 스크롤 컨테이너용
+.scroll-area-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
