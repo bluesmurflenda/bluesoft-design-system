@@ -44,7 +44,7 @@ $nav-menu-fg-hover-light: var(--nav-fg-hover); // hover/selected 동일 색(실�
 $nav-menu-fg-dark: var(--nav-dark-fg); // dark는 default/hover/selected 전부 동일 고정(실측)
 
 $announcement-bg: var(--nav-announcement-bg);
-$announcement-fg: $color-white;
+$announcement-fg: $white;
 
 .site-header {
   width: 100%;

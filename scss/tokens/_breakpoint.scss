@@ -1,100 +1,180 @@
-// Figma DS Master > Breakpoint collection, 2026-08-28 재정비(bluesoft-token-scss-design.md 기준)
-// 5모드(Mobile/Tablet/Laptop/Desktop/Wide) 값을 실측한 결과 grid-margin 하나만 desktop(120)≠wide(360)로
-// 실제 차이가 있고 나머지는 전부 laptop 이상에서 desktop=wide로 동일하다. 그래서 실사용 CSS 분기는
-// 768/1024/1280 3개로 충분하며, grid-margin만 1920에서 한 번 더 갈라진다.
+// Figma DS Master > Breakpoint collection(Mobile/Tablet/Laptop/Desktop/Wide) — 자동 생성.
+// 출처: figma/tokens.breakpoint.json. 값(--x 커스텀 프로퍼티)의 미디어쿼리는 기준폭 그대로
+// (375/768/1024/1440/1920) 쓴다. 각 미디어쿼리는 "바로 앞 구간과 값이 다른 토큰"만 담는다(모바일-퍼스트).
 //
-// 컴포넌트가 매번 map.get()으로 breakpoint별 값을 꺼내 쓰던 방식을, 여기서 CSS 커스텀 프로퍼티로
-// 한 번만 정의해두고 컴포넌트는 var(--token-name)만 참조하면 자동으로 반응하는 방식으로 바꾼다
-// (primitive/semantic 레이어가 이미 쓰고 있는 :root + [data-*]/미디어쿼리 패턴과 동일한 사상).
-
-$breakpoint-mobile: 375px;
-$breakpoint-tablet: 768px;
-$breakpoint-laptop: 1024px;
-$breakpoint-desktop: 1440px;
-$breakpoint-wide: 1920px;
-
-// 실제 CSS 미디어쿼리 분기 — mq() 믹스인(abstracts/_mixins.scss)도 이 값을 그대로 참조한다.
+// $css-breakpoint-sm/md/lg 는 위와 별개다 — abstracts/_maps.scss($breakpoints 맵)·
+// components/_header.scss(모바일 nav 토글 등)가 @media 조건에 직접 쓰는 컴파일타임 픽셀 상수라
+// var()로 못 바꾼다(미디어쿼리 조건은 CSS 커스텀 프로퍼티를 못 읽는다). 이번 재작성 이전 값을
+// 그대로 유지했다 — lg가 1280인 이유는 _header.scss 자체 주석(laptop→desktop 전환점 실측)을 참조.
+// Figma Breakpoint의 Desktop 기준폭(1440)과 다르다는 걸 알고 남긴 것이지 실수가 아니다.
 $css-breakpoint-sm: 768px;
 $css-breakpoint-md: 1024px;
 $css-breakpoint-lg: 1280px;
 
 :root {
   --grid-columns: 4;
-  --grid-gutter: 16px;
-  --grid-margin: 16px;
-
+  --grid-gutter: var(--space-4);
+  --grid-margin: var(--space-4);
+  --breakpoint: 375px;
+  --container-padding-x: var(--space-4);
   --container-width: 375px;
-  --container-padding-x: 16px;
-
-  --section-gap: 32px; // 2026-08-28 확인: space/8 (기존 40은 오류)
-  --section-gap-sub: 32px;
-  --section-padding-top: 32px; // 2026-08-28 확인: space/8 (기존 40은 오류)
-  --section-padding-bottom: 48px; // 2026-08-28 확인: space/12 (기존 64는 오류)
-
+  --section-gap: var(--space-8);
+  --section-gap-sub: var(--space-8);
+  --section-padding-top: var(--space-8);
+  --section-padding-bottom: var(--space-12);
   --header-height: 64px;
   --sub-visual-height: 140px;
   --tabs-height: 48px;
-  --field-gap: 16px;
-  --field-body-gap: 12px;
+  --field-gap: var(--space-4);
+  --field-body-gap: var(--space-3);
   --table-col-label-width: 200px;
+  --type-display-2xl-size: var(--font-size-display-md);
+  --type-display-2xl-leading: var(--font-leading-display-md);
+  --type-display-xl-size: var(--font-size-display-sm);
+  --type-display-xl-leading: var(--font-leading-display-sm);
+  --type-display-lg-size: var(--font-size-display-xs);
+  --type-display-lg-leading: var(--font-leading-display-xs);
+  --type-display-md-size: var(--font-size-display-xs);
+  --type-display-md-leading: var(--font-leading-display-xs);
+  --type-display-sm-size: var(--font-size-body-2xl);
+  --type-display-sm-leading: var(--font-leading-body-2xl);
+  --type-display-xs-size: var(--font-size-body-xl);
+  --type-display-xs-leading: var(--font-leading-body-xl);
+  --type-body-2xl-size: var(--font-size-body-lg);
+  --type-body-2xl-leading: var(--font-leading-body-lg);
+  --type-body-xl-size: var(--font-size-body-lg);
+  --type-body-xl-leading: var(--font-leading-body-lg);
+  --type-body-lg-size: var(--font-size-body-sm);
+  --type-body-lg-leading: var(--font-leading-body-sm);
 }
 
-@media (min-width: $css-breakpoint-sm) {
+@media (min-width: 768px) {
   :root {
     --grid-columns: 8;
-    --grid-gutter: 24px;
-    --grid-margin: 32px;
-
+    --grid-gutter: var(--space-6);
+    --grid-margin: var(--space-8);
+    --breakpoint: 768px;
+    --container-padding-x: var(--space-8);
     --container-width: 768px;
-    --container-padding-x: 32px;
-
-    --section-gap: 40px;
-    --section-padding-top: 40px;
-    --section-padding-bottom: 64px;
-
+    --section-gap: var(--space-10);
+    --section-padding-top: var(--space-10);
+    --section-padding-bottom: var(--space-16);
     --sub-visual-height: 180px;
-    --field-gap: 20px;
-    --field-body-gap: 16px;
+    --field-gap: var(--space-5);
+    --field-body-gap: var(--space-4);
     --table-col-label-width: 240px;
+    --type-display-2xl-size: var(--font-size-display-lg);
+    --type-display-2xl-leading: var(--font-leading-display-lg);
+    --type-display-xl-size: var(--font-size-display-md);
+    --type-display-xl-leading: var(--font-leading-display-md);
+    --type-display-lg-size: var(--font-size-display-sm);
+    --type-display-lg-leading: var(--font-leading-display-sm);
+    --type-display-sm-size: var(--font-size-display-xs);
+    --type-display-sm-leading: var(--font-leading-display-xs);
+    --type-display-xs-size: var(--font-size-body-2xl);
+    --type-display-xs-leading: var(--font-leading-body-2xl);
+    --type-body-2xl-size: var(--font-size-body-xl);
+    --type-body-2xl-leading: var(--font-leading-body-xl);
+    --type-body-lg-size: var(--font-size-body-lg);
+    --type-body-lg-leading: var(--font-leading-body-lg);
   }
 }
 
-@media (min-width: $css-breakpoint-md) {
+@media (min-width: 1024px) {
   :root {
     --grid-columns: 12;
-    --grid-gutter: 24px;
-    --grid-margin: 32px;
-
+    --breakpoint: 1024px;
     --container-width: 1024px;
-
-    --section-gap-sub: 40px;
-    --section-padding-bottom: 80px;
-
+    --section-gap-sub: var(--space-10);
+    --section-padding-bottom: var(--space-20);
     --sub-visual-height: 220px;
     --tabs-height: 56px;
+    --field-gap: var(--space-6);
     --table-col-label-width: 320px;
+    --type-display-2xl-size: var(--font-size-display-xl);
+    --type-display-2xl-leading: var(--font-leading-display-xl);
+    --type-display-xl-size: var(--font-size-display-lg);
+    --type-display-xl-leading: var(--font-leading-display-lg);
+    --type-display-lg-size: var(--font-size-display-md);
+    --type-display-lg-leading: var(--font-leading-display-md);
+    --type-display-md-size: var(--font-size-display-sm);
+    --type-display-md-leading: var(--font-leading-display-sm);
+    --type-display-xs-size: var(--font-size-display-xs);
+    --type-display-xs-leading: var(--font-leading-display-xs);
+    --type-body-2xl-size: var(--font-size-body-2xl);
+    --type-body-2xl-leading: var(--font-leading-body-2xl);
+    --type-body-xl-size: var(--font-size-body-xl);
+    --type-body-xl-leading: var(--font-leading-body-xl);
   }
 }
 
-@media (min-width: $css-breakpoint-lg) {
+@media (min-width: 1440px) {
   :root {
     --grid-margin: 120px;
-
-    --container-width: 1200px;
+    --breakpoint: 1440px;
     --container-padding-x: 0;
-
-    --section-gap: 80px;
-    --section-padding-top: 80px;
-    --section-padding-bottom: 128px;
-
-    --header-height: 80px; // 2026-08-28 확인: laptop(1024)까지 64 유지, desktop(1280)에서 80 — 기존 header.scss는 1024에서 전환하던 버그
+    --container-width: 1200px;
+    --section-gap: var(--space-20);
+    --section-padding-top: var(--space-20);
+    --section-padding-bottom: var(--space-32);
+    --header-height: 80px;
     --sub-visual-height: 260px;
-    --field-gap: 24px;
+    --table-col-label-width: 360px;
+    --type-display-2xl-size: var(--font-size-display-2xl);
+    --type-display-2xl-leading: var(--font-leading-display-2xl);
+    --type-display-xl-size: var(--font-size-display-xl);
+    --type-display-xl-leading: var(--font-leading-display-xl);
+    --type-display-lg-size: var(--font-size-display-lg);
+    --type-display-lg-leading: var(--font-leading-display-lg);
+    --type-display-md-size: var(--font-size-display-md);
+    --type-display-md-leading: var(--font-leading-display-md);
+    --type-display-sm-size: var(--font-size-display-sm);
+    --type-display-sm-leading: var(--font-leading-display-sm);
   }
 }
 
-@media (min-width: $breakpoint-wide) {
+@media (min-width: 1920px) {
   :root {
-    --grid-margin: 360px; // grid-margin만 desktop(120)≠wide(360) — 유일하게 4번째 분기가 필요한 항목
+    --grid-margin: 360px;
+    --breakpoint: 1920px;
   }
 }
+
+// ──────────────────────────────────────────────────────────────
+// SCSS 별칭
+// ──────────────────────────────────────────────────────────────
+
+$grid-columns: var(--grid-columns);
+$grid-gutter: var(--grid-gutter);
+$grid-margin: var(--grid-margin);
+$breakpoint: var(--breakpoint);
+$container-padding-x: var(--container-padding-x);
+$container-width: var(--container-width);
+$section-gap: var(--section-gap);
+$section-gap-sub: var(--section-gap-sub);
+$section-padding-top: var(--section-padding-top);
+$section-padding-bottom: var(--section-padding-bottom);
+$header-height: var(--header-height);
+$sub-visual-height: var(--sub-visual-height);
+$tabs-height: var(--tabs-height);
+$field-gap: var(--field-gap);
+$field-body-gap: var(--field-body-gap);
+$table-col-label-width: var(--table-col-label-width);
+$type-display-2xl-size: var(--type-display-2xl-size);
+$type-display-2xl-leading: var(--type-display-2xl-leading);
+$type-display-xl-size: var(--type-display-xl-size);
+$type-display-xl-leading: var(--type-display-xl-leading);
+$type-display-lg-size: var(--type-display-lg-size);
+$type-display-lg-leading: var(--type-display-lg-leading);
+$type-display-md-size: var(--type-display-md-size);
+$type-display-md-leading: var(--type-display-md-leading);
+$type-display-sm-size: var(--type-display-sm-size);
+$type-display-sm-leading: var(--type-display-sm-leading);
+$type-display-xs-size: var(--type-display-xs-size);
+$type-display-xs-leading: var(--type-display-xs-leading);
+$type-body-2xl-size: var(--type-body-2xl-size);
+$type-body-2xl-leading: var(--type-body-2xl-leading);
+$type-body-xl-size: var(--type-body-xl-size);
+$type-body-xl-leading: var(--type-body-xl-leading);
+$type-body-lg-size: var(--type-body-lg-size);
+$type-body-lg-leading: var(--type-body-lg-leading);

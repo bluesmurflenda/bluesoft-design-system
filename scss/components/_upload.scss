@@ -15,7 +15,7 @@
 //     (uploading|error)  .upload-item__action > button.icon-btn.icon-btn-sm.icon-btn-ghost
 
 @use '../tokens/primitive' as *;
-@use '../tokens/semantic' as *;
+@use '../tokens/theme' as *;
 @use 'sass:map';
 
 // 2026-08-28: 각 값에 이미 시맨틱 역할이 주석으로 달려 있어, 그 역할에 대응하는 semantic.scss의

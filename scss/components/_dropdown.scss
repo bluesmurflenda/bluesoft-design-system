@@ -47,7 +47,7 @@ $list-item-heights: (
 
 $dropdown-border: var(--field-border);
 $dropdown-fg: var(--list-item-fg);
-$dropdown-chevron: $color-neutral-600;
+$dropdown-chevron: $neutral-600;
 $list-panel-border: var(--list-panel-border);
 $list-panel-bg: var(--list-panel-bg);
 $list-item-bg-hover: var(--list-item-bg-hover);
@@ -70,11 +70,11 @@ $list-item-fg-selected: var(--list-item-fg-selected);
     cursor: pointer;
 
     &:hover {
-      border-color: $color-neutral-400;
+      border-color: $neutral-400;
     }
 
     &[aria-expanded='true'] {
-      border-color: $color-blue-500;
+      border-color: $blue-500;
       box-shadow: 0 0 0 2px $effect-focus-ring;
     }
 

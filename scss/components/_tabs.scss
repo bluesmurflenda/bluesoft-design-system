@@ -94,9 +94,9 @@ $tabs-pill-colors: (
   fg-active: var(--tabs-pill-fg-active),
   fg-disabled: var(--tabs-fg-disabled),
   border: var(--tabs-border),
-  border-hover: $color-slate-300, // 다크 실측값 없음 — primitive 상수 유지
+  border-hover: $neutral-300, // 다크 실측값 없음 — primitive 상수 유지
   border-active: var(--tabs-pill-border-active),
-  bg-hover: $color-slate-50, // 다크 실측값 없음 — primitive 상수 유지
+  bg-hover: $neutral-50, // 다크 실측값 없음 — primitive 상수 유지
   bg-active: var(--tabs-pill-bg-active),
 );
 

@@ -49,21 +49,27 @@ function addDetail(id, title, items) {
 // ── S1. hex 하드코딩 ──────────────────────────────────────────────
 {
   const HEX_RE = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g;
+  const stripLineComment = (line) => line.replace(/\/\/.*$/, ''); // 주석 안 예시 코드는 대상 아님
   const violations = [];
   for (const file of ALL_SCSS_FILES) {
     if (rel(file) === 'scss/tokens/_primitive.scss') continue;
     const lines = fs.readFileSync(file, 'utf8').split('\n');
-    lines.forEach((line, i) => {
-      if (EXEMPTION_COMMENT_RE.test(line)) return;
+    lines.forEach((rawLine, i) => {
+      if (EXEMPTION_COMMENT_RE.test(rawLine)) return;
+      const line = stripLineComment(rawLine);
       const matches = line.match(HEX_RE);
-      if (matches) violations.push({ file: rel(file), line: i + 1, text: line.trim(), matches });
+      if (matches) violations.push({ file: rel(file), line: i + 1, text: rawLine.trim(), matches });
     });
   }
+  const byFile = new Map();
+  for (const v of violations) byFile.set(v.file, (byFile.get(v.file) || 0) + 1);
+  const byFileSorted = [...byFile.entries()].sort((a, b) => b[1] - a[1]);
   rows.push(
     row('S1', 'hex 하드코딩', violations.length ? 'FAIL' : 'PASS', violations.length,
       violations[0] ? `예: ${violations[0].file}:${violations[0].line}` : '')
   );
   addDetail('S1', 'hex 하드코딩', violations.map((v) => `${v.file}:${v.line}  ${v.text}`));
+  addDetail('S1-byfile', 'hex 하드코딩 — 파일별 건수', byFileSorted.map(([f, c]) => `${c}\t${f}`));
 }
 
 // ── S2. Figma ↔ CSS 토큰 대조 ─────────────────────────────────────
@@ -298,9 +304,10 @@ const lintResult = await stylelint.lint({
 // ── 출력 ──────────────────────────────────────────────────────────
 const hasFail = printReport('check-tokens.mjs — SCSS 검사', rows);
 for (const d of details) {
+  const cap = d.id.endsWith('-byfile') ? Infinity : 30;
   console.log(`\n-- ${d.id} ${d.title} (${d.items.length}건) --`);
-  for (const item of d.items.slice(0, 30)) console.log('  ' + item);
-  if (d.items.length > 30) console.log(`  ... 외 ${d.items.length - 30}건 (전체 개수는 위 표 참조)`);
+  for (const item of d.items.slice(0, cap)) console.log('  ' + item);
+  if (d.items.length > cap) console.log(`  ... 외 ${d.items.length - cap}건 (전체 개수는 위 표 참조)`);
 }
 
 process.exit(hasFail ? 1 : 0);

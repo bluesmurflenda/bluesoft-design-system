@@ -1,0 +1,141 @@
+// Figma DS Master > Theme collection(일반 시맨틱만: accent·brand·border·surface·text·icon) — 자동 생성.
+// 컴포넌트별 시맨틱(button/chip/tabs 등)은 여전히 각 컴포넌트 SCSS에서 채운다(3~7단계).
+// 출처: figma/tokens.theme.json. 값을 바꾸려면 Figma를 고치고 스냅샷을 다시 뽑은 뒤 재생성한다.
+// [data-theme='dark'] 는 Default와 값이 다른 항목만 오버라이드한다(전역 4장 — 상속되므로 같은 값 재선언 안 함).
+
+:root {
+  --brand-50: var(--blue-50);
+  --brand-100: var(--blue-100);
+  --brand-200: var(--blue-200);
+  --brand-300: var(--blue-300);
+  --brand-400: var(--blue-400);
+  --brand-500: var(--blue-500);
+  --brand-600: var(--blue-600);
+  --brand-700: var(--blue-700);
+  --brand-800: var(--blue-800);
+  --brand-900: var(--blue-900);
+  --text-primary: var(--neutral-800);
+  --text-secondary: var(--neutral-700);
+  --text-tertiary: var(--neutral-600);
+  --text-disabled: var(--neutral-400);
+  --text-inverse: var(--white);
+  --text-brand: var(--blue-600);
+  --text-danger: var(--red-600);
+  --accent-50: var(--sky-50);
+  --accent-100: var(--sky-100);
+  --accent-200: var(--sky-200);
+  --accent-300: var(--sky-300);
+  --accent-400: var(--sky-400);
+  --accent-500: var(--sky-500);
+  --accent-600: var(--sky-600);
+  --accent-700: var(--sky-700);
+  --accent-800: var(--sky-800);
+  --accent-900: var(--sky-900);
+  --surface-default: var(--white);
+  --surface-subtle: var(--neutral-50);
+  --surface-muted: var(--neutral-100);
+  --surface-inverse: var(--neutral-900);
+  --surface-brand-subtle: var(--blue-50);
+  --surface-accent-subtle: var(--sky-50);
+  --border-default: var(--neutral-200);
+  --border-strong: var(--neutral-300);
+  --border-brand: var(--blue-500);
+  --border-accent: var(--sky-500);
+  --border-danger: var(--red-600);
+  --icon-primary: var(--neutral-600);
+  --icon-subtle: var(--neutral-500);
+  --icon-strong: var(--neutral-800);
+  --icon-disabled: var(--neutral-300);
+  --icon-brand: var(--brand-600);
+  --icon-inverse: var(--white);
+}
+
+[data-theme='dark'] {
+  --brand-50: var(--blue-950);
+  --brand-100: var(--blue-900);
+  --brand-200: var(--blue-800);
+  --brand-300: var(--blue-700);
+  --brand-400: var(--blue-600);
+  --brand-600: var(--blue-400);
+  --brand-700: var(--blue-300);
+  --brand-800: var(--blue-200);
+  --brand-900: var(--blue-100);
+  --text-primary: var(--neutral-50);
+  --text-secondary: var(--neutral-300);
+  --text-tertiary: var(--neutral-400);
+  --text-disabled: var(--neutral-600);
+  --text-inverse: var(--neutral-900);
+  --text-brand: var(--blue-400);
+  --text-danger: var(--red-400);
+  --accent-50: var(--sky-950);
+  --accent-100: var(--sky-900);
+  --accent-200: var(--sky-800);
+  --accent-300: var(--sky-700);
+  --accent-400: var(--sky-600);
+  --accent-600: var(--sky-400);
+  --accent-700: var(--sky-300);
+  --accent-800: var(--sky-200);
+  --accent-900: var(--sky-100);
+  --surface-default: var(--neutral-900);
+  --surface-subtle: var(--neutral-950);
+  --surface-muted: var(--neutral-800);
+  --surface-inverse: var(--neutral-50);
+  --surface-brand-subtle: var(--blue-950);
+  --surface-accent-subtle: var(--sky-950);
+  --border-default: var(--neutral-700);
+  --border-strong: var(--neutral-600);
+  --border-danger: var(--red-500);
+  --icon-primary: var(--neutral-400);
+  --icon-strong: var(--neutral-200);
+  --icon-disabled: var(--neutral-700);
+  --icon-inverse: var(--neutral-900);
+}
+
+// ──────────────────────────────────────────────────────────────
+// SCSS 별칭 — 기존 $accent-*, $brand-* 등의 이름은 그대로 유지.
+// ──────────────────────────────────────────────────────────────
+
+$brand-50: var(--brand-50);
+$brand-100: var(--brand-100);
+$brand-200: var(--brand-200);
+$brand-300: var(--brand-300);
+$brand-400: var(--brand-400);
+$brand-500: var(--brand-500);
+$brand-600: var(--brand-600);
+$brand-700: var(--brand-700);
+$brand-800: var(--brand-800);
+$brand-900: var(--brand-900);
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-tertiary: var(--text-tertiary);
+$text-disabled: var(--text-disabled);
+$text-inverse: var(--text-inverse);
+$text-brand: var(--text-brand);
+$text-danger: var(--text-danger);
+$accent-50: var(--accent-50);
+$accent-100: var(--accent-100);
+$accent-200: var(--accent-200);
+$accent-300: var(--accent-300);
+$accent-400: var(--accent-400);
+$accent-500: var(--accent-500);
+$accent-600: var(--accent-600);
+$accent-700: var(--accent-700);
+$accent-800: var(--accent-800);
+$accent-900: var(--accent-900);
+$surface-default: var(--surface-default);
+$surface-subtle: var(--surface-subtle);
+$surface-muted: var(--surface-muted);
+$surface-inverse: var(--surface-inverse);
+$surface-brand-subtle: var(--surface-brand-subtle);
+$surface-accent-subtle: var(--surface-accent-subtle);
+$border-default: var(--border-default);
+$border-strong: var(--border-strong);
+$border-brand: var(--border-brand);
+$border-accent: var(--border-accent);
+$border-danger: var(--border-danger);
+$icon-primary: var(--icon-primary);
+$icon-subtle: var(--icon-subtle);
+$icon-strong: var(--icon-strong);
+$icon-disabled: var(--icon-disabled);
+$icon-brand: var(--icon-brand);
+$icon-inverse: var(--icon-inverse);

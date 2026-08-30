@@ -48,7 +48,7 @@ $select-sizes: (
 $select-label-fg: var(--field-label-fg);
 $select-hint-fg: var(--field-hint-fg);
 $select-fg: var(--list-item-fg);
-$select-icon-fg: $color-neutral-600;
+$select-icon-fg: $neutral-600;
 $select-disabled-bg: var(--field-bg-disabled);
 $select-bg: var(--field-bg);
 
@@ -56,9 +56,9 @@ $select-bg: var(--field-bg);
 // normal은 기존 공용 $effect-focus-ring(blue-500 alpha .30) 유지, invalid=red-200, valid=green-100. spread 2px(버튼·소셜버튼과 동일 컨벤션).
 // border-disabled(normal)는 field/border-disabled(neutral-200)로 수정 — 기존 neutral-300은 오기였다.
 $select-validation-colors: (
-  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: var(--field-border-disabled)),
-  invalid: (border: $color-red-500, border-hover: $color-red-600, border-focus: $color-red-500, ring: $color-red-200, border-disabled: $color-red-200),
-  valid: (border: $color-green-600, border-hover: $color-green-700, border-focus: $color-green-600, ring: $color-green-100, border-disabled: $color-green-200),
+  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: $blue-500, ring: $effect-focus-ring, border-disabled: var(--field-border-disabled)),
+  invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200),
+  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200),
 );
 
 .select {

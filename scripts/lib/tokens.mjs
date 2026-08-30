@@ -41,7 +41,10 @@ export function loadFigmaIds() {
 }
 
 export function cssVarName(tokenName) {
-  return '--' + tokenName.replace(/\//g, '-');
+  // 슬래시뿐 아니라 공백도 하이픈으로 — Figma에 "effect/focus ring"처럼 공백 섞인 변수명이 있다
+  // (Figma 쪽 네이밍 버그로 보인다. codeSyntax도 그 공백을 그대로 물고 있지만 공백은 유효한
+  // CSS 커스텀 프로퍼티 이름이 아니라 코드 쪽은 항상 하이픈으로 정규화한다).
+  return '--' + tokenName.replace(/[\s/]+/g, '-');
 }
 
 // cssVarName(뒤에 -- 뗀 것) -> {collection, name} 역방향 맵. 별칭(var(--x)) 해석에 쓴다.

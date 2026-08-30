@@ -63,8 +63,8 @@
     height: 24px;
     padding-inline: 10px; // 2026-08-28 실측: space 토큰(8/12)에 안 맞는 리터럴 값
     border-radius: $radius-full;
-    background-color: $color-slate-50;
-    color: $color-slate-600;
+    background-color: $neutral-50;
+    color: $neutral-600;
     @include mix.text(body-sm, medium);
   }
 
@@ -101,10 +101,10 @@
   }
 
   &-dark {
-    color: $color-white;
+    color: $white;
 
     .side-nav-item__icon {
-      color: $color-white;
+      color: $white;
     }
 
     &:hover {

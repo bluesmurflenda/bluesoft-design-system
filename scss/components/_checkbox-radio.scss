@@ -52,20 +52,20 @@ $choice-colors: (
     border: var(--choice-box-border),
     border-hover: var(--choice-box-border-hover),
     ring: $effect-focus-ring,
-    selected-bg: $color-blue-500,
-    selected-bg-hover: $color-blue-700,
+    selected-bg: $blue-500,
+    selected-bg-hover: $blue-700,
     label-fg: var(--choice-label-fg),
   ),
   valid: (
-    border: $color-green-600,
-    border-hover: $color-green-700,
-    ring: $color-green-100,
+    border: $green-600,
+    border-hover: $green-700,
+    ring: $green-100,
     label-fg: var(--choice-label-fg-valid),
   ),
   invalid: (
-    border: $color-red-500,
-    border-hover: $color-red-600,
-    ring: $color-red-200,
+    border: $red-500,
+    border-hover: $red-600,
+    ring: $red-200,
     label-fg: var(--choice-label-fg-invalid),
   ),
 );
@@ -173,8 +173,8 @@ $choice-description-fg: var(--choice-description-fg);
       margin: auto;
       width: 10px;
       height: 6px;
-      border-left: 2px solid $color-white;
-      border-bottom: 2px solid $color-white;
+      border-left: 2px solid $white;
+      border-bottom: 2px solid $white;
       transform: rotate(-45deg) translateY(-1px);
     }
 
@@ -185,7 +185,7 @@ $choice-description-fg: var(--choice-description-fg);
       bottom: 43.75%;
       left: 25%;
       right: 25%;
-      background-color: $color-white;
+      background-color: $white;
     }
   }
 
@@ -198,7 +198,7 @@ $choice-description-fg: var(--choice-description-fg);
       width: 8px;
       height: 8px;
       border-radius: $radius-full;
-      background-color: $color-white;
+      background-color: $white;
     }
   }
 }
@@ -242,7 +242,7 @@ $toggle-knob-size: 16px;
 $toggle-knob-inset: 2px;
 
 $toggle-colors: (
-  bg-on: $color-blue-500,
+  bg-on: $blue-500,
   bg-on-hover: var(--toggle-track-bg-on-hover),
   bg-off: var(--toggle-track-bg-off),
   bg-off-hover: var(--toggle-track-bg-off-hover),

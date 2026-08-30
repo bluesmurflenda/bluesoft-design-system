@@ -2,7 +2,7 @@
 // 로그인 폼 상단 전용 — 사이트 Header와 별개 컴포넌트. Align(center|left) 2변형.
 
 @use '../tokens/primitive' as *;
-@use '../tokens/semantic' as *;
+@use '../tokens/theme' as *;
 @use '../abstracts/mixins' as mix;
 
 $login-header-title-fg: $text-primary;

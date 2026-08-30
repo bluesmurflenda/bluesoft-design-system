@@ -11,8 +11,8 @@
 //   3. 바꾸고 싶은 --색상/치수 커스텀 프로퍼티만 :root 안에 다시 선언한다. 나머지는 그대로 상속된다.
 //
 // 주의사항
-//   - 여기서 덮어쓰는 건 CSS 커스텀 프로퍼티(--color-*)뿐이다. tokens/_primitive.scss의
-//     $color-blue-600 같은 SCSS $변수는 컴파일 타임에 이미 var(--color-blue-600) 문자열로
+//   - 여기서 덮어쓰는 건 CSS 커스텀 프로퍼티(--blue-* 등 Figma 변수명 그대로)뿐이다. tokens/_primitive.scss의
+//     $blue-600 같은 SCSS $변수는 컴파일 타임에 이미 var(--blue-600) 문자열로
 //     확정되므로, 이 파일에서 $변수를 재선언해도 이미 컴파일된 컴포넌트 CSS엔 아무 영향이 없다.
 //   - 코어 파일(scss/tokens/*, scss/components/*)은 절대 프로젝트 맞춤으로 고치지 않는다 —
 //     나중에 DS Master 쪽 변경을 다시 복붙(diff·병합)할 때 로컬 수정과 충돌한다.
@@ -25,19 +25,19 @@
 
 // :root {
 //   // brand 별칭이 참조하는 primitive blue 스케일을 프로젝트 색으로 교체.
-//   // semantic.scss의 $brand-* 는 이미 var(--color-blue-*)를 가리키므로,
-//   // 여기서 --color-blue-* 자체를 갈아끼우면 브랜드 관련 컴포넌트(버튼·칩·탭 등)에 전부 반영된다.
-//   --color-blue-50: #eff9f8;
-//   --color-blue-100: #d7f0ed;
-//   --color-blue-500: #14b8a6;
-//   --color-blue-600: #0d9488;
-//   --color-blue-700: #0f766e;
+//   // theme.scss의 $brand-* 는 이미 var(--blue-*)를 가리키므로,
+//   // 여기서 --blue-* 자체를 갈아끼우면 브랜드 관련 컴포넌트(버튼·칩·탭 등)에 전부 반영된다.
+//   --blue-50: #eff9f8;
+//   --blue-100: #d7f0ed;
+//   --blue-500: #14b8a6;
+//   --blue-600: #0d9488;
+//   --blue-700: #0f766e;
 // }
 //
 // [data-theme='dark'] {
-//   --color-blue-500: #2dd4bf;
-//   --color-blue-600: #14b8a6;
-//   --color-blue-700: #0d9488;
+//   --blue-500: #2dd4bf;
+//   --blue-600: #14b8a6;
+//   --blue-700: #0d9488;
 // }
 
 // ──────────────────────────────────────────────────────────────

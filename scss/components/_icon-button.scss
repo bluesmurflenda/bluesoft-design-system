@@ -62,7 +62,7 @@ $icon-button-extra-variants: (
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $effect-focus-ring;
+    box-shadow: 0 0 0 2px $white, 0 0 0 4px $effect-focus-ring;
   }
 }
 

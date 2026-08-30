@@ -1,57 +1,105 @@
-// Figma DS Master > Shape collection (Rounded / Square / Pill 모드), 2026-08-28 재정비
-// (bluesoft-token-scss-design.md 기준 — 컴파일타임 맵 선택 방식에서 [data-shape] 런타임 전환으로 변경)
-//
-// 2026-08-28 재확인(bluesoft-buttons-spec.md): 커스텀 프로퍼티 이름에서 --shape- 접두사를 뺐다 —
-// 이후 문서들이 전부 컴포넌트 네임스페이스를 접두사 없이 쓴다(--button-radius, --field-*, --calendar-*
-// 등). 같은 관례를 따른다.
-//
-// tabs-gap-pill/tabs-gap-underline은 Shape 컬렉션에 값이 있지만 3모드 전부 동일해서 실제로는
-// 모드와 무관한 상수다(button-padding-x/xs·md·lg와 같은 케이스) — CSS 변수화 대상에서 제외했고
-// 각 컴포넌트가 그대로 고정값을 쓴다. con-radius는 처음엔 같은 케이스로 보고 제외했으나
-// 2026-08-28 status-spec.md 재실측으로 Square에서 radius/none로 갈리는 게 확인돼 다시 포함시켰다.
-// 기본값은 rounded.
-
-@use 'primitive' as *;
+// Figma DS Master > Shape collection(Rounded/Square/Pill) — 자동 생성, 손으로 고치지 않는다.
+// 출처: figma/tokens.shape.json. 값을 바꾸려면 Figma를 고치고 스냅샷을 다시 뽑은 뒤 재생성한다.
+// 기본값은 Rounded. [data-shape='square'|'pill'] 는 Rounded와 값이 다른 항목만 오버라이드한다.
 
 :root {
-  --button-radius: #{$radius-sm};
-  --button-radius-xs: #{$radius-xsm}; // 2026-08-28 확인: xs도 모드에 따라 갈린다(이전 "모드 무관" 가정은 오류)
-  --button-padding-x-xs: #{$space-2};
-  --button-padding-x-sm: #{$space-3};
-  --button-padding-x-md: #{$space-5};
-  --button-padding-x-lg: #{$space-6};
-  --button-padding-x-xl: #{$space-6};
-  --calendar-radius: #{$radius-lg};
-  --calendar-cell-radius: #{$radius-full};
-  --con-radius: #{$radius-full};
-  --pagination-radius: #{$radius-sm};
-  --tabs-radius: #{$radius-full};
+  --button-radius: var(--radius-sm);
+  --tabs-radius: var(--radius-lg);
+  --pagination-radius: var(--radius-sm);
+  --con-radius: var(--radius-sm);
+  --button-padding-x-xs: var(--space-2);
+  --button-padding-x-sm: var(--space-3);
+  --button-padding-x-md: var(--space-5);
+  --button-padding-x-lg: var(--space-6);
+  --button-padding-x-xl: var(--space-6);
+  --calendar-radius: var(--radius-lg);
+  --calendar-cell-radius: var(--radius-full);
+  --tabs-gap-underline: var(--space-2);
+  --tabs-gap-pill: var(--space-2);
+  --modal-width-sm: 300px;
+  --modal-width-md: 500px;
+  --modal-width-lg: 800px;
+  --modal-width-xl: 1000px;
+  --board-col-date: 120px;
+  --board-col-views: 100px;
+  --board-col-meta: 120px;
+  --table-cell-padding-x-sm: var(--space-4);
+  --table-cell-padding-x-md: var(--space-4);
+  --table-cell-padding-x-lg: var(--space-4);
+  --calendar-gap-cell: var(--space-1);
+  --calendar-gap-row: var(--space-1);
+  --calendar-min-width: 280px;
+  --calendar-max-width: 420px;
+  --calendar-min-height: 354px;
+  --calendar-max-height: 474px;
+  --table-cell-min-height-sm: 36px;
+  --table-cell-min-height-md: 44px;
+  --table-cell-min-height-lg: 64px;
+  --scrollbar-radius: var(--radius-full);
+  --button-radius-xs: var(--radius-xsm);
+  --card-radius: var(--radius-lg);
 }
 
 [data-shape='square'] {
-  --button-radius: #{$radius-none};
-  --button-radius-xs: #{$radius-none};
-  --calendar-radius: #{$radius-none};
-  --calendar-cell-radius: #{$radius-none};
-  --con-radius: #{$radius-none};
-  --pagination-radius: #{$radius-none};
-  --tabs-radius: #{$radius-none};
+  --button-radius: var(--radius-none);
+  --tabs-radius: var(--radius-none);
+  --pagination-radius: var(--radius-none);
+  --con-radius: var(--radius-none);
+  --calendar-radius: var(--radius-none);
+  --calendar-cell-radius: var(--radius-none);
+  --scrollbar-radius: var(--radius-none);
+  --button-radius-xs: var(--radius-none);
+  --card-radius: var(--radius-none);
 }
 
 [data-shape='pill'] {
-  --button-radius: #{$radius-full};
-  --button-radius-xs: #{$radius-full};
-  --button-padding-x-sm: #{$space-4}; // Pill 모드만 sm 16(rounded/square는 12)
-  --button-padding-x-xl: #{$space-7}; // Pill 모드만 xl 28(rounded/square는 24)
-  --calendar-radius: #{$radius-2xl};
-  --calendar-cell-radius: #{$radius-full};
-  --con-radius: #{$radius-full};
-  --pagination-radius: #{$radius-full};
-  --tabs-radius: #{$radius-full};
+  --button-radius: var(--radius-full);
+  --tabs-radius: var(--radius-full);
+  --pagination-radius: var(--radius-full);
+  --con-radius: var(--radius-full);
+  --button-padding-x-sm: var(--space-4);
+  --button-padding-x-xl: var(--space-7);
+  --calendar-radius: var(--radius-2xl);
+  --button-radius-xs: var(--radius-full);
+  --card-radius: var(--radius-2xl);
 }
 
-// Shape 컬렉션과 무관하게 이 파일에 보관돼 온 modal 폭 상수(모드 무관 고정값).
-$modal-width-sm: 300px;
-$modal-width-md: 500px;
-$modal-width-lg: 800px;
-$modal-width-xl: 1000px;
+// ──────────────────────────────────────────────────────────────
+// SCSS 별칭
+// ──────────────────────────────────────────────────────────────
+
+$button-radius: var(--button-radius);
+$tabs-radius: var(--tabs-radius);
+$pagination-radius: var(--pagination-radius);
+$con-radius: var(--con-radius);
+$button-padding-x-xs: var(--button-padding-x-xs);
+$button-padding-x-sm: var(--button-padding-x-sm);
+$button-padding-x-md: var(--button-padding-x-md);
+$button-padding-x-lg: var(--button-padding-x-lg);
+$button-padding-x-xl: var(--button-padding-x-xl);
+$calendar-radius: var(--calendar-radius);
+$calendar-cell-radius: var(--calendar-cell-radius);
+$tabs-gap-underline: var(--tabs-gap-underline);
+$tabs-gap-pill: var(--tabs-gap-pill);
+$modal-width-sm: var(--modal-width-sm);
+$modal-width-md: var(--modal-width-md);
+$modal-width-lg: var(--modal-width-lg);
+$modal-width-xl: var(--modal-width-xl);
+$board-col-date: var(--board-col-date);
+$board-col-views: var(--board-col-views);
+$board-col-meta: var(--board-col-meta);
+$table-cell-padding-x-sm: var(--table-cell-padding-x-sm);
+$table-cell-padding-x-md: var(--table-cell-padding-x-md);
+$table-cell-padding-x-lg: var(--table-cell-padding-x-lg);
+$calendar-gap-cell: var(--calendar-gap-cell);
+$calendar-gap-row: var(--calendar-gap-row);
+$calendar-min-width: var(--calendar-min-width);
+$calendar-max-width: var(--calendar-max-width);
+$calendar-min-height: var(--calendar-min-height);
+$calendar-max-height: var(--calendar-max-height);
+$table-cell-min-height-sm: var(--table-cell-min-height-sm);
+$table-cell-min-height-md: var(--table-cell-min-height-md);
+$table-cell-min-height-lg: var(--table-cell-min-height-lg);
+$scrollbar-radius: var(--scrollbar-radius);
+$button-radius-xs: var(--button-radius-xs);
+$card-radius: var(--card-radius);

@@ -3,7 +3,7 @@
 // initials 원형(sm=32) 하나만 이 파일 안에 최소 구현한다. 겹침은 -8, 링은 surface/default 2px.
 
 @use '../tokens/primitive' as *;
-@use '../tokens/semantic' as *;
+@use '../tokens/theme' as *;
 @use '../abstracts/mixins' as mix;
 
 // 2026-08-28 Dark 모드 실측

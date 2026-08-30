@@ -16,17 +16,17 @@ $input-sizes: (
   xl: (height: 56px, padding-x: $space-4, type: body-lg, icon: 20px),
 );
 
-$input-label-fg: $color-neutral-800; // text-primary
-$input-placeholder-fg: $color-neutral-400;
-$input-disabled-bg: $color-neutral-100;
-$input-disabled-placeholder-fg: $color-neutral-300;
+$input-label-fg: $neutral-800; // text-primary
+$input-placeholder-fg: $neutral-400;
+$input-disabled-bg: $neutral-100;
+$input-disabled-placeholder-fg: $neutral-300;
 // 2026-08-28 실측: Shadow/xs — hover·disabled까지 공통, focus에서는 포커스 링으로 완전히 대체된다(합쳐지지 않음).
 $input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
 $input-validation-colors: (
-  normal: (border: $color-neutral-300, border-hover: $color-neutral-400, border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: $color-neutral-300, hint-fg: $color-neutral-600),
-  invalid: (border: $color-red-500, border-hover: $color-red-500, border-focus: $color-red-500, ring: $color-red-200, border-disabled: $color-red-200, hint-fg: $color-red-500),
-  valid: (border: $color-green-600, border-hover: $color-green-600, border-focus: $color-green-600, ring: $color-green-100, border-disabled: $color-green-200, hint-fg: $color-neutral-600),
+  normal: (border: $neutral-300, border-hover: $neutral-400, border-focus: $blue-500, ring: $effect-focus-ring, border-disabled: $neutral-300, hint-fg: $neutral-600),
+  invalid: (border: $red-500, border-hover: $red-500, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
+  valid: (border: $green-600, border-hover: $green-600, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: $neutral-600),
 );
 
 .input {
@@ -45,7 +45,7 @@ $input-validation-colors: (
     align-items: center;
     gap: $space-2;
     border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
-    background-color: $color-white;
+    background-color: $white;
     box-shadow: $input-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;
   }
@@ -66,7 +66,7 @@ $input-validation-colors: (
     background: none;
     padding: 0;
     // font-weight는 아래 @each의 text()로 이동
-    color: $color-neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
+    color: $neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
 
     &::placeholder {
       color: $input-placeholder-fg;

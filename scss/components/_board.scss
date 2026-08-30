@@ -3,7 +3,7 @@
 // 게시판형 목록. Notice/New 배지는 chip 컴포넌트를 그대로 재사용한다(.chip .chip-sm .chip-brand 등).
 
 @use '../tokens/primitive' as *;
-@use '../tokens/semantic' as *;
+@use '../tokens/theme' as *;
 @use 'sass:map';
 @use '../abstracts/mixins' as mix;
 @use '../abstracts/maps' as maps;

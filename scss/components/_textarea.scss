@@ -13,15 +13,15 @@ $textarea-sizes: (
   lg: (height: 160px, padding-x: $space-5, padding-y: $space-3, type: body-lg),
 );
 
-$textarea-label-fg: $color-neutral-800; // text-primary
-$textarea-placeholder-fg: $color-neutral-400;
-$textarea-disabled-bg: $color-neutral-100;
+$textarea-label-fg: $neutral-800; // text-primary
+$textarea-placeholder-fg: $neutral-400;
+$textarea-disabled-bg: $neutral-100;
 $textarea-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs, input과 공용
 
 $textarea-validation-colors: (
-  normal: (border: $color-neutral-300, border-hover: $color-neutral-400, border-focus: $color-blue-500, ring: $effect-focus-ring, border-disabled: $color-neutral-300, hint-fg: $color-neutral-600),
-  invalid: (border: $color-red-500, border-hover: $color-red-500, border-focus: $color-red-500, ring: $color-red-200, border-disabled: $color-red-200, hint-fg: $color-red-500),
-  valid: (border: $color-green-600, border-hover: $color-green-600, border-focus: $color-green-600, ring: $color-green-100, border-disabled: $color-green-200, hint-fg: $color-neutral-600),
+  normal: (border: $neutral-300, border-hover: $neutral-400, border-focus: $blue-500, ring: $effect-focus-ring, border-disabled: $neutral-300, hint-fg: $neutral-600),
+  invalid: (border: $red-500, border-hover: $red-500, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
+  valid: (border: $green-600, border-hover: $green-600, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: $neutral-600),
 );
 
 .textarea {
@@ -40,7 +40,7 @@ $textarea-validation-colors: (
     align-items: flex-start;
     gap: $space-2;
     border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
-    background-color: $color-white;
+    background-color: $white;
     box-shadow: $textarea-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;
   }
@@ -54,7 +54,7 @@ $textarea-validation-colors: (
     background: none;
     padding: 0;
     // font-weight는 아래 @each의 text()로 이동
-    color: $color-neutral-700;
+    color: $neutral-700;
 
     &::placeholder {
       color: $textarea-placeholder-fg;

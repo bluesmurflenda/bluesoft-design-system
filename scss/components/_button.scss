@@ -78,12 +78,12 @@ $button-gap: $space-2; // 아이콘·라벨 내부 gap. 사이즈별 세분값�
 
 $button-variants: (
   // primary/danger/tertiary-fg는 다크 실측값이 라이트와 동일해 primitive 그대로 유지.
-  primary: (bg: $color-blue-600, bg-hover: $color-blue-700, bg-pressed: $color-blue-800, fg: $color-white),
+  primary: (bg: $blue-600, bg-hover: $blue-700, bg-pressed: $blue-800, fg: $white),
   secondary: (bg: var(--button-secondary-bg), bg-hover: var(--button-secondary-bg-hover), bg-pressed: var(--button-secondary-bg-pressed), fg: var(--button-secondary-fg)),
-  tertiary: (bg: var(--button-tertiary-bg), bg-hover: $color-neutral-500, bg-pressed: var(--button-tertiary-bg-pressed), fg: $color-white),
+  tertiary: (bg: var(--button-tertiary-bg), bg-hover: $neutral-500, bg-pressed: var(--button-tertiary-bg-pressed), fg: $white),
   outline: (bg: var(--button-outline-bg), bg-hover: var(--button-outline-bg-hover), bg-pressed: var(--button-outline-bg-pressed), border: var(--button-outline-border), fg: var(--button-outline-fg)),
   ghost: (bg: transparent, bg-hover: var(--button-ghost-bg-hover), bg-pressed: var(--button-ghost-bg-pressed), fg: var(--button-ghost-fg)),
-  danger: (bg: $color-red-600, bg-hover: $color-red-700, bg-pressed: $color-red-800, fg: $color-white),
+  danger: (bg: $red-600, bg-hover: $red-700, bg-pressed: $red-800, fg: $white),
   scrim-dark: (bg: rgba(0, 0, 0, 0.3), bg-hover: rgba(0, 0, 0, 0.6), bg-pressed: rgba(0, 0, 0, 0.8), fg: var(--button-scrim-dark-fg)),
   scrim-light: (bg: rgba(255, 255, 255, 0.3), bg-hover: rgba(255, 255, 255, 0.6), bg-pressed: rgba(255, 255, 255, 0.8), fg: var(--button-scrim-light-fg)),
 );
@@ -116,7 +116,7 @@ $button-link-fg-disabled: var(--button-link-fg-disabled);
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px $color-white, 0 0 0 4px $effect-focus-ring;
+    box-shadow: 0 0 0 2px $white, 0 0 0 4px $effect-focus-ring;
   }
 }
 

@@ -84,9 +84,9 @@ $social-brand-colors: (
 // outline 테마 — 4개 소셜 공통(naver/kakao/apple의 outline 변형 + google 전체)
 .social-btn-outline,
 .social-btn-google {
-  background-color: $color-white;
-  border: 1px solid $color-neutral-300; // button/outline/border
-  color: $color-neutral-700; // button/outline/fg
+  background-color: $white;
+  border: 1px solid $neutral-300; // button/outline/border
+  color: $neutral-700; // button/outline/fg
 }
 
 // brand 테마 — naver/kakao/apple만 (google은 위 outline 규칙을 그대로 씀)
@@ -94,11 +94,11 @@ $social-brand-colors: (
   .social-btn-brand.social-btn-#{$social} {
     background-color: $bg;
     border: none;
-    color: $color-white;
+    color: $white;
   }
 }
 
 // 2026-08-28 재실측: kakao만 글자색이 검정으로 바뀌어 있다(카카오 공식 가이드와 일치, 이전 실측의 흰색은 stale).
 .social-btn-brand.social-btn-kakao {
-  color: $color-black;
+  color: $black;
 }

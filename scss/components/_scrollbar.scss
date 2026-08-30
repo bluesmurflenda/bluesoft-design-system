@@ -17,7 +17,7 @@
 
 $scrollbar-track-bg: var(--scrollbar-track-bg);
 $scrollbar-thumb-bg: var(--scrollbar-thumb-bg);
-$scrollbar-thumb-bg-hover: $color-neutral-500;
+$scrollbar-thumb-bg-hover: $neutral-500;
 // 2026-08-28 확인(missing-measurements G6 + nav-display-spec 8장 재확인): scrollbar/radius가
 // 실제 Figma 변수로 존재한다(값은 999=radius/full과 동일) — 변수 바인딩 원칙에 따라 전용 프로퍼티로 뺀다.
 $scrollbar-radius: $radius-full;
