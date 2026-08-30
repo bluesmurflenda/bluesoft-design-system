@@ -1,0 +1,188 @@
+{
+  "_meta": {
+    "exportedAt": "2026-08-30",
+    "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
+    "collection": "Shape",
+    "count": 35
+  },
+  "_modes": [
+    "Rounded",
+    "Square",
+    "Pill"
+  ],
+  "button/radius": {
+    "Rounded": "var(--radius-sm)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "tabs/radius": {
+    "Rounded": "var(--radius-lg)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "pagination/radius": {
+    "Rounded": "var(--radius-sm)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "con/radius": {
+    "Rounded": "var(--radius-sm)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "button/padding-x/xs": {
+    "Rounded": "var(--space-2)",
+    "Square": "var(--space-2)",
+    "Pill": "var(--space-2)"
+  },
+  "button/padding-x/sm": {
+    "Rounded": "var(--space-3)",
+    "Square": "var(--space-3)",
+    "Pill": "var(--space-4)"
+  },
+  "button/padding-x/md": {
+    "Rounded": "var(--space-5)",
+    "Square": "var(--space-5)",
+    "Pill": "var(--space-5)"
+  },
+  "button/padding-x/lg": {
+    "Rounded": "var(--space-6)",
+    "Square": "var(--space-6)",
+    "Pill": "var(--space-6)"
+  },
+  "button/padding-x/xl": {
+    "Rounded": "var(--space-6)",
+    "Square": "var(--space-6)",
+    "Pill": "var(--space-7)"
+  },
+  "calendar/radius": {
+    "Rounded": "var(--radius-lg)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-2xl)"
+  },
+  "calendar/cell/radius": {
+    "Rounded": "var(--radius-full)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "tabs/gap/underline": {
+    "Rounded": "var(--space-2)",
+    "Square": "var(--space-2)",
+    "Pill": "var(--space-2)"
+  },
+  "tabs/gap/pill": {
+    "Rounded": "var(--space-2)",
+    "Square": "var(--space-2)",
+    "Pill": "var(--space-2)"
+  },
+  "modal/width/sm": {
+    "Rounded": 300,
+    "Square": 300,
+    "Pill": 300
+  },
+  "modal/width/md": {
+    "Rounded": 500,
+    "Square": 500,
+    "Pill": 500
+  },
+  "modal/width/lg": {
+    "Rounded": 800,
+    "Square": 800,
+    "Pill": 800
+  },
+  "modal/width/xl": {
+    "Rounded": 1000,
+    "Square": 1000,
+    "Pill": 1000
+  },
+  "board/col/date": {
+    "Rounded": 120,
+    "Square": 120,
+    "Pill": 120
+  },
+  "board/col/views": {
+    "Rounded": 100,
+    "Square": 100,
+    "Pill": 100
+  },
+  "board/col/meta": {
+    "Rounded": 120,
+    "Square": 120,
+    "Pill": 120
+  },
+  "table/cell/padding-x/sm": {
+    "Rounded": "var(--space-4)",
+    "Square": "var(--space-4)",
+    "Pill": "var(--space-4)"
+  },
+  "table/cell/padding-x/md": {
+    "Rounded": "var(--space-4)",
+    "Square": "var(--space-4)",
+    "Pill": "var(--space-4)"
+  },
+  "table/cell/padding-x/lg": {
+    "Rounded": "var(--space-4)",
+    "Square": "var(--space-4)",
+    "Pill": "var(--space-4)"
+  },
+  "calendar/gap/cell": {
+    "Rounded": "var(--space-1)",
+    "Square": "var(--space-1)",
+    "Pill": "var(--space-1)"
+  },
+  "calendar/gap/row": {
+    "Rounded": "var(--space-1)",
+    "Square": "var(--space-1)",
+    "Pill": "var(--space-1)"
+  },
+  "calendar/min-width": {
+    "Rounded": 280,
+    "Square": 280,
+    "Pill": 280
+  },
+  "calendar/max-width": {
+    "Rounded": 420,
+    "Square": 420,
+    "Pill": 420
+  },
+  "calendar/min-height": {
+    "Rounded": 354,
+    "Square": 354,
+    "Pill": 354
+  },
+  "calendar/max-height": {
+    "Rounded": 474,
+    "Square": 474,
+    "Pill": 474
+  },
+  "table/cell/min-height/sm": {
+    "Rounded": 36,
+    "Square": 36,
+    "Pill": 36
+  },
+  "table/cell/min-height/md": {
+    "Rounded": 44,
+    "Square": 44,
+    "Pill": 44
+  },
+  "table/cell/min-height/lg": {
+    "Rounded": 64,
+    "Square": 64,
+    "Pill": 64
+  },
+  "scrollbar/radius": {
+    "Rounded": "var(--radius-full)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "button/radius-xs": {
+    "Rounded": "var(--radius-xsm)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-full)"
+  },
+  "card/radius": {
+    "Rounded": "var(--radius-lg)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-2xl)"
+  }
+}

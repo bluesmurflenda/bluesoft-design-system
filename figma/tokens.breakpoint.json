@@ -1,0 +1,253 @@
+{
+  "_meta": {
+    "exportedAt": "2026-08-30",
+    "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
+    "collection": "Breakpoint",
+    "count": 34
+  },
+  "_modes": [
+    "Wide",
+    "Desktop",
+    "Laptop",
+    "Tablet",
+    "Mobile"
+  ],
+  "grid/columns": {
+    "Wide": 12,
+    "Desktop": 12,
+    "Laptop": 12,
+    "Tablet": 8,
+    "Mobile": 4
+  },
+  "grid/gutter": {
+    "Wide": "var(--space-6)",
+    "Desktop": "var(--space-6)",
+    "Laptop": "var(--space-6)",
+    "Tablet": "var(--space-6)",
+    "Mobile": "var(--space-4)"
+  },
+  "grid/margin": {
+    "Wide": 360,
+    "Desktop": 120,
+    "Laptop": "var(--space-8)",
+    "Tablet": "var(--space-8)",
+    "Mobile": "var(--space-4)"
+  },
+  "breakpoint": {
+    "Wide": 1920,
+    "Desktop": 1440,
+    "Laptop": 1024,
+    "Tablet": 768,
+    "Mobile": 375
+  },
+  "container/padding-x": {
+    "Wide": 0,
+    "Desktop": 0,
+    "Laptop": "var(--space-8)",
+    "Tablet": "var(--space-8)",
+    "Mobile": "var(--space-4)"
+  },
+  "container/width": {
+    "Wide": 1200,
+    "Desktop": 1200,
+    "Laptop": 1024,
+    "Tablet": 768,
+    "Mobile": 375
+  },
+  "section/gap": {
+    "Wide": "var(--space-20)",
+    "Desktop": "var(--space-20)",
+    "Laptop": "var(--space-10)",
+    "Tablet": "var(--space-10)",
+    "Mobile": "var(--space-8)"
+  },
+  "section/gap-sub": {
+    "Wide": "var(--space-10)",
+    "Desktop": "var(--space-10)",
+    "Laptop": "var(--space-10)",
+    "Tablet": "var(--space-8)",
+    "Mobile": "var(--space-8)"
+  },
+  "section/padding-top": {
+    "Wide": "var(--space-20)",
+    "Desktop": "var(--space-20)",
+    "Laptop": "var(--space-10)",
+    "Tablet": "var(--space-10)",
+    "Mobile": "var(--space-8)"
+  },
+  "section/padding-bottom": {
+    "Wide": "var(--space-32)",
+    "Desktop": "var(--space-32)",
+    "Laptop": "var(--space-20)",
+    "Tablet": "var(--space-16)",
+    "Mobile": "var(--space-12)"
+  },
+  "header/height": {
+    "Wide": 80,
+    "Desktop": 80,
+    "Laptop": 64,
+    "Tablet": 64,
+    "Mobile": 64
+  },
+  "sub-visual/height": {
+    "Wide": 260,
+    "Desktop": 260,
+    "Laptop": 220,
+    "Tablet": 180,
+    "Mobile": 140
+  },
+  "tabs/height": {
+    "Wide": 56,
+    "Desktop": 56,
+    "Laptop": 56,
+    "Tablet": 48,
+    "Mobile": 48
+  },
+  "field/gap": {
+    "Wide": "var(--space-6)",
+    "Desktop": "var(--space-6)",
+    "Laptop": "var(--space-6)",
+    "Tablet": "var(--space-5)",
+    "Mobile": "var(--space-4)"
+  },
+  "field/body-gap": {
+    "Wide": "var(--space-4)",
+    "Desktop": "var(--space-4)",
+    "Laptop": "var(--space-4)",
+    "Tablet": "var(--space-4)",
+    "Mobile": "var(--space-3)"
+  },
+  "table/col-label-width": {
+    "Wide": 360,
+    "Desktop": 360,
+    "Laptop": 320,
+    "Tablet": 240,
+    "Mobile": 200
+  },
+  "type/display-2xl/size": {
+    "Wide": "var(--font-size-display-2xl)",
+    "Desktop": "var(--font-size-display-2xl)",
+    "Laptop": "var(--font-size-display-xl)",
+    "Tablet": "var(--font-size-display-lg)",
+    "Mobile": "var(--font-size-display-md)"
+  },
+  "type/display-2xl/leading": {
+    "Wide": "var(--font-leading-display-2xl)",
+    "Desktop": "var(--font-leading-display-2xl)",
+    "Laptop": "var(--font-leading-display-xl)",
+    "Tablet": "var(--font-leading-display-lg)",
+    "Mobile": "var(--font-leading-display-md)"
+  },
+  "type/display-xl/size": {
+    "Wide": "var(--font-size-display-xl)",
+    "Desktop": "var(--font-size-display-xl)",
+    "Laptop": "var(--font-size-display-lg)",
+    "Tablet": "var(--font-size-display-md)",
+    "Mobile": "var(--font-size-display-sm)"
+  },
+  "type/display-xl/leading": {
+    "Wide": "var(--font-leading-display-xl)",
+    "Desktop": "var(--font-leading-display-xl)",
+    "Laptop": "var(--font-leading-display-lg)",
+    "Tablet": "var(--font-leading-display-md)",
+    "Mobile": "var(--font-leading-display-sm)"
+  },
+  "type/display-lg/size": {
+    "Wide": "var(--font-size-display-lg)",
+    "Desktop": "var(--font-size-display-lg)",
+    "Laptop": "var(--font-size-display-md)",
+    "Tablet": "var(--font-size-display-sm)",
+    "Mobile": "var(--font-size-display-xs)"
+  },
+  "type/display-lg/leading": {
+    "Wide": "var(--font-leading-display-lg)",
+    "Desktop": "var(--font-leading-display-lg)",
+    "Laptop": "var(--font-leading-display-md)",
+    "Tablet": "var(--font-leading-display-sm)",
+    "Mobile": "var(--font-leading-display-xs)"
+  },
+  "type/display-md/size": {
+    "Wide": "var(--font-size-display-md)",
+    "Desktop": "var(--font-size-display-md)",
+    "Laptop": "var(--font-size-display-sm)",
+    "Tablet": "var(--font-size-display-xs)",
+    "Mobile": "var(--font-size-display-xs)"
+  },
+  "type/display-md/leading": {
+    "Wide": "var(--font-leading-display-md)",
+    "Desktop": "var(--font-leading-display-md)",
+    "Laptop": "var(--font-leading-display-sm)",
+    "Tablet": "var(--font-leading-display-xs)",
+    "Mobile": "var(--font-leading-display-xs)"
+  },
+  "type/display-sm/size": {
+    "Wide": "var(--font-size-display-sm)",
+    "Desktop": "var(--font-size-display-sm)",
+    "Laptop": "var(--font-size-display-xs)",
+    "Tablet": "var(--font-size-display-xs)",
+    "Mobile": "var(--font-size-body-2xl)"
+  },
+  "type/display-sm/leading": {
+    "Wide": "var(--font-leading-display-sm)",
+    "Desktop": "var(--font-leading-display-sm)",
+    "Laptop": "var(--font-leading-display-xs)",
+    "Tablet": "var(--font-leading-display-xs)",
+    "Mobile": "var(--font-leading-body-2xl)"
+  },
+  "type/display-xs/size": {
+    "Wide": "var(--font-size-display-xs)",
+    "Desktop": "var(--font-size-display-xs)",
+    "Laptop": "var(--font-size-display-xs)",
+    "Tablet": "var(--font-size-body-2xl)",
+    "Mobile": "var(--font-size-body-xl)"
+  },
+  "type/display-xs/leading": {
+    "Wide": "var(--font-leading-display-xs)",
+    "Desktop": "var(--font-leading-display-xs)",
+    "Laptop": "var(--font-leading-display-xs)",
+    "Tablet": "var(--font-leading-body-2xl)",
+    "Mobile": "var(--font-leading-body-xl)"
+  },
+  "type/body-2xl/size": {
+    "Wide": "var(--font-size-body-2xl)",
+    "Desktop": "var(--font-size-body-2xl)",
+    "Laptop": "var(--font-size-body-2xl)",
+    "Tablet": "var(--font-size-body-xl)",
+    "Mobile": "var(--font-size-body-lg)"
+  },
+  "type/body-2xl/leading": {
+    "Wide": "var(--font-leading-body-2xl)",
+    "Desktop": "var(--font-leading-body-2xl)",
+    "Laptop": "var(--font-leading-body-2xl)",
+    "Tablet": "var(--font-leading-body-xl)",
+    "Mobile": "var(--font-leading-body-lg)"
+  },
+  "type/body-xl/size": {
+    "Wide": "var(--font-size-body-xl)",
+    "Desktop": "var(--font-size-body-xl)",
+    "Laptop": "var(--font-size-body-xl)",
+    "Tablet": "var(--font-size-body-lg)",
+    "Mobile": "var(--font-size-body-lg)"
+  },
+  "type/body-xl/leading": {
+    "Wide": "var(--font-leading-body-xl)",
+    "Desktop": "var(--font-leading-body-xl)",
+    "Laptop": "var(--font-leading-body-xl)",
+    "Tablet": "var(--font-leading-body-lg)",
+    "Mobile": "var(--font-leading-body-lg)"
+  },
+  "type/body-lg/size": {
+    "Wide": "var(--font-size-body-lg)",
+    "Desktop": "var(--font-size-body-lg)",
+    "Laptop": "var(--font-size-body-lg)",
+    "Tablet": "var(--font-size-body-lg)",
+    "Mobile": "var(--font-size-body-sm)"
+  },
+  "type/body-lg/leading": {
+    "Wide": "var(--font-leading-body-lg)",
+    "Desktop": "var(--font-leading-body-lg)",
+    "Laptop": "var(--font-leading-body-lg)",
+    "Tablet": "var(--font-leading-body-lg)",
+    "Mobile": "var(--font-leading-body-sm)"
+  }
+}

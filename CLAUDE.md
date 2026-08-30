@@ -1,33 +1,462 @@
-# bluesoft-design-system
+# BLUESOFT 디자인시스템 — 작업 규칙
 
-BLUESOFT 디자인시스템(SCSS)을 SI 프로젝트마다 복붙해 쓸 master SCSS로 코드화하는 저장소.
-LXP(coursemos)용이 아니다 — LXP는 Moodle+Grunt 종속이라 별개이며 `coursemos-publishing` 스킬 대상이 아니다.
+전역 `~/.claude/CLAUDE.md` 를 따르되, 이 문서가 우선한다.
 
-## 참조
+**이 문서에는 값·수치가 없다.** 값은 Figma MCP 로 조회한다.
+숫자가 필요하면 검증 스크립트를 돌리거나 직접 조회한다.
 
-- Figma DS Master: fileKey `kJD5jv7RNKxLD1hP8oKtBG`
-- Figma Icon Set: fileKey `T4yvRXEYW0GKecETo3CyYc`
-- GitHub: https://github.com/bluesmurflenda/bluesoft-design-system.git
-- DS 최신 상태(컴포넌트 스펙·토큰 체계): `~/.claude/ds/bluesoft-ds.md`
+| 파일 키 | 파일 |
+|---|---|
+| `kJD5jv7RNKxLD1hP8oKtBG` | DS Master |
+| `T4yvRXEYW0GKecETo3CyYc` | Icon Set |
 
-## 폴더 구조
+## 역할 경계
+
+| 주체 | 하는 일 | 하지 않는 일 |
+|---|---|---|
+| **코드 작업(커서)** | SCSS 작성 · Figma **조회** · 검사 실행 · `PROGRESS.md` 갱신 | **Figma 수정** · 값 추측 · 결정 |
+| **Figma 작업** | 실측 · 수정 · ADR 제안 · 검사 항목 설계 | 코드 작성 |
+| **사람** | 시각적 판단 · 확신도 낮음 승인 · 우선순위 | 값 대조 (스크립트가 한다) |
+
+**Figma 를 고쳐야 할 상황이 나오면 코드 작업을 멈추고 보고한다.**
+조회는 하되 쓰기 API 를 호출하지 않는다.
+
+## 문서
+
+| 파일 | 내용 | 갱신 |
+|---|---|---|
+| `CLAUDE.md` (이 문서) | 작업 규칙 | Figma 작업 시 |
+| `DECISIONS.md` | 결정 기록 (ADR). append-only | 결정이 날 때 |
+| `PROGRESS.md` | 진행 상태 | **커서가 단계마다** |
+| `scripts/README.md` | 검사 항목 정의 | 새 문제가 나올 때 |
+| `~/.claude/common/figma.md` | Figma 공통 작업법 | 프로젝트 무관 |
+| `figma/tokens.*.json` | 변수 스냅샷 (값의 기준) | **퍼블리시할 때마다** |
+
+**이 5개가 전부다.** 다른 md 파일을 발견하면 읽지 않는다 — 폐기된 스냅샷이다.
+
+---
+
+## 1. 토큰 계층
 
 ```
-scss/tokens/       _primitive, _semantic, _breakpoint, _shape
-scss/components/   button, icon-button, social-button, chip, tabs, table, board, calendar, modal, checkbox-radio, scrollbar 외
-scss/utilities/    _reset, _typography
-scss/_function.scss
-scss/_project-overrides.example.scss   SI 프로젝트 복붙 시 브랜드색 등을 오버라이드하는 템플릿(main.scss 미포함, 사용법은 파일 상단 주석 참조)
-scss/main.scss     진입점
-icons/
-docs/              GitHub Pages 시각화 페이지
+Primitive          색 램프·space·radius·font·motion. hex 가 있는 유일한 곳
+  ↓ 별칭
+Theme (시맨틱)     surface · text · border · icon · brand · accent
+  ↓ 별칭
+Theme (컴포넌트)   button · card · field · nav · table · tabs …
+  ↓ 참조
+컴포넌트 / CSS
 ```
 
-## 결정 사항
+### 컴포넌트는 시맨틱을 거친다
 
-- 빌드 도구(Grunt 등)는 아직 안 붙임 — 필요해지면 그때 추가
-- 시각화 웹페이지는 GitHub Pages(`/docs`)로 서빙 — repo를 public으로 둔다
-- 위치는 SFTP 미러(`d:\ftp-blue`)와 무관한 순수 로컬 git 저장소
-- **배포 방식은 복붙 고정**(2026-08-28): 회사 내부 사이트를 제외한 외부 상업 프로젝트는 프로젝트 성격이 저마다 달라 `scss/` 폴더를 그대로 복붙해 쓴다. git subtree·npm 패키지화 같은 자동 업데이트 전파 방식은 검토하지 않는다 — 프로젝트별 브랜드색 차이는 복붙한 뒤 `:root`에서 필요한 `--color-*`만 덮어쓰는 식으로 대응(코어 파일 수정 없이 가능, CSS 커스텀 프로퍼티 구조 덕분).
-- **토큰은 CSS 커스텀 프로퍼티 기반**(2026-08-28, 다크모드 대비). `_primitive.scss`가 `:root`/`[data-theme='dark']`에 `--color-*` 등을 정의하고, 기존 `$color-*` SCSS 변수는 전부 `var(--color-*)`를 가리키는 별칭이다 — 컴포넌트 파일은 `$변수`를 그대로 쓰면 된다. `_semantic.scss`도 자체 `--accent-*`/`--brand-*` 등 한 겹을 더 두고 primitive의 `var()`를 참조한다(primitive→semantic→component 3단).
-  **Figma Theme 컬렉션에 Dark 모드가 아직 없어서** `[data-theme='dark']` 블록은 구조만 두고 light와 완전히 같은 값을 임시로 넣어뒀다. Figma에 실제 다크 값이 생기면 `_primitive.scss`의 다크 블록 색상 항목만 교체하면 된다(컴포넌트 파일은 손댈 필요 없음).
+프리미티브를 직접 참조하면 **다크모드에서 그대로 남는다.**
+같은 값의 시맨틱 토큰이 있으면 그것을 경유한다.
+
+```scss
+.btn-primary { background: var(--blue-600); }          // 금지
+.btn-primary { background: var(--button-primary-bg); } // 정상
+```
+
+### 프리미티브 직접 참조가 정상인 경우
+
+| 유형 | 이유 |
+|---|---|
+| 시맨틱 계층 자체 | 프리미티브를 가리키는 것이 이 계층의 역할 |
+| 브랜드 램프 (`brand/*` · `accent/*`) | 브랜드 색을 바꾸는 지점 |
+| 의미색 (성공·경고·오류·주말) | 의미가 색에 있음 |
+| 브랜드 자산 (로고·소셜) | 색이 고정. 모드 무관 |
+| 유채색 배경 위 글자 | 대비 확보용 고정 |
+| 컴포넌트 고유 톤 | 대응하는 시맨틱이 없음 |
+| 알파 토큰 | Figma 별칭으로 알파를 못 넣음 |
+| 색이 아닌 것 (`font/*`·`space/*`·`radius/*`) | 모드가 없음 |
+
+**색이 아닌 프리미티브는 검사 대상이 아니다.**
+
+### 형제 참조를 만들지 않는다
+
+같은 그룹의 다른 하위그룹을 참조하면 두 Variant 가 묶여 하나를 바꿀 때 다른 것도 바뀐다.
+
+```
+tabs/pill/fg → tabs/underline/fg   // 금지 — pill 과 underline 이 결합
+tabs/pill/fg → text/tertiary       // 정상 — 공통 조상을 각자 참조
+```
+
+**값이 같아도 Variant 별로 독립 토큰을 둔다.** 토큰 개수는 늘지만 별칭이라 유지 비용이 낮다.
+
+### 독립과 시맨틱 경유는 충돌하지 않는다
+
+Variant 별 독립 토큰이 **같은 시맨틱을 각자 참조**하면 둘 다 만족한다.
+
+```
+tabs/underline/fg  ┐
+tabs/pill/fg       ├→ text/tertiary
+tabs/segmented/fg  ┘
+```
+
+`text/tertiary` 를 바꾸면 셋 다 바뀌지만, `pill` 만 조정하고 싶으면
+`tabs/pill/fg` 의 참조 대상만 바꾸면 된다. **형제를 거치면 이게 불가능하다.**
+
+---
+
+## 2. 컬렉션과 모드
+
+| 컬렉션 | CSS |
+|---|---|
+| Primitive | `:root` |
+| Theme | `:root` + `[data-theme="dark"]` |
+| Shape | `:root` + `[data-shape="…"]` |
+| Breakpoint | `:root` + 미디어쿼리 |
+
+**모드는 실제로 값이 갈릴 때만 만든다.** 프로젝트마다 자동으로 추가하지 않는다.
+
+### `Theme=dark` 는 다크모드가 아니다
+
+`Header` · `_Nav/Menu Item` · `_Side Nav/Item` · `Tooltip` 의 `Theme` 축은
+**"어두운 스타일"** 이다. 라이트모드 사이트에서도 어두운 헤더로 쓴다.
+
+```
+Theme=light  →  모드를 따라감 (다크모드에서 어두워짐)
+Theme=dark   →  항상 어두움
+```
+
+**따라서 `*/dark/*` 토큰은 다크모드에서 반전하지 않는다.** 반전하면 "어두운 스타일"이 흰색이 된다.
+`tooltip/light/*` 도 마찬가지다 — "밝은 스타일"이므로 어두워지면 안 된다.
+
+**검사 규칙:** 토큰명에 `/dark/` 또는 `/light/` 가 들어가면 라이트·다크 값이 같아야 한다.
+
+**주의:** `brand/*` · `accent/*` 램프는 다크모드에서 반전된다.
+"어두운 스타일" 토큰이 이것을 참조하면 **별칭은 같아도 값이 뒤집힌다.**
+프리미티브(`blue/*` 등)로 고정한다.
+
+코드에서는 `.header--dark` 와 `[data-theme="dark"]` 를 구분해서 쓴다.
+
+`Logo` 의 `Color` 축은 성격이 다르다 — 로고 색상 선택이다.
+
+### light 와 dark 의 hover 동작이 다르다
+
+nav 계열에서 **light 만 hover 시 글자색이 바뀐다.** dark 는 전 상태 고정이다.
+이 비대칭을 코드에 반영한다.
+
+---
+
+## 3. 대비 기준
+
+기준표는 `figma.md` 7장.
+
+**아이콘 전용 토큰이 따로 있는 이유가 이 기준 차이다.** `text/*` 를 아이콘에 재사용하면
+기준이 섞여 나중에 아이콘만 조정할 수 없다.
+
+`fg` / `bg` 쌍은 **라이트·다크 양쪽에서** 검사한다. 한쪽만 보면 놓친다.
+
+알파 배경 처리는 `figma.md` 7장.
+
+---
+
+## 4. 슬롯과 크기
+
+**슬롯은 이름이 아니라 사이징으로 고른다.**
+
+`Table/Cell` 의 슬롯 이름은 실제 용도와 어긋난다.
+인스턴스 오버라이드 유실 위험 때문에 이름을 유지하기로 확정했다.
+
+| 사이징 | 넣을 수 있는 것 |
+|---|---|
+| FIXED | 크기가 고정된 것 (아이콘·아바타 1개) |
+| HUG | 폭이 가변인 것 (Chip · Avatar Group) |
+
+**FIXED 슬롯에 가변폭 컴포넌트를 넣으면 눌린다.**
+
+SLOT 안의 인스턴스는 폭 조절이 제한된다.
+컬럼 폭이 다른 테이블은 `Table/Row` 를 쓰지 않고 **셀 인스턴스를 오토레이아웃으로 나열한다.**
+디태치가 아니다 — 셀은 인스턴스로 남아 마스터 변경을 계속 받는다.
+
+### 높이는 고정하지 않는다
+
+**`min-height` 로 둔다.** 고정하면 텍스트가 여러 줄일 때 잘린다.
+한 줄일 때는 고정과 같고 여러 줄일 때만 늘어난다.
+
+**여백은 `padding-y` 가 아니라 세로 중앙 정렬이 만든다.**
+둘을 함께 쓰면 여러 줄에서 높이가 과도해진다.
+
+### Figma 시안값과 CSS 구조값을 구분한다
+
+Figma 는 `width: 100%` 를 표현할 수 없어 브레이크포인트별 실제 폭이 필요하다.
+CSS 는 `width:100%` + `max-width` + `margin-inline:auto` 구조를 쓴다.
+
+**같은 개념에 토큰을 둘 두지 않는다.** 시안용 값 하나만 두고,
+CSS 구조에만 필요한 값(상한 등)은 코드에서 처리한다.
+
+---
+
+## 5. 작업 순서
+
+전역 지침의 **2장(값의 출처)·3장(되돌리기 어려운 작업)을 따른다.**
+여기에는 Figma 고유 절차만 적는다.
+
+### 컴포넌트를 만들기 전
+
+**파일 전체에서 같은 이름을 검색한다.** `search_design_system` 은 로컬 컴포넌트를 놓치므로
+"없다"의 근거로 쓸 수 없다.
+
+기존 컴포넌트를 인스턴스·중첩·슬롯으로 재사용할 수 있는지 먼저 본다.
+
+### 값을 바꾸기 전
+
+**`componentPropertyDefinitions` · `children` 을 그 컴포넌트에 대해 다시 읽는다.**
+다른 컴포넌트에서 일반화하지 않는다. 같은 이름의 슬롯도 구조가 다를 수 있다.
+
+완료 검증은 **수치로** 한다 — 좌표·색·개수.
+"속성 개수" 같은 대리 지표는 검증이 아니다.
+
+### 삭제하기 전
+
+전역 3장 절차에 더해, **참조 범위에 다른 프로젝트 파일을 포함한다.**
+DS Master 에서 미사용이어도 프로젝트에서 쓰는 토큰이 있다.
+
+**description 이 있는 토큰은 삭제 후보에서 제외한다.** 이유가 적혀 있다는 건 의도적이라는 뜻이다.
+
+---
+
+## 6. 컴포넌트 세트 규격
+
+- 세트 프레임에 **점선 테두리**
+- 세트 프레임 배경은 **`surface/default`**
+  → 모드를 따라가므로 페이지를 `Theme=Dark` 로 바꾸면 **다크 변형을 그 자리에서 확인**할 수 있다
+
+레이어 순서 규칙은 `figma.md` 6장.
+
+---
+
+## 7. 토큰 위생
+
+검사 스크립트가 잡는 항목들의 근거.
+
+### 네이밍
+
+- **같은 뜻에 같은 접미사를 쓴다.** 보조 텍스트는 `fg-supporting` 하나로 통일한다
+- **접미사 순서를 뒤집지 않는다.** `supporting-fg` 금지
+- **같은 성격의 그룹은 형식을 맞춘다.** `text/primary` 와 `icon/primary` 처럼
+- **깊이는 3단계 이하.** 4단계가 필요하면 하이픈으로 합친다 (`calendar/cell/selected-fg`)
+
+### 참조 구조
+
+- **별칭이 자기 자신으로 돌아오면 안 된다** (순환)
+- **별칭 사슬은 3단계 이하.** 더 깊으면 계층 설계가 잘못됐다는 신호다
+- **존재하지 않는 변수를 가리키는 참조가 없어야 한다**
+
+### 메타데이터
+
+`codeSyntax` · `scopes` · `description` 규칙은 `figma.md` 4장.
+**이 프로젝트는 세 가지 모두 빠짐없이 채운다** — 검사 항목 D12 가 잡는다.
+
+### 모드 값
+
+- **모든 모드에 값이 있어야 한다**
+- **브레이크포인트 값은 Wide → Mobile 로 가면서 커지지 않는다.**
+  예외가 있으면 `description` 에 이유를 적는다
+
+---
+
+## 8. Figma 작업
+
+**`~/.claude/common/figma.md` 를 따른다.** 조회·검증·삭제 절차, API 제약, 폰트 문제가 거기 있다.
+
+이 프로젝트에서 실제로 겪은 것 — **단정하지 말고 재현되면 실측한다.**
+
+- `maxWidth` 를 "바인딩 불가"로 오진했다. 실제 원인은 라이브러리 변수 조회 실패였다
+- 인스턴스 `HUG` 를 "불가"로 오진했다. `resize` 실패와 뭉뚱그린 것이었다
+
+**증상과 원인은 다르다.** 동작하지 않으면 왜 그런지 먼저 좁힌다.
+---
+
+## 9. 퍼블리시 순서
+
+```
+프로젝트 파일의 참조 정리 (삭제·이름변경한 토큰)
+  → DS Master 퍼블리시
+  → 프로젝트에서 라이브러리 업데이트 수락
+  → 인스턴스 재조회로 실측
+  → 코드 반영
+```
+
+**반대로 하면 시안과 코드가 어긋난다.**
+
+---
+
+## 10. 검증
+
+값 대조는 사람이 하지 않는다. **스크립트가 한다.**
+
+검사 항목은 `scripts/README.md` 에 있다.
+**새 문제가 나오면 항목을 추가한다.** 항목은 줄지 않는다.
+
+---
+
+## 11. 코드 구현 절차
+
+### 파일 구조
+
+```
+scss/
+├─ tokens/
+│  ├─ _primitive.scss      hex 가 있는 유일한 곳. Figma Primitive 컬렉션
+│  ├─ _theme.scss          :root + [data-theme="dark"]
+│  ├─ _shape.scss          :root + [data-shape="…"]
+│  └─ _breakpoint.scss     :root + 미디어쿼리
+├─ abstracts/
+│  ├─ _maps.scss           $type-scale · $space · $radius · 컴포넌트 Map
+│  ├─ _mixins.scss         text() · mq() · container()
+│  └─ _functions.scss      space() · radius()
+├─ base/
+│  ├─ _reset.scss
+│  └─ _typography.scss     .text-* 유틸 (@each 생성)
+└─ components/             시맨틱 토큰만 참조
+   ├─ _button.scss
+   ├─ _field.scss
+   └─ …
+
+scripts/
+├─ README.md              검사 항목 정의
+├─ check-nodes.mjs        Figma 노드 스캔 (REST)
+└─ check-tokens.mjs       SCSS + tokens.json 대조
+
+figma/
+├─ tokens.primitive.json  MCP 로 추출한 변수 스냅샷
+├─ tokens.theme.json
+├─ tokens.shape.json
+└─ tokens.breakpoint.json
+```
+
+**`figma/tokens.*.json` 은 Figma 퍼블리시할 때마다 다시 뽑는다.**
+Variables REST API 를 못 쓰므로 이 파일이 값의 기준이다.
+
+`tokens/` 4개 파일은 **Figma 조회 결과를 옮긴 것**이다. 사람이 값을 임의로 바꾸지 않는다.
+
+**첫 생성은 수동이다.** Figma MCP 로 각 컬렉션을 조회해 CSS 변수로 옮긴다.
+`check:tokens` 의 토큰 대조(S2)가 누락·불일치를 잡는다.
+
+나중에 Figma REST API → 자동 생성으로 바꿀 수 있다.
+그때를 위해 **`_primitive.scss` 와 `_theme.scss` 는 사람이 손대지 않는 파일로 취급한다.**
+예외 주석이 필요하면 그 줄에만 남긴다.
+
+### 작업 순서
+
+앞 단계가 끝나야 다음이 가능하다. 각 단계 끝에 검사를 통과시킨다.
+
+| 순서 | 대상 | 이유 |
+|---|---|---|
+| **0-a** | **`figma/tokens.*.json` 추출 (MCP)** | **Variables REST API 를 못 써서 스냅샷이 필요하다** |
+| **0-b** | **`scripts/` 검사 스크립트 + `package.json`** | **이것이 없으면 1단계를 검증할 수 없다** |
+| 1 | `tokens/` 4개 파일 | 나머지가 전부 참조한다 |
+| 2 | `abstracts/` + `base/_typography.scss` | 컴포넌트가 mixin 을 쓴다 |
+| 3 | 버튼 계열 | `focus ring` · `radius` 가 전체에서 재사용 |
+| 4 | 입력 계열 | 3의 ring 사용법이 이어진다 |
+| 5 | 상태 표시 (chip · alert · card · tooltip 등) | chip 토큰이 뒤에서 재사용 |
+| 6 | 테이블 · 보드 | 슬롯에 3·4·5 컴포넌트가 들어간다 |
+| 7 | 내비게이션 · 표시 (tabs · pagination · modal 등) | 앞 토큰을 가장 많이 참조 |
+
+**0단계는 `scripts/README.md` 의 항목 정의를 그대로 구현한다.**
+검사 없이 코드를 쌓으면 뭐가 틀렸는지 나중에 못 찾는다.
+
+**Figma Variables REST API 는 이 계정에서 못 쓴다**(Enterprise 전용).
+그래서 변수 값은 `figma/tokens.*.json` 스냅샷으로 둔다 — 추출 방법은 `scripts/README.md`.
+
+**한 단계 안에서는 컴포넌트 단위로 나눈다.** 컴포넌트 하나를 끝내고 다음으로 간다.
+
+### 각 컴포넌트 작업 흐름
+
+```
+1. Figma MCP 로 그 컴포넌트를 조회한다
+   - 축(variantOptions) · 속성 · 각 변형의 크기·토큰
+2. Plan 을 적는다 — 만들 클래스, 쓸 Map, 예외 처리
+3. 코드를 쓴다
+4. 검사 스크립트를 통과시킨다
+5. PROGRESS.md 를 갱신한다
+6. 다음 컴포넌트로
+```
+
+**문서와 라이브가 다르면 `PROGRESS.md` 의 "발견한 불일치" 에 적는다.**
+라이브대로 코드를 쓰고 계속 진행한다 — 그것 때문에 멈추지 않는다.
+
+**조회 없이 값을 쓰지 않는다.** 이 문서에 값이 없는 이유다.
+
+### 반응형 타이포
+
+`Breakpoint` 컬렉션의 `type/*` 토큰이 CSS 변수로 나온다.
+`_breakpoint.scss` 에서 미디어쿼리로 값이 바뀌므로 **컴포넌트는 미디어쿼리를 쓰지 않는다.**
+
+```scss
+// _breakpoint.scss
+:root { --type-display-lg-size: var(--font-size-display-xs); }        // Mobile 기본
+@media (min-width: 1024px) { :root { --type-display-lg-size: var(--font-size-display-md); } }
+
+// _maps.scss
+$type-scale: (
+  display-lg: (size: var(--type-display-lg-size), leading: var(--type-display-lg-leading), family: display)
+);
+
+// 컴포넌트 — 미디어쿼리 없이 반응형
+.hero__title { @include text(display-lg, bold); }
+```
+
+**Figma 텍스트 스타일이 `type/*` 을 바인딩한 것만 반응형이다.**
+프리미티브를 직접 바인딩한 스타일은 고정이다. 조회해서 확인한다.
+
+### 완료 판정
+
+```bash
+npm run check:nodes     # Figma 노드 스캔 (FIGMA_TOKEN 필요)
+npm run check:tokens    # SCSS + tokens.json 대조
+npm run build           # 컴파일
+```
+
+**셋 다 통과해야 그 단계가 끝난 것이다.** 하나라도 실패하면 커밋하지 않는다.
+
+**`FIGMA_TOKEN` 이 없으면 `check:nodes` 는 skip 된다.** 그 사실을 출력하고 나머지로 판정한다.
+토큰이 없다는 이유로 작업을 멈추거나 사람에게 묻지 않는다.
+
+변수 검사(D3~D9·D11~D13)는 **Figma 를 수정한 뒤 MCP 로 돌린다.** 코드 작업 중에는 필요 없다.
+
+통과하면 `PROGRESS.md` 의 해당 단계를 `검사통과` 로 바꾼다.
+
+---
+
+## 12. 확인이 필요할 때
+
+`DECISIONS.md` 에 없는 판단이 필요하면 **작업을 멈추고 보고한다.**
+스스로 정하지 않는다. 결정이 나면 `DECISIONS.md` 에 기록한다.
+
+**다음은 멈출 이유가 아니다** — 이 문서와 `DECISIONS.md` 에 답이 있다.
+
+| 상황 | 답 |
+|---|---|
+| 파일을 어디에 만드나 | 11장 파일 구조 |
+| 무엇부터 하나 | 11장 작업 순서 |
+| 값이 얼마인가 | Figma MCP 조회 |
+| 프리미티브를 직접 써도 되나 | 1장 "프리미티브 직접 참조가 정상인 경우" |
+| 다크값이 왜 같은가 | 2장 · ADR-002 |
+| 언제 끝난 것인가 | 11장 완료 판정 |
+| FIGMA_TOKEN 이 없다 | `scripts/README.md` — skip 하고 진행 |
+| `.env` 를 만들어도 되나 | 된다. `.gitignore` 에 추가 |
+
+---
+
+## 13. 실패했던 사례
+
+같은 실수를 막기 위한 기록. **틀릴 때마다 한 줄 추가한다.**
+
+| 사례 | 원인 |
+|---|---|
+| 툴팁이 다크에서 흰색 | 폐기된 문서의 옛 값을 코드에 넣음 |
+| 체크박스가 다크에서 흰 덩어리 | 프리미티브 직접 참조 |
+| 이미 있는 컴포넌트를 중복 생성 시도 | 한 번 조회로 "없다" 단정 |
+| 셀 데이터 소실 | 프로브 없이 일괄 변경 |
+| 로고 중복 생성 후 삭제 | "내가 만든 것"이라 확인 생략 |
+| 인스턴스 내부를 자체 레이어로 세어 과대 보고 | 소유 구분 안 함 |
+| 상위 N개만 출력하고 "전부"라 단정 | 범위를 밝히지 않음 |
+| 이름만 바꾸고 "완료" 보고 | 참조 구조를 안 고침 |
+| 컨테이너 패딩 토큰을 화면 여백에 씀 | 토큰 용도 확인 안 함 |
+| 세트 배경 통일에서 일부 누락 | 전수 확인 안 함 |
+| API 제약을 두 번 오진 | 증상과 원인을 구분 안 함 |
+| 문서에 값·수치를 넣어 낡음 | 방침과 값을 섞음 |
