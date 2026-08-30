@@ -8,8 +8,8 @@
 @use 'abstracts/functions';
 @use 'abstracts/mixins';
 
-@use 'utilities/reset';
-@use 'utilities/typography';
+@use 'base/reset';
+@use 'base/typography';
 
 @use 'components/button';
 @use 'components/icon-button';

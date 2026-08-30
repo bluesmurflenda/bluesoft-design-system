@@ -10,7 +10,7 @@
 ## 현재 단계
 
 ```
-0단계 완료 — 1단계(tokens/) 진행 대기
+2단계 완료 — 3단계(버튼 계열) 진행 대기
 ```
 
 ---
@@ -22,7 +22,7 @@
 | 0-a | `figma/tokens.*.json` · `tokens.ids.json` 추출 | 완료 | 2026-08-30 | MCP(`use_figma`)로 4개 컬렉션(553개 변수) + id→이름 맵 추출. 각 파일 `count` 필드와 실제 개수 일치 확인 |
 | 0-b | `scripts/` 검사 스크립트 | 완료 | 2026-08-30 | 아래 "0단계 완료 메모" 참조 — 스크립트는 정상 동작하지만 `check:tokens`·`check:nodes` 자체는 아직 그린이 아니다(기존 코드의 실제 문제를 찾아냈기 때문 — 의도된 결과) |
 | 1 | `tokens/` 4개 파일 | 완료 | 2026-08-30 | 아래 "1단계 완료 메모" 참조. `check:tokens` 자체는 아직 전체 그린이 아니다 — 남은 실패는 대부분 컴포넌트 파일 소관(3~7단계) |
-| 2 | `abstracts/` + `base/_typography.scss` | 대기 | | |
+| 2 | `abstracts/` + `base/_typography.scss` | 완료 | 2026-08-30 | 아래 "2단계 완료 메모" 참조 |
 | 3 | 버튼 계열 | 대기 | | |
 | 4 | 입력 계열 | 대기 | | |
 | 5 | 상태 표시 | 대기 | | |
@@ -146,6 +146,26 @@ Enterprise 전용이라 401. 필요할 때 Figma MCP로 대화 중 수동 실행
 
 ---
 
+## 2단계 완료 메모 — `abstracts/` + `base/_typography.scss`
+
+**작업**: `_maps.scss`·`_mixins.scss`·`_functions.scss`·`base/_typography.scss`(구
+`utilities/_typography.scss`). 파일마다 `check:tokens` 확인 — 이 단계는 값이 아니라 참조 구조를
+바꾸는 것이라 S1~S7 건수는 그대로다(261/350 등 1단계 종료 시점과 동일, 회귀 없음만 확인).
+
+- `$type-scale`(`_maps.scss`): size/lh가 primitive 고정값을 직접 참조하던 걸 고쳤다. display
+  6종 + body-lg/xl/2xl(9종)은 `tokens/_breakpoint.scss`가 1단계에서 만든 뷰포트별 `--type-*`를,
+  나머지 body-2xs/xs/sm/md(Figma에 반응형 값 없음)는 `--font-size-body-*`를 그대로 쓴다 — 어느
+  쪽도 px 리터럴을 맵에 넣지 않는다.
+- `text()`(`_mixins.scss`): `$weight` 기본값을 `regular`→`null`로. 굵기 없이 부르면 `font-weight`
+  선언 자체를 안 낸다. 기존 호출 39곳 전부 굵기를 명시적으로 넘기고 있어 회귀 없음(grep으로 확인).
+- `space()`/`radius()`(`_functions.scss`): 이미 CSS 변수 반환·Map은 키 검증용이라는 요구사항과
+  일치해서 손대지 않았다.
+- `base/_typography.scss`: 로직은 그대로(이미 굵기 미포함), `utilities/` → `base/`로 이동
+  (`_reset.scss`도 같이) — CLAUDE.md 11장 문서 구조와 실제 코드가 달랐던 것을 맞췄다. `main.scss`
+  `@use` 경로 갱신.
+
+---
+
 ## 막힌 것
 
 **`DECISIONS.md` 에 없는 판단이 필요해 멈춘 지점.**
@@ -154,6 +174,7 @@ Enterprise 전용이라 401. 필요할 때 Figma MCP로 대화 중 수동 실행
 | 날짜 | 단계 | 내용 |
 |---|---|---|
 | 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함 — 코드 쪽 문제 아니라 Figma 쪽 네이밍 버그). 코드 작업 세션은 Figma 쓰기 API를 안 쓰므로 여기서 멈추고 보고만 한다. **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 — Figma 쪽 이름이 고쳐지면(`effect/focus-ring`) 이 우회는 지워도 된다 |
+| 2026-08-30 | 2단계(`abstracts/_mixins.scss`) | `container()`/`section()` 레이아웃 믹스인이 없다. 이전엔 "근거가 될 CSS 변수가 없어서" 보류였는데, 1단계로 그 변수(`--container-*`/`--section-*`)가 이미 생겨서 그 이유는 더 이상 유효하지 않다. 이번 2단계 지시 범위에 없어서 추가 안 함 — 만들지, 만든다면 시그니처를 어떻게 할지 확인 필요 |
 
 ---
 
