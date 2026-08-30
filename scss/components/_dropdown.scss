@@ -7,24 +7,20 @@
 @use '../abstracts/maps' as maps;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측. dropdown 트리거 글자색(dropdown-fg)은 list/item/fg와 값이 같아 그 토큰을 공유한다.
-// chevron 색은 대응하는 Theme 변수를 못 찾아 primitive 상수로 유지(다크값 미확인).
+// list/* 는 dropdown.scss 가 소유(패널·옵션을 이 파일이 구현하므로) — select.scss 는 참조만
+// 한다. field/border 는 input.scss 소유라 여기서 다시 선언하지 않는다(2026-08-30 정리 —
+// 이전엔 select.scss·dropdown.scss·input.scss 세 곳에 흩어져 중복 선언돼 있었다).
+// dropdown 트리거 글자색은 list/item/fg 와 값이 같아 그 토큰을 공유한다(get_variable_defs 확인).
 :root {
-  --field-border: #d4d4d4;
-  --list-item-fg: #404040;
-  --list-item-fg-selected: #2563eb;
-  --list-panel-border: #e5e5e5;
-  --list-panel-bg: #ffffff;
-  --list-item-bg-hover: #fafafa;
+  --list-item-fg: var(--text-secondary);
+  --list-item-fg-selected: var(--brand-600);
+  --list-panel-border: var(--border-default);
+  --list-panel-bg: var(--white);
+  --list-item-bg-hover: var(--surface-subtle);
 }
 
 [data-theme='dark'] {
-  --field-border: #404040;
-  --list-item-fg: #d4d4d4;
-  --list-item-fg-selected: #60a5fa;
-  --list-panel-border: #404040;
-  --list-panel-bg: #262626;
-  --list-item-bg-hover: #0a0a0a;
+  --list-panel-bg: var(--neutral-800);
 }
 
 // 2026-08-28 확인(inputs-spec): 트리거 radius는 field/radius가 아니라 button/radius 공유.
@@ -47,7 +43,9 @@ $list-item-heights: (
 
 $dropdown-border: var(--field-border);
 $dropdown-fg: var(--list-item-fg);
-$dropdown-chevron: $neutral-600;
+// icon/primary — 2026-08-28 당시엔 코드에 icon/* 시맨틱이 없어 primitive 고정값으로 남겨뒀던
+// 것을 1단계에서 icon/* 를 추가한 뒤 바로잡는다(값은 동일, 다크 대응이 새로 생김).
+$dropdown-chevron: var(--icon-primary);
 $list-panel-border: var(--list-panel-border);
 $list-panel-bg: var(--list-panel-bg);
 $list-item-bg-hover: var(--list-item-bg-hover);
@@ -70,11 +68,11 @@ $list-item-fg-selected: var(--list-item-fg-selected);
     cursor: pointer;
 
     &:hover {
-      border-color: $neutral-400;
+      border-color: var(--field-border-hover);
     }
 
     &[aria-expanded='true'] {
-      border-color: $blue-500;
+      border-color: var(--field-border-focus);
       box-shadow: 0 0 0 2px $effect-focus-ring;
     }
 
@@ -160,6 +158,13 @@ $list-item-font: (
 
   &:hover {
     background-color: $list-item-bg-hover;
+  }
+
+  // Figma에 focus 표시가 없다 — 키보드 접근성을 위해 코드에서 추가한다(문서에 없는 것과
+  // 없어도 되는 것은 다르다). 다른 포커스 링과 같은 컨벤션(2px, effect/focus-ring).
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px $effect-focus-ring;
   }
 
   &.list-item-selected {

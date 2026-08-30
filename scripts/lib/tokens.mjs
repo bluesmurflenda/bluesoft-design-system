@@ -40,7 +40,16 @@ export function loadFigmaIds() {
   return byCollection; // { Primitive: {id: name}, Theme: {...}, ... }
 }
 
+// codeSyntax.WEB이 기계적 변환(슬래시/공백→하이픈)과 실제로 다른, 의도된 리네임만 여기 올린다
+// (2026-08-30 use_figma로 553개 전수 대조해서 찾음 — 10건 중 이 1건만 "의도된 리네임"이었다).
+// table/header-col/*·con/white/* 6건은 codeSyntax 자체가 깨져 있어(서로 다른 토큰이 같은 이름을
+// 가리킴) 여기 올리지 않는다 — Figma를 고쳐야 하는 사안이라 PROGRESS.md "막힌 것"에 남겼다.
+const CODE_SYNTAX_OVERRIDES = {
+  'text/danger': 'text-error',
+};
+
 export function cssVarName(tokenName) {
+  if (CODE_SYNTAX_OVERRIDES[tokenName]) return '--' + CODE_SYNTAX_OVERRIDES[tokenName];
   // 슬래시뿐 아니라 공백도 하이픈으로 — Figma에 "effect/focus ring"처럼 공백 섞인 변수명이 있다
   // (Figma 쪽 네이밍 버그로 보인다. codeSyntax도 그 공백을 그대로 물고 있지만 공백은 유효한
   // CSS 커스텀 프로퍼티 이름이 아니라 코드 쪽은 항상 하이픈으로 정규화한다).

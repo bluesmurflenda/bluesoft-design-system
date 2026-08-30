@@ -6,37 +6,38 @@
 @use '../tokens/primitive' as *;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측 — selected-bg 계열(blue-500/700, green/red)은 라이트·다크 동일해 그대로 둔다.
+// get_variable_defs로 재확인(2026-08-30): choice/box/bg-selected는 blue-500이 아니라 blue-600
+// (실제 #2563eb) — 기존 코드가 한 단계 낮은 값을 쓰고 있었다. 나머지는 값 자체는 맞았고
+// 하드코딩 hex → 별칭 참조로만 바꾼다. 라이트·다크 별칭 대상이 같은 토큰(예: bg-selected,
+// track/bg-on)은 다크 블록에 다시 안 쓴다.
 :root {
-  --choice-box-bg: #ffffff;
-  --choice-box-border: #d4d4d4;
-  --choice-box-bg-hover: #e5e5e5;
-  --choice-box-border-hover: #a3a3a3;
-  --choice-label-fg: #262626;
-  --choice-label-fg-invalid: #dc2626;
-  --choice-label-fg-valid: #16a34a;
-  --choice-description-fg: #525252;
-  --toggle-track-bg-off: #d4d4d4;
-  --toggle-track-bg-off-hover: #a3a3a3;
-  --toggle-track-bg-on-hover: #2563eb;
-  --toggle-knob-bg: #ffffff;
-  --toggle-fg: #262626;
+  --choice-box-bg: var(--surface-default);
+  --choice-box-border: var(--border-strong);
+  --choice-box-bg-hover: var(--neutral-200);
+  --choice-box-border-hover: var(--neutral-400);
+  --choice-box-bg-selected: var(--blue-600);
+  --choice-box-fg-selected: var(--white);
+  --choice-box-bg-disabled: var(--surface-muted);
+  --choice-box-border-disabled: var(--border-default);
+  --choice-label-fg: var(--text-primary);
+  --choice-label-fg-invalid: var(--text-error);
+  --choice-label-fg-valid: var(--green-600);
+  --choice-description-fg: var(--text-tertiary);
+  --toggle-track-bg-off: var(--neutral-300);
+  --toggle-track-bg-off-hover: var(--neutral-400);
+  --toggle-track-bg-on: var(--brand-500);
+  --toggle-track-bg-on-hover: var(--brand-600);
+  --toggle-knob-bg: var(--white);
+  --toggle-fg: var(--icon-strong);
 }
 
 [data-theme='dark'] {
-  --choice-box-bg: #171717;
-  --choice-box-border: #525252;
-  --choice-box-bg-hover: #404040;
-  --choice-box-border-hover: #737373;
-  --choice-label-fg: #fafafa;
-  --choice-label-fg-invalid: #f87171;
-  --choice-label-fg-valid: #4ade80;
-  --choice-description-fg: #a3a3a3;
-  --toggle-track-bg-off: #404040;
-  --toggle-track-bg-off-hover: #525252;
-  --toggle-track-bg-on-hover: #60a5fa;
-  --toggle-knob-bg: #0a0a0a;
-  --toggle-fg: #e5e5e5;
+  --choice-box-bg-hover: var(--neutral-700);
+  --choice-box-border-hover: var(--neutral-500);
+  --choice-label-fg-valid: var(--green-400);
+  --toggle-track-bg-off: var(--neutral-700);
+  --toggle-track-bg-off-hover: var(--neutral-600);
+  --toggle-knob-bg: var(--neutral-950);
 }
 
 $choice-size: 20px;
@@ -52,7 +53,7 @@ $choice-colors: (
     border: var(--choice-box-border),
     border-hover: var(--choice-box-border-hover),
     ring: $effect-focus-ring,
-    selected-bg: $blue-500,
+    selected-bg: var(--choice-box-bg-selected),
     selected-bg-hover: $blue-700,
     label-fg: var(--choice-label-fg),
   ),
@@ -173,8 +174,8 @@ $choice-description-fg: var(--choice-description-fg);
       margin: auto;
       width: 10px;
       height: 6px;
-      border-left: 2px solid $white;
-      border-bottom: 2px solid $white;
+      border-left: 2px solid var(--choice-box-fg-selected);
+      border-bottom: 2px solid var(--choice-box-fg-selected);
       transform: rotate(-45deg) translateY(-1px);
     }
 
@@ -185,7 +186,7 @@ $choice-description-fg: var(--choice-description-fg);
       bottom: 43.75%;
       left: 25%;
       right: 25%;
-      background-color: $white;
+      background-color: var(--choice-box-fg-selected);
     }
   }
 
@@ -198,7 +199,7 @@ $choice-description-fg: var(--choice-description-fg);
       width: 8px;
       height: 8px;
       border-radius: $radius-full;
-      background-color: $white;
+      background-color: var(--choice-box-fg-selected);
     }
   }
 }
@@ -242,7 +243,7 @@ $toggle-knob-size: 16px;
 $toggle-knob-inset: 2px;
 
 $toggle-colors: (
-  bg-on: $blue-500,
+  bg-on: var(--toggle-track-bg-on),
   bg-on-hover: var(--toggle-track-bg-on-hover),
   bg-off: var(--toggle-track-bg-off),
   bg-off-hover: var(--toggle-track-bg-off-hover),

@@ -9,31 +9,8 @@
 @use 'dropdown' as dd;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측. 2가지 발견:
-// 1) normal validation의 border-disabled는 기존 neutral-300이 아니라 field/border-disabled(neutral-200)이 맞았다 — 수정.
-// 2) field/hint/fg(라이트 #525252=neutral-600)가 이전 라이브 실측(#a3a3a3=neutral-400)과 다르다 — Theme 토큰 쪽을
-//    새 기준으로 채택했다. 실제 인스턴스에서 재확인 필요.
-:root {
-  --field-bg: #ffffff;
-  --field-bg-disabled: #f5f5f5;
-  --field-border: #d4d4d4;
-  --field-border-hover: #a3a3a3;
-  --field-border-disabled: #e5e5e5;
-  --field-label-fg: #262626;
-  --field-hint-fg: #525252;
-  --list-item-fg: #404040;
-}
-
-[data-theme='dark'] {
-  --field-bg: #0a0a0a;
-  --field-bg-disabled: #262626;
-  --field-border: #404040;
-  --field-border-hover: #525252;
-  --field-border-disabled: #262626;
-  --field-label-fg: #fafafa;
-  --field-hint-fg: #a3a3a3;
-  --list-item-fg: #d4d4d4;
-}
+// field/* 는 input.scss, list/* 는 dropdown.scss 가 소유한다 — 여기서는 참조만 한다
+// (2026-08-30 정리. 이전엔 이 파일이 field/*·list-item-fg를 다시 선언해 3개 파일에 흩어져 있었다).
 
 // 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
 $select-sizes: (
@@ -48,15 +25,15 @@ $select-sizes: (
 $select-label-fg: var(--field-label-fg);
 $select-hint-fg: var(--field-hint-fg);
 $select-fg: var(--list-item-fg);
-$select-icon-fg: $neutral-600;
+$select-icon-fg: var(--icon-primary);
 $select-disabled-bg: var(--field-bg-disabled);
 $select-bg: var(--field-bg);
 
-// 2026-08-28 재실측: 포커스 링은 rgba 반투명이 아니라 solid 색 그대로다.
-// normal은 기존 공용 $effect-focus-ring(blue-500 alpha .30) 유지, invalid=red-200, valid=green-100. spread 2px(버튼·소셜버튼과 동일 컨벤션).
-// border-disabled(normal)는 field/border-disabled(neutral-200)로 수정 — 기존 neutral-300은 오기였다.
+// 2026-08-28 재실측: 포커스 링은 rgba 반투명이 아니라 solid 색 그대로다(invalid/valid는 이름에
+// "30%"가 붙어있어도 실제로는 solid — get_variable_defs로 재확인, 2026-08-30).
+// 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응 시맨틱이 없다.
 $select-validation-colors: (
-  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: $blue-500, ring: $effect-focus-ring, border-disabled: var(--field-border-disabled)),
+  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: var(--field-border-focus), ring: $effect-focus-ring, border-disabled: var(--field-border-disabled)),
   invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200),
   valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200),
 );

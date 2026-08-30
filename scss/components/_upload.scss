@@ -18,19 +18,18 @@
 @use '../tokens/theme' as *;
 @use 'sass:map';
 
-// 2026-08-28: 각 값에 이미 시맨틱 역할이 주석으로 달려 있어, 그 역할에 대응하는 semantic.scss의
-// 다크 모드 대응 변수로 교체했다(원래 primitive 직접 참조라 다크에서 안 바뀌는 문제가 있었음).
-// 2026-08-28 재확인(inputs-spec): dropzone·uploading 테두리는 border/default가 아니라 field/border다
-// (Input·Select·Dropdown이 쓰는 것과 같은 토큰) — border/default(#e5e5e5)와 field/border(#d4d4d4)는 값이 다르다.
-$upload-border: var(--field-border);
+// 2026-08-30 get_variable_defs로 재확인: dropzone·uploading 테두리는 실제로 border/default다
+// (#e5e5e5) — 2026-08-28 당시 "field/border(#d4d4d4)가 맞다"고 재확인했다는 기록이 있었지만
+// 이번 라이브 조회 결과와 다르다. 라이브가 이긴다(전역 2장) — field/border 참조를 border/default로 되돌린다.
+$upload-border: var(--border-default);
 $upload-fg-title: $text-primary;
 $upload-fg-supporting: $text-secondary; // 2026-08-28 재실측: neutral-600 아니라 700(#404040)
 $upload-icon-badge-bg: $surface-brand-subtle;
 $upload-icon-badge-border: $brand-100; // outside 링이 아니라 32px 안쪽을 파먹는 border-4(실측)
-$upload-icon-fg: $brand-600;
+$upload-icon-fg: $brand-600; // 확인 필요 — get_variable_defs에 icon/primary(neutral)도 같이 잡혀서 어느 아이콘 색인지 불확실(PROGRESS.md 막힌 것 참조)
 
 $upload-item-state-border: (
-  uploading: var(--field-border),
+  uploading: var(--border-default),
   done: $border-brand,
   error: $border-danger,
 );

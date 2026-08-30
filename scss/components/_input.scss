@@ -8,6 +8,28 @@
 @use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
+// field/* 는 Input·Textarea·Select·Dropdown 이 공유하는 시맨틱이라 여기(입력 계열 중 처음
+// 다루는 파일)서만 선언한다 — 다른 파일은 var(--field-*)만 참조한다(get_variable_defs로
+// Input 실제 바인딩 확인, 2026-08-30). 값이 같은 대상을 가리키는 항목은 다크 블록에 안 쓴다.
+:root {
+  --field-bg: var(--white);
+  --field-bg-disabled: var(--surface-muted);
+  --field-border: var(--border-strong);
+  --field-border-hover: var(--neutral-400);
+  --field-border-focus: var(--brand-500);
+  --field-border-disabled: var(--border-default);
+  --field-fg: var(--text-primary);
+  --field-fg-placeholder: var(--neutral-400);
+  --field-label-fg: var(--text-primary);
+  --field-hint-fg: var(--text-tertiary);
+}
+
+[data-theme='dark'] {
+  --field-bg: var(--neutral-950);
+  --field-border-hover: var(--neutral-600);
+  --field-fg-placeholder: var(--neutral-500);
+}
+
 // 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
 $input-sizes: (
   sm: (height: 32px, padding-x: $space-3, type: body-xs, icon: 16px),
@@ -16,17 +38,22 @@ $input-sizes: (
   xl: (height: 56px, padding-x: $space-4, type: body-lg, icon: 20px),
 );
 
-$input-label-fg: $neutral-800; // text-primary
-$input-placeholder-fg: $neutral-400;
-$input-disabled-bg: $neutral-100;
-$input-disabled-placeholder-fg: $neutral-300;
+$input-label-fg: var(--field-label-fg);
+$input-fg: var(--field-fg);
+$input-placeholder-fg: var(--field-fg-placeholder);
+$input-disabled-bg: var(--field-bg-disabled);
+$input-disabled-placeholder-fg: $neutral-300; // Figma에 disabled 전용 placeholder 토큰 없음 — 실측 고정값 유지
 // 2026-08-28 실측: Shadow/xs — hover·disabled까지 공통, focus에서는 포커스 링으로 완전히 대체된다(합쳐지지 않음).
 $input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
+// 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응하는 시맨틱이 없다(의미 자체가
+// 색에 있는 경우, CLAUDE.md 1장). border-disabled의 red-200/green-200도 마찬가지.
+// invalid/valid의 ring은 스타일 이름이 "30%"라도 실제 바인딩은 solid red-200/green-100이다
+// (get_variable_defs로 확인 — 이름과 실제 alpha가 다르다).
 $input-validation-colors: (
-  normal: (border: $neutral-300, border-hover: $neutral-400, border-focus: $blue-500, ring: $effect-focus-ring, border-disabled: $neutral-300, hint-fg: $neutral-600),
-  invalid: (border: $red-500, border-hover: $red-500, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
-  valid: (border: $green-600, border-hover: $green-600, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: $neutral-600),
+  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: var(--field-border-focus), ring: $effect-focus-ring, border-disabled: var(--field-border-disabled), hint-fg: var(--field-hint-fg)),
+  invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
+  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: var(--field-hint-fg)),
 );
 
 .input {
@@ -45,7 +72,7 @@ $input-validation-colors: (
     align-items: center;
     gap: $space-2;
     border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
-    background-color: $white;
+    background-color: var(--field-bg);
     box-shadow: $input-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;
   }
@@ -66,7 +93,7 @@ $input-validation-colors: (
     background: none;
     padding: 0;
     // font-weight는 아래 @each의 text()로 이동
-    color: $neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
+    color: $input-fg; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
 
     &::placeholder {
       color: $input-placeholder-fg;

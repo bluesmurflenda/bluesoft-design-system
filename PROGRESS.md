@@ -10,7 +10,7 @@
 ## 현재 단계
 
 ```
-3단계 완료 — 4단계(입력 계열) 진행 대기
+4단계 완료 — 5단계(상태 표시) 진행 대기
 ```
 
 ---
@@ -24,7 +24,7 @@
 | 1 | `tokens/` 4개 파일 | 완료 | 2026-08-30 | 아래 "1단계 완료 메모" 참조. `check:tokens` 자체는 아직 전체 그린이 아니다 — 남은 실패는 대부분 컴포넌트 파일 소관(3~7단계) |
 | 2 | `abstracts/` + `base/_typography.scss` | 완료 | 2026-08-30 | 아래 "2단계 완료 메모" 참조 |
 | 3 | 버튼 계열 | 완료 | 2026-08-30 | 아래 "3단계 완료 메모" 참조 |
-| 4 | 입력 계열 | 대기 | | |
+| 4 | 입력 계열 | 완료 | 2026-08-31 | 아래 "4단계 완료 메모" 참조 |
 | 5 | 상태 표시 | 대기 | | |
 | 6 | 테이블 · 보드 | 대기 | | |
 | 7 | 내비게이션 · 표시 | 대기 | | |
@@ -209,6 +209,80 @@ resolve된 색이 같은지**가 아니라 **별칭이 가리키는 대상 이�
 
 ---
 
+## 4단계 완료 메모 1/2 — codeSyntax 전수 대조(553개)에서 발견한 것
+
+`text/danger`의 실제 codeSyntax가 `--text-error`임을 확인하는 김에(4단계에서 `choice/label/
+fg-invalid`가 이 토큰을 가리켜서 발견) **전체 변수의 codeSyntax.WEB을 기계적 변환(슬래시→하이픈)과
+전수 대조**했다(`use_figma`). 10건 불일치 — 이미 아는 것(`effect/focus ring` 공백) 제외하면:
+
+- **`text/danger` → `--text-error`**: 의도된 리네임으로 보고 반영(`_theme.scss`, ADR 없이 처리
+  — 단순 이름 정합화). `scripts/lib/tokens.mjs`에 `CODE_SYNTAX_OVERRIDES` 로 등록해 S2가 계속
+  맞게 비교하게 함.
+- **`table/header-col/bg`·`/fg` → codeSyntax가 `--table-header-bg`/`-fg`**(`-col` 없음, 반면
+  `table/header-row/*`는 정상적으로 `-row`가 붙어있다): 두 다른 토큰이 겹치는 이름을 가리키는
+  게 아니라 `header-col` 쪽 codeSyntax가 갱신 안 된 것으로 보인다. **6단계(테이블) 소관 —
+  그때 Figma에서 실측 확인 필요.**
+- **`con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·
+  `border-selected`)**: codeSyntax가 서로 뒤섞여 있다(`fg-selected`가 `--con-bg-selected`를,
+  `bg-selected`가 `--con-fg-selected`를 가리키는 식) — 이건 의도된 리네임이 아니라 **Figma
+  쪽 데이터 오류로 보인다.** 코드에 반영하지 않았다 — **5단계(con) 진행 시 Figma에서 재확인
+  필요, 코드 작업 세션에서 고칠 수 없다(쓰기 API 안 씀).**
+
+---
+
+## 4단계 완료 메모 2/2 — 입력 계열(Input·Textarea·Select·Dropdown·_List/*·Checkbox·Radio·Toggle·Upload)
+
+**작업**: `get_variable_defs`로 Input(293:855)·Textarea(344:381)·Select(316:644)·
+Checkbox(308:306)·Radio(309:923)·Toggle(719:281)·Upload Dropzone/Item(1366:17664·17718)을
+다시 조회하고, `field/*`·`list/*`·`choice/*`·`toggle/*` Theme 그룹과 대조해 재작성했다.
+
+| 시점 | S1 | S2(누락·전용·불일치) |
+|---|---|---|
+| 3단계 종료 | 288 | 183 (130·14·39) |
+| codeSyntax 정리 후 | 288 | 181 (130·14·37) |
+| `_input.scss` 후 | 260 | 173 (124·14·35) |
+| `_dropdown.scss`+`_select.scss` 정리 후 | 260 | 173 (변화 없음 — 중복 제거·참조 정리라 카운트엔 안 잡힘) |
+| `_textarea.scss` 후 | 260 | 173 (원래 hex 0건이라 변화 없음) |
+| `_checkbox-radio.scss` 후 | 234 | 163 (114·14·35) |
+| `_upload.scss` 후 | 234 | 163 (변화 없음 — 값 정정이라 카운트엔 안 잡힘) |
+
+**지시받은 것 확인**:
+- Input의 `_*base`(Size)+`wrapper`(State·Validation) 2단 구조 — 코드는 이미 `.input`에
+  `.input-{size}`·`.input-{validation}` 클래스를 조합하는 방식이라 그대로 두었다.
+- `filled`==`normal` — `$input-validation-colors`·`$select-validation-colors` 둘 다 이미
+  `filled` 키가 없어서 손댈 것 없었다.
+- invalid/valid 포커스 링이 이름은 "30%"지만 실제 alpha 1.0 — `get_variable_defs`로 재확인,
+  기존 코드가 이미 solid `$red-200`/`$green-100`을 쓰고 있어 맞았다.
+- 유효성 색(red/green) 프리미티브 직접 참조 — 그대로 유지, 시맨틱으로 바꾸지 않았다.
+- `_List/Item` `height`+`align-items:center` — 기존 코드가 이미 이렇게 돼 있었다.
+- `_List/Item` focus 링 — Figma에 없어서 `dropdown.scss`에 새로 추가(`:focus-visible`,
+  다른 곳과 같은 컨벤션의 2px ring).
+
+**발견해서 고친 것**:
+- `field/*`(bg·border·border-hover·border-focus·border-disabled·fg·fg-placeholder·label/fg·
+  hint/fg)가 **`select.scss`·`dropdown.scss`·`input.scss` 세 곳에 흩어져 하드코딩 hex로
+  중복 선언**돼 있었다(다행히 값은 서로 일치). `input.scss`를 소유자로 정해 하나로 모으고,
+  나머지는 `var(--field-*)` 참조만 남겼다. `dropdown.scss`는 `--field-bg`를 선언한 적도
+  없이 참조만 하고 있었다(select.scss가 어쩌다 먼저 선언해 우연히 동작한 것) — 이것도 정리.
+- `.input__control`의 색이 `$neutral-700`(#404040)으로 하드코딩돼 있었는데 실제 바인딩은
+  `field/fg`=`text/primary`=neutral-800(#262626)이었다 — 다크모드 대응도 없었다(파일 자체에
+  `[data-theme=dark]` 블록이 아예 없었음).
+- `_checkbox-radio.scss`의 `selected-bg`가 `$blue-500`이었는데 실제는 `$blue-600`(#2563eb) —
+  `get_variable_defs`로 확인한 값 자체가 틀렸던 경우.
+- `dropdown.scss`·`select.scss`의 셰브론/아이콘 색(`$neutral-600` 고정값)이 실제로는
+  `icon/primary`였다 — 1단계에서 icon/* 시맨틱을 추가하기 전에 쓰인 코드라 그때는 대응
+  변수가 없어서 고정값을 썼던 것(주석에 그렇게 적혀 있었다), 이제는 `var(--icon-primary)`로
+  다크 대응이 생겼다.
+- `upload.scss`의 dropzone 테두리 — 파일 자체 주석은 "field/border가 맞다"고 했지만
+  `get_variable_defs` 재조회 결과는 `border/default`였다. 라이브가 이겨서 되돌렸다
+  (PROGRESS.md 발견한 불일치에 기록 안 함 — 같은 파일 안의 자기모순이라 여기만 기록).
+
+**확인 안 되는 채로 둔 것**: Upload Item의 파일 아이콘 색(`$brand-600`) — `get_variable_defs`가
+서브트리 전체의 바인딩을 뭉뚱그려 반환해서 아이콘 자체가 brand인지 icon/primary(neutral)인지
+구분이 안 됐다. 값을 추측해서 바꾸지 않고 "막힌 것"에 남겼다.
+
+---
+
 ## 막힌 것
 
 **`DECISIONS.md` 에 없는 판단이 필요해 멈춘 지점.**
@@ -218,6 +292,9 @@ resolve된 색이 같은지**가 아니라 **별칭이 가리키는 대상 이�
 |---|---|---|
 | 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함 — 코드 쪽 문제 아니라 Figma 쪽 네이밍 버그). 코드 작업 세션은 Figma 쓰기 API를 안 쓰므로 여기서 멈추고 보고만 한다. **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 — Figma 쪽 이름이 고쳐지면(`effect/focus-ring`) 이 우회는 지워도 된다 |
 | 2026-08-30 | 2단계(`abstracts/_mixins.scss`) | `container()`/`section()` 레이아웃 믹스인이 없다. 이전엔 "근거가 될 CSS 변수가 없어서" 보류였는데, 1단계로 그 변수(`--container-*`/`--section-*`)가 이미 생겨서 그 이유는 더 이상 유효하지 않다. 이번 2단계 지시 범위에 없어서 추가 안 함 — 만들지, 만든다면 시그니처를 어떻게 할지 확인 필요 |
+| 2026-08-30 | 6단계 예정(테이블) | `table/header-col/bg`·`/fg`의 codeSyntax가 `-col` 없이 `--table-header-bg`/`-fg`를 가리킨다(`table/header-row/*`는 정상). Figma에서 실측 재확인 필요 — 코드 작업 세션에서 못 고침 |
+| 2026-08-30 | 5단계 예정(con) | `con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`)의 codeSyntax가 서로 뒤섞여 있다(의도된 리네임이 아니라 데이터 오류로 보임). Figma에서 확인·수정 필요 — 코드 작업 세션에서 못 고침 |
+| 2026-08-30 | 4단계(`_upload.scss`) | Upload Item의 파일 아이콘 색(`$upload-icon-fg: $brand-600`)이 맞는지 불확실 — `get_variable_defs`로 다시 조회하니 `icon/primary`(neutral)도 같은 서브트리에서 잡혔는데, 그게 파일 아이콘 것인지 다른 요소(취소 버튼 등) 것인지 이 도구로는 구분이 안 된다. 값을 바꾸지 않고 그대로 뒀다 — Figma에서 직접 레이어 확인 필요 |
 
 ---
 
