@@ -3,6 +3,7 @@
 // 텍스트는 전 타입·전 사이즈 Body/Sm(14/20) 고정 — Size는 패딩·높이만 바꾼다(라이브 실측 확인).
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측 — 실제로 쓰는 토큰만(pill border-hover 등 다크값 미확인인 건 primitive 상수 유지).
@@ -111,9 +112,7 @@ $tabs-segmented-colors: (
   display: inline-flex;
   align-items: center;
   gap: $tabs-gap;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
+  @include mix.text(body-sm, medium);
   white-space: nowrap;
   cursor: pointer;
 

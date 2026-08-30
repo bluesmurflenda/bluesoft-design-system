@@ -3,12 +3,14 @@
 // 포커스 링 스프레드도 input과 동일한 2px로 확인됨(이전 재실측 당시의 sm-neutral-700/3px는 stale).
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
+// 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
 $textarea-sizes: (
-  sm: (height: 96px, padding-x: $space-3, padding-y: $space-2, font-size: $font-size-body-xs, line-height: $font-leading-body-xs),
-  md: (height: 128px, padding-x: $space-4, padding-y: $space-3, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
-  lg: (height: 160px, padding-x: $space-5, padding-y: $space-3, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
+  sm: (height: 96px, padding-x: $space-3, padding-y: $space-2, type: body-xs),
+  md: (height: 128px, padding-x: $space-4, padding-y: $space-3, type: body-sm),
+  lg: (height: 160px, padding-x: $space-5, padding-y: $space-3, type: body-lg),
 );
 
 $textarea-label-fg: $color-neutral-800; // text-primary
@@ -29,9 +31,7 @@ $textarea-validation-colors: (
   width: 100%;
 
   &__label {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $textarea-label-fg;
   }
 
@@ -53,7 +53,7 @@ $textarea-validation-colors: (
     outline: none;
     background: none;
     padding: 0;
-    font-weight: $font-weight-regular;
+    // font-weight는 아래 @each의 text()로 이동
     color: $color-neutral-700;
 
     &::placeholder {
@@ -62,9 +62,7 @@ $textarea-validation-colors: (
   }
 
   &__hint {
-    font-weight: $font-weight-regular;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, regular);
   }
 }
 
@@ -76,8 +74,7 @@ $textarea-validation-colors: (
     }
 
     .textarea__control {
-      font-size: map.get($props, font-size);
-      line-height: map.get($props, line-height);
+      @include mix.text(map.get($props, type), regular);
     }
   }
 }

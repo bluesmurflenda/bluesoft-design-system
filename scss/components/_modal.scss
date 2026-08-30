@@ -5,6 +5,8 @@
 
 @use '../tokens/primitive' as *;
 @use '../tokens/shape' as shape;
+@use '../abstracts/mixins' as mix;
+@use '../abstracts/maps' as maps;
 @use 'sass:map';
 
 $modal-widths: (
@@ -66,16 +68,12 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
   }
 
   &__title {
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-body-lg;
-    line-height: $font-leading-body-lg;
+    @include mix.text(body-lg, semibold);
     color: $modal-title-fg;
   }
 
   &__description {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $modal-description-fg;
   }
 
@@ -163,7 +161,10 @@ $modal-icon-colors: (
     border-radius: $radius-sm;
     background-color: $color-slate-50;
     color: $color-slate-600;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    // font-weight 선언이 원래 없던 자리라 text() 믹스인(weight 강제 포함)을 쓰지 않고
+    // $type-scale에서 size/lh만 뽑아 쓴다(규칙 3 대체 경로).
+    $modal-slot-type: map.get(maps.$type-scale, body-sm);
+    font-size: map.get($modal-slot-type, size);
+    line-height: map.get($modal-slot-type, lh);
   }
 }

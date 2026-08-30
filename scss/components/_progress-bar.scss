@@ -4,6 +4,7 @@
 
 @use '../tokens/primitive' as *;
 @use '../tokens/semantic' as *;
+@use '../abstracts/mixins' as mix;
 
 $progress-bar-track-bg: $surface-brand-subtle;
 $progress-bar-fill-bg: $brand-600;
@@ -31,9 +32,7 @@ $progress-bar-value-fg: $text-primary;
 
   &__value {
     flex-shrink: 0;
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $progress-bar-value-fg;
   }
 }

@@ -3,6 +3,7 @@
 // Type=default는 투명 — 둘 다 패딩·라운드는 동일.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 
 // 2026-08-28 Dark 모드 실측
 :root {
@@ -82,9 +83,7 @@ $calendar-today-fg: var(--calendar-today-fg);
   }
 
   &__month-label {
-    font-weight: $font-weight-bold;
-    font-size: $font-size-body-xl;
-    line-height: $font-leading-body-xl;
+    @include mix.text(body-xl, bold);
     color: $calendar-header-fg;
   }
 
@@ -106,9 +105,7 @@ $calendar-today-fg: var(--calendar-today-fg);
     height: 36px;
     align-items: center;
     justify-content: center;
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $calendar-weekday-fg;
 
     &.is-saturday {
@@ -139,9 +136,7 @@ $calendar-today-fg: var(--calendar-today-fg);
   justify-content: center;
   border-radius: var(--calendar-cell-radius);
   background-color: transparent;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
+  @include mix.text(body-sm, medium);
   color: $calendar-day-fg;
 
   &.is-saturday {

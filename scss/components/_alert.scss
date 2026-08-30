@@ -3,6 +3,7 @@
 // info는 brand와 bg/fg/border가 완전히 동일한 값이다(Chip과 동일 패턴) — 추정 아님, 실측 그대로.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측
@@ -104,15 +105,11 @@ $alert-colors: (
   }
 
   &__title {
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, semibold);
   }
 
   &__text {
-    font-weight: $font-weight-regular;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, regular);
     color: $alert-fg-supporting; // 실측: alert/fg-supporting은 색상과 무관한 공용 톤
   }
 

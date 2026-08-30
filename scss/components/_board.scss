@@ -4,6 +4,9 @@
 
 @use '../tokens/primitive' as *;
 @use '../tokens/semantic' as *;
+@use 'sass:map';
+@use '../abstracts/mixins' as mix;
+@use '../abstracts/maps' as maps;
 
 // 2026-08-28: 주석에 이미 명시된 시맨틱 역할대로 semantic.scss/table.scss의 다크 대응 변수로 교체.
 $board-border: $border-default; // border/default — table의 slate-200과 다른 값이라 별도 정의
@@ -39,18 +42,14 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: $font-size-body-md;
-    line-height: $font-leading-body-md;
+    @include mix.text(body-md, regular);
     color: $board-title-fg;
-    font-weight: $font-weight-regular;
   }
 
   // 2026-08-28 확인(table-nav-spec): kind=notice는 굵어지는 게 아니라 Body/2Xs/Medium으로 작아진다
   // (post의 Body/Md/Regular 15px보다 작은 12px) — 공지가 덜 강조되는 것이 실측 사실.
   &-notice &__title {
-    font-size: $font-size-body-2xs;
-    line-height: $font-leading-body-2xs;
-    font-weight: $font-weight-medium;
+    @include mix.text(body-2xs, medium);
   }
 
   &__meta {
@@ -65,9 +64,11 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   align-items: center;
   justify-content: center;
   width: $board-col-width;
-  font-size: $font-size-body-sm;
-  line-height: $font-leading-body-sm;
   text-align: center;
+  // font-weight는 Role(body/header) 축이라 사이즈와 분리 — size/line-height만 $type-scale에서 읽는다.
+  $board-cell-type: map.get(maps.$type-scale, body-sm);
+  font-size: map.get($board-cell-type, size);
+  line-height: map.get($board-cell-type, lh);
 
   &-body {
     color: $board-meta-fg;
@@ -91,9 +92,7 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
   &__title {
     flex: 1 0 0;
     min-width: 0;
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $board-header-fg;
   }
 }
@@ -129,9 +128,7 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: $font-size-body-md;
-    line-height: $font-leading-body-md;
-    font-weight: $font-weight-regular;
+    @include mix.text(body-md, regular);
     color: $board-title-fg;
   }
 
@@ -139,8 +136,10 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
     display: flex;
     align-items: center;
     gap: $space-2;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    // font-weight 선언이 원래 없던 자리라 추가하지 않는다 — size/line-height만 $type-scale에서 읽는다.
+    $board-card-meta-type: map.get(maps.$type-scale, body-sm);
+    font-size: map.get($board-card-meta-type, size);
+    line-height: map.get($board-card-meta-type, lh);
     color: $board-meta-fg;
     white-space: nowrap;
   }

@@ -4,6 +4,7 @@
 // dark 테마 hover/selected의 글자·아이콘 흰색 유지는 2026-08-28 노드 1299:270·1299:281 직접 조회로 확인 완료(nav-dark-fg가 두 상태 다 white).
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 
 // 2026-08-28 Dark 모드 실측 — ⚠️ 확인 필요: nav/dark/item/bg-hover가 다크 모드에서 밝은 하늘색(#bfdbfe)으로
 // 바뀌는데, 다크 테마 아이템의 글자색(nav-dark-fg)은 여전히 흰색 고정으로 실측돼 있다(2026-08-28 별도 측정).
@@ -32,9 +33,7 @@
   height: 40px;
   padding: $space-2 $space-3;
   border-radius: $radius-sm; // 2026-08-28 확인(table-nav-spec 0장): default 12/hover·selected 8로 갈리던 결함 — radius/sm(8)로 통일
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-lg;
-  line-height: $font-leading-body-lg;
+  @include mix.text(body-lg, medium);
   cursor: pointer;
 
   &__content {
@@ -66,9 +65,7 @@
     border-radius: $radius-full;
     background-color: $color-slate-50;
     color: $color-slate-600;
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
   }
 
   &-sub {

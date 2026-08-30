@@ -7,6 +7,7 @@
 // fg도 흰색이 아니라 거의 검정(#0a0a0a)으로 반전된다 — 대비 확보 목적, 추정 아니라 실측값 그대로.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
 :root {
@@ -52,9 +53,9 @@
 }
 
 $con-sizes: (
-  sm: (height: 32px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm),
-  md: (height: 40px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg),
-  lg: (height: 48px, padding-x: $space-6, font-size: $font-size-body-xl, line-height: $font-leading-body-xl),
+  sm: (height: 32px, padding-x: $space-4, type: body-sm),
+  md: (height: 40px, padding-x: $space-5, type: body-lg),
+  lg: (height: 48px, padding-x: $space-6, type: body-xl),
 );
 
 $con-fg: var(--con-fg);
@@ -80,7 +81,7 @@ $con-themes: (
   border-radius: var(--con-radius); // 2026-08-28 재확인(status-spec): Square 모드에서 radius/none — 모드 무관 아니었음
   border: 1px solid transparent;
   color: $con-fg;
-  font-weight: $font-weight-medium;
+  // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   cursor: pointer;
 
   .con__icon {
@@ -94,8 +95,7 @@ $con-themes: (
   .con-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
-    font-size: map.get($props, font-size);
-    line-height: map.get($props, line-height);
+    @include mix.text(map.get($props, type), medium);
   }
 }
 

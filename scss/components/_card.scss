@@ -8,6 +8,7 @@
 // hover는 3 Style 공통으로 card/border-hover(#38bdf8) 1px가 추가된다(Default·Tinted는 평소 보더가 없다가 hover에서만 생김).
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 
 // 2026-08-28 Dark 모드 실측
 :root {
@@ -117,29 +118,21 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
   }
 
   &__eyebrow {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-2xs;
-    line-height: $font-leading-body-2xs;
+    @include mix.text(body-2xs, medium);
     color: $card-fg-supporting;
   }
 
   &__title {
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-body-lg;
-    line-height: $font-leading-body-lg;
+    @include mix.text(body-lg, semibold);
   }
 
   &__description {
-    font-weight: $font-weight-regular;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, regular);
     color: $card-fg-supporting;
   }
 
   &__meta {
-    font-weight: $font-weight-regular;
-    font-size: $font-size-body-2xs;
-    line-height: $font-leading-body-2xs;
+    @include mix.text(body-2xs, regular);
     color: $card-fg-supporting;
   }
 

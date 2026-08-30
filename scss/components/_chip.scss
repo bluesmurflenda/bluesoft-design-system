@@ -4,6 +4,7 @@
 // 이 파일 하나의 클래스 조합(.chip__dot 등)으로 구현한다.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측: info는 라이트에선 brand와 완전히 같은 값이었는데, 다크에서는 fg만 갈린다
@@ -39,9 +40,9 @@
 }
 
 $chip-sizes: (
-  sm: (height: 22px, padding-x: $space-2, gap: $space-1, font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, icon: 12px, dot: 6px),
-  md: (height: 24px, padding-x: 10px, gap: $space-1, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 14px, dot: 6px),
-  lg: (height: 28px, padding-x: $space-3, gap: 6px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px, dot: 8px),
+  sm: (height: 22px, padding-x: $space-2, gap: $space-1, type: body-2xs, icon: 12px, dot: 6px),
+  md: (height: 24px, padding-x: 10px, gap: $space-1, type: body-sm, icon: 14px, dot: 6px),
+  lg: (height: 28px, padding-x: $space-3, gap: 6px, type: body-sm, icon: 16px, dot: 8px),
 );
 
 $chip-colors: (
@@ -57,7 +58,7 @@ $chip-colors: (
   display: inline-flex;
   align-items: center;
   border-radius: $radius-full;
-  font-weight: $font-weight-medium;
+  // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
 }
 
@@ -66,8 +67,7 @@ $chip-colors: (
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
-    font-size: map.get($props, font-size);
-    line-height: map.get($props, line-height);
+    @include mix.text(map.get($props, type), medium);
 
     .chip__icon,
     .chip__close {
@@ -100,15 +100,15 @@ $chip-colors: (
 // status-spec 2장). height·텍스트 스케일은 Chip과 같지만 padding-x(8/8/9)·점 크기(6/8/10)가 다르다
 // — .chip__dot(위, Chip 내부 Dot 슬롯)과는 별개라 이름 충돌을 피해 .chip-dot__dot으로 둔다.
 $chip-dot-sizes: (
-  sm: (height: 22px, padding-x: 8px, gap: $space-1, font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, dot: 6px),
-  md: (height: 24px, padding-x: 8px, gap: $space-1, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, dot: 8px),
-  lg: (height: 28px, padding-x: 9px, gap: 6px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, dot: 10px),
+  sm: (height: 22px, padding-x: 8px, gap: $space-1, type: body-2xs, dot: 6px),
+  md: (height: 24px, padding-x: 8px, gap: $space-1, type: body-sm, dot: 8px),
+  lg: (height: 28px, padding-x: 9px, gap: 6px, type: body-sm, dot: 10px),
 );
 
 .chip-dot {
   display: inline-flex;
   align-items: center;
-  font-weight: $font-weight-medium;
+  // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
 
   &__dot {
@@ -122,8 +122,7 @@ $chip-dot-sizes: (
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
-    font-size: map.get($props, font-size);
-    line-height: map.get($props, line-height);
+    @include mix.text(map.get($props, type), medium);
 
     .chip-dot__dot {
       width: map.get($props, dot);

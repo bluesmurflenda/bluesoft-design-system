@@ -4,6 +4,7 @@
 
 @use '../tokens/primitive' as *;
 @use '../tokens/semantic' as *;
+@use '../abstracts/mixins' as mix;
 
 // 2026-08-28 Dark 모드 실측
 :root {
@@ -45,9 +46,7 @@ $avatar-fg: var(--avatar-fg);
   box-shadow: $avatar-group-ring;
   background-color: $avatar-bg;
   color: $avatar-fg;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-2xs;
-  line-height: $font-leading-body-2xs;
+  @include mix.text(body-2xs, medium);
 }
 
 .avatar-group__more {

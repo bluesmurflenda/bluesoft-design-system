@@ -3,6 +3,7 @@
 
 @use '../tokens/primitive' as *;
 @use '../tokens/semantic' as *;
+@use '../abstracts/mixins' as mix;
 
 $login-header-title-fg: $text-primary;
 $login-header-supporting-fg: $text-secondary;
@@ -29,16 +30,12 @@ $login-header-supporting-fg: $text-secondary;
   }
 
   &__title {
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-display-sm;
-    line-height: $font-leading-display-sm;
+    @include mix.text(display-sm, semibold);
     color: $login-header-title-fg;
   }
 
   &__supporting {
-    font-weight: $font-weight-regular;
-    font-size: $font-size-body-lg;
-    line-height: $font-leading-body-lg;
+    @include mix.text(body-lg, regular);
     color: $login-header-supporting-fg;
   }
 }

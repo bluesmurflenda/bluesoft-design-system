@@ -3,6 +3,8 @@
 // Select(라벨 있는 필드형)는 _select.scss 에서 이 파일의 list-item/list-panel 클래스를 그대로 재사용한다.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
+@use '../abstracts/maps' as maps;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측. dropdown 트리거 글자색(dropdown-fg)은 list/item/fg와 값이 같아 그 토큰을 공유한다.
@@ -64,7 +66,7 @@ $list-item-fg-selected: var(--list-item-fg-selected);
     border: 1px solid $dropdown-border;
     background-color: var(--field-bg);
     color: $dropdown-fg;
-    font-weight: $font-weight-medium;
+    // font-weight는 아래 @each의 text()로 이동
     cursor: pointer;
 
     &:hover {
@@ -94,20 +96,21 @@ $list-item-fg-selected: var(--list-item-fg-selected);
 
 // 2026-08-28 전 사이즈 재실측(Size=sm~xl 4개 노드 직접 조회): lg와 xl은 둘 다 Body/Lg에서
 // 멈춘다 — Body/Md를 거치지 않고 sm→xs, md→sm, lg→lg, xl→lg(=lg와 동일)로 확인됐다.
+// 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
 $dropdown-font: (
-  sm: (size: $font-size-body-xs, lh: $font-leading-body-xs),
-  md: (size: $font-size-body-sm, lh: $font-leading-body-sm),
-  lg: (size: $font-size-body-lg, lh: $font-leading-body-lg),
-  xl: (size: $font-size-body-lg, lh: $font-leading-body-lg),
+  sm: body-xs,
+  md: body-sm,
+  lg: body-lg,
+  xl: body-lg,
 );
 
 // _List/Item 폰트도 트리거보다 한 단계 위에서 사이즈별로 갈린다(실측 확인).
 // sm→Body/Sm, md→Body/Lg, lg·xl→Body/Xl(lg에서 멈춤, 트리거와 동일한 패턴).
 $list-item-font: (
-  sm: (size: $font-size-body-sm, lh: $font-leading-body-sm),
-  md: (size: $font-size-body-lg, lh: $font-leading-body-lg),
-  lg: (size: $font-size-body-xl, lh: $font-leading-body-xl),
-  xl: (size: $font-size-body-xl, lh: $font-leading-body-xl),
+  sm: body-sm,
+  md: body-lg,
+  lg: body-xl,
+  xl: body-xl,
 );
 
 @each $size, $props in $dropdown-sizes {
@@ -116,8 +119,7 @@ $list-item-font: (
       height: map.get($props, height);
       padding-inline: map.get($props, padding-x);
       border-radius: map.get($props, radius);
-      font-size: map.get(map.get($dropdown-font, $size), size);
-      line-height: map.get(map.get($dropdown-font, $size), lh);
+      @include mix.text(map.get($dropdown-font, $size), medium);
     }
 
     .dropdown__chevron {
@@ -127,8 +129,11 @@ $list-item-font: (
 
     .list-item {
       height: map.get($list-item-heights, $size);
-      font-size: map.get(map.get($list-item-font, $size), size);
-      line-height: map.get(map.get($list-item-font, $size), lh);
+      // font-weight는 아래 기본 .list-item 규칙(medium, 사이즈 무관)이 그대로 적용되므로
+      // 여기서는 재선언하지 않고 size/lh만 $type-scale에서 가져온다.
+      $list-item-type: map.get(maps.$type-scale, map.get($list-item-font, $size));
+      font-size: map.get($list-item-type, size);
+      line-height: map.get($list-item-type, lh);
     }
   }
 }
@@ -150,9 +155,7 @@ $list-item-font: (
   padding-inline: $space-3; // 문서 권고: padding-y(6/8/11/15, 폰트 파생값) 대신 height로 세로 크기 고정
   border-radius: $radius-sm;
   color: $list-item-fg;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-body-lg; // 기본값(md 상당). 사이즈별 실제값은 .dropdown-{size}/.select-{size} 스코프에서 덮어씀
-  line-height: $font-leading-body-lg;
+  @include mix.text(body-lg, medium); // 기본값(md 상당). size/lh는 .dropdown-{size}/.select-{size} 스코프에서 덮어씀. weight(medium)는 사이즈 무관 고정값이라 이 규칙 하나로 전체를 커버함
   cursor: pointer;
 
   &:hover {

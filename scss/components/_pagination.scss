@@ -7,6 +7,7 @@
 
 @use '../tokens/primitive' as *;
 @use 'sass:map';
+@use '../abstracts/maps' as maps;
 
 // 2026-08-28 Dark 모드 실측
 :root {
@@ -28,9 +29,9 @@
 }
 
 $pagination-sizes: (
-  sm: (item: 32px, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, gap: $space-1),
-  md: (item: 40px, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, gap: $space-1),
-  lg: (item: 48px, font-size: $font-size-body-xl, line-height: $font-leading-body-xl, gap: $space-2),
+  sm: (item: 32px, type: body-sm, gap: $space-1),
+  md: (item: 40px, type: body-lg, gap: $space-1),
+  lg: (item: 48px, type: body-xl, gap: $space-2),
 );
 
 $pagination-border: var(--pagination-border);
@@ -85,23 +86,26 @@ $pagination-icon-fg: $color-neutral-600;
 
 @each $size, $props in $pagination-sizes {
   .pagination-#{$size} {
+    // font-weight는 State(현재 페이지 여부) 축이라 사이즈와 분리 — size/line-height만 $type-scale에서 읽는다.
+    $pagination-type: map.get(maps.$type-scale, map.get($props, type));
+
     .pagination-number {
       width: map.get($props, item);
       height: map.get($props, item);
-      font-size: map.get($props, font-size);
-      line-height: map.get($props, line-height);
+      font-size: map.get($pagination-type, size);
+      line-height: map.get($pagination-type, lh);
     }
 
     // "Page 1 of 10" 텍스트, numbers/group의 Prev·Next 라벨도 셀과 같은 사이즈 스케일을 탄다(실측 일치).
     &.pagination-simple,
     &.pagination-simple-icon {
-      font-size: map.get($props, font-size);
-      line-height: map.get($props, line-height);
+      font-size: map.get($pagination-type, size);
+      line-height: map.get($pagination-type, lh);
     }
 
     .pagination__nav {
-      font-size: map.get($props, font-size);
-      line-height: map.get($props, line-height);
+      font-size: map.get($pagination-type, size);
+      line-height: map.get($pagination-type, lh);
     }
   }
 }

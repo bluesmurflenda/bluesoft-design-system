@@ -2,6 +2,7 @@
 // 변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 5(xs/sm/md/lg/xl) × 상태 5
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측: primary/danger/tertiary-fg/scrim 배경은 라이트·다크 동일이라 다크 블록 불필요.
@@ -65,11 +66,11 @@ $button-radius-xs: var(--button-radius-xs);
 // (이전 "모드 무관" 가정은 오류) — rounded/square/pill 전부 tokens/_shape.scss에서 배선.
 // padding-x도 sm·xl은 Pill 모드에서만 값이 달라져 var(--button-padding-x-*)로 뺐다.
 $button-sizes: (
-  xs: (height: 28px, padding-x: var(--button-padding-x-xs), font-size: $font-size-body-2xs, line-height: $font-leading-body-2xs, radius: $button-radius-xs),
-  sm: (height: 32px, padding-x: var(--button-padding-x-sm), font-size: $font-size-body-sm, line-height: $font-leading-body-sm, radius: $button-radius),
-  md: (height: 40px, padding-x: var(--button-padding-x-md), font-size: $font-size-body-md, line-height: $font-leading-body-md, radius: $button-radius),
-  lg: (height: 48px, padding-x: var(--button-padding-x-lg), font-size: $font-size-body-lg, line-height: $font-leading-body-lg, radius: $button-radius),
-  xl: (height: 56px, padding-x: var(--button-padding-x-xl), font-size: $font-size-body-xl, line-height: $font-leading-body-xl, radius: $button-radius),
+  xs: (height: 28px, padding-x: var(--button-padding-x-xs), type: body-2xs, radius: $button-radius-xs),
+  sm: (height: 32px, padding-x: var(--button-padding-x-sm), type: body-sm, radius: $button-radius),
+  md: (height: 40px, padding-x: var(--button-padding-x-md), type: body-md, radius: $button-radius),
+  lg: (height: 48px, padding-x: var(--button-padding-x-lg), type: body-lg, radius: $button-radius),
+  xl: (height: 56px, padding-x: var(--button-padding-x-xl), type: body-xl, radius: $button-radius),
 );
 // lg와 xl이 padding-x 둘 다 24로 동일 — Rounded/Square 모드 한정. Pill 모드에서는 sm·xl만 달라진다(6장).
 
@@ -103,7 +104,7 @@ $button-link-fg-disabled: var(--button-link-fg-disabled);
   justify-content: center;
   gap: $button-gap;
   border: none;
-  font-weight: $font-weight-semibold;
+  // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
   cursor: pointer;
   transition: background-color $motion-fast, border-color $motion-fast, color $motion-fast;
@@ -123,8 +124,7 @@ $button-link-fg-disabled: var(--button-link-fg-disabled);
   .btn-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
-    font-size: map.get($props, font-size);
-    line-height: map.get($props, line-height);
+    @include mix.text(map.get($props, type), semibold);
     border-radius: map.get($props, radius);
   }
 }

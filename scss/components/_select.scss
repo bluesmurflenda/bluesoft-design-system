@@ -4,6 +4,8 @@
 // 패널·옵션(list-panel/list-item)은 _dropdown.scss 의 클래스를 그대로 재사용한다.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
+@use '../abstracts/maps' as maps;
 @use 'dropdown' as dd;
 @use 'sass:map';
 
@@ -33,13 +35,14 @@
   --list-item-fg: #d4d4d4;
 }
 
+// 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
 $select-sizes: (
-  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs, chevron: 12px),
-  md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, chevron: 16px),
+  sm: (height: 32px, padding-x: $space-3, type: body-xs, chevron: 12px),
+  md: (height: 40px, padding-x: $space-4, type: body-sm, chevron: 16px),
   // 2026-08-28 재실측: lg·xl 모두 Body/Lg(16/24)에서 멈춘다 — dropdown 트리거와 동일 패턴, 15/22 아님.
   // 셰브론도 lg·xl 둘 다 20으로 동일(재확인).
-  lg: (height: 48px, padding-x: $space-5, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, chevron: 20px),
-  xl: (height: 56px, padding-x: $space-6, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, chevron: 20px),
+  lg: (height: 48px, padding-x: $space-5, type: body-lg, chevron: 20px),
+  xl: (height: 56px, padding-x: $space-6, type: body-lg, chevron: 20px),
 );
 
 $select-label-fg: var(--field-label-fg);
@@ -65,9 +68,7 @@ $select-validation-colors: (
   width: 100%;
 
   &__label {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $select-label-fg;
   }
 
@@ -97,9 +98,7 @@ $select-validation-colors: (
   }
 
   &__hint {
-    font-weight: $font-weight-regular;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, regular);
     color: $select-hint-fg;
   }
 }
@@ -109,8 +108,11 @@ $select-validation-colors: (
     .select__field {
       height: map.get($props, height);
       padding-inline: map.get($props, padding-x);
-      font-size: map.get($props, font-size);
-      line-height: map.get($props, line-height);
+      // .select__field는 font-weight를 별도로 선언한 적이 없으므로(상속값 유지) text() 믹스인 대신
+      // $type-scale에서 size/lh만 뽑아 쓴다 — weight를 새로 추가하지 않기 위함.
+      $select-field-type: map.get(maps.$type-scale, map.get($props, type));
+      font-size: map.get($select-field-type, size);
+      line-height: map.get($select-field-type, lh);
     }
 
     .select__chevron {
@@ -119,11 +121,13 @@ $select-validation-colors: (
     }
 
     // dropdown.scss의 _List/Item 폰트·높이 맵 재사용(패널·옵션을 그대로 재사용하므로) — dropdown과
-    // 동일 컴포넌트 기반이라는 전제로 적용.
+    // 동일 컴포넌트 기반이라는 전제로 적용. font-weight는 _dropdown.scss의 기본 .list-item 규칙(medium)이
+    // 이미 전역으로 적용되므로 여기서는 재선언하지 않는다.
     .list-item {
       height: map.get(dd.$list-item-heights, $size);
-      font-size: map.get(map.get(dd.$list-item-font, $size), size);
-      line-height: map.get(map.get(dd.$list-item-font, $size), lh);
+      $list-item-type: map.get(maps.$type-scale, map.get(dd.$list-item-font, $size));
+      font-size: map.get($list-item-type, size);
+      line-height: map.get($list-item-type, lh);
     }
   }
 }

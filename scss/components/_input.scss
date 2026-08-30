@@ -5,13 +5,15 @@
 // lg·xl 모두 Body/Lg(16/24)에서 멈춘다 — button/dropdown/select와 동일한 사이즈 진행 패턴.
 
 @use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
+// 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
 $input-sizes: (
-  sm: (height: 32px, padding-x: $space-3, font-size: $font-size-body-xs, line-height: $font-leading-body-xs, icon: 16px),
-  md: (height: 40px, padding-x: $space-4, font-size: $font-size-body-sm, line-height: $font-leading-body-sm, icon: 16px),
-  lg: (height: 48px, padding-x: $space-4, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, icon: 20px),
-  xl: (height: 56px, padding-x: $space-4, font-size: $font-size-body-lg, line-height: $font-leading-body-lg, icon: 20px),
+  sm: (height: 32px, padding-x: $space-3, type: body-xs, icon: 16px),
+  md: (height: 40px, padding-x: $space-4, type: body-sm, icon: 16px),
+  lg: (height: 48px, padding-x: $space-4, type: body-lg, icon: 20px),
+  xl: (height: 56px, padding-x: $space-4, type: body-lg, icon: 20px),
 );
 
 $input-label-fg: $color-neutral-800; // text-primary
@@ -34,9 +36,7 @@ $input-validation-colors: (
   width: 100%;
 
   &__label {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
     color: $input-label-fg;
   }
 
@@ -65,7 +65,7 @@ $input-validation-colors: (
     outline: none;
     background: none;
     padding: 0;
-    font-weight: $font-weight-regular;
+    // font-weight는 아래 @each의 text()로 이동
     color: $color-neutral-700; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
 
     &::placeholder {
@@ -85,9 +85,7 @@ $input-validation-colors: (
     flex-shrink: 0;
   }
 
-  &__hint {
-    font-weight: $font-weight-regular;
-  }
+  // &__hint의 font-weight는 아래 @each의 text()로 이동(.input__control과 공유)
 }
 
 @each $size, $props in $input-sizes {
@@ -99,8 +97,7 @@ $input-validation-colors: (
 
     .input__control,
     .input__hint {
-      font-size: map.get($props, font-size);
-      line-height: map.get($props, line-height);
+      @include mix.text(map.get($props, type), regular);
     }
 
     .input__icon {

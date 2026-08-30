@@ -10,6 +10,7 @@
 
 @use '../tokens/primitive' as *;
 @use '../tokens/breakpoint' as bp;
+@use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
 // 2026-08-28 Dark 모드 실측 — Tooltip과 같은 반전 패턴: site-header-dark(원래 어두운 헤더, 밝은 배경 위에서 쓰는 용도)가
@@ -56,9 +57,7 @@ $announcement-fg: $color-white;
     padding: $space-2 $space-10;
     background-color: $announcement-bg;
     color: $announcement-fg;
-    font-weight: $font-weight-medium;
-    font-size: $font-size-body-sm;
-    line-height: $font-leading-body-sm;
+    @include mix.text(body-sm, medium);
 
     @media (max-width: bp.$css-breakpoint-sm - 1) {
       padding-inline: $space-4;
@@ -128,9 +127,7 @@ $announcement-fg: $color-white;
   align-items: center;
   padding: $space-3 $space-4;
   color: $nav-menu-fg-light;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-body-xl;
-  line-height: $font-leading-body-xl;
+  @include mix.text(body-xl, bold);
   cursor: pointer;
 
   &:hover,
