@@ -10,7 +10,7 @@
 ## 현재 단계
 
 ```
-2단계 완료 — 3단계(버튼 계열) 진행 대기
+3단계 완료 — 4단계(입력 계열) 진행 대기
 ```
 
 ---
@@ -23,7 +23,7 @@
 | 0-b | `scripts/` 검사 스크립트 | 완료 | 2026-08-30 | 아래 "0단계 완료 메모" 참조 — 스크립트는 정상 동작하지만 `check:tokens`·`check:nodes` 자체는 아직 그린이 아니다(기존 코드의 실제 문제를 찾아냈기 때문 — 의도된 결과) |
 | 1 | `tokens/` 4개 파일 | 완료 | 2026-08-30 | 아래 "1단계 완료 메모" 참조. `check:tokens` 자체는 아직 전체 그린이 아니다 — 남은 실패는 대부분 컴포넌트 파일 소관(3~7단계) |
 | 2 | `abstracts/` + `base/_typography.scss` | 완료 | 2026-08-30 | 아래 "2단계 완료 메모" 참조 |
-| 3 | 버튼 계열 | 대기 | | |
+| 3 | 버튼 계열 | 완료 | 2026-08-30 | 아래 "3단계 완료 메모" 참조 |
 | 4 | 입력 계열 | 대기 | | |
 | 5 | 상태 표시 | 대기 | | |
 | 6 | 테이블 · 보드 | 대기 | | |
@@ -163,6 +163,49 @@ Enterprise 전용이라 401. 필요할 때 Figma MCP로 대화 중 수동 실행
 - `base/_typography.scss`: 로직은 그대로(이미 굵기 미포함), `utilities/` → `base/`로 이동
   (`_reset.scss`도 같이) — CLAUDE.md 11장 문서 구조와 실제 코드가 달랐던 것을 맞췄다. `main.scss`
   `@use` 경로 갱신.
+
+---
+
+## 3단계 완료 메모 — 버튼 계열(Button·Icon Button·Social Button)
+
+**작업**: Figma MCP로 세 컴포넌트를 각각 다시 조회했다(`get_variable_defs` — 라이브 인스턴스가
+실제로 바인딩한 변수를 이름·값으로 확인하는 방식, node id는 Button 182:45·Icon Button
+390:5196·Social Button 422:6313). 조회 결과를 `figma/tokens.theme.json`의 `button/*`(40개)와
+대조해 재작성했다.
+
+| 시점 | S1 | S2(누락·전용·불일치) |
+|---|---|---|
+| 2단계 종료 | 350 | 261 (190·22·49) |
+| `_button.scss` 후 | 304 | 217 (156·22·39) |
+| `_icon-button.scss` 후 | 288 | 183 (130·14·39) |
+| `_social-button.scss` 후 | 288 | 183 (변화 없음 — 값 정확성 수정이라 카운트에는 안 잡힘) |
+
+**발견한 것**:
+- `_button.scss`가 `button/*` 시맨틱을 커스텀 프로퍼티로 노출하지 않고 프리미티브·하드코딩
+  hex를 직접 썼다. 그 값 자체도 낡아서(예: `tertiary bg`↔`bg-hover`가 라이트/다크 뒤바뀌어
+  있었고, `disabled-bg/fg/border`가 옛 slate 값) 실제 렌더링이 Figma와 달랐다.
+- `_icon-button.scss`의 `--icon-btn-ghost-*` 커스텀 프로퍼티는 Figma에 대응하는 이름이 없었다
+  — `get_variable_defs`로 실제 이름이 `button/ghost-inverse`·`button/ghost-brand`·
+  `button/ghost-white`(Icon Button 전용이 아니라 button 네임스페이스 공유)임을 확인, 이름을
+  맞췄다.
+- `_social-button.scss`의 outline/google 배경·테두리·글자색이 `$neutral-300`/`$neutral-700`/
+  `$white` 프리미티브 직접 참조라 다크모드에서 안 바뀌었다. `get_variable_defs`로 실제 바인딩을
+  확인해 `var(--button-outline-border)`/`var(--button-outline-fg)`/`var(--surface-default)`로
+  교체 — 이 중 배경은 `button/outline/bg`가 아니라 `surface/default`에 바인딩돼 있어(라이트는
+  같은 값, 다크는 neutral-900 vs -950로 다름) 그대로 구분해서 반영했다.
+
+**방법**: 라이트·다크 별칭 대상 이름이 같은 토큰(예: `ghost/fg`→`text/secondary`)은 다크
+블록에 재선언하지 않는다 — 별칭 체인이 알아서 다크값을 물어온다. 이름은 같아도 **최종
+resolve된 색이 같은지**가 아니라 **별칭이 가리키는 대상 이름이 같은지**로 판단해야 한다
+(처음에 반대로 접근해서 25개 오버라이드가 나왔다가, 대상 이름 기준으로 다시 계산해 14개로
+정정 — `primary/bg`는 라이트에서 `brand/600`을 가리키고 다크에서 `blue/600`을 직접 가리켜서
+**최종값은 같아도**(`#2563eb`) 대상이 달라 오버라이드가 필요했던 반면, `ghost/fg`는 라이트·
+다크 둘 다 `text/secondary`를 가리켜서 그 토큰 자신의 다크 처리에 맡기면 된다).
+
+**알파 토큰**(`button/ghost/bg`·`scrim-dark/*`·`scrim-light/*`·`ghost-inverse/bg*`·
+`ghost-brand/bg`·`ghost-white/bg`, 총 11개)은 Figma 원본이 별칭이 아니라 리터럴이라 S1 예외
+주석(`/* 예외: 알파 */`)을 달고 그대로 뒀다 — 이게 S1 288건에서 tokens/ 관련으로 남아있는
+합법적 예외다.
 
 ---
 

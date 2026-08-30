@@ -5,58 +5,67 @@
 @use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측: primary/danger/tertiary-fg/scrim 배경은 라이트·다크 동일이라 다크 블록 불필요.
-// 색이 실제로 갈리는 토큰만 커스텀 프로퍼티로 뺀다.
+// 커스텀 프로퍼티는 figma/tokens.theme.json의 button/* 를 그대로 옮긴 것 — 손으로 만든 값이
+// 아니다(1단계 tokens/ 재생성과 같은 방식). primary/danger 등 라이트·다크 별칭 대상 이름이
+// 동일한 토큰은 다크 블록에 다시 안 쓴다 — 별칭 체인이 알아서 다크값을 물어온다(전역 4장).
 :root {
-  --button-secondary-bg: #eff6ff;
-  --button-secondary-bg-hover: #dbeafe;
-  --button-secondary-bg-pressed: #bfdbfe;
-  --button-secondary-fg: #1d4ed8;
-  --button-outline-bg: #ffffff;
-  --button-outline-bg-hover: #fafafa;
-  --button-outline-bg-pressed: #f5f5f5;
-  --button-outline-fg: #404040;
-  --button-outline-border: #d4d4d4;
-  --button-ghost-fg: #404040;
-  --button-ghost-bg-hover: #f5f5f5;
-  --button-ghost-bg-pressed: #e5e5e5;
-  --button-tertiary-bg: #a3a3a3;
-  --button-tertiary-bg-pressed: #525252;
-  --button-disabled-bg: #f1f5f9;
-  --button-disabled-fg: #94a3b8;
-  --button-disabled-border: #e2e8f0;
-  --button-link-fg: #404040;
-  --button-link-fg-hover: #2563eb;
-  --button-link-fg-pressed: #1e40af;
-  --button-link-fg-disabled: #a3a3a3;
-  --button-scrim-dark-fg: #ffffff;
-  --button-scrim-light-fg: #171717;
+  --button-primary-bg: var(--brand-600);
+  --button-primary-bg-hover: var(--brand-700);
+  --button-primary-bg-pressed: var(--brand-800);
+  --button-primary-fg: var(--white);
+  --button-secondary-bg: var(--brand-50);
+  --button-secondary-bg-hover: var(--brand-100);
+  --button-secondary-bg-pressed: var(--brand-200);
+  --button-secondary-fg: var(--brand-700);
+  --button-tertiary-bg: var(--neutral-600);
+  --button-tertiary-bg-hover: var(--neutral-700);
+  --button-tertiary-bg-pressed: var(--neutral-800);
+  --button-outline-bg: var(--white);
+  --button-outline-bg-hover: var(--surface-subtle);
+  --button-outline-bg-pressed: var(--neutral-100);
+  --button-outline-fg: var(--text-secondary);
+  --button-outline-border: var(--border-strong);
+  --button-ghost-fg: var(--text-secondary);
+  --button-ghost-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-ghost-bg-hover: var(--neutral-100);
+  --button-ghost-bg-pressed: var(--neutral-200);
+  --button-danger-bg: var(--red-600);
+  --button-danger-bg-hover: var(--red-700);
+  --button-danger-bg-pressed: var(--red-800);
+  --button-danger-fg: var(--white);
+  --button-disabled-bg: var(--neutral-100);
+  --button-disabled-fg: var(--text-disabled);
+  --button-disabled-border: var(--border-default);
+  --button-scrim-dark-bg: #0000004d; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-scrim-dark-bg-hover: #00000099; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-scrim-dark-bg-pressed: #000000cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-scrim-dark-fg: var(--white);
+  --button-scrim-light-bg: #ffffff4d; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-scrim-light-bg-hover: #ffffff99; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-scrim-light-bg-pressed: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --button-scrim-light-fg: var(--neutral-900);
+  --button-link-fg: var(--text-secondary);
+  --button-link-fg-hover: var(--brand-600);
+  --button-link-fg-pressed: var(--brand-800);
+  --button-link-fg-disabled: var(--text-disabled);
+  --button-tertiary-fg: var(--white);
 }
 
 [data-theme='dark'] {
-  --button-secondary-bg: #172554;
-  --button-secondary-bg-hover: #1e3a8a;
-  --button-secondary-bg-pressed: #1e40af;
-  --button-secondary-fg: #93c5fd;
-  --button-outline-bg: #0a0a0a;
-  --button-outline-bg-hover: #0a0a0a;
-  --button-outline-bg-pressed: #171717;
-  --button-outline-fg: #d4d4d4;
-  --button-outline-border: #525252;
-  --button-ghost-fg: #d4d4d4;
-  --button-ghost-bg-hover: #171717;
-  --button-ghost-bg-pressed: #262626;
-  --button-tertiary-bg: #525252;
-  --button-tertiary-bg-pressed: #a3a3a3;
-  --button-disabled-bg: #0f172a;
-  --button-disabled-fg: #475569;
-  --button-disabled-border: #334155;
-  --button-link-fg: #d4d4d4;
-  --button-link-fg-hover: #60a5fa;
-  --button-link-fg-pressed: #bfdbfe;
-  --button-link-fg-disabled: #525252;
-  --button-scrim-dark-fg: #0a0a0a;
-  --button-scrim-light-fg: #f5f5f5;
+  --button-primary-bg: var(--blue-600);
+  --button-primary-bg-hover: var(--blue-700);
+  --button-primary-bg-pressed: var(--blue-800);
+  --button-tertiary-bg: var(--neutral-400);
+  --button-tertiary-bg-hover: var(--neutral-300);
+  --button-tertiary-bg-pressed: var(--neutral-200);
+  --button-outline-bg: var(--neutral-950);
+  --button-outline-bg-pressed: var(--neutral-900);
+  --button-ghost-bg-hover: var(--neutral-900);
+  --button-ghost-bg-pressed: var(--neutral-800);
+  --button-disabled-bg: var(--neutral-900);
+  --button-scrim-dark-fg: var(--neutral-950);
+  --button-scrim-light-fg: var(--neutral-100);
+  --button-tertiary-fg: var(--neutral-950);
 }
 
 $button-radius: var(--button-radius);
@@ -76,16 +85,18 @@ $button-sizes: (
 
 $button-gap: $space-2; // 아이콘·라벨 내부 gap. 사이즈별 세분값은 문서화돼 있지 않아 단일값 사용.
 
+// 8개 변형(link 제외) 전부 같은 패턴 — 프리미티브를 직접 물지 않고 위 --button-* 커스텀
+// 프로퍼티만 참조한다. 값이 라이트·다크 동일한 것(primary/danger 등)도 결과는 같다 —
+// 위에서 이미 별칭 체인으로 처리했다.
 $button-variants: (
-  // primary/danger/tertiary-fg는 다크 실측값이 라이트와 동일해 primitive 그대로 유지.
-  primary: (bg: $blue-600, bg-hover: $blue-700, bg-pressed: $blue-800, fg: $white),
+  primary: (bg: var(--button-primary-bg), bg-hover: var(--button-primary-bg-hover), bg-pressed: var(--button-primary-bg-pressed), fg: var(--button-primary-fg)),
   secondary: (bg: var(--button-secondary-bg), bg-hover: var(--button-secondary-bg-hover), bg-pressed: var(--button-secondary-bg-pressed), fg: var(--button-secondary-fg)),
-  tertiary: (bg: var(--button-tertiary-bg), bg-hover: $neutral-500, bg-pressed: var(--button-tertiary-bg-pressed), fg: $white),
+  tertiary: (bg: var(--button-tertiary-bg), bg-hover: var(--button-tertiary-bg-hover), bg-pressed: var(--button-tertiary-bg-pressed), fg: var(--button-tertiary-fg)),
   outline: (bg: var(--button-outline-bg), bg-hover: var(--button-outline-bg-hover), bg-pressed: var(--button-outline-bg-pressed), border: var(--button-outline-border), fg: var(--button-outline-fg)),
-  ghost: (bg: transparent, bg-hover: var(--button-ghost-bg-hover), bg-pressed: var(--button-ghost-bg-pressed), fg: var(--button-ghost-fg)),
-  danger: (bg: $red-600, bg-hover: $red-700, bg-pressed: $red-800, fg: $white),
-  scrim-dark: (bg: rgba(0, 0, 0, 0.3), bg-hover: rgba(0, 0, 0, 0.6), bg-pressed: rgba(0, 0, 0, 0.8), fg: var(--button-scrim-dark-fg)),
-  scrim-light: (bg: rgba(255, 255, 255, 0.3), bg-hover: rgba(255, 255, 255, 0.6), bg-pressed: rgba(255, 255, 255, 0.8), fg: var(--button-scrim-light-fg)),
+  ghost: (bg: var(--button-ghost-bg), bg-hover: var(--button-ghost-bg-hover), bg-pressed: var(--button-ghost-bg-pressed), fg: var(--button-ghost-fg)),
+  danger: (bg: var(--button-danger-bg), bg-hover: var(--button-danger-bg-hover), bg-pressed: var(--button-danger-bg-pressed), fg: var(--button-danger-fg)),
+  scrim-dark: (bg: var(--button-scrim-dark-bg), bg-hover: var(--button-scrim-dark-bg-hover), bg-pressed: var(--button-scrim-dark-bg-pressed), fg: var(--button-scrim-dark-fg)),
+  scrim-light: (bg: var(--button-scrim-light-bg), bg-hover: var(--button-scrim-light-bg-hover), bg-pressed: var(--button-scrim-light-bg-pressed), fg: var(--button-scrim-light-fg)),
 );
 
 // disabled는 전 변형 공통(link 제외 — link는 자기 전용 fg-disabled 토큰을 쓴다).

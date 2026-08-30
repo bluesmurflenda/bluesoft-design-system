@@ -84,9 +84,11 @@ $social-brand-colors: (
 // outline 테마 — 4개 소셜 공통(naver/kakao/apple의 outline 변형 + google 전체)
 .social-btn-outline,
 .social-btn-google {
-  background-color: $white;
-  border: 1px solid $neutral-300; // button/outline/border
-  color: $neutral-700; // button/outline/fg
+  // get_variable_defs로 확인(2026-08-30): 배경은 button/outline/bg가 아니라 surface/default에
+  // 직접 바인딩돼 있다 — 값은 라이트에서 같지만(둘 다 white) 다크에서 다르다(neutral-900 vs -950).
+  background-color: var(--surface-default);
+  border: 1px solid var(--button-outline-border);
+  color: var(--button-outline-fg);
 }
 
 // brand 테마 — naver/kakao/apple만 (google은 위 outline 규칙을 그대로 씀)
