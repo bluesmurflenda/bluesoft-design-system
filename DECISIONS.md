@@ -523,21 +523,59 @@ S6(중첩 깊이)·S7(BEM 위반) 강제 수단으로 stylelint 를 쓰기로 �
 
 ---
 
+## ADR-021 · scopes 조이기 기준
+
+상태: Accepted 확신도: 높음 날짜: 2026-08-31
+
+### 맥락
+
+Theme 컬렉션 토큰 다수가 `scopes: ALL_SCOPES`로 남아 있었다 — 어떤 속성에든 바인딩할 수
+있다는 뜻이라, Figma 에서 변수를 고를 때 엉뚱한 자리(예: 배경색 자리에 텍스트 전용 토큰)가
+후보로 잘못 뜰 여지가 컸다.
+
+### 결정
+
+**역할별로 좁힌다.** 램프(brand·accent 등 원시 색 단계)는 4개 scope 전부 유지, 배경은
+`FRAME_FILL`+`SHAPE_FILL`, 테두리는 `STROKE_COLOR`, 전경(텍스트·아이콘)은 `TEXT_FILL`+
+`SHAPE_FILL`로 좁힌다. Theme 77건을 이 기준으로 조였다 — 충돌 0건 확인.
+
+**Primitive 189건은 조이지 않는다.** 프리미티브는 정의상 어디든 쓰일 수 있어야 하는
+원시값 계층이라 scope 를 좁히는 것 자체가 목적에 안 맞는다.
+
+**예외**: `surface/default`는 실사용이 넓어 4개 전부 유지(strokes 314곳·TEXT 2곳).
+`border/default`는 `STROKE_COLOR`에 `SHAPE_FILL` 하나를 더했다(구분선 도형 채움 45곳).
+순수 border 토큰 27건은 `STROKE_COLOR` 1개다.
+
+### 근거
+
+`ALL_SCOPES`는 후보가 너무 넓어 잘못 선택되기 쉽다 — scope 를 역할에 맞게 좁히면 Figma
+속성 패널에서 그 자리에 맞는 토큰만 후보로 뜬다.
+
+**다만 조인 뒤 실사용을 반드시 대조해야 한다** — `surface/default`가 테두리 자리에 314곳
+쓰이는 것처럼, scope 를 좁히면서 그 변수가 실제로 걸쳐 쓰이던 속성을 놓치면 그 자리에서
+후보 목록에서 사라져 버린다. 이번엔 대조 후 충돌 0건을 확인했다.
+
+### 뒤집으려면
+
+해당 토큰의 `scopes`를 `ALL_SCOPES`로 되돌린다. 건별 1분.
+
+---
+
 ## 미결 — 결정이 필요할 때 여기에 추가한다
 
 | # | 항목 | 성격 |
 |---|---|---|
 | 1 | `Con` · `Card` · `Social Button` 의 disabled 표현 부재 | Figma 에 상태 추가 vs 코드에서 `opacity` |
 | 2 | `_List/Item` focus 표시 부재 | Figma 추가 vs 코드에서 ring |
-| 3 | `Chip` · `Alert` 의 `brand` 와 `info` 중복 | 한쪽 삭제 vs 유지 |
-| 4 | `Calendar` `Type=Card` 와 `default` 동일 | 축 삭제 vs 유지 |
-| 5 | `Pagination` `simple` 과 `numbers` 규격 동일 | 통합 vs 유지 |
+| ~~3~~ | ~~`Chip` · `Alert` 의 `brand` 와 `info` 중복~~ | **해소**: 다르다. brand는 브랜드 램프를 따라가고 info는 blue 고정 — 다크에서 `chip/brand/fg`=#93c5fd vs `chip/info/fg`=#60a5fa로 갈린다. 브랜드 색을 바꿔도 info는 파랑을 유지해야 하므로 의도된 설계. |
+| ~~4~~ | ~~`Calendar` `Type=Card` 와 `default` 동일~~ | **해소**: 다르다. fills의 visible 플래그로 갈린다 — Card=배경 보임, default=투명. 스크린샷으로 확인. |
+| ~~5~~ | ~~`Pagination` `simple` 과 `numbers` 규격 동일~~ | **해소**: 다르다. Size가 내부 요소를 바꾼다(셀 32/40/48, gap 2/2/4). Type은 구성 자체가 다르다(simple=텍스트+버튼, numbers=화살표+번호목록). |
 | 6 | `Checkbox` radius 하드값 | 토큰화 vs 유지 |
-| 7 | `Toggle` track radius · padding 하드값 | 토큰화 vs 유지 |
+| ~~7~~ | ~~`Toggle` track radius · padding 하드값~~ | **해소**: radius는 이미 토큰화됨(`$radius-full`). space 스케일은 `space-N = N*4px`(step 값이지 리터럴 px가 아님) — `$toggle-height`(20px)는 `$space-5`, `$toggle-knob-size`(16px)는 `$space-4`로 토큰화했다. `$toggle-width`(36px)·`$toggle-knob-inset`(2px)은 스케일에 대응 step이 없어(각각 32/40 사이, 4px 미만) 리터럴로 유지하고 주석으로 이유를 남겼다. |
 | 8 | `Tooltip` radius 하드값 | 토큰화 vs 유지 |
 | 9 | `Modal` alert 계열에 lg·xl 부재 | 의도 확인 |
 | 10 | `Featured Icon` 에 `info` 색 부재 | 추가 vs 유지 |
-| 11 | `ALL_SCOPES` 토큰의 scopes 조이기 | 작업량 대비 실익 |
+| ~~11~~ | ~~`ALL_SCOPES` 토큰의 scopes 조이기~~ | **해소(ADR-021)**: Theme 77건을 역할별로 조였다. 충돌 0 확인. `surface/default`는 실사용이 넓어 4개 전부 유지, `border/default`는 `STROKE_COLOR`+`SHAPE_FILL`(구분선 도형 채움 45곳)로 예외 유지. |
 | ~~12~~ | ~~`board-row` `notice` 텍스트가 `post` 보다 작음~~ | **해소**: batch 4 에서 확인. title 크기는 동일하고 차이는 Notice 배지 유무였다. |
 
 **이 목록은 코드 작업을 막지 않는다.** 대부분 "의도인지 확인"이다.

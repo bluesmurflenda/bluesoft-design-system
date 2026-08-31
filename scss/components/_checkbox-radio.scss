@@ -237,10 +237,10 @@ $choice-description-fg: var(--choice-description-fg);
 }
 
 // Toggle(Switch) — 같은 페이지에 속한 별도 컨트롤
-$toggle-width: 36px;
-$toggle-height: 20px;
-$toggle-knob-size: 16px;
-$toggle-knob-inset: 2px;
+$toggle-width: 36px; // 예외: space 스케일에 36 없음(step*4px 이라 32·40뿐) — 리터럴 유지
+$toggle-height: $space-5; // 20px = space-5(step 5*4px)
+$toggle-knob-size: $space-4; // 16px = space-4(step 4*4px)
+$toggle-knob-inset: 2px; // 예외: space 스케일 최소 단위가 4px(space-1) — 2px 없음, 리터럴 유지
 
 $toggle-colors: (
   bg-on: var(--toggle-track-bg-on),
@@ -308,7 +308,7 @@ $toggle-colors: (
     // &:checked + .toggle__track 안에 .toggle__knob을 한 번 더 중첩하면 4단이 되므로
     // 복합 선택자로 펼친다(컴파일 결과 동일).
     &:checked + .toggle__track .toggle__knob {
-      transform: translateX($toggle-width - $toggle-knob-size - $toggle-knob-inset * 2);
+      transform: translateX(calc(#{$toggle-width} - #{$toggle-knob-size} - #{$toggle-knob-inset} * 2));
     }
 
     &:checked:hover:not(:disabled) + .toggle__track {
