@@ -29,6 +29,7 @@
 | 5 | 상태 표시 | 완료 | 2026-08-31 | 아래 "5단계 완료 메모" 참조 |
 | 6 | 테이블 · 보드 | 완료 | 2026-08-31 | 아래 "6단계 완료 메모" 참조 |
 | 7 | 내비게이션 · 표시 | 완료 | 2026-08-31 | 아래 "7단계 완료 메모" 참조 |
+| 8 | Figma ↔ SCSS 색 바인딩 전수 대조 (28개 컴포넌트) | 진행 | | |
 
 상태: `대기` → `진행` → `검사통과` → `완료`
 
@@ -42,7 +43,7 @@
 
 | 단계 | 컴포넌트 | 상태 | 비고 |
 |---|---|---|---|
-| | | | |
+| 8 | Alert | 검사통과 | 아래 "8단계 진행 메모 — Alert" 참조 |
 
 ---
 
@@ -516,13 +517,73 @@ WARN 그대로 둔다.
 
 ---
 
+## 8단계 진행 메모 — Alert
+
+Claude 앱이 Figma MCP로 뽑은 "요소→토큰" 기준표를 받아 `_alert.scss`·`docs/components/alert.html`과
+전수 대조했다(node 756:4134 계열, `get_variable_defs`로 761:51·761:44 직접 재확인).
+
+**SCSS 버그 발견·수정**: `_alert.scss`의 `&-banner { border: none; }`가 뒤에 나오는 `@each`
+루프의 `.alert-{color} { border: 1px solid ...; }`에 소스 순서상 덮어써지고 있었다(동일
+specificity, 나중 선언이 이김) — banner에 테두리가 남아 보이던 원인. `border: none` 선언을
+`@each` 루프 뒤로 옮겨 해결. Figma 재확인(node 761:44)으로 banner에 border 변수 자체가
+없음을 재검증했다.
+
+**docs 마크업 문제 발견·수정**: inline 데모가 `.doc-matrix`(`minmax(160px,1fr)` 그리드)를
+써서 실제 폭 480px를 못 받고 텍스트가 한 글자씩 줄바꿈되고 있었다 — banner/toast처럼
+`.doc-col`(세로 flex)로 교체. Figma 기준표에 있던 Action 1·Action 2(`button/tertiary/bg`)
+데모가 문서에 아예 없어서 신규 섹션으로 추가.
+
+**범위 밖 발견 → ADR-022로 처리**: 아이콘·닫기 버튼이 항상 회색으로 보이는 진짜 원인은
+`icons/sprite.svg`(저장소 루트, SI 프로젝트들이 실제로 가져다 쓰는 산출물)의 293개 `<path>`가
+전부 `fill="#525252"` 리터럴을 물고 있어서였다 — CSS `currentColor`로는 못 고치는 문제(`<use>`가
+참조하는 `<symbol>` 내부 자체 지정값이 상속을 막음). 새 스크립트
+`scripts/fix-icon-sprite-fill.mjs`(`npm run fix:icon-sprite`)로 `icons/sprite.svg` 자체를
+치환했다 — 자세한 내용·근거는 `DECISIONS.md` ADR-022. Headless Chrome 스크린샷으로 Alert·
+Icon Button·Social Button 세 페이지를 검증: 아이콘이 색상 토큰을 따라가고, 브랜드 로고색
+(Google/Naver/Kakao)은 안 건드려졌다.
+
+**검사**: `npm run build` 통과. `check:tokens` — alert 관련 신규 실패 없음(기존 tabs/list
+누락 8건은 7단계부터 있던 것, 무관). `check:nodes`는 `FIGMA_TOKEN` 만료(403)로 이번 세션엔
+못 돌렸다 — 토큰 재발급 필요, Alert 작업과는 무관한 별개 사안.
+
+---
+
+## 8단계 방법론 — 하이브리드 자동 대조(D14, ADR-023)
+
+Alert 이후부터는 순수 프롬프트 기준표 방식 대신 **하이브리드**로 진행한다. Claude 앱이 기준표를
+줄 때 구조화된 요소↔토큰 JSON도 함께 주면, 그걸 `scripts/lib/element-map/<컴포넌트>.mjs`로
+저장하고 `check-nodes.mjs`의 **D14**(신규)가 REST 덤프 + 컴파일된 CSS 대조로 회귀 검사에
+편입한다. 근거·설계·한계는 `DECISIONS.md` ADR-023, 항목 정의는 `scripts/README.md` D14 참조.
+
+**구현·검증 상태(2026-09-01)**:
+- `check-nodes.mjs --dump <세트명>` 모드 추가 — D1/D2의 `walk`/`resolveVarId` 재사용
+- `scripts/lib/element-map/alert.mjs` 작성 — Icon/Close가 인스턴스라 REST 워크가 내부까지
+  못 들어가는 것을 우려해 `get_variable_defs`를 노드 단위(761:52·765:141)로 개별 확인 —
+  인스턴스 자체 레벨에 `alert-brand-fg` 바인딩이 있어(REST의 인스턴스-소유 배제 규칙과 무관하게
+  인스턴스 자신의 fills는 잡힌다) 문제없음을 확인
+- **REST 없이(FIGMA_TOKEN 만료) `fetch` 모킹 통합 테스트로 로직 검증** — 정상 매핑 조용히 통과,
+  Figma 쪽 결손을 "Figma 불일치"로, `dist/main.css`를 일부러 깨뜨린 것(임시 변경 후 재빌드로
+  원복, 저장소에 흔적 없음)을 "SCSS 불일치"로 정확히 구분하는 것을 확인
+- **실제 라이브 데이터로 검증 완료(2026-09-01, 토큰 재발급 후)** — `npm run check:nodes` 결과
+  D1·D2·D10 PASS(16개 페이지), **D14는 처음 12건 FAIL** — Icon·Close가 전부 "바인딩 없음"으로
+  잡혔다. Raw REST(`GET /v1/files/{key}/nodes`)로 직접 확인해서 원인을 좁혔다: **기준표도
+  SCSS도 아니라 `walkForDump()` 자체의 버그였다.** D1/D2의 `walk()`를 그대로 재사용하면서
+  "인스턴스 경계에서 안 내려간다"는 규칙까지 같이 가져왔는데, 그 규칙은 D1/D2가 "같은 위반을
+  파일 전체에서 중복 집계하지 않기" 위해 만든 것이지 D14 목적(이 자리의 실제 색)엔 안 맞았다.
+  REST는 INSTANCE 노드도 오버라이드 반영된 `children`을 그대로 주는데(실측: `Icon` 인스턴스
+  자체 `fills`는 빈 배열, 색은 내부 `Icon/Icon` 벡터에 있었다), `walkForDump`가 거기서 멈춰서
+  못 찾은 것이다. `walkForDump`에서 인스턴스 경계 정지 로직을 제거하고 `element-map/alert.mjs`의
+  `figmaPath`를 `Icon`→`Icon/Icon`, `Close`→`Close/Icon`으로 정정 — 재실행 결과 **D1·D2·D10·D14
+  전부 PASS**. `scripts/README.md` D14 항목에 이 차이를 기록.
+
+---
+
 ## 막힌 것
 
 **`DECISIONS.md` 에 없는 판단이 필요해 멈춘 지점.**
 사람이 결정하면 ADR 로 옮기고 여기서 지운다.
 
-**현재 없음** — 마지막으로 남아 있던 Figma 수정 3건(+text/danger 1건)이 2026-08-31에 전부
-처리됐다. 아래 "발견한 불일치" 표 참조.
+**현재 없음** — 8단계에서 새로 발견한 아이콘 sprite 문제는 ADR-022로 결정·처리 완료.
 
 ---
 
@@ -533,3 +594,4 @@ WARN 그대로 둔다.
 | 날짜 | 항목 | 내용 | 원인 |
 |---|---|---|---|
 | 2026-08-31 | `_button.scss` `$button-sizes` | ADR-015(Accepted)가 3단계에서 코드에 반영되지 않음. docs 4단계에서 발견. | |
+| 2026-09-01 | D14 `walkForDump` | Alert Icon·Close 12건 FAIL — 라이브 데이터로 처음 실행. 원인은 검사 스크립트 자체(인스턴스 경계에서 안 내려가는 D1/D2 규칙을 D14에 그대로 재사용) | `walkForDump`가 인스턴스 내부까지 내려가도록 수정, `figmaPath` 정정 후 PASS |

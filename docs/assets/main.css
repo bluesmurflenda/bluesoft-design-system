@@ -2746,7 +2746,6 @@ table {
 .alert-banner {
   padding: var(--space-4) var(--space-6);
   border-radius: 0;
-  border: none;
 }
 .alert__body {
   flex: 1;
@@ -2823,6 +2822,10 @@ table {
 }
 .alert-info .alert__title {
   color: var(--alert-info-fg);
+}
+
+.alert-banner {
+  border: none;
 }
 
 .featured-icon {

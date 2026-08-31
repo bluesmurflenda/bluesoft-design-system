@@ -320,6 +320,50 @@ tabs/pill/bg-hover → surface/subtle            통과
 **나온 배경:** DS Master 에서 미사용인 레이아웃 토큰이 프로젝트 파일에서 수백 곳 쓰이고 있었다.
 한 파일만 보고 삭제했으면 사고였다.
 
+### D14. 요소별 토큰 매핑 대조
+
+근거: `CLAUDE.md` 6장(작업 대상별 참조) · ADR-023
+
+**`scripts/lib/element-map/*.mjs`에 매핑이 있는 컴포넌트만, 요소별 토큰 참조가 Figma와
+일치하는지 대조한다.** N군(REST)이라 `check-nodes.mjs`가 D1/D2/D10과 같은 호출 안에서 돈다.
+
+```
+매핑 파일 하나 = 컴포넌트 세트 하나
+{ set, variantAxis, elements: [{ figmaPath, element, figmaType, cssSelector, cssProperty, token, except?, via? }] }
+```
+
+- `figmaPath`: 변형 루트 기준 레이어 경로(`''` = 루트 자신, `'Body/Title'`처럼 `/`로 중첩 표기)
+- `cssSelector`/`cssProperty`: **실제로 그 값이 선언되는 지점**(컴파일된 CSS 기준). 자식 요소가
+  색 선언이 없고 조상에서 상속받으면(Icon·Close처럼) 조상 셀렉터를 가리키고 `via`에 이유를 남긴다
+- `token`: 기대 토큰. `{color}`처럼 `variantAxis`의 축 이름을 플레이스홀더로 쓸 수 있다
+- `except`: 특정 축 값에서 이 매핑 자체가 성립하지 않는 경우(예: banner는 border 자체가 없음)
+
+각 항목에 대해 참조된 축(placeholder가 쓰인 축)만 전개하고, 나머지 축은 첫 번째 비-제외값으로
+고정해 대표 변형 하나를 고른다 — 참조 안 되는 축까지 전수 조합하면 같은 검사를 중복해서
+반복한다. Figma 쪽(REST 덤프)과 SCSS 쪽(컴파일된 CSS의 `var(--x)`) 을 각각 기대 토큰과
+대조해서 **어느 쪽이 어긋났는지 구분해 보고한다**(`Figma 불일치` vs `SCSS 불일치`).
+
+**한계— 캐스케이드로 실제 이기는 값은 검사하지 않는다.** 셀렉터가 올바른 토큰을 참조하는지만
+보지, 여러 클래스가 동시에 걸렸을 때(`class="alert alert-banner alert-brand"`) 소스 순서·
+specificity로 실제 적용되는 값이 뭔지는 시뮬레이션하지 않는다. Alert의 banner 테두리 버그
+(`.alert-banner`의 `border: none`이 나중에 나오는 `.alert-brand`의 `border`에 덮어써진 것)가
+이 한계의 실제 사례다 — 두 선언 다 올바른 토큰을 참조하고 있어서 D14로는 안 잡힌다.
+
+**`--dump` 모드**: `node scripts/check-nodes.mjs --dump <컴포넌트세트명>` — 위반 필터링 없이
+그 세트의 모든 변형에 대해 `path → 바인딩된 토큰`을 JSON으로 전부 출력한다. element-map 작성·
+검증용이지 회귀 검사가 아니다(리포트에 안 실림, `--dump` 없이 돌리는 정기 검사와 별개).
+
+**나온 배경:** Alert 대조 세션에서 반자동(하이브리드) 방식이 필요하다고 판단했다 — Figma 요소
+↔ SCSS 셀렉터 매핑은 자동 도출이 안 되지만(레이어명·클래스명이 다른 체계), Figma 조회(REST)와
+SCSS 파싱(postcss)은 자동화되므로 매핑만 사람이 한 번 쓰면 회귀 검사로 계속 재사용된다.
+
+**D1/D2의 `walk()`와 인스턴스 처리가 다르다.** D1/D2는 인스턴스 경계에서 내려가지 않는다(같은
+위반을 파일 전체에서 중복 집계하지 않으려는 것 — figma.md). D14의 `walkForDump()`는 **내려간다**
+— 위반 집계가 아니라 "이 자리에 실제로 어떤 색이 적용됐는가"를 봐야 하는데, REST는 INSTANCE
+노드도 오버라이드가 반영된 `children`을 그대로 반환하기 때문이다(실측: Alert의 `Icon` 인스턴스
+자체 `fills`는 빈 배열이고, 실제 색은 그 안의 중첩 벡터 `Icon/Icon`에 있었다 — 2026-09-01,
+라이브 데이터로 처음 발견. `figmaPath`를 인스턴스 내부까지 적어야 하는 이유이기도 하다).
+
 ---
 
 ## check-tokens.mjs — SCSS 검사
@@ -448,3 +492,4 @@ D13 고아 토큰      INFO   14    목록 출력
 | 2026-08-29 | D1~D13 · S1~S7 | 초기 정의. 이번 세션에서 발생한 문제 유형 |
 | 2026-08-31 | S3b | 4단계에서 `dropdown.scss`가 `--field-bg`를 선언 없이 참조하고 `select.scss`가 먼저 선언해서 우연히 통과하던 걸 발견 |
 | 2026-08-31 | S6·S7b | stylelint 도입 안 하기로 결정(ADR-020) — `check-tokens.mjs`가 직접 검사하도록 재작성 |
+| 2026-09-01 | D14 | Alert 대조 세션에서 하이브리드 방식(ADR-023) 도입 — 요소별 토큰 매핑을 `scripts/lib/element-map/`에 쌓고 REST+컴파일된 CSS로 자동 대조 |

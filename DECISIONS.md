@@ -561,6 +561,146 @@ Theme 컬렉션 토큰 다수가 `scopes: ALL_SCOPES`로 남아 있었다 — �
 
 ---
 
+## ADR-022 · 아이콘 sprite 의 fill 을 빌드 산출물 단계에서 currentColor 로 치환한다
+
+상태: Accepted 확신도: 높음 날짜: 2026-08-31
+
+### 맥락
+
+Alert 대조 작업 중 아이콘·닫기 버튼이 색상(brand/success/warning/...)과 무관하게 항상 회색으로
+렌더링되는 걸 발견했다. 원인을 추적하니 `icons/raw/base/*.svg`(개별 원본, 293개)의 모든
+`<path>`가 Figma export 시점 리터럴 `fill="#525252"`(우연히 `icon/primary` 라이트값과 일치)를
+가지고 있고, 이 원본들이 조립된 `icons/sprite.svg`(1136개 `<symbol>`, 저장소 루트 — `docs/assets/`
+사본이 아니라 원본)도 그 값을 그대로 물고 있었다.
+
+`.icon` 컨테이너에 `fill: currentColor`를 CSS 로 걸어도 소용없다 — `<use>` 가 참조하는
+`<symbol>` 내부 `<path>` 자체에 이미 지정값(`fill` 속성)이 있으면 조상의 상속값이 적용되지
+않는다(SVG/CSS 명세: 요소 자신의 지정값이 상속보다 우선하고, `<use>` 참조 내용은 바깥 문서의
+셀렉터로 직접 선택할 수 없다). 즉 SVG 소스 자체를 고쳐야 하는 문제였다.
+
+`icons/sprite.svg`는 이 저장소(마스터 라이브러리)가 SI 프로젝트마다 복붙해 쓰는 산출물의
+일부다(`README.md`: "Figma DS Master를 기준으로 SI 프로젝트마다 복붙해 쓰는 master SCSS").
+`docs/` 는 `scripts/sync-docs-assets.mjs`가 이 파일을 그대로 복사한 미러일 뿐이라, docs 복사
+단계에서만 치환하면 docs 사이트만 고쳐지고 실제로 이 파일을 가져다 쓰는 프로젝트들은 그대로
+회색 버그를 물려받는다.
+
+### 결정
+
+`icons/sprite.svg`(저장소 루트, 배포 산출물) 자체를 새 스크립트로 치환한다.
+`icons/raw/base/*.svg`(개별 원본)는 건드리지 않는다.
+
+```
+scripts/fix-icon-sprite-fill.mjs   fill="#525252" → fill="currentColor" (정확히 이 문자열만)
+npm run fix:icon-sprite            로 실행
+```
+
+이 저장소엔 raw SVG → sprite 를 조립하는 스크립트가 없다(외부에서 한 번 조립해 커밋한 정적
+파일). 그래서 "sprite 생성 스크립트 안에 치환을 넣는다"가 아니라 **sprite 파일을 직접
+치환하는 별도 스크립트**로 만들었다. Figma Icon Set 에서 아이콘을 새로 받아 `icons/sprite.svg`를
+다시 커밋할 때마다 이 스크립트를 다시 돌려야 한다 — 자동으로 안 걸린다(postbuild 에 안 걸음,
+아래 "뒤집으려면" 참조 아님 — 의도적으로 수동 단계로 남겼다. sprite 재조립 자체가 이 저장소
+밖에서 일어나는 수동 작업이라 그 뒤에 오는 이 단계도 같이 수동으로 뒀다).
+
+`docs 동기화(sync-docs-assets.mjs)`는 손대지 않았다 — 이미 치환된 `icons/sprite.svg`를
+그대로 복사하기만 하면 되므로.
+
+### 근거
+
+**정확히 `fill="#525252"` 문자열만 치환**해서 다른 색은 전혀 안 건드린다 — 전수 확인 결과
+sprite 안의 fill 값은 293건이 전부 `#525252`이고 나머지 8건은 Social Button 브랜드 로고 심볼
+(`icon-base-social-google`의 `#4285F4` 등 Google 4색·Naver `#03C75A`·Kakao `#FFEB3B`/`#3E2723`)
+뿐이었다. 치환 후 재확인: 293건 모두 `currentColor`로 바뀌었고 브랜드 8건은 그대로, `<symbol>`
+개수(1136)·`<svg>` 태그 균형 모두 변화 없음 — 구조가 안 깨졌다.
+
+Headless Chrome 스크린샷으로 Alert·Icon Button·Social Button 세 페이지를 직접 확인했다.
+Alert·Icon Button은 아이콘이 이제 색상별 토큰(fg)을 따라간다(이전엔 전부 회색). Social Button은
+실제로는 `LOGO` 매핑이 `message-circle`/`smile`/`globe` 플레이스홀더만 쓰고 있어(스프라이트에
+실제 브랜드 마크가 없다는 문서 설명과 별개로, `icon-base-social-*` 심볼 자체는 존재하지만
+미사용) 애초에 브랜드색과 무관했다 — 오히려 컬러 배경 위에서 흰색/검정으로 올바르게 갈리는
+것까지 확인(이전엔 배경과 무관하게 항상 회색이었을 결함).
+
+`icon-duo-*`(838개, `stroke` 기반 duotone 아이콘군)는 이번 치환 대상이 아니다 — `fill` 이
+아니라 `stroke="#171717"`/`stroke="#0EA5E9"`를 쓰고, 현재 어떤 컴포넌트·docs 페이지도
+참조하지 않는 미사용 인벤토리라 범위 밖으로 남겨뒀다. 나중에 실제로 쓰기 시작하면 그때
+같은 방식(stroke 치환)으로 판단한다.
+
+### 뒤집으려면
+
+`icons/sprite.svg`를 git 이력에서 치환 전 커밋으로 되돌린다. 또는 역방향 스크립트
+(`fill="currentColor"` → `fill="#525252"`)를 만들어 돌린다. 건당 5분.
+
+---
+
+## ADR-023 · Figma↔SCSS 요소 대조를 하이브리드로 한다
+
+상태: Accepted 확신도: 높음 날짜: 2026-09-01
+
+### 맥락
+
+28개 컴포넌트의 요소별 색 바인딩을 전수 대조할 방법이 필요했다. 완전 자동화가 가능한지
+판단을 먼저 했다 — 3단계로 나눠보면:
+
+1. **Figma 쪽 "요소→토큰" 추출**: `check-nodes.mjs`의 D1/D2가 이미 REST(`GET /v1/files/{key}/nodes`)
+   + `tokens.ids.json`으로 이 일의 절반을 하고 있었다(노드 트리 순회 + `boundVariables` 이름
+   해석, 인스턴스 내부는 제외). MCP `get_variable_defs`는 노드 트리 전체를 뭉뚱그려 집계해서
+   요소별 구분이 안 된다(Alert에서 Icon·Close·Title이 전부 `alert-brand-fg` 하나로만 나와
+   "아마 셋 다 이거겠다"는 정황 추론에 그쳤다) — REST+`tokens.ids.json`이 이 목적엔 더 정확했다.
+2. **SCSS 쪽 파싱**: `check-tokens.mjs`가 이미 postcss로 컴파일된 CSS를 파싱한다(S5·S7a·S7b,
+   ADR-020). 이것도 기존 인프라로 된다.
+3. **"요소↔셀렉터" 매핑**: 이건 자동 도출이 안 됐다. Figma 레이어명(`Icon`)과 BEM 클래스명
+   (`.alert__icon`)은 다른 명명 체계고, 이 매핑을 아는 건 사람(또는 Claude 앱)이 컴포넌트를
+   조회하며 하는 바로 그 판단이다 — 지금 만드는 기준표 자체가 이 매핑과 동급의 작업물이다.
+
+### 결정
+
+**Figma 조회(REST)와 SCSS 파싱(postcss)은 자동화하고, 요소명↔셀렉터 매핑은 컴포넌트별 설정
+파일로 사람이 정의한다.** 매핑이 없는 컴포넌트는 검사 대상에서 자연히 빠지고 지금처럼 프롬프트
+기준표로 진행한다.
+
+구현(Alert을 파일럿으로 완료):
+
+- `scripts/check-nodes.mjs --dump <세트명>`: D1/D2의 `walk`/`resolveVarId`를 재사용해 그
+  컴포넌트 세트의 모든 변형에 대해 `path → 바인딩된 토큰`을 위반 필터링 없이 JSON으로 낸다.
+  element-map 작성·검증용.
+- `scripts/lib/element-map/*.mjs`: 컴포넌트당 하나. `{ figmaPath, cssSelector, cssProperty,
+  token, except?, via? }` 목록. `token`·`cssSelector`는 `{color}` 같은 변형 축 플레이스홀더를
+  쓴다. `cssSelector`는 Figma 레이어가 아니라 **실제로 그 값이 선언되는 지점**을 가리킨다 —
+  Icon·Close처럼 자체 선언이 없고 조상에서 상속받으면 조상 셀렉터를 가리키고 `via`에 이유를
+  남긴다(자세한 근거는 `scripts/README.md` D14).
+- **D14**(`check-nodes.mjs`에 통합, N군): 매핑마다 참조된 축만 전개해 대표 변형을 고르고,
+  Figma 덤프·컴파일된 CSS(`dist/main.css`) 양쪽을 기대 토큰과 대조해 **Figma 불일치 / SCSS
+  불일치를 구분해서** 보고한다.
+
+### 근거
+
+Figma 레이어명과 BEM 클래스명은 다른 명명 체계라 자동 도출이 불가능하다. 매핑 작성은 지금
+기준표 작성과 조사량이 같아서(Alert처럼 단순한 컴포넌트는 조사를 구조화만 하면 되므로 추가
+비용이 거의 없고, Table/Cell·Calendar·Modal·Avatar Group처럼 복잡한 컴포넌트는 `PROGRESS.md`
+3~7단계에 반복 기록된 것처럼 애초에 한 번에 정확히 파악되지 않는 경우가 많아 매핑 작성 자체가
+지금 하는 조사와 같은 작업량이다) 순증 비용이 없고, **한 번 쓰면 회귀 검사로 계속 재사용된다**
+(ADR-014 "검사 항목은 누적한다"와 같은 방향).
+
+Alert로 파일럿 구현 후 실제 REST 없이(FIGMA_TOKEN 만료 상태) `fetch`를 모킹한 통합 테스트로
+로직을 검증했다 — 정상 매핑은 조용히 통과하고, Figma 쪽 데이터를 일부러 빠뜨리면 "Figma
+불일치"로, `dist/main.css`를 일부러 깨뜨리면(임시 변경 후 재빌드로 원복) "SCSS 불일치"로 정확히
+구분되는 것을 확인했다.
+
+### 한계
+
+**토큰 참조 오류만 잡는다.** 여러 클래스가 동시에 걸렸을 때 소스 순서·specificity로 실제
+적용되는 값이 뭔지는 시뮬레이션하지 않는다 — Alert의 banner 테두리 버그(`.alert-banner`의
+`border: none`이 나중에 나오는 `.alert-brand`의 `border`에 소스 순서상 덮어써진 것)가 그
+예다. 두 선언 다 올바른 토큰을 참조하고 있어서 D14로는 안 잡히고, 실제로 오늘 이 버그는
+사람(Claude 앱의 기준표 지시)이 스크린샷을 보고서야 잡혔다. 색 토큰 바인딩만 다루고, 효과
+(그림자)·타이포·간격은 대상이 아니다.
+
+### 뒤집으려면
+
+`scripts/lib/element-map/` 디렉터리를 삭제하고 `check-nodes.mjs`의 D14 블록(`--dump` 모드
+포함)을 제거한다. 프롬프트 기준표 방식으로 돌아간다. 30분.
+
+---
+
 ## 미결 — 결정이 필요할 때 여기에 추가한다
 
 | # | 항목 | 성격 |

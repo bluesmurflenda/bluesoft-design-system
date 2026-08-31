@@ -6,6 +6,7 @@
   "scripts": {
     "build": "sass scss/main.scss:dist/main.css --no-source-map",
     "postbuild": "node scripts/sync-docs-assets.mjs && node scripts/generate-docs-tokens.mjs",
+    "fix:icon-sprite": "node scripts/fix-icon-sprite-fill.mjs",
     "check:nodes": "node scripts/check-nodes.mjs",
     "check:tokens": "node scripts/check-tokens.mjs",
     "check": "npm run check:nodes && npm run check:tokens"

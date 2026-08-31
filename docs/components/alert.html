@@ -20,8 +20,14 @@
 
   <section class="doc-section">
     <h2>Inline</h2>
-    <p class="doc-desc">본문 안에 배치하는 기본 레이아웃. 보더 + <code>radius-lg</code>.</p>
-    <div class="doc-matrix" id="alert-inline-matrix"></div>
+    <p class="doc-desc">본문 안에 배치하는 기본 레이아웃. 보더 + <code>radius-lg</code>. 폭 480px 고정.</p>
+    <div class="doc-col" id="alert-inline-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Action</h2>
+    <p class="doc-desc">Action 1·Action 2 슬롯(<code>button/tertiary/bg</code>) — 기본 숨김, 필요할 때만 넣는다.</p>
+    <div class="doc-col" id="alert-action-list"></div>
   </section>
 
   <section class="doc-section">
@@ -54,13 +60,18 @@
     return '<svg class="' + cls + '"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
   }
 
-  function alertHtml(layout, color, icon, text) {
+  function alertHtml(layout, color, icon, text, withActions) {
     return (
       '<div class="alert alert-' + layout + ' alert-' + color + '">' +
       iconSvg(icon, 'icon alert__icon') +
       '<div class="alert__body">' +
       '<div class="alert__title">Alert 제목</div>' +
       '<div class="alert__text">' + text + '</div>' +
+      (withActions ?
+        '<div class="alert__actions">' +
+        '<button class="btn btn-sm btn-tertiary">Action 1</button>' +
+        '<button class="btn btn-sm btn-tertiary">Action 2</button>' +
+        '</div>' : '') +
       '</div>' +
       iconSvg('x', 'icon alert__close') +
       '</div>'
@@ -70,11 +81,24 @@
   (function () {
     var el = document.getElementById('alert-inline-matrix');
     COLORS.forEach(function (c) {
-      var cell = document.createElement('div');
-      cell.className = 'doc-cell';
-      cell.innerHTML = alertHtml('inline', c[0], c[1], c[2]) +
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.style.width = '100%';
+      wrap.innerHTML = alertHtml('inline', c[0], c[1], c[2]) +
         '<span class="doc-cell__caption">alert alert-inline alert-' + c[0] + '</span>';
-      el.appendChild(cell);
+      el.appendChild(wrap);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('alert-action-list');
+    [COLORS[0], COLORS[2]].forEach(function (c) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.style.width = '100%';
+      wrap.innerHTML = alertHtml('inline', c[0], c[1], c[2], true) +
+        '<span class="doc-cell__caption">alert alert-inline alert-' + c[0] + ' + alert__actions</span>';
+      el.appendChild(wrap);
     });
   })();
 
