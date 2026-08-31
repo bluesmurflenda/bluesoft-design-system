@@ -481,6 +481,48 @@ Figma Dev Mode가 보여주는 이름과 코드의 변수 이름이 같아야 �
 
 ---
 
+## ADR-020 · stylelint 를 도입하지 않는다
+
+상태: Accepted 확신도: 높음 날짜: 2026-08-31
+
+### 맥락
+
+S6(중첩 깊이)·S7(BEM 위반) 강제 수단으로 stylelint 를 쓰기로 문서(`scripts/README.md`)에
+적었고, `check-tokens.mjs`가 `stylelint-config-standard-scss` 기반 `.stylelintrc.json`을
+`max-nesting-depth`·`selector-max-id` 두 규칙만 걸러 쓰는 방식으로 구현돼 있었다. devDependencies
+에 `stylelint`가 있었지만 독립 실행 스크립트(`npm run lint`)는 없었다.
+
+### 결정
+
+**도입하지 않는다.** `check-tokens.mjs`가 SCSS 소스·컴파일된 CSS를 직접 스캔해 S6·S7b를
+검사하도록 재작성한다(중괄호 균형 스캐너 + postcss 파싱, S5·S7a와 같은 방식). `stylelint`·
+`stylelint-config-standard-scss`를 devDependencies에서 제거하고 `.stylelintrc.json`을
+삭제한다. S7a·S7b가 쓰는 CSS 파싱은 `postcss`(stylelint의 전이 의존성으로만 설치돼 있던 것)를
+독립 devDependency로 등록해 유지한다.
+
+### 근거
+
+`npm run lint`(전체 규칙)를 실제로 돌려보니 332건이 나왔는데, 우리가 원래 강제하려던 두
+규칙(`max-nesting-depth`·`selector-max-id`)의 위반은 **0건**이었다 — 이미
+`check-tokens.mjs`가 걸러서 통과 확인 중이었다. 나머지는:
+- 102건 — `selector-class-pattern`이 이 프로젝트의 BEM `__`/`--` 표기를 kebab-case 위반으로
+  오탐(`.tabs-item__content` 등 정상 클래스가 전부 걸림).
+- 230건 — 빈 줄 삽입 규칙 5종(134건)·색상 표기법 규칙 4종(53건) 등 이 프로젝트가 정한 규칙과
+  무관한 포매팅·스타일 취향.
+
+전체 규칙 세트를 `check`에 넣으면 항상 FAIL하는 게이트가 되고, 필요한 2규칙만 쓰려면
+`selector-class-pattern`을 BEM 패턴으로 재정의하고 나머지 규칙을 하나씩 꺼야 한다 — 그
+설정을 만들고 유지하는 비용이, 이미 `check-tokens.mjs`로 통과 확인 중인 2규칙을 위해 낼
+가치보다 크다.
+
+### 뒤집으려면
+
+`.stylelintrc.json`을 새로 만들어 `selector-class-pattern`을 BEM 패턴(`/^[a-z0-9-]+(__[a-z0-9-]+)?(--[a-z0-9-]+)?$/`
+류)으로 지정하고, 나머지 무관한 규칙을 개별 비활성화한다. `check-tokens.mjs`의 S6/S7b를
+`stylelint.lint()` 호출로 되돌린다. 반나절.
+
+---
+
 ## 미결 — 결정이 필요할 때 여기에 추가한다
 
 | # | 항목 | 성격 |
@@ -496,6 +538,6 @@ Figma Dev Mode가 보여주는 이름과 코드의 변수 이름이 같아야 �
 | 9 | `Modal` alert 계열에 lg·xl 부재 | 의도 확인 |
 | 10 | `Featured Icon` 에 `info` 색 부재 | 추가 vs 유지 |
 | 11 | `ALL_SCOPES` 토큰의 scopes 조이기 | 작업량 대비 실익 |
-| 12 | `board-row` `notice` 텍스트가 `post` 보다 작음 | 의도 확인 |
+| ~~12~~ | ~~`board-row` `notice` 텍스트가 `post` 보다 작음~~ | **해소**: batch 4 에서 확인. title 크기는 동일하고 차이는 Notice 배지 유무였다. |
 
 **이 목록은 코드 작업을 막지 않는다.** 대부분 "의도인지 확인"이다.

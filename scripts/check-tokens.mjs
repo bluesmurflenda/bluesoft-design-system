@@ -4,7 +4,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
-import stylelint from 'stylelint';
 
 import { printReport, row } from './lib/report.mjs';
 import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt } from './lib/allowlist.mjs';
@@ -287,48 +286,114 @@ function extractTopLevelBlocks(text) {
   return blocks;
 }
 
-// ── S6/S7 (stylelint 기반 부분: 중첩 깊이 · ID 셀렉터) ────────────
-const lintResult = await stylelint.lint({
-  files: [SCSS_ROOT.replace(/\\/g, '/') + '/**/*.scss'],
-  configFile: path.join(ROOT, '.stylelintrc.json'),
-});
-
+// ── S6. 중첩 깊이 — 직접 구현(ADR-020: stylelint 미도입, SCSS 소스를 직접 스캔한다) ──
+// 정확한 SCSS 파서가 아니라 중괄호 균형만 세는 경량 스캐너다(S5의 extractTopLevelBlocks와
+// 같은 방식 — 이 프로젝트 규모에는 충분하다). CLAUDE.md 5장 규칙대로 의사 클래스·의사 요소·
+// 속성 셀렉터(&:hover, &::after, &[aria-disabled='true'])만 깊이에서 제외하고, 요소(&__x)·
+// 수식어(&-x, &--x) 중첩은 전부 센다 — "금지" 예시(.board{&__list{&-item{&--active{}}}})가
+// 4단계로 걸리는 것과 같은 기준.
 {
+  const MAX_DEPTH = 3;
   const nestingWarnings = [];
-  for (const r of lintResult.results) {
-    for (const w of r.warnings) {
-      if (w.rule === 'max-nesting-depth') {
-        nestingWarnings.push({ file: rel(r.source), line: w.line, text: w.text });
+
+  function looksLikeSelectorStart(t) {
+    if (!t || t.startsWith('//') || t.startsWith('/*') || t.startsWith('*')) return false;
+    if (t.startsWith('@')) return false; // @media·@each·@include·@if 등 — 구조상 깊이에 안 넣는다
+    if (/^\$[\w-]+\s*:/.test(t)) return false; // SCSS 변수 선언
+    if (/^--[\w-]+\s*:/.test(t)) return false; // 커스텀 프로퍼티 선언
+    if (/^[a-z-]+\s*:/i.test(t) && !t.includes('{')) return false; // 일반 프로퍼티 선언
+    return /^[.&%\[]|^[a-zA-Z]/.test(t);
+  }
+
+  function isPseudoOnlyGroup(text) {
+    const parts = text.replace(/\{$/, '').split(',').map((s) => s.trim()).filter(Boolean);
+    if (!parts.length) return false;
+    return parts.every((p) => {
+      if (!p.startsWith('&')) return false;
+      const restPart = p.slice(1);
+      return restPart.length > 0 && /^(:{1,2}[a-zA-Z-]+(\([^)]*\))?|\[[^\]]*\])+$/.test(restPart);
+    });
+  }
+
+  function applyOpen(file, lineNo, text, stack, depthRef) {
+    const bumps = !isPseudoOnlyGroup(text);
+    if (bumps) {
+      depthRef.value++;
+      if (depthRef.value > MAX_DEPTH) {
+        nestingWarnings.push({ file, line: lineNo, text: text.replace(/\s+/g, ' ').slice(0, 100) });
+      }
+    }
+    stack.push(bumps);
+  }
+
+  for (const file of ALL_SCSS_FILES) {
+    const lines = fs.readFileSync(file, 'utf8').split('\n').map((l) => l.replace(/\/\/.*$/, ''));
+    const depthRef = { value: 0 };
+    const stack = [];
+    let pending = null; // 콤마로 이어지는 다중 셀렉터 누적: {text, startLine}
+
+    for (let i = 0; i < lines.length; i++) {
+      const t = lines[i].trim();
+      if (!t) continue;
+
+      if (pending) {
+        pending.text += ' ' + t;
+        if (t.endsWith(',')) continue;
+        if (t.endsWith('{')) {
+          applyOpen(rel(file), pending.startLine, pending.text, stack, depthRef);
+        } else {
+          stack.push(false); // 셀렉터로 확정 못 지음 — 안전하게 깊이에 안 넣는다
+        }
+        pending = null;
+      } else if (looksLikeSelectorStart(t) && t.endsWith(',')) {
+        pending = { text: t, startLine: i + 1 };
+        continue;
+      } else if (looksLikeSelectorStart(t) && t.endsWith('{')) {
+        applyOpen(rel(file), i + 1, t, stack, depthRef);
+      } else {
+        const opens = (t.match(/\{/g) || []).length;
+        for (let k = 0; k < opens; k++) stack.push(false);
+      }
+
+      const closes = (t.match(/\}/g) || []).length;
+      for (let k = 0; k < closes; k++) {
+        if (stack.pop()) depthRef.value--;
       }
     }
   }
-  rows.push(row('S6', '중첩 깊이(stylelint)', nestingWarnings.length ? 'FAIL' : 'PASS', nestingWarnings.length,
+
+  rows.push(row('S6', '중첩 깊이', nestingWarnings.length ? 'FAIL' : 'PASS', nestingWarnings.length,
     nestingWarnings[0] ? `예: ${nestingWarnings[0].file}:${nestingWarnings[0].line}` : ''));
   addDetail('S6', '중첩 깊이', nestingWarnings.map((w) => `${w.file}:${w.line}  ${w.text}`));
 }
 
+// ── S7. BEM 요소 체이닝 · ID 셀렉터 — 컴파일된 CSS 기준(postcss로 파싱) ──────────
 {
-  const idWarnings = [];
   const chainWarnings = [];
-  for (const r of lintResult.results) {
-    for (const w of r.warnings) {
-      if (w.rule === 'selector-max-id') idWarnings.push({ file: rel(r.source), line: w.line, text: w.text });
-    }
-  }
-  // 요소 체이닝(.block__el1__el2) — 컴파일된 CSS의 실제 셀렉터를 본다(소스는 &__ 중첩이라 체이닝 여부가 안 보인다).
+  const idWarnings = [];
+  // 요소 체이닝(.block__el1__el2)은 컴파일된 CSS의 실제 셀렉터를 봐야 한다(소스는 &__ 중첩이라
+  // 체이닝 여부가 컴파일 전엔 안 보인다). ID 셀렉터도 같은 파싱 결과를 재사용한다.
   const compiled = sass.compile(path.join(SCSS_ROOT, 'main.scss'), { style: 'expanded' });
   const postcssMod = (await import('postcss')).default;
   const root = postcssMod.parse(compiled.css);
-  const seen = new Set();
+  const seenClasses = new Set();
+  const seenSelectors = new Set();
   root.walkRules((rule) => {
     for (const sel of rule.selector.split(',')) {
-      const classes = sel.match(/\.[a-zA-Z0-9_-]+/g) || [];
+      const trimmedSel = sel.trim();
+
+      const classes = trimmedSel.match(/\.[a-zA-Z0-9_-]+/g) || [];
       for (const c of classes) {
         const name = c.slice(1);
-        if (seen.has(name)) continue;
-        seen.add(name);
+        if (seenClasses.has(name)) continue;
+        seenClasses.add(name);
         const elementSeparators = (name.match(/__/g) || []).length;
         if (elementSeparators >= 2) chainWarnings.push({ selector: name });
+      }
+
+      if (/#[a-zA-Z][\w-]*/.test(trimmedSel) && !seenSelectors.has(trimmedSel)) {
+        seenSelectors.add(trimmedSel);
+        idWarnings.push({ selector: trimmedSel });
       }
     }
   });
@@ -336,8 +401,8 @@ const lintResult = await stylelint.lint({
     chainWarnings[0] ? `예: .${chainWarnings[0].selector}` : ''));
   addDetail('S7a', 'BEM 요소 체이닝', chainWarnings.map((w) => `.${w.selector}`));
   rows.push(row('S7b', 'ID 셀렉터', idWarnings.length ? 'FAIL' : 'PASS', idWarnings.length,
-    idWarnings[0] ? `예: ${idWarnings[0].file}:${idWarnings[0].line}` : ''));
-  addDetail('S7b', 'ID 셀렉터', idWarnings.map((w) => `${w.file}:${w.line}  ${w.text}`));
+    idWarnings[0] ? `예: ${idWarnings[0].selector}` : ''));
+  addDetail('S7b', 'ID 셀렉터', idWarnings.map((w) => w.selector));
 }
 
 // ── 출력 ──────────────────────────────────────────────────────────
