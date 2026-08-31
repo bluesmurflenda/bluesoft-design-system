@@ -10,7 +10,7 @@
 ## 현재 단계
 
 ```
-5단계 완료 — 6단계(테이블 · 보드) 진행 대기
+6단계 완료 — 7단계(내비게이션 · 표시) 진행 대기
 ```
 
 ---
@@ -26,7 +26,7 @@
 | 3 | 버튼 계열 | 완료 | 2026-08-30 | 아래 "3단계 완료 메모" 참조 |
 | 4 | 입력 계열 | 완료 | 2026-08-31 | 아래 "4단계 완료 메모" 참조 |
 | 5 | 상태 표시 | 완료 | 2026-08-31 | 아래 "5단계 완료 메모" 참조 |
-| 6 | 테이블 · 보드 | 대기 | | |
+| 6 | 테이블 · 보드 | 완료 | 2026-08-31 | 아래 "6단계 완료 메모" 참조 |
 | 7 | 내비게이션 · 표시 | 대기 | | |
 
 상태: `대기` → `진행` → `검사통과` → `완료`
@@ -349,6 +349,71 @@ done 체크=`choice/box/fg-selected`(둘 다 공유 컴포넌트를 통해 이�
 - `container()`/`section()` 레이아웃 믹스인 — `abstracts/_mixins.scss`에 사용자가 지정한
   시그니처 그대로 추가했다. `--container-max-width`는 ADR-006으로 Figma에서 삭제된 토큰이라
   CSS 폴백 `1200px`을 하드값으로 두고 그 줄에 ADR-006을 주석으로 남겼다.
+
+---
+
+## 6단계 완료 메모 — 테이블 · 보드(Table/Cell·Table·Table/Row·Table/Header·board-row·board-cell·board-header·board-card·board-list)
+
+**작업**: Table/Cell(1046:96)·Table/Header(1046:1073)·Table/Row(1046:1036)·Table(1046:9840)·
+board-row(1028:5850)·board-header(1030:37)·board-card(1031:9664)·board-cell(1038:889)·
+board-list(1040:830)를 `get_variable_defs`+`get_metadata`로 다시 조회해 `table/*` Theme 그룹·
+`table/cell/*`·`board/col/*` Shape 그룹과 대조·재작성했다.
+
+| 시점 | S1 | S2(누락·전용·불일치) |
+|---|---|---|
+| 5단계 종료 | 114 | 144 |
+| `_table.scss`+`_board.scss` 후 | 98 | 129 |
+
+**지시받은 것 확인**:
+- Table/Cell 높이는 `min-height`, padding-y 0 + `align-items:center`로 여백 — 이미 그렇게
+  돼 있었다(손댈 것 없음, 이번엔 사이즈별 `height`/`padding-x`를 `_shape.scss`의 CSS 변수로
+  바꾸는 김에 주석만 보강).
+- Align 축이 `text-align`만이 아니라 셀 `justify-content` + Text block `align-items`가 함께
+  바뀐다 — 기존 코드는 `justify-content`만 바꾸고 있었다. `.table-cell__text`에
+  `display:flex;flex-direction:column;align-items`를 추가해 Align=left일 때 Text/Supporting
+  스택 전체가 왼쪽 정렬되도록 고쳤다(Figma 메타데이터로 Text/Supporting 사이 gap이 0임도 확인).
+- 슬롯은 이름이 아니라 사이징으로 — `__leading`(FIXED)·`__text`(HUG/FILL) 이미 그렇게
+  구현돼 있어 주석만 명시.
+- 컬럼 폭이 다른 테이블은 Table/Row 대신 셀 오토레이아웃 — 코드에 이미 flex 구조라 자연히
+  지원됨, 그 취지를 주석으로 남겼다(별도 클래스 불필요).
+- board-row notice 텍스트가 12 vs 15라던 기존 주석 — **재실측 결과 틀렸다.** 아래 "발견해서
+  고친 것" 참조.
+- `table/header-col/*` codeSyntax 깨짐(−col 누락) — 코드는 정상 이름 `--table-header-col-*`을
+  쓰고 PROGRESS.md 기록 유지(아래 "막힌 것" 표, 변경 없음).
+
+**발견해서 고친 것**:
+- `_table.scss`: `--table-border`·`--table-header-*-bg/fg`·`--table-cell-fg`가 전부 slate 계열
+  하드코딩(#e2e8f0 등)이었고 다크 전용 하드코딩도 따로 있었다 — `get_variable_defs`로
+  Table/Header·Table/Row 라이브 바인딩을 직접 재조회하니 라이트·다크 값이 전부 같아서(둘 다
+  `surface/subtle`·`text/primary` 등) `[data-theme=dark]` 오버라이드 자체를 없앴다.
+  header-col/bg와 header-row/bg가 다른 값(neutral-50 vs slate-50)이라던 기존 주석은 slate→
+  neutral 정리 이전의 낡은 측정이었다 — 지금은 둘 다 `surface/subtle`(#fafafa)로 같다.
+- `_table.scss`: `--table-cell-fg-muted`를 Figma 실제 이름 `fg-supporting`으로 리네임
+  (CLAUDE.md 7장 — 보조 텍스트 접미사 통일).
+- `_table.scss`: `$table-cell-sizes` 맵이 `_shape.scss`가 1단계부터 이미 내보낸
+  `--table-cell-min-height-*`·`--table-cell-padding-x-*` CSS 변수를 안 쓰고 리터럴 px를
+  중복 선언하고 있었다 — 값은 같았지만 소스가 둘이라 하나로 합쳤다.
+- `_table.scss`: `table/row/bg-alt`(지그재그 행 배경) 토큰을 신규 발견 — 기존 코드는 아예
+  참조하지 않고 있었다. `markup.md` 규칙대로 `:nth-child(even)`로 적용, hover가 항상 이기도록
+  선언 순서를 hover 뒤로 뒀다.
+- `_board.scss`: `board/col/views`(100)·`board/col/date`·`board/col/meta`(둘 다 120) 3개
+  Shape 토큰 중 `_board.scss`는 `.board-cell` 하나뿐이라 구분이 없다 — 리터럴
+  `$board-col-width: 120px`를 `var(--board-col-meta)` 참조로 바꿔 중복을 없앴다.
+  `board/col/views`(100)는 여전히 어떤 코드도 참조하지 않는 미사용 토큰으로 남는다(별도
+  `.board-cell` variant가 없어서 손댈 데가 없음 — 삭제는 Figma 소관이라 하지 않음).
+- `_board.scss`: **board-row notice 타이틀 축소가 틀렸다.** `get_metadata`로 Kind=post
+  (1028:5816)·Kind=notice(1028:5840)의 Title 노드 크기를 직접 대조하니 둘 다 height 22로
+  동일했다 — 기존 코드가 notice에 적용하던 "Body/2Xs/Medium"(12px)은 Title이 아니라 그 옆의
+  Notice 배지(.chip, chip-brand-fg/bg와 함께 바인딩됨) 텍스트 스타일이었다. Title 폰트 축소
+  오버라이드를 제거했다 — "공지" 표시는 배지를 조건부로 넣는 마크업만으로 끝난다.
+- `_board.scss`: `board-card`에 Kind=notice 대응이 아예 없었다. `get_metadata`로 Kind=notice
+  (1031:9648)가 post(1031:9618)보다 높이 30px 큰 이유를 확인 — Title 위에 Notice(.chip) 배지
+  줄이 조건부로 추가되기 때문(board-row와 달리 인라인이 아니라 별도 줄)이다. `&__tags` 슬롯을
+  신규 추가.
+
+**S3b(WARN)**: `_board.scss`가 `--table-header-col-bg`·`-fg`·`--table-row-bg-hover`를 선언
+없이 참조하는 3건 — 기존부터 있던 의도된 공유(테이블과 보드가 같은 헤더/호버 배경 재사용)라
+WARN 그대로 둔다.
 
 ---
 

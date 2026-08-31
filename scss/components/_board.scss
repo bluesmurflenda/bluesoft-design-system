@@ -12,11 +12,14 @@
 $board-border: $border-default; // border/default — table의 slate-200과 다른 값이라 별도 정의
 $board-title-fg: $text-primary;
 $board-meta-fg: $text-tertiary;
-$board-header-bg: var(--table-header-bg); // table-header-bg 재사용 — 2026-08-28 재실측: #f8fafc(slate-50), neutral-50(#fafafa) 아니었음
-$board-header-fg: var(--table-header-fg);
-$board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 컬럼 폭이 동일(120)로 확인.
-                          // Shape 컬렉션 미리보기 보드엔 조회수 컬럼이 100으로 나와 있었으나
-                          // board-row 라이브 인스턴스 전부 120이라 이 값이 최신으로 판단, _shape.scss도 함께 수정.
+// 2026-08-31 재확인(get_variable_defs, board-header 1030:37): table/header-col/* 를 그대로
+// 재사용한다 — codeSyntax가 깨져 있어도(-col 누락) 코드는 정상 이름(table.scss 6단계에서 rename)을 쓴다.
+$board-header-bg: var(--table-header-col-bg);
+$board-header-fg: var(--table-header-col-fg);
+// 2026-08-31: 리터럴 120px 대신 tokens/_shape.scss의 board/col/meta 변수를 그대로 참조한다 —
+// board.scss엔 date/views 구분 클래스가 아예 없어서(.board-cell 하나뿐) meta 하나면 충분하다.
+// board/col/views(100)는 아직 어떤 코드에서도 참조하지 않는 미사용 토큰으로 남아 있다.
+$board-col-width: var(--board-col-meta);
 
 .board-row {
   display: flex;
@@ -46,11 +49,11 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
     color: $board-title-fg;
   }
 
-  // 2026-08-28 확인(table-nav-spec): kind=notice는 굵어지는 게 아니라 Body/2Xs/Medium으로 작아진다
-  // (post의 Body/Md/Regular 15px보다 작은 12px) — 공지가 덜 강조되는 것이 실측 사실.
-  &-notice &__title {
-    @include mix.text(body-2xs, medium);
-  }
+  // 2026-08-31 정정: get_metadata로 Kind=post(1028:5816)·Kind=notice(1028:5840)의 Title 노드
+  // 크기를 직접 대조하니 둘 다 height 22로 동일했다 — "Body/2Xs/Medium"은 Title이 아니라 그
+  // 옆에 붙는 Notice 배지(.chip)의 텍스트 스타일이었다(chip-brand-fg·chip-brand-bg와 함께 묶여
+  // 바인딩됨). Title 자체는 Kind에 상관없이 항상 body-md/regular다 — 아래 &-notice 오버라이드 제거.
+  // "공지" 표시는 .board-row__content 안에 .chip.chip-sm.chip-brand를 조건부로 넣는 것으로 끝난다.
 
   &__meta {
     display: flex;
@@ -122,6 +125,16 @@ $board-col-width: 120px; // board/col/meta — 실측 결과 날짜·조회수 �
 
   &:hover {
     background-color: var(--table-row-bg-hover);
+  }
+
+  // 2026-08-31 신규 발견(get_metadata, Kind=notice 1031:9648 vs Kind=post 1031:9618): notice는
+  // post보다 높이가 30px 크다 — Title 위에 Notice(.chip) 배지 줄이 조건부로 추가되기 때문이다
+  // (board-row와 달리 배지가 인라인이 아니라 별도 줄). Title 자체 크기는 board-row와 마찬가지로
+  // Kind에 상관없이 동일 — 기존 코드에 이 줄 자체가 아예 없었다.
+  &__tags {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
   }
 
   &__title {

@@ -1,8 +1,11 @@
 // Figma DS Master > Table/Cell(1046:96) + Table/Header(1046:1073) + Table/Row(1046:1036) + Table(1046:9840)
 // 2026-08-27 라이브 실측. Size는 폰트가 아니라 밀도(높이 36/44/64) — 문서 설명 그대로 확인.
 // sm·md는 Body/Sm 폰트를 공유하고 lg만 Body/Lg로 커진다(실측 그대로, 균등 스케일 아님).
-// Role별: body(테두리만) / header-col(맨 위 헤더행, 배경 neutral-50) / header-row(왼쪽 라벨 열, 배경 slate-50 + 우측 테두리 추가).
-// Align은 Figma의 center(국문 게시판형)/left(데이터 테이블형) — 텍스트 정렬만 다르다.
+// Role별: body(테두리만) / header-col(맨 위 헤더행) / header-row(왼쪽 라벨 열 + 우측 테두리 추가) —
+// 2026-08-31 재실측: 배경은 둘 다 surface/subtle로 같다(예전엔 neutral-50/slate-50로 다르다고
+// 잘못 기록돼 있었다).
+// Align은 Figma의 center(국문 게시판형)/left(데이터 테이블형) — text-align만이 아니라 셀
+// justify-content와 Text block align-items가 함께 바뀐다.
 
 @use '../tokens/primitive' as *;
 @use '../tokens/theme' as *;
@@ -10,45 +13,47 @@
 @use '../abstracts/mixins' as mix;
 @use '../abstracts/maps' as maps;
 
-// 2026-08-28 Dark 모드 실측
+// figma/tokens.theme.json의 table/* 를 그대로 옮겼다(2026-08-31). 라이트·다크 별칭 대상이 전부
+// 동일해(둘 다 surface/subtle·text/primary 등) [data-theme=dark] 오버라이드가 없다 — 이전 코드는
+// slate 계열 하드코딩(#e2e8f0 등, ADR-001로 폐기된 램프)과 다크 전용 하드코딩을 따로 갖고 있었는데
+// get_variable_defs로 Table/Header(1046:1073)·Table/Row(1046:1036) 라이브 바인딩을 직접 재확인해
+// (둘 다 #fafafa=neutral-50=surface/subtle) 전부 제거했다. header-col/bg와 header-row/bg가 다른
+// 값이라던 기존 주석은 slate→neutral 정리 이전의 낡은 측정이었다.
+//
+// table/header-col/* 의 codeSyntax가 깨져 있어(-col 누락, Figma Dev Mode엔 --table-header-bg로
+// 표시된다) 실제 이름과 다르지만, 코드는 정상 이름(--table-header-col-*)을 쓴다 — 7단계 후 Figma
+// 수정 예정(PROGRESS.md 막힌 것 참조). table/cell/fg-supporting도 기존 코드의 "muted" 대신
+// Figma 실제 이름 "supporting"으로 맞췄다(CLAUDE.md 7장 — 보조 텍스트 접미사 통일).
 :root {
-  --table-border: #e2e8f0;
-  --table-header-bg: #f8fafc;
-  --table-header-fg: #262626;
-  --table-header-row-bg: #fafafa;
-  --table-header-row-fg: #262626;
-  --table-cell-fg: #404040;
-  --table-cell-fg-muted: #475569;
-  --table-row-bg-hover: #f8fafc;
+  --table-border: var(--border-default);
+  --table-header-col-bg: var(--surface-subtle);
+  --table-header-col-fg: var(--text-primary);
+  --table-header-row-bg: var(--surface-subtle);
+  --table-header-row-fg: var(--text-primary);
+  --table-cell-fg: var(--text-secondary);
+  --table-cell-fg-supporting: var(--text-tertiary);
+  --table-row-bg-hover: var(--surface-subtle);
+  --table-row-bg-alt: var(--surface-subtle); // 신규 발견: 지그재그(zebra) 행 배경. markup.md 규칙대로 :nth-child(even)로 적용
 }
 
-[data-theme='dark'] {
-  --table-border: #64748b;
-  --table-header-bg: #020617;
-  --table-header-fg: #fafafa;
-  --table-header-row-bg: #0a0a0a;
-  --table-header-row-fg: #fafafa;
-  --table-cell-fg: #d4d4d4;
-  --table-cell-fg-muted: #94a3b8;
-  --table-row-bg-hover: #020617;
-}
-
-// 2026-08-28 재실측: header-bg와 header-row-bg가 서로 바뀌어 있었음(neutral-50=#fafafa / slate-50=#f8fafc 혼동).
 $table-border: var(--table-border);
-$table-header-bg: var(--table-header-bg);
-$table-header-fg: var(--table-header-fg);
+$table-header-col-bg: var(--table-header-col-bg);
+$table-header-col-fg: var(--table-header-col-fg);
 $table-header-row-bg: var(--table-header-row-bg);
 $table-header-row-fg: var(--table-header-row-fg);
 $table-cell-fg: var(--table-cell-fg);
-$table-cell-fg-muted: var(--table-cell-fg-muted);
+$table-cell-fg-supporting: var(--table-cell-fg-supporting);
 $table-row-bg-hover: var(--table-row-bg-hover);
+$table-row-bg-alt: var(--table-row-bg-alt);
 
+// height·padding-x는 tokens/_shape.scss가 이미 내보낸 table/cell/min-height·padding-x Shape
+// 컬렉션 변수를 그대로 참조한다(1단계에서 만들어졌지만 이 파일이 안 쓰고 리터럴 px를 중복 선언하고
+// 있었다 — 값은 같았지만 소스가 둘이라 6단계에서 하나로 합쳤다).
 $table-cell-sizes: (
-  sm: (height: 36px, type: body-sm),
-  md: (height: 44px, type: body-sm),
-  lg: (height: 64px, type: body-lg),
+  sm: (height: var(--table-cell-min-height-sm), padding-x: var(--table-cell-padding-x-sm), type: body-sm),
+  md: (height: var(--table-cell-min-height-md), padding-x: var(--table-cell-padding-x-md), type: body-sm),
+  lg: (height: var(--table-cell-min-height-lg), padding-x: var(--table-cell-padding-x-lg), type: body-lg),
 );
-$table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사이즈별로 안 커짐)
 
 .table {
   display: flex;
@@ -66,24 +71,45 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
 .table-row {
   display: flex;
 
+  // 지그재그 배경 — 실제로는 :nth-child(even)다(markup.md 규칙). hover가 항상 이기도록 이 뒤에 선언.
+  &:nth-child(even) {
+    background-color: $table-row-bg-alt;
+  }
+
   &:hover {
     background-color: $table-row-bg-hover;
   }
+
+  // 컬럼 폭이 다른 테이블은 Table/Row(균등 flex:1) 대신 셀을 오토레이아웃으로 나열한다 —
+  // 각 .table-cell에 개별 width/flex-basis를 지정하고 flex:1 0 0을 쓰지 않으면 된다(디태치 아님,
+  // 셀은 그대로 인스턴스로 마스터 변경을 계속 받는다. CLAUDE.md 4장).
 }
 
 .table-cell {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; // Align=center 기본
   gap: $space-2;
   flex: 1 0 0;
   min-width: 0;
-  padding-inline: $table-cell-padding-x;
   border-bottom: $border-hairline solid $table-border;
 
-  &.align-left {
+  // Align 축은 text-align 하나가 아니다 — 셀의 justify-content와 Text block의 align-items가 함께 바뀐다.
+  &-align-left {
     justify-content: flex-start;
-    text-align: left;
+
+    .table-cell__text {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Align=center 기본 — Text/Supporting 스택도 함께 가운데 정렬
+    flex: 1 0 0;
+    min-width: 0;
   }
 }
 
@@ -91,7 +117,9 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
   .table-cell-#{$size} {
     // 2026-08-28 확인(table-nav-spec): counterAxisSizingMode AUTO + minHeight다 — height 고정 금지.
     // 한 줄이면 이 값과 같고 텍스트가 여러 줄이면 셀이 늘어난다(고정 44라 잘리던 결함의 재발 방지).
+    // padding-y는 0 — 세로 여백은 align-items:center가 만든다(패딩과 함께 쓰면 여러 줄에서 과도해짐).
     min-height: map.get($props, height);
+    padding-inline: map.get($props, padding-x);
     // font-weight는 Role(body/header-col/header-row) 축이라 사이즈 축과 분리 — size/line-height만 $type-scale에서 읽는다.
     $table-cell-type: map.get(maps.$type-scale, map.get($props, type));
     font-size: map.get($table-cell-type, size);
@@ -105,14 +133,14 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
     font-weight: $font-weight-medium;
 
     .table-cell__supporting {
-      color: $table-cell-fg-muted;
+      color: $table-cell-fg-supporting;
       @include mix.text(body-2xs, medium);
     }
   }
 
   &-header-col {
-    background-color: $table-header-bg;
-    color: $table-header-fg;
+    background-color: $table-header-col-bg;
+    color: $table-header-col-fg;
     font-weight: $font-weight-semibold;
   }
 
@@ -123,7 +151,8 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
     border-right: $border-hairline solid $table-border;
   }
 
-  // 셀 내부 슬롯 — Leading(고정폭, sm·md 24 / lg 32), Chip/Action(HUG), Text block(FILL)
+  // 셀 내부 슬롯 — Leading(고정폭, sm·md 24 / lg 32), Chip/Action(HUG), Text block(FILL).
+  // 이름이 아니라 사이징으로 고른다: FIXED는 이 __leading처럼 고정 크기, HUG는 __text처럼 가변폭.
   &__leading {
     flex-shrink: 0;
     width: 24px;
@@ -136,11 +165,6 @@ $table-cell-padding-x: $space-4; // 전 사이즈 공통 16px(실측 확인, 사
       width: 32px;
       height: 32px;
     }
-  }
-
-  &__text {
-    flex: 1 0 0;
-    min-width: 0;
   }
 }
 
