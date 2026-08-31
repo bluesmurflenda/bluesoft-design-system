@@ -10,7 +10,7 @@
 ## 현재 단계
 
 ```
-4단계 완료 — 5단계(상태 표시) 진행 대기
+5단계 완료 — 6단계(테이블 · 보드) 진행 대기
 ```
 
 ---
@@ -25,7 +25,7 @@
 | 2 | `abstracts/` + `base/_typography.scss` | 완료 | 2026-08-30 | 아래 "2단계 완료 메모" 참조 |
 | 3 | 버튼 계열 | 완료 | 2026-08-30 | 아래 "3단계 완료 메모" 참조 |
 | 4 | 입력 계열 | 완료 | 2026-08-31 | 아래 "4단계 완료 메모" 참조 |
-| 5 | 상태 표시 | 대기 | | |
+| 5 | 상태 표시 | 완료 | 2026-08-31 | 아래 "5단계 완료 메모" 참조 |
 | 6 | 테이블 · 보드 | 대기 | | |
 | 7 | 내비게이션 · 표시 | 대기 | | |
 
@@ -277,9 +277,78 @@ Checkbox(308:306)·Radio(309:923)·Toggle(719:281)·Upload Dropzone/Item(1366:17
   `get_variable_defs` 재조회 결과는 `border/default`였다. 라이브가 이겨서 되돌렸다
   (PROGRESS.md 발견한 불일치에 기록 안 함 — 같은 파일 안의 자기모순이라 여기만 기록).
 
-**확인 안 되는 채로 둔 것**: Upload Item의 파일 아이콘 색(`$brand-600`) — `get_variable_defs`가
-서브트리 전체의 바인딩을 뭉뚱그려 반환해서 아이콘 자체가 brand인지 icon/primary(neutral)인지
-구분이 안 됐다. 값을 추측해서 바꾸지 않고 "막힌 것"에 남겼다.
+**확인 안 되는 채로 둔 것**: ~~Upload Item의 파일 아이콘 색~~ — **해결(2026-08-31)**. 사용자가
+Upload/Item 전체 바인딩을 확인해줬다: Featured icon 배경=`surface/brand-subtle`(이미 맞았음),
+파일 아이콘=`icon/primary`(brand/600 아님 — 그건 progress-bar의 Fill이었다), progress-bar
+Track=`surface/brand-subtle`·Fill=`brand/600`(이미 맞았음), 액션 버튼 아이콘=`button/ghost/fg`·
+done 체크=`choice/box/fg-selected`(둘 다 공유 컴포넌트를 통해 이미 맞음). `$upload-icon-fg`만
+`var(--icon-primary)`로 수정.
+
+---
+
+## 5단계 완료 메모 — 상태 표시(Chip·Chip/dot·Con·Alert·Card·Tooltip·Help icon·Featured icon)
+
+**작업**: `figma/tokens.theme.json`(1단계에 커밋된 스냅샷, 재추출 안 함 — 7단계까지 기준값 고정)에서
+`chip/*`·`con/*`·`alert/*`·`card/*`·`tooltip/*` 그룹을 그대로 옮겨 `:root`/`[data-theme='dark']`를
+재작성했다. 오버라이드는 "라이트·다크 별칭 대상 이름이 다른 것만" 원칙으로 판단했다.
+
+| 시점 | S1 | S2(누락·전용·불일치) | S3 | S5 |
+|---|---|---|---|---|
+| 4단계 종료 | 234 | 163 | 0 | 3 |
+| `_con.scss` 후 | 200 | 159 | 0 | 2 |
+| `_chip.scss` 후 | 176 | 155 | 0 | 2 |
+| `_alert.scss`+`_card.scss`+`_tooltip.scss` 후 | 114 | 144 | 10 | 0 |
+| `_modal.scss` 참조 수정 후 | 114 | 144 | 0 | 0 |
+
+**지시받은 것 확인**:
+- con의 gray 기본 배경은 `con/gray/bg` 토큰이 없어 `con/white/bg`를 참조한다 — 직접 재확인(17개
+  `con/*` 변수 전수 열거)해 토큰 자체가 없다는 기존 주석이 맞았다. `$con-themes`의 `gray: (bg: var(--con-white-bg), ...)` 그대로 유지.
+- con·card의 disabled는 opacity로 처리 — 둘 다 이미 그렇게 돼 있어 손댈 것 없었다.
+- card hover 시 테두리 추가로 인한 레이아웃 시프트 방지(`border: 1px solid transparent` 선점) —
+  `-default`·`-tinted` 둘 다 이미 그렇게 돼 있었다.
+- tooltip 배경은 루트가 아니라 `.tooltip__content`에 — 이미 그렇게 구조돼 있었다.
+- `tooltip/*`·`con/white/*-selected`는 다크에서 반전하지 않음 — 아래 "발견해서 고친 것" 참조,
+  기존 코드는 이 규칙을 절반만(혹은 반대로) 지키고 있었다.
+- featured-icon은 `chip/*` 재사용, info 색 없음(5종) — 이미 그렇게 구현돼 있어 손댈 것 없었다.
+
+**발견해서 고친 것**:
+- `_con.scss`: `con/white/fg-selected`·`border-selected`가 다크에서 반전되고 있었다(검정/밝은
+  파랑으로 바뀌어 대비 붕괴). 실측 결과 `fg-selected`는 라이트·다크 별칭 대상이 둘 다 `white`라
+  오버라이드가 필요 없고(그런데도 다크 블록에 재선언돼 있었다), `bg-selected`·`border-selected`는
+  라이트에서 `brand-600`(다크에서 반전되는 램프)을 참조하므로 다크 블록에서 `blue-600`으로
+  고정해야 반전을 막을 수 있다 — 이전 코드는 `bg-selected`만 고쳐져 있고 `border-selected`는
+  그대로 반전되고 있었다.
+- `_chip.scss`: `chip-neutral-bg`/`fg`가 슬레이트 계열 하드코딩(`#f8fafc`/`#475569`, ADR-001로
+  폐기된 램프)이었다 — `var(--surface-subtle)`/`var(--text-tertiary)`로 교체.
+- `_alert.scss`: `neutral` 그룹이 같은 슬레이트 드리프트(`#f8fafc`·`#e2e8f0`·`#334155`)였다 —
+  `var(--surface-subtle)`·`var(--border-default)`·`var(--text-secondary)`로 교체. success·
+  warning·error·info(border·fg만) 다크 오버라이드는 이전에 아예 없었다(라이트값이 다크에도
+  그대로 적용되고 있었음) — 실측대로 추가.
+- `_card.scss`: 전체가 하드코딩 hex였다. `card/fg`는 컴포넌트 설명상 "글자색"이지만 실측 별칭
+  대상은 `icon/strong`이다 — 라이브가 이겨서 그대로 옮겼다(문서보다 실측 우선).
+- `_tooltip.scss`: **반대로 구현돼 있었다.** 기존 코드는 `light`가 다크에서 반전(`#ffffff`→
+  `#0a0a0a` 등)되고 `dark`는 `bg`·`fg`까지 불필요하게 재선언(S5 중복 오버라이드로 잡힘)돼
+  있었다. 실측은 `dark`·`light` 둘 다 배경·주 텍스트가 고정이고, `dark`의 `fg-supporting`만
+  실제로 갈린다(`white`→`neutral-300`, 대비 확보 목적) — 그 한 줄만 오버라이드로 남기고
+  나머지는 전부 제거했다.
+- `_modal.scss`: `$modal-icon-colors`가 `--featured-icon-brand-bg` 등 존재하지 않는 커스텀
+  프로퍼티를 참조하고 있었다(S3 FAIL 10건, 신규 발견). `_featured-icon.scss`가 이전 단계에서
+  자체 `--featured-icon-*`를 제거하고 `--chip-*`를 직접 참조하도록 리팩터됐는데, `modal.scss`
+  쪽 참조는 그때 안 고쳐진 채 남아 있었다 — `--chip-*`로 맞춰 수리했다. modal 자체는 7단계
+  대상이지만 이건 5단계 작업(featured-icon)이 깨뜨린 참조라 여기서 함께 고쳤다.
+- `help-icon.scss`: 이미 `var(--text-tertiary)` 기반이라 손댈 것 없었다.
+
+**S3b(WARN)**: `_featured-icon.scss`·`_modal.scss`가 `--chip-*`를 선언 없이 참조하는 10+10건이
+새로 잡혔다 — 의도된 공유(둘 다 "chip과 완전히 같은 색상 맵" 재사용)라 WARN 그대로 둔다.
+
+**5단계 종료 후 막힌 것 2건 해결**:
+- Upload Item 파일 아이콘 — 재확인 결과 `_upload.scss`에 이미 정확히 반영돼 있었다(위 4단계
+  메모 참조). Featured icon 배경(`$upload-icon-badge-bg: $surface-brand-subtle`)·액션 버튼
+  아이콘(`.icon-btn-ghost`가 `button.scss`의 공유 `ghost` 변형을 재사용해 `var(--button-ghost-fg)`)도
+  grep으로 다시 확인해 전부 일치를 확인했다 — 코드 변경 없음.
+- `container()`/`section()` 레이아웃 믹스인 — `abstracts/_mixins.scss`에 사용자가 지정한
+  시그니처 그대로 추가했다. `--container-max-width`는 ADR-006으로 Figma에서 삭제된 토큰이라
+  CSS 폴백 `1200px`을 하드값으로 두고 그 줄에 ADR-006을 주석으로 남겼다.
 
 ---
 
@@ -288,13 +357,15 @@ Checkbox(308:306)·Radio(309:923)·Toggle(719:281)·Upload Dropzone/Item(1366:17
 **`DECISIONS.md` 에 없는 판단이 필요해 멈춘 지점.**
 사람이 결정하면 ADR 로 옮기고 여기서 지운다.
 
+**Figma 수정이 필요한 항목(7건)은 7단계 완료 후 일괄 처리한다.** 작업 중간에 Figma를 고치고
+`figma/tokens.*.json`을 재추출하면 그 시점 전후로 S2 수치를 비교할 수 없게 된다 — 7단계까지는
+스냅샷을 그대로 두고 코드 작업만 계속한다.
+
 | 날짜 | 단계 | 내용 |
 |---|---|---|
-| 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함 — 코드 쪽 문제 아니라 Figma 쪽 네이밍 버그). 코드 작업 세션은 Figma 쓰기 API를 안 쓰므로 여기서 멈추고 보고만 한다. **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 — Figma 쪽 이름이 고쳐지면(`effect/focus-ring`) 이 우회는 지워도 된다 |
-| 2026-08-30 | 2단계(`abstracts/_mixins.scss`) | `container()`/`section()` 레이아웃 믹스인이 없다. 이전엔 "근거가 될 CSS 변수가 없어서" 보류였는데, 1단계로 그 변수(`--container-*`/`--section-*`)가 이미 생겨서 그 이유는 더 이상 유효하지 않다. 이번 2단계 지시 범위에 없어서 추가 안 함 — 만들지, 만든다면 시그니처를 어떻게 할지 확인 필요 |
-| 2026-08-30 | 6단계 예정(테이블) | `table/header-col/bg`·`/fg`의 codeSyntax가 `-col` 없이 `--table-header-bg`/`-fg`를 가리킨다(`table/header-row/*`는 정상). Figma에서 실측 재확인 필요 — 코드 작업 세션에서 못 고침 |
-| 2026-08-30 | 5단계 예정(con) | `con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`)의 codeSyntax가 서로 뒤섞여 있다(의도된 리네임이 아니라 데이터 오류로 보임). Figma에서 확인·수정 필요 — 코드 작업 세션에서 못 고침 |
-| 2026-08-30 | 4단계(`_upload.scss`) | Upload Item의 파일 아이콘 색(`$upload-icon-fg: $brand-600`)이 맞는지 불확실 — `get_variable_defs`로 다시 조회하니 `icon/primary`(neutral)도 같은 서브트리에서 잡혔는데, 그게 파일 아이콘 것인지 다른 요소(취소 버튼 등) 것인지 이 도구로는 구분이 안 된다. 값을 바꾸지 않고 그대로 뒀다 — Figma에서 직접 레이어 확인 필요 |
+| 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | **[7단계 후 일괄 처리]** Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함). 코드 작업 세션은 Figma 쓰기 API를 안 쓰므로 여기서 멈추고 보고만 한다. **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 |
+| 2026-08-30 | 6단계 예정(테이블) | **[7단계 후 일괄 처리]** `table/header-col/bg`·`/fg`의 codeSyntax가 `-col` 없이 `--table-header-bg`/`-fg`를 가리킨다(`table/header-row/*`는 정상). Figma에서 실측 재확인 필요 |
+| 2026-08-30 | 5단계(con) | **[7단계 후 일괄 처리]** `con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`)의 codeSyntax가 서로 뒤섞여 있다(의도된 리네임이 아니라 데이터 오류로 보임). Figma에서 확인·수정 필요 |
 
 ---
 

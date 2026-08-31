@@ -5,27 +5,21 @@
 @use '../tokens/primitive' as *;
 @use '../abstracts/mixins' as mix;
 
-// 2026-08-28 Dark 모드 실측 — 특이사항: 페이지가 다크 모드가 되면 Tooltip의 Theme=dark 변형(원래 검정 배경)이
-// 오히려 밝은 배경으로, Theme=light 변형이 어두운 배경으로 반전된다. 추정 아니라 Figma 실측값 그대로다
-// (상대적 대비 관계를 유지하려는 의도로 보인다).
+// figma/tokens.theme.json의 tooltip/* 를 그대로 옮겼다(2026-08-31). 이전 코드는 반대로 돼
+// 있었다 — light가 반전되고 dark는 bg·fg까지 불필요하게 재선언돼 있었다. 실측은 그 반대다:
+// dark/light 둘 다 "스타일"이라 bg·fg는 고정이고, dark의 fg-supporting만 라이트(white)보다
+// 살짝 죽인 neutral-300으로 실제로 갈린다(대비 확보) — 이것만 진짜 오버라이드가 필요하다.
 :root {
-  --tooltip-dark-bg: #171717;
-  --tooltip-dark-fg: #ffffff;
-  --tooltip-dark-fg-supporting: #ffffff;
-  --tooltip-light-bg: #ffffff;
-  --tooltip-light-fg: #404040;
-  --tooltip-light-fg-supporting: #525252;
+  --tooltip-dark-bg: var(--neutral-900);
+  --tooltip-dark-fg: var(--white);
+  --tooltip-dark-fg-supporting: var(--white);
+  --tooltip-light-bg: var(--white);
+  --tooltip-light-fg: var(--neutral-700);
+  --tooltip-light-fg-supporting: var(--neutral-600);
 }
 
 [data-theme='dark'] {
-  // 2026-08-28 확인(status-spec 0장): dark 모드에서 기계적으로 반전돼 "어두운 스타일" 툴팁이
-  // 흰색이 되는 결함 — bg·fg는 라이트값 그대로 고정한다. fg-supporting은 별도 확인 필요라 보류.
-  --tooltip-dark-bg: #171717;
-  --tooltip-dark-fg: #ffffff;
-  --tooltip-dark-fg-supporting: #0a0a0a;
-  --tooltip-light-bg: #0a0a0a;
-  --tooltip-light-fg: #d4d4d4;
-  --tooltip-light-fg-supporting: #a3a3a3;
+  --tooltip-dark-fg-supporting: var(--neutral-300);
 }
 
 $tooltip-dark-bg: var(--tooltip-dark-bg);

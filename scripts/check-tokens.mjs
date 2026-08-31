@@ -147,19 +147,33 @@ function addDetail(id, title, items) {
   }
 }
 
-// ── S3. 미정의 변수 ───────────────────────────────────────────────
+// ── S3. 미정의 변수 + 파일 간 암묵 의존 ────────────────────────────
 {
-  const declared = new Set();
+  const declared = new Set(); // 전역 존재 여부(미정의 판정용)
+  const declaredIn = new Map(); // name -> Set<file>  (소유권 판정용)
   const used = []; // {file, line, name}
   const DECL_RE = /--([a-z0-9-]+)\s*:/gi;
   // 캡처 그룹 2 = 폴백(,...) 유무. 폴백이 있으면 "런타임/인라인 style로 외부에서 채워질 수 있음"을
   // 스스로 표시한 것이라 미정의를 허용한다(예: progress-bar의 var(--progress-bar-value, 0%)).
   const USE_RE = /var\(\s*(--[a-z0-9-]+)\s*(,[^)]*)?\)/gi;
   const stripLineComment = (line) => line.replace(/\/\/.*$/, '');
+  // 어디서 선언하든 "전역 토큰층"으로 취급하는 파일 — 모든 컴포넌트가 암묵적으로 의존해도 된다.
+  const CANONICAL_FILES = new Set([
+    'scss/tokens/_primitive.scss',
+    'scss/tokens/_theme.scss',
+    'scss/tokens/_shape.scss',
+    'scss/tokens/_breakpoint.scss',
+  ]);
   for (const file of ALL_SCSS_FILES) {
+    const r = rel(file);
     const text = fs.readFileSync(file, 'utf8').split('\n').map(stripLineComment).join('\n');
     let m;
-    while ((m = DECL_RE.exec(text))) declared.add(m[1].toLowerCase());
+    while ((m = DECL_RE.exec(text))) {
+      const name = m[1].toLowerCase();
+      declared.add(name);
+      if (!declaredIn.has(name)) declaredIn.set(name, new Set());
+      declaredIn.get(name).add(r);
+    }
   }
   for (const file of ALL_SCSS_FILES) {
     const lines = fs.readFileSync(file, 'utf8').split('\n');
@@ -178,6 +192,30 @@ function addDetail(id, title, items) {
   rows.push(row('S3', '미정의 변수', undefinedUses.length ? 'FAIL' : 'PASS', undefinedUses.length,
     undefinedUses[0] ? `예: ${undefinedUses[0].file}:${undefinedUses[0].line} ${undefinedUses[0].name}` : ''));
   addDetail('S3', '미정의 변수', undefinedUses.map((u) => `${u.file}:${u.line}  ${u.name}`));
+
+  // 선언은 있지만(S3는 통과) 이 파일 자신도, 전역 토큰층(tokens/*)도 아닌 "다른 컴포넌트 파일"만
+  // 선언한 변수를 참조하는 경우 — dropdown.scss가 --field-bg를 선언 없이 참조하다가 select.scss가
+  // 먼저 선언해서 우연히 동작했던 패턴(2026-08-31). 컴파일 결과는 문제없지만(:root는 파일 순서와
+  // 무관하게 전역 병합) 소유권이 불분명해 나중에 선언 쪽을 지우면 조용히 깨진다 — 실패 아니라 경고.
+  const crossFile = [];
+  const seenPair = new Set();
+  for (const u of used) {
+    if (u.file.startsWith('scss/tokens/')) continue; // 토큰층 자기 자신은 대상 아님
+    const name = u.name.slice(2).toLowerCase();
+    const owners = declaredIn.get(name);
+    if (!owners) continue; // 미정의는 위 S3가 이미 처리
+    if (owners.has(u.file)) continue; // 자기 파일이 선언
+    const hasCanonicalOwner = [...owners].some((f) => CANONICAL_FILES.has(f));
+    if (hasCanonicalOwner) continue; // 전역 토큰층 소유 — 정상
+    const key = `${u.file} ${name}`;
+    if (seenPair.has(key)) continue;
+    seenPair.add(key);
+    crossFile.push({ file: u.file, line: u.line, name: u.name, owners: [...owners].sort() });
+  }
+  rows.push(row('S3b', '파일 간 암묵 의존', 'WARN', crossFile.length,
+    crossFile[0] ? `예: ${crossFile[0].file} → ${crossFile[0].name}(${crossFile[0].owners.join(',')})` : ''));
+  addDetail('S3b', '파일 간 암묵 의존(선언 없이 참조 — 다른 컴포넌트 파일이 선언)',
+    crossFile.map((c) => `${c.file}:${c.line}  ${c.name}  ← ${c.owners.join(', ')}`));
 }
 
 // ── S4. 컴포넌트의 프리미티브 직접 참조 ───────────────────────────

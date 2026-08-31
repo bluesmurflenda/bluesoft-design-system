@@ -5,3 +5,4 @@ node_modules/
 icons/raw/
 dist/
 .env
+.guide/

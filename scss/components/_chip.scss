@@ -7,36 +7,35 @@
 @use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측: info는 라이트에선 brand와 완전히 같은 값이었는데, 다크에서는 fg만 갈린다
-// (brand dark #93c5fd / info dark #60a5fa) — bg는 다크에서도 여전히 공유. 우연히 라이트만 같았던 것.
+// figma/tokens.theme.json의 chip/* 를 그대로 옮겼다(2026-08-31). 이전 값은 neutral이 슬레이트
+// 계열(#f8fafc 등, ADR-001로 폐기된 램프)이었다 — get_variable_defs로 재확인해 neutral로 교체.
+// info는 라이트에선 brand와 값이 같지만(둘 다 #eff6ff/#1d4ed8) 서로 다른 토큰이라 다크에서
+// 갈린다(brand는 brand-700이 다크에서 blue-300으로 반전, info는 blue-400으로 고정) — 우연히
+// 라이트만 같았던 것이지 별칭을 공유하는 게 아니다(ADR-010, 형제 참조 금지와 같은 이유로 각자
+// 독립 토큰을 쓴다).
 :root {
-  --chip-brand-bg: #eff6ff;
-  --chip-brand-fg: #1d4ed8;
-  --chip-neutral-bg: #f8fafc;
-  --chip-neutral-fg: #475569;
-  --chip-success-bg: #f0fdf4;
-  --chip-success-fg: #15803d;
-  --chip-warning-bg: #fefce8;
-  --chip-warning-fg: #a16207;
-  --chip-error-bg: #fef2f2;
-  --chip-error-fg: #b91c1c;
-  --chip-info-bg: #eff6ff;
-  --chip-info-fg: #1d4ed8;
+  --chip-brand-bg: var(--brand-50);
+  --chip-brand-fg: var(--brand-700);
+  --chip-neutral-bg: var(--surface-subtle);
+  --chip-neutral-fg: var(--text-tertiary);
+  --chip-success-bg: var(--green-50);
+  --chip-success-fg: var(--green-700);
+  --chip-warning-bg: var(--yellow-50);
+  --chip-warning-fg: var(--yellow-700);
+  --chip-error-bg: var(--red-50);
+  --chip-error-fg: var(--red-700);
+  --chip-info-bg: var(--surface-brand-subtle);
+  --chip-info-fg: var(--blue-700);
 }
 
 [data-theme='dark'] {
-  --chip-brand-bg: #172554;
-  --chip-brand-fg: #93c5fd;
-  --chip-neutral-bg: #020617;
-  --chip-neutral-fg: #94a3b8;
-  --chip-success-bg: #052e16;
-  --chip-success-fg: #4ade80;
-  --chip-warning-bg: #422006;
-  --chip-warning-fg: #facc15;
-  --chip-error-bg: #450a0a;
-  --chip-error-fg: #f87171;
-  --chip-info-bg: #172554;
-  --chip-info-fg: #60a5fa;
+  --chip-success-bg: var(--green-950);
+  --chip-success-fg: var(--green-400);
+  --chip-warning-bg: var(--yellow-950);
+  --chip-warning-fg: var(--yellow-400);
+  --chip-error-bg: var(--red-950);
+  --chip-error-fg: var(--red-400);
+  --chip-info-fg: var(--blue-400);
 }
 
 $chip-sizes: (

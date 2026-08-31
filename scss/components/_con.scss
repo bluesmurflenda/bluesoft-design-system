@@ -10,46 +10,38 @@
 @use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
+// figma/tokens.theme.json의 con/* 를 그대로 옮겼다(2026-08-31, 손으로 만든 값 아님).
+// con/white/*-selected 3종(bg·fg·border)은 다크에서 반전하지 않는다 — fg는 white를 그대로
+// 참조해서(별칭 대상 이름이 라이트·다크 동일) 자동으로 안 바뀌고, bg·border는 라이트에서
+// brand-600(다크에서 반전되는 램프)을 참조하지만 다크 블록에서 blue-600으로 고정해 반전을
+// 막는다 — 이전 코드는 bg-selected만 고쳐져 있고 fg-selected·border-selected는 여전히
+// 반전되고 있었다(검정/밝은 파랑으로 바뀜, 대비 붕괴).
 :root {
-  --con-fg: #404040;
-  --con-fg-selected: #2563eb;
-  --con-bg-selected: #dbeafe;
-  --con-border-selected: #bfdbfe;
-  --con-gray-border: #e5e5e5;
-  --con-gray-bg-hover: #f5f5f5;
-  --con-color-bg: #eff6ff;
-  --con-color-bg-hover: #dbeafe;
-  --con-color-border: #bfdbfe;
-  --con-white-bg: #ffffff;
-  --con-white-border: #e5e5e5;
-  --con-white-bg-hover: #dbeafe;
-  --con-white-fg-hover: #2563eb;
-  --con-white-border-hover: #bfdbfe;
-  --con-white-fg-selected: #ffffff;
-  --con-white-bg-selected: #2563eb;
-  --con-white-border-selected: #2563eb;
+  --con-fg: var(--text-secondary);
+  --con-gray-border: var(--border-default);
+  --con-gray-bg-hover: var(--neutral-100);
+  --con-bg-selected: var(--brand-100);
+  --con-fg-selected: var(--brand-700);
+  --con-border-selected: var(--brand-200);
+  --con-color-bg: var(--brand-50);
+  --con-color-bg-hover: var(--brand-100);
+  --con-color-border: var(--brand-200);
+  --con-white-bg: var(--white);
+  --con-white-border: var(--border-default);
+  --con-white-bg-hover: var(--brand-100);
+  --con-white-fg-hover: var(--brand-600);
+  --con-white-border-hover: var(--brand-200);
+  --con-white-fg-selected: var(--white);
+  --con-white-bg-selected: var(--brand-600);
+  --con-white-border-selected: var(--brand-600);
 }
 
 [data-theme='dark'] {
-  --con-fg: #d4d4d4;
-  --con-fg-selected: #60a5fa;
-  --con-bg-selected: #1e3a8a;
-  --con-border-selected: #1e40af;
-  --con-gray-border: #404040;
-  --con-gray-bg-hover: #171717;
-  --con-color-bg: #172554;
-  --con-color-bg-hover: #1e3a8a;
-  --con-color-border: #93c5fd;
-  --con-white-bg: #0a0a0a;
-  --con-white-border: #404040;
-  --con-white-bg-hover: #1e3a8a;
-  --con-white-fg-hover: #60a5fa;
-  --con-white-border-hover: #1e40af;
-  --con-white-fg-selected: #0a0a0a;
-  // 2026-08-28 확인(status-spec 0장): bg-selected가 밝은 blue-400으로 반전되면 그 위 검정 글자와
-  // 대비가 무너진다 — 라이트값(#2563eb) 유지가 맞다.
-  --con-white-bg-selected: #2563eb;
-  --con-white-border-selected: #60a5fa;
+  --con-gray-bg-hover: var(--neutral-900);
+  --con-color-border: var(--brand-700);
+  --con-white-bg: var(--neutral-950);
+  --con-white-bg-selected: var(--blue-600);
+  --con-white-border-selected: var(--blue-600);
 }
 
 $con-sizes: (

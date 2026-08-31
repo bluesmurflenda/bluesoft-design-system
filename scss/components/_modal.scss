@@ -97,14 +97,15 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
   }
 }
 
-// Featured Icon과 완전히 같은 색상 맵이라 _featured-icon.scss가 정의한 커스텀 프로퍼티를 그대로 재사용한다
-// (CSS 커스텀 프로퍼티는 전역이라 @use 없이도 참조 가능 — 다크 모드 값도 자동으로 같이 따라온다).
+// Featured Icon과 완전히 같은 색상 맵이라 chip/* 커스텀 프로퍼티를 그대로 재사용한다(featured-icon도
+// 이걸 직접 참조한다 — 2026-08-31 수정: 이전엔 _featured-icon.scss가 자체 --featured-icon-* 를
+// 뒀었지만 그 프로퍼티가 제거되면서 여기 참조가 끊겨 있었다, S3 미정의 변수로 발견).
 $modal-icon-colors: (
-  brand: (bg: var(--featured-icon-brand-bg), fg: var(--featured-icon-brand-fg)),
-  neutral: (bg: var(--featured-icon-neutral-bg), fg: var(--featured-icon-neutral-fg)),
-  success: (bg: var(--featured-icon-success-bg), fg: var(--featured-icon-success-fg)),
-  warning: (bg: var(--featured-icon-warning-bg), fg: var(--featured-icon-warning-fg)),
-  error: (bg: var(--featured-icon-error-bg), fg: var(--featured-icon-error-fg)),
+  brand: (bg: var(--chip-brand-bg), fg: var(--chip-brand-fg)),
+  neutral: (bg: var(--chip-neutral-bg), fg: var(--chip-neutral-fg)),
+  success: (bg: var(--chip-success-bg), fg: var(--chip-success-fg)),
+  warning: (bg: var(--chip-warning-bg), fg: var(--chip-warning-fg)),
+  error: (bg: var(--chip-error-bg), fg: var(--chip-error-fg)),
 );
 
 .modal-featured-icon {

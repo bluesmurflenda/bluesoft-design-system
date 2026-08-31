@@ -1,8 +1,4 @@
-// mq() 믹스인(모바일 퍼스트, min-width 전용) + text() 믹스인.
-// container()/section() 레이아웃 믹스인은 아직 없다 — tokens/_breakpoint.scss가 1단계에서
-// --container-*/--section-* CSS 변수를 이미 내보내므로 더 이상 "근거가 될 변수가 없어서"는
-// 아니다. 이번 2단계 지시 범위(maps/mixins/functions/typography)에 포함되지 않아 보류했다 —
-// 추가할지, 어떤 시그니처로 할지는 확인 필요(PROGRESS.md 막힌 것 참조).
+// mq() 믹스인(모바일 퍼스트, min-width 전용) + text() 믹스인 + container()/section() 레이아웃 믹스인.
 
 @use 'sass:map';
 @use 'maps';
@@ -38,4 +34,21 @@
     }
     font-weight: map.get(maps.$font-weight-scale, $weight);
   }
+}
+
+@mixin container {
+  width: 100%;
+  // ADR-006: container/max-width 는 Figma 에서 삭제됐다(container/width 하나만 남기고 통합) —
+  // CSS 구조에만 필요한 상한이라 토큰 없이 1200px 하드값을 폴백으로 둔다.
+  max-width: var(--container-max-width, 1200px);
+  padding-inline: var(--container-padding-x);
+  margin-inline: auto;
+}
+
+@mixin section {
+  padding-top: var(--section-padding-top);
+  padding-bottom: var(--section-padding-bottom);
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
 }

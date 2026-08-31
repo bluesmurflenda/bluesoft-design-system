@@ -10,23 +10,20 @@
 @use '../tokens/primitive' as *;
 @use '../abstracts/mixins' as mix;
 
-// 2026-08-28 Dark 모드 실측
+// figma/tokens.theme.json의 card/* 를 그대로 옮겼다(2026-08-31). card/fg는 문서상 "글자색"
+// 설명이지만 실측 별칭 대상은 icon/strong이다 — 라이브가 맞다고 보고 그대로 옮긴다.
 :root {
-  --card-bg: #ffffff;
-  --card-bg-tinted: #fafafa;
-  --card-border: #e5e5e5;
-  --card-border-hover: #38bdf8;
-  --card-fg: #262626;
-  --card-fg-supporting: #525252;
+  --card-bg: var(--white);
+  --card-bg-tinted: var(--neutral-50);
+  --card-border: var(--border-default);
+  --card-border-hover: var(--accent-400);
+  --card-fg: var(--icon-strong);
+  --card-fg-supporting: var(--text-tertiary);
 }
 
 [data-theme='dark'] {
-  --card-bg: #262626;
-  --card-bg-tinted: #404040;
-  --card-border: #737373;
-  --card-border-hover: #0284c7;
-  --card-fg: #e5e5e5;
-  --card-fg-supporting: #a3a3a3;
+  --card-bg: var(--neutral-800);
+  --card-bg-tinted: var(--neutral-700);
 }
 
 $card-radius: $radius-lg;

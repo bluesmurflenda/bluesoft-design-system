@@ -6,49 +6,42 @@
 @use '../abstracts/mixins' as mix;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측
+// figma/tokens.theme.json의 alert/* 를 그대로 옮겼다(2026-08-31) — 이전 값은 neutral이
+// 슬레이트 계열(ADR-001로 폐기된 램프)이었다.
 :root {
-  --alert-brand-bg: #eff6ff;
-  --alert-brand-border: #bfdbfe;
-  --alert-brand-fg: #1d4ed8;
-  --alert-neutral-bg: #f8fafc;
-  --alert-neutral-border: #e2e8f0;
-  --alert-neutral-fg: #334155;
-  --alert-success-bg: #f0fdf4;
-  --alert-success-border: #bbf7d0;
-  --alert-success-fg: #15803d;
-  --alert-warning-bg: #fefce8;
-  --alert-warning-border: #fef08a;
-  --alert-warning-fg: #a16207;
-  --alert-error-bg: #fef2f2;
-  --alert-error-border: #fecaca;
-  --alert-error-fg: #b91c1c;
-  --alert-info-bg: #eff6ff;
-  --alert-info-border: #bfdbfe;
-  --alert-info-fg: #1d4ed8;
-  --alert-fg-supporting: #525252;
+  --alert-brand-bg: var(--brand-50);
+  --alert-brand-border: var(--brand-200);
+  --alert-brand-fg: var(--brand-700);
+  --alert-neutral-bg: var(--surface-subtle);
+  --alert-neutral-border: var(--border-default);
+  --alert-neutral-fg: var(--text-secondary);
+  --alert-success-bg: var(--green-50);
+  --alert-success-border: var(--green-200);
+  --alert-success-fg: var(--green-700);
+  --alert-warning-bg: var(--yellow-50);
+  --alert-warning-border: var(--yellow-200);
+  --alert-warning-fg: var(--yellow-700);
+  --alert-error-bg: var(--red-50);
+  --alert-error-border: var(--red-200);
+  --alert-error-fg: var(--red-700);
+  --alert-info-bg: var(--surface-brand-subtle);
+  --alert-info-border: var(--blue-200);
+  --alert-info-fg: var(--blue-700);
+  --alert-fg-supporting: var(--text-tertiary);
 }
 
 [data-theme='dark'] {
-  --alert-brand-bg: #172554;
-  --alert-brand-border: #1e40af;
-  --alert-brand-fg: #93c5fd;
-  --alert-neutral-bg: #020617;
-  --alert-neutral-border: #334155;
-  --alert-neutral-fg: #cbd5e1;
-  --alert-success-bg: #052e16;
-  --alert-success-border: #15803d;
-  --alert-success-fg: #4ade80;
-  --alert-warning-bg: #422006;
-  --alert-warning-border: #a16207;
-  --alert-warning-fg: #facc15;
-  --alert-error-bg: #450a0a;
-  --alert-error-border: #b91c1c;
-  --alert-error-fg: #f87171;
-  --alert-info-bg: #172554;
-  --alert-info-border: #1d4ed8;
-  --alert-info-fg: #60a5fa;
-  --alert-fg-supporting: #a3a3a3;
+  --alert-success-bg: var(--green-950);
+  --alert-success-border: var(--green-700);
+  --alert-success-fg: var(--green-400);
+  --alert-warning-bg: var(--yellow-950);
+  --alert-warning-border: var(--yellow-700);
+  --alert-warning-fg: var(--yellow-400);
+  --alert-error-bg: var(--red-950);
+  --alert-error-border: var(--red-700);
+  --alert-error-fg: var(--red-400);
+  --alert-info-border: var(--blue-700);
+  --alert-info-fg: var(--blue-400);
 }
 
 $alert-fg-supporting: var(--alert-fg-supporting);
