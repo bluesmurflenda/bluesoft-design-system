@@ -23,7 +23,8 @@
     <p class="doc-desc">
       <code>_tooltip.scss</code>에 실제로 정의된 arrow 클래스는 <code>tooltip-arrow-none/top/bottom/left/right</code> 5개뿐입니다.
       Figma 축에 있는 <code>bottom-left</code>/<code>bottom-right</code>(코너 오프셋)는 대응하는 CSS 클래스가 아직 없어 이 페이지에서는 제외했습니다 — 추정으로 만들지 않습니다.
-      다크 모드에서는 Theme=dark가 밝은 배경으로, Theme=light가 어두운 배경으로 반전되는 것이 실측 그대로의 의도된 동작입니다(상대적 대비 관계 유지).
+      <code>Theme=dark/light</code>는 사이트 다크모드가 아니라 컴포넌트 자체의 고정된 스타일(어두운 배경 스타일 / 밝은 배경 스타일)입니다 — 사이트를 다크모드로 바꿔도 이 배경·글자색은 반전되지 않습니다.
+      <code>tooltip-light</code>는 배경·글자·보조 텍스트가 전부 완전히 고정이고, <code>tooltip-dark</code>는 배경과 제목 글자는 고정이지만 보조 텍스트(<code>fg-supporting</code>)만 사이트 다크모드에서 흰색보다 살짝 죽인 회색(<code>neutral-300</code>)으로 대비를 낮춥니다 — 이 페이지는 라이트 테마로 고정돼 있어 그 차이는 보이지 않습니다.
     </p>
     <div class="doc-row" id="tooltip-matrix"></div>
   </section>

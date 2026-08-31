@@ -29,17 +29,17 @@
     <div class="doc-card">
       <div class="table">
         <div class="table-header">
-          <div class="table-cell table-cell-md table-cell-header-col align-left">이름</div>
+          <div class="table-cell table-cell-md table-cell-header-col table-cell-align-left">이름</div>
           <div class="table-cell table-cell-md table-cell-header-col">상태</div>
           <div class="table-cell table-cell-md table-cell-header-col">가입일</div>
         </div>
         <div class="table-row">
-          <div class="table-cell table-cell-md table-cell-body align-left">김블루</div>
+          <div class="table-cell table-cell-md table-cell-body table-cell-align-left">김블루</div>
           <div class="table-cell table-cell-md table-cell-body"><span class="chip chip-sm chip-success">활성</span></div>
           <div class="table-cell table-cell-md table-cell-body">2026.01.15</div>
         </div>
         <div class="table-row">
-          <div class="table-cell table-cell-md table-cell-body align-left">이소프트</div>
+          <div class="table-cell table-cell-md table-cell-body table-cell-align-left">이소프트</div>
           <div class="table-cell table-cell-md table-cell-body"><span class="chip chip-sm chip-neutral">대기</span></div>
           <div class="table-cell table-cell-md table-cell-body">2026.02.02</div>
         </div>
@@ -54,7 +54,7 @@
 
   <section class="doc-section">
     <h2>header-row(왼쪽 라벨 열) 조합</h2>
-    <p class="doc-desc">배경이 header-col과 다른 톤(slate-50)이고 우측 보더가 추가됩니다.</p>
+    <p class="doc-desc">배경은 header-col과 같은 톤(surface/subtle)이고, 우측 보더만 추가됩니다.</p>
     <div class="doc-card" style="display:inline-flex;">
       <div class="table-cell table-cell-md table-cell-header-row" style="width:140px;">라벨</div>
       <div class="table-cell table-cell-md table-cell-body" style="width:200px;">값</div>
@@ -77,7 +77,7 @@
     ['header-row', 'table-cell-header-row', '헤더(왼쪽)'],
   ];
   var SIZES = ['sm', 'md', 'lg'];
-  var ALIGNS = [['center', ''], ['left', 'align-left']];
+  var ALIGNS = [['center', ''], ['left', 'table-cell-align-left']];
 
   (function () {
     var el = document.getElementById('cell-matrix');
@@ -88,7 +88,7 @@
           cell.className = 'doc-cell';
           cell.innerHTML =
             '<div style="width:100%;display:flex;">' +
-            '<div class="table-cell table-cell-' + size + ' table-cell-' + role[0] + ' ' + align[1] + '" style="width:100%;border:1px solid var(--color-neutral-200);">' + role[2] + '</div>' +
+            '<div class="table-cell table-cell-' + size + ' table-cell-' + role[0] + ' ' + align[1] + '" style="width:100%;border:1px solid var(--neutral-200);">' + role[2] + '</div>' +
             '</div>' +
             '<span class="doc-cell__caption">table-cell-' + size + ' table-cell-' + role[0] + (align[1] ? ' ' + align[1] : '') + '</span>';
           el.appendChild(cell);
@@ -105,8 +105,8 @@
       wrap.style.alignItems = 'center';
       wrap.style.gap = '8px';
       wrap.innerHTML =
-        '<div class="table-cell table-cell-' + pair[0] + ' table-cell-body" style="width:180px;border:1px solid var(--color-neutral-200);">' +
-        '<span class="table-cell__leading" style="background:var(--color-blue-100);"></span>' +
+        '<div class="table-cell table-cell-' + pair[0] + ' table-cell-body" style="width:180px;border:1px solid var(--neutral-200);">' +
+        '<span class="table-cell__leading" style="background:var(--blue-100);"></span>' +
         '<span class="table-cell__text">size=' + pair[0] + '</span></div>';
       el.appendChild(wrap);
     });

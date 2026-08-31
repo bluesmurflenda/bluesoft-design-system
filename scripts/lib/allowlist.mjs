@@ -36,3 +36,14 @@ export const D1_NODE_EXCEPTIONS = [
 export function isD1NodeExempt(component, primitive) {
   return D1_NODE_EXCEPTIONS.some((e) => e.component === component && e.primitive === primitive);
 }
+
+// S2 전용 — ADR-015. Figma엔 있지만 코드에서 일부러 안 내보내는 토큰(누락으로 잡히면 안 된다).
+// "컬렉션/이름" 문자열로 좁힌다 — 다른 토큰이 같은 이유로 빠지면 그때 항목을 추가한다.
+export const S2_MISSING_EXEMPT = new Set([
+  'Shape/button/radius-xs', // Button Size=xs 코드 제외(실사용 0건) — Figma 변형 자체는 유지
+  'Shape/button/padding-x/xs',
+]);
+
+export function isS2MissingExempt(collection, name) {
+  return S2_MISSING_EXEMPT.has(`${collection}/${name}`);
+}

@@ -1,13 +1,14 @@
 // Figma DS Master > Shape collection(Rounded/Square/Pill) — 자동 생성, 손으로 고치지 않는다.
 // 출처: figma/tokens.shape.json. 값을 바꾸려면 Figma를 고치고 스냅샷을 다시 뽑은 뒤 재생성한다.
 // 기본값은 Rounded. [data-shape='square'|'pill'] 는 Rounded와 값이 다른 항목만 오버라이드한다.
+// 예외: button/radius-xs·button/padding-x/xs는 Figma Shape에 있지만 내보내지 않는다(ADR-015 —
+// Button Size xs는 코드에서 제외, 실사용 0건).
 
 :root {
   --button-radius: var(--radius-sm);
   --tabs-radius: var(--radius-lg);
   --pagination-radius: var(--radius-sm);
   --con-radius: var(--radius-sm);
-  --button-padding-x-xs: var(--space-2);
   --button-padding-x-sm: var(--space-3);
   --button-padding-x-md: var(--space-5);
   --button-padding-x-lg: var(--space-6);
@@ -36,7 +37,6 @@
   --table-cell-min-height-md: 44px;
   --table-cell-min-height-lg: 64px;
   --scrollbar-radius: var(--radius-full);
-  --button-radius-xs: var(--radius-xsm);
   --card-radius: var(--radius-lg);
 }
 
@@ -48,7 +48,6 @@
   --calendar-radius: var(--radius-none);
   --calendar-cell-radius: var(--radius-none);
   --scrollbar-radius: var(--radius-none);
-  --button-radius-xs: var(--radius-none);
   --card-radius: var(--radius-none);
 }
 
@@ -60,7 +59,6 @@
   --button-padding-x-sm: var(--space-4);
   --button-padding-x-xl: var(--space-7);
   --calendar-radius: var(--radius-2xl);
-  --button-radius-xs: var(--radius-full);
   --card-radius: var(--radius-2xl);
 }
 
@@ -72,7 +70,6 @@ $button-radius: var(--button-radius);
 $tabs-radius: var(--tabs-radius);
 $pagination-radius: var(--pagination-radius);
 $con-radius: var(--con-radius);
-$button-padding-x-xs: var(--button-padding-x-xs);
 $button-padding-x-sm: var(--button-padding-x-sm);
 $button-padding-x-md: var(--button-padding-x-md);
 $button-padding-x-lg: var(--button-padding-x-lg);
@@ -101,5 +98,4 @@ $table-cell-min-height-sm: var(--table-cell-min-height-sm);
 $table-cell-min-height-md: var(--table-cell-min-height-md);
 $table-cell-min-height-lg: var(--table-cell-min-height-lg);
 $scrollbar-radius: var(--scrollbar-radius);
-$button-radius-xs: var(--button-radius-xs);
 $card-radius: var(--card-radius);

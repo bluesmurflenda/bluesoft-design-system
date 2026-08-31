@@ -15,7 +15,7 @@
   <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Featured Icon</div>
   <div class="doc-page-header">
     <h1>Featured Icon</h1>
-    <p>Color 5종(brand/neutral/success/warning/error) × Size 2종(sm 40px/md 48px) = 10. Alert와 동일한 색 스케일을 재사용합니다(실측 일치). sm은 아이콘 20px·패딩 10px, md는 아이콘 24px·패딩 12px, 원형(radius-full)입니다.</p>
+    <p>Color 5종(brand/neutral/success/warning/error) × Size 2종(sm 40px/md 48px) = 10. 전용 토큰이 없어 <code>chip/*</code> 커스텀 프로퍼티를 그대로 재사용합니다(<code>_featured-icon.scss</code>가 <code>var(--chip-brand-bg)</code> 등을 직접 참조 — Alert가 아니라 Chip입니다, info 색은 Chip에만 있고 여기엔 없습니다). sm은 아이콘 20px·패딩 10px, md는 아이콘 24px·패딩 12px, 원형(radius-full)입니다.</p>
   </div>
 
   <section class="doc-section">

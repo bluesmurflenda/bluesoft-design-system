@@ -1,5 +1,5 @@
 // Figma DS Master > Button (node 182:45) + Theme > button 그룹, 2026-08-27 라이브 인스턴스 실측
-// 변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 5(xs/sm/md/lg/xl) × 상태 5
+// 변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 4(sm/md/lg/xl, ADR-015로 xs 제외) × 상태 5
 
 @use '../tokens/primitive' as *;
 @use '../abstracts/mixins' as mix;
@@ -69,13 +69,11 @@
 }
 
 $button-radius: var(--button-radius);
-$button-radius-xs: var(--button-radius-xs);
 
-// 2026-08-28 재확인(bluesoft-buttons-spec.md 6장): xs radius도 Shape 모드에 따라 갈린다
-// (이전 "모드 무관" 가정은 오류) — rounded/square/pill 전부 tokens/_shape.scss에서 배선.
-// padding-x도 sm·xl은 Pill 모드에서만 값이 달라져 var(--button-padding-x-*)로 뺐다.
+// ADR-015: Size는 4단계(sm·md·lg·xl)다. xs는 Figma에 45변형 있지만 실제 인스턴스 사용처가
+// 0건이라 제외 — Figma 쪽 변형 자체는 삭제하지 않는다(코드만 4단계).
+// padding-x는 sm·xl이 Pill 모드에서만 값이 달라져 var(--button-padding-x-*)로 뺐다(6장).
 $button-sizes: (
-  xs: (height: 28px, padding-x: var(--button-padding-x-xs), type: body-2xs, radius: $button-radius-xs),
   sm: (height: 32px, padding-x: var(--button-padding-x-sm), type: body-sm, radius: $button-radius),
   md: (height: 40px, padding-x: var(--button-padding-x-md), type: body-md, radius: $button-radius),
   lg: (height: 48px, padding-x: var(--button-padding-x-lg), type: body-lg, radius: $button-radius),

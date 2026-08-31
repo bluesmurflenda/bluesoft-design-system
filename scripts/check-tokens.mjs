@@ -7,7 +7,7 @@ import * as sass from 'sass';
 import stylelint from 'stylelint';
 
 import { printReport, row } from './lib/report.mjs';
-import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES } from './lib/allowlist.mjs';
+import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt } from './lib/allowlist.mjs';
 import {
   figmaSnapshotExists,
   loadFigmaCollections,
@@ -111,6 +111,7 @@ function addDetail(id, title, items) {
           }
           const rawCompiled = compiledValueFor(colName, mode, varName);
           if (rawCompiled === undefined) {
+            if (isS2MissingExempt(colName, name)) continue;
             missing.push({ colName, name, mode, cssVar: '--' + varName });
             continue;
           }

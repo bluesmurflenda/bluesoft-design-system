@@ -15,80 +15,918 @@
   <div class="doc-breadcrumb"><a href="../index.html">토큰</a> / 색상</div>
   <div class="doc-page-header">
     <h1>색상</h1>
-    <p>Primitive 팔레트 전 스케일(50~900). 컴포넌트는 이 값을 직접 쓰지 않고 <code>$color-*</code> SCSS 변수를 통해 참조합니다.</p>
+    <p>Primitive 팔레트(hex 원시값)와 Theme 일반 시맨틱 44개(<code>surface·text·border·icon·brand·accent</code>, Default·Dark 2모드)입니다. 컴포넌트별 토큰(button·chip·tabs 등 246개)은 각 컴포넌트 문서 페이지를 참조하세요. 컴포넌트는 이 값을 직접 쓰지 않고 <code>var(--*)</code> CSS 커스텀 프로퍼티를 통해 참조합니다.</p>
   </div>
 
   <section class="doc-section">
-    <div class="doc-subhead">Blue (Brand)</div>
-    <div class="doc-grid" id="swatch-blue"></div>
-  </section>
-  <section class="doc-section">
-    <div class="doc-subhead">Neutral</div>
-    <div class="doc-grid" id="swatch-neutral"></div>
-  </section>
-  <section class="doc-section">
-    <div class="doc-subhead">Slate</div>
-    <div class="doc-grid" id="swatch-slate"></div>
-  </section>
-  <section class="doc-section">
-    <div class="doc-subhead">Red</div>
-    <div class="doc-grid" id="swatch-red"></div>
-  </section>
-  <section class="doc-section">
+    <h2>Primitive</h2>
+    <p class="doc-desc">hex가 있는 유일한 곳. <code>figma/tokens.primitive.json</code>에서 생성됩니다 — 이 섹션은 손으로 고치지 마세요(<code>scripts/generate-docs-tokens.mjs</code>, <code>npm run build</code> 때마다 재생성).</p>
+    <!-- GENERATED:PRIMITIVE:START -->
+    <div class="doc-subhead">Blue</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#eff6ff;"></div>
+        <div class="doc-swatch__label">blue-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#dbeafe;"></div>
+        <div class="doc-swatch__label">blue-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#bfdbfe;"></div>
+        <div class="doc-swatch__label">blue-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#93c5fd;"></div>
+        <div class="doc-swatch__label">blue-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#60a5fa;"></div>
+        <div class="doc-swatch__label">blue-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#3b82f6;"></div>
+        <div class="doc-swatch__label">blue-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#2563eb;"></div>
+        <div class="doc-swatch__label">blue-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#1d4ed8;"></div>
+        <div class="doc-swatch__label">blue-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#1e40af;"></div>
+        <div class="doc-swatch__label">blue-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#1e3a8a;"></div>
+        <div class="doc-swatch__label">blue-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#172554;"></div>
+        <div class="doc-swatch__label">blue-950</div>
+      </div>
+    </div>
     <div class="doc-subhead">Green</div>
-    <div class="doc-grid" id="swatch-green"></div>
-  </section>
-  <section class="doc-section">
-    <div class="doc-subhead">Yellow</div>
-    <div class="doc-grid" id="swatch-yellow"></div>
-  </section>
-  <section class="doc-section">
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f0fdf4;"></div>
+        <div class="doc-swatch__label">green-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#dcfce7;"></div>
+        <div class="doc-swatch__label">green-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#bbf7d0;"></div>
+        <div class="doc-swatch__label">green-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#86efac;"></div>
+        <div class="doc-swatch__label">green-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#4ade80;"></div>
+        <div class="doc-swatch__label">green-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#22c55e;"></div>
+        <div class="doc-swatch__label">green-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#16a34a;"></div>
+        <div class="doc-swatch__label">green-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#15803d;"></div>
+        <div class="doc-swatch__label">green-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#166534;"></div>
+        <div class="doc-swatch__label">green-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#14532d;"></div>
+        <div class="doc-swatch__label">green-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#052e16;"></div>
+        <div class="doc-swatch__label">green-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Indigo</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#eef2ff;"></div>
+        <div class="doc-swatch__label">indigo-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#e0e7ff;"></div>
+        <div class="doc-swatch__label">indigo-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#c7d2fe;"></div>
+        <div class="doc-swatch__label">indigo-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#a5b4fc;"></div>
+        <div class="doc-swatch__label">indigo-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#818cf8;"></div>
+        <div class="doc-swatch__label">indigo-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#6366f1;"></div>
+        <div class="doc-swatch__label">indigo-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#4f46e5;"></div>
+        <div class="doc-swatch__label">indigo-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#4338ca;"></div>
+        <div class="doc-swatch__label">indigo-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#3730a3;"></div>
+        <div class="doc-swatch__label">indigo-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#312e81;"></div>
+        <div class="doc-swatch__label">indigo-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#1e1b4b;"></div>
+        <div class="doc-swatch__label">indigo-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Neutral</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fafafa;"></div>
+        <div class="doc-swatch__label">neutral-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f5f5f5;"></div>
+        <div class="doc-swatch__label">neutral-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#e5e5e5;"></div>
+        <div class="doc-swatch__label">neutral-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#d4d4d4;"></div>
+        <div class="doc-swatch__label">neutral-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#a3a3a3;"></div>
+        <div class="doc-swatch__label">neutral-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#737373;"></div>
+        <div class="doc-swatch__label">neutral-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#525252;"></div>
+        <div class="doc-swatch__label">neutral-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#404040;"></div>
+        <div class="doc-swatch__label">neutral-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#262626;"></div>
+        <div class="doc-swatch__label">neutral-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#171717;"></div>
+        <div class="doc-swatch__label">neutral-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#0a0a0a;"></div>
+        <div class="doc-swatch__label">neutral-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Orange</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fff7ed;"></div>
+        <div class="doc-swatch__label">orange-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#ffedd5;"></div>
+        <div class="doc-swatch__label">orange-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fed7aa;"></div>
+        <div class="doc-swatch__label">orange-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fdba74;"></div>
+        <div class="doc-swatch__label">orange-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fb923c;"></div>
+        <div class="doc-swatch__label">orange-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f97316;"></div>
+        <div class="doc-swatch__label">orange-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#ea580c;"></div>
+        <div class="doc-swatch__label">orange-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#c2410c;"></div>
+        <div class="doc-swatch__label">orange-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#9a3412;"></div>
+        <div class="doc-swatch__label">orange-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#7c2d12;"></div>
+        <div class="doc-swatch__label">orange-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#431407;"></div>
+        <div class="doc-swatch__label">orange-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Pink</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fdf2f8;"></div>
+        <div class="doc-swatch__label">pink-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fce7f3;"></div>
+        <div class="doc-swatch__label">pink-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fbcfe8;"></div>
+        <div class="doc-swatch__label">pink-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f9a8d4;"></div>
+        <div class="doc-swatch__label">pink-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f472b6;"></div>
+        <div class="doc-swatch__label">pink-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#ec4899;"></div>
+        <div class="doc-swatch__label">pink-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#db2777;"></div>
+        <div class="doc-swatch__label">pink-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#be185d;"></div>
+        <div class="doc-swatch__label">pink-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#9d174d;"></div>
+        <div class="doc-swatch__label">pink-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#831843;"></div>
+        <div class="doc-swatch__label">pink-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#500724;"></div>
+        <div class="doc-swatch__label">pink-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Purple</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#faf5ff;"></div>
+        <div class="doc-swatch__label">purple-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f3e8ff;"></div>
+        <div class="doc-swatch__label">purple-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#e9d5ff;"></div>
+        <div class="doc-swatch__label">purple-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#d8b4fe;"></div>
+        <div class="doc-swatch__label">purple-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#c084fc;"></div>
+        <div class="doc-swatch__label">purple-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#a855f7;"></div>
+        <div class="doc-swatch__label">purple-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#9333ea;"></div>
+        <div class="doc-swatch__label">purple-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#7e22ce;"></div>
+        <div class="doc-swatch__label">purple-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#6b21a8;"></div>
+        <div class="doc-swatch__label">purple-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#581c87;"></div>
+        <div class="doc-swatch__label">purple-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#3b0764;"></div>
+        <div class="doc-swatch__label">purple-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Red</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fef2f2;"></div>
+        <div class="doc-swatch__label">red-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fee2e2;"></div>
+        <div class="doc-swatch__label">red-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fecaca;"></div>
+        <div class="doc-swatch__label">red-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fca5a5;"></div>
+        <div class="doc-swatch__label">red-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f87171;"></div>
+        <div class="doc-swatch__label">red-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#ef4444;"></div>
+        <div class="doc-swatch__label">red-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#dc2626;"></div>
+        <div class="doc-swatch__label">red-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#b91c1c;"></div>
+        <div class="doc-swatch__label">red-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#991b1b;"></div>
+        <div class="doc-swatch__label">red-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#7f1d1d;"></div>
+        <div class="doc-swatch__label">red-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#450a0a;"></div>
+        <div class="doc-swatch__label">red-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Rose</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fff1f2;"></div>
+        <div class="doc-swatch__label">rose-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#ffe4e6;"></div>
+        <div class="doc-swatch__label">rose-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fecdd3;"></div>
+        <div class="doc-swatch__label">rose-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fda4af;"></div>
+        <div class="doc-swatch__label">rose-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fb7185;"></div>
+        <div class="doc-swatch__label">rose-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f43f5e;"></div>
+        <div class="doc-swatch__label">rose-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#e11d48;"></div>
+        <div class="doc-swatch__label">rose-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#be123c;"></div>
+        <div class="doc-swatch__label">rose-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#9f1239;"></div>
+        <div class="doc-swatch__label">rose-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#881337;"></div>
+        <div class="doc-swatch__label">rose-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#4c0519;"></div>
+        <div class="doc-swatch__label">rose-950</div>
+      </div>
+    </div>
     <div class="doc-subhead">Sky</div>
-    <div class="doc-grid" id="swatch-sky"></div>
-  </section>
-  <section class="doc-section">
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#f0f9ff;"></div>
+        <div class="doc-swatch__label">sky-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#e0f2fe;"></div>
+        <div class="doc-swatch__label">sky-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#bae6fd;"></div>
+        <div class="doc-swatch__label">sky-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#7dd3fc;"></div>
+        <div class="doc-swatch__label">sky-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#38bdf8;"></div>
+        <div class="doc-swatch__label">sky-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#0ea5e9;"></div>
+        <div class="doc-swatch__label">sky-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#0284c7;"></div>
+        <div class="doc-swatch__label">sky-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#0369a1;"></div>
+        <div class="doc-swatch__label">sky-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#075985;"></div>
+        <div class="doc-swatch__label">sky-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#0c4a6e;"></div>
+        <div class="doc-swatch__label">sky-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#082f49;"></div>
+        <div class="doc-swatch__label">sky-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Yellow</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fefce8;"></div>
+        <div class="doc-swatch__label">yellow-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fef9c3;"></div>
+        <div class="doc-swatch__label">yellow-100</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fef08a;"></div>
+        <div class="doc-swatch__label">yellow-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#fde047;"></div>
+        <div class="doc-swatch__label">yellow-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#facc15;"></div>
+        <div class="doc-swatch__label">yellow-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#eab308;"></div>
+        <div class="doc-swatch__label">yellow-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#ca8a04;"></div>
+        <div class="doc-swatch__label">yellow-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#a16207;"></div>
+        <div class="doc-swatch__label">yellow-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#854d0e;"></div>
+        <div class="doc-swatch__label">yellow-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#713f12;"></div>
+        <div class="doc-swatch__label">yellow-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div class="doc-swatch__chip" style="background-color:#422006;"></div>
+        <div class="doc-swatch__label">yellow-950</div>
+      </div>
+    </div>
     <div class="doc-subhead">Social</div>
-    <div class="doc-row" id="swatch-social"></div>
+    <div class="doc-row">
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="width:120px;background-color:#ffcd00;"></div><div class="doc-swatch__label">social-kakao</div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="width:120px;background-color:#03c75a;"></div><div class="doc-swatch__label">social-naver</div></div>
+      <div class="doc-swatch"><div class="doc-swatch__chip" style="width:120px;background-color:#000000;"></div><div class="doc-swatch__label">social-apple</div></div>
+    </div>
+    <!-- GENERATED:PRIMITIVE:END -->
+  </section>
+
+  <section class="doc-section">
+    <h2>Theme — 일반 시맨틱</h2>
+    <p class="doc-desc">Primitive를 가리키는 의미 별칭입니다. 각 스와치는 Default(왼쪽)·Dark(오른쪽) 두 모드를 나란히 보여주고, 라벨 아래에 별칭 대상(한 단계)을 표기합니다. <code>figma/tokens.theme.json</code>에서 생성됩니다 — 이 섹션도 손으로 고치지 마세요.</p>
+    <!-- GENERATED:THEME:START -->
+    <div class="doc-subhead">Surface</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#ffffff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#171717;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">surface-default</div>
+        <div class="doc-swatch__label" style="opacity:.6;">white | neutral-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#fafafa;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0a0a0a;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">surface-subtle</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-50 | neutral-950</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#f5f5f5;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#262626;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">surface-muted</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-100 | neutral-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#171717;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#fafafa;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">surface-inverse</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-900 | neutral-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#eff6ff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#172554;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">surface-brand-subtle</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-50 | blue-950</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#f0f9ff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#082f49;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">surface-accent-subtle</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-50 | sky-950</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Text</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#262626;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#fafafa;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-primary</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-800 | neutral-50</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#404040;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#d4d4d4;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-secondary</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-700 | neutral-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#525252;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#a3a3a3;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-tertiary</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-600 | neutral-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#a3a3a3;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#525252;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-disabled</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-400 | neutral-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#ffffff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#171717;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-inverse</div>
+        <div class="doc-swatch__label" style="opacity:.6;">white | neutral-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#2563eb;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#60a5fa;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-brand</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-600 | blue-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#dc2626;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#f87171;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">text-danger</div>
+        <div class="doc-swatch__label" style="opacity:.6;">red-600 | red-400</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Border</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#e5e5e5;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#404040;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">border-default</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-200 | neutral-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#d4d4d4;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#525252;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">border-strong</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-300 | neutral-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#3b82f6;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#3b82f6;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">border-brand</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0ea5e9;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0ea5e9;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">border-accent</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#dc2626;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#ef4444;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">border-danger</div>
+        <div class="doc-swatch__label" style="opacity:.6;">red-600 | red-500</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Icon</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#525252;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#a3a3a3;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">icon-primary</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-600 | neutral-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#737373;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#737373;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">icon-subtle</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#262626;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#e5e5e5;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">icon-strong</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-800 | neutral-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#d4d4d4;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#404040;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">icon-disabled</div>
+        <div class="doc-swatch__label" style="opacity:.6;">neutral-300 | neutral-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#2563eb;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#60a5fa;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">icon-brand</div>
+        <div class="doc-swatch__label" style="opacity:.6;">brand-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#ffffff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#171717;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">icon-inverse</div>
+        <div class="doc-swatch__label" style="opacity:.6;">white | neutral-900</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Brand</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#eff6ff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#172554;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-50</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-50 | blue-950</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#dbeafe;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#1e3a8a;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-100</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-100 | blue-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#bfdbfe;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#1e40af;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-200</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-200 | blue-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#93c5fd;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#1d4ed8;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-300</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-300 | blue-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#60a5fa;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#2563eb;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-400</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-400 | blue-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#3b82f6;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#3b82f6;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-500</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#2563eb;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#60a5fa;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-600</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-600 | blue-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#1d4ed8;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#93c5fd;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-700</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-700 | blue-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#1e40af;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#bfdbfe;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-800</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-800 | blue-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#1e3a8a;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#dbeafe;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">brand-900</div>
+        <div class="doc-swatch__label" style="opacity:.6;">blue-900 | blue-100</div>
+      </div>
+    </div>
+    <div class="doc-subhead">Accent</div>
+    <div class="doc-grid">
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#f0f9ff;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#082f49;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-50</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-50 | sky-950</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#e0f2fe;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0c4a6e;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-100</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-100 | sky-900</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#bae6fd;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#075985;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-200</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-200 | sky-800</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#7dd3fc;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0369a1;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-300</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-300 | sky-700</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#38bdf8;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0284c7;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-400</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-400 | sky-600</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0ea5e9;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0ea5e9;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-500</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-500</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0284c7;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#38bdf8;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-600</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-600 | sky-400</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0369a1;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#7dd3fc;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-700</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-700 | sky-300</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#075985;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#bae6fd;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-800</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-800 | sky-200</div>
+      </div>
+      <div class="doc-swatch">
+        <div style="display:flex;gap:4px;">
+          <div class="doc-swatch__chip" style="flex:1;background-color:#0c4a6e;" title="Default"></div>
+          <div class="doc-swatch__chip" style="flex:1;background-color:#e0f2fe;" title="Dark"></div>
+        </div>
+        <div class="doc-swatch__label">accent-900</div>
+        <div class="doc-swatch__label" style="opacity:.6;">sky-900 | sky-100</div>
+      </div>
+    </div>
+    <!-- GENERATED:THEME:END -->
   </section>
 </main>
 
 <script>window.DOCS_BASE = '../';</script>
 <script src="../assets/nav.js"></script>
-<script>
-  function renderSwatches(containerId, prefix, steps) {
-    var el = document.getElementById(containerId);
-    if (!el) return;
-    steps.forEach(function (step) {
-      var varName = '--color-' + prefix + '-' + step;
-      var swatch = document.createElement('div');
-      swatch.className = 'doc-swatch';
-      swatch.innerHTML =
-        '<div class="doc-swatch__chip" style="background-color:var(' + varName + ')"></div>' +
-        '<div class="doc-swatch__label">' + prefix + '-' + step + '</div>';
-      el.appendChild(swatch);
-    });
-  }
-  var scale = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-  ['blue', 'neutral', 'slate', 'red', 'green', 'yellow', 'sky'].forEach(function (p) {
-    renderSwatches('swatch-' + p, p, scale);
-  });
-
-  (function () {
-    var el = document.getElementById('swatch-social');
-    var items = [
-      ['social-naver', 'social-naver'],
-      ['social-kakao', 'social-kakao'],
-      ['social-apple', 'social-apple'],
-    ];
-    items.forEach(function (item) {
-      var wrap = document.createElement('div');
-      wrap.className = 'doc-swatch';
-      wrap.innerHTML =
-        '<div class="doc-swatch__chip" style="width:120px;background-color:var(--' + item[0] + ')"></div>' +
-        '<div class="doc-swatch__label">' + item[1] + '</div>';
-      el.appendChild(wrap);
-    });
-  })();
-</script>
 </body>
 </html>

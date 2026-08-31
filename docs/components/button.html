@@ -15,7 +15,7 @@
   <div class="doc-breadcrumb"><a href="../index.html">기본 컴포넌트</a> / Button</div>
   <div class="doc-page-header">
     <h1>Button</h1>
-    <p>변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 5(xs/sm/md/lg/xl) = 45. hover·pressed·focus는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외하고, 실제 클래스로 켤 수 있는 default/disabled만 나열합니다.</p>
+    <p>변형 9종(primary/secondary/tertiary/outline/ghost/danger/scrim-dark/scrim-light/link) × 사이즈 4(sm/md/lg/xl, ADR-015로 xs 제외 — Figma엔 45변형 있지만 실사용 0건이라 코드에서 뺐다) = 36. hover·pressed·focus는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외하고, 실제 클래스로 켤 수 있는 default/disabled만 나열합니다.</p>
   </div>
 
   <section class="doc-section">
@@ -25,12 +25,11 @@
       <table style="border-collapse:collapse;width:100%;">
         <thead>
           <tr>
-            <th style="text-align:left;padding:8px 16px 8px 0;font-size:12px;color:var(--color-neutral-500);"></th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">xs</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">sm</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">md</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">lg</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--color-neutral-500);">xl</th>
+            <th style="text-align:left;padding:8px 16px 8px 0;font-size:12px;color:var(--neutral-500);"></th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">sm</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">md</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">lg</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">xl</th>
           </tr>
         </thead>
         <tbody id="btn-matrix"></tbody>
@@ -55,7 +54,7 @@
 <script src="../assets/nav.js"></script>
 <script>
   var VARIANTS = ['primary', 'secondary', 'tertiary', 'outline', 'ghost', 'danger', 'scrim-dark', 'scrim-light', 'link'];
-  var SIZES = ['xs', 'sm', 'md', 'lg', 'xl'];
+  var SIZES = ['sm', 'md', 'lg', 'xl'];
 
   function darkWrap(html) { return '<div style="background:#111;padding:12px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
   function lightWrap(html) { return '<div style="background:#ddd;padding:12px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
@@ -65,7 +64,7 @@
     VARIANTS.forEach(function (variant) {
       var row = document.createElement('tr');
       var labelCell = document.createElement('td');
-      labelCell.style.cssText = 'padding:8px 16px 8px 0;font-size:12px;font-family:monospace;color:var(--color-neutral-600);white-space:nowrap;';
+      labelCell.style.cssText = 'padding:8px 16px 8px 0;font-size:12px;font-family:monospace;color:var(--neutral-600);white-space:nowrap;';
       labelCell.textContent = 'btn-' + variant;
       row.appendChild(labelCell);
       SIZES.forEach(function (size) {

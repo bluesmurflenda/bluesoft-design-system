@@ -58,7 +58,7 @@
       row.style.gap = '16px';
       row.innerHTML =
         '<span class="doc-swatch__label" style="width:70px;flex-shrink:0;">space-' + s + '</span>' +
-        '<div style="width:var(--space-' + s + ');height:20px;background:var(--color-blue-500);border-radius:4px;flex-shrink:0;"></div>' +
+        '<div style="width:var(--space-' + s + ');height:20px;background:var(--blue-500);border-radius:4px;flex-shrink:0;"></div>' +
         '<span class="doc-swatch__label">var(--space-' + s + ')</span>';
       el.appendChild(row);
     });
@@ -71,7 +71,7 @@
       var wrap = document.createElement('div');
       wrap.className = 'doc-swatch';
       wrap.innerHTML =
-        '<div style="width:64px;height:64px;background:var(--color-blue-100);border:1px solid var(--color-blue-300);border-radius:var(--radius-' + name + ');"></div>' +
+        '<div style="width:64px;height:64px;background:var(--blue-100);border:1px solid var(--blue-300);border-radius:var(--radius-' + name + ');"></div>' +
         '<div class="doc-swatch__label">radius-' + name + '</div>';
       el.appendChild(wrap);
     });
@@ -83,7 +83,7 @@
       var wrap = document.createElement('div');
       wrap.className = 'doc-swatch';
       wrap.innerHTML =
-        '<div style="width:100px;height:0;border-top:var(--border-' + name + ') solid var(--color-neutral-800);"></div>' +
+        '<div style="width:100px;height:0;border-top:var(--border-' + name + ') solid var(--neutral-800);"></div>' +
         '<div class="doc-swatch__label">border-' + name + '</div>';
       el.appendChild(wrap);
     });

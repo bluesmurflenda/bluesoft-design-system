@@ -2,12 +2,14 @@
   "name": "bluesoft-design-system",
   "version": "0.1.0",
   "private": true,
-  "description": "BLUESOFT 디자인시스템 SCSS 마스터 — SI 프로젝트마다 복붙해 쓰는 마스터 소스",
+  "description": "BLUESOFT 디자인시스템 SCSS 마스터",
   "scripts": {
     "build": "sass scss/main.scss:dist/main.css --no-source-map",
+    "postbuild": "node scripts/sync-docs-assets.mjs && node scripts/generate-docs-tokens.mjs",
     "check:nodes": "node scripts/check-nodes.mjs",
     "check:tokens": "node scripts/check-tokens.mjs",
-    "check": "npm run check:nodes && npm run check:tokens"
+    "lint": "stylelint \"scss/**/*.scss\"",
+    "check": "npm run check:nodes && npm run check:tokens && npm run lint"
   },
   "devDependencies": {
     "sass": "^1.103.1",

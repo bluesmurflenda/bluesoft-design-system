@@ -20,7 +20,7 @@
 
   <section class="doc-section">
     <h2>Theme × Size × State</h2>
-    <p class="doc-desc">white 테마는 배경이 흰색이라 밝은 페이지 위에서 보이지 않아, 파란 배경(<code>--color-blue-800</code>) 위에 올렸습니다.</p>
+    <p class="doc-desc">white 테마는 배경이 흰색이라 밝은 페이지 위에서 보이지 않아, 파란 배경(<code>--blue-800</code>) 위에 올렸습니다.</p>
     <div class="doc-matrix" id="con-matrix"></div>
   </section>
 </main>
@@ -38,7 +38,7 @@
     if (state === 'disabled') classes.push('con-disabled');
     var html = '<span class="' + classes.join(' ') + '">필터</span>';
     if (theme === 'white') {
-      html = '<div style="background:var(--color-blue-800);padding:10px;border-radius:8px;display:inline-block;">' + html + '</div>';
+      html = '<div style="background:var(--blue-800);padding:10px;border-radius:8px;display:inline-block;">' + html + '</div>';
     }
     return html;
   }

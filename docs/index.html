@@ -19,7 +19,7 @@
 
   <section class="doc-section">
     <div class="doc-card doc-col">
-      <p style="margin:0;font-size:14px;">토큰은 3단 구조입니다: <strong>Primitive</strong>(원시값, CSS 커스텀 프로퍼티) → <strong>Semantic</strong>(의미 별칭) → <strong>Component</strong>(컴포넌트별 SCSS 변수). 컴포넌트 파일은 <code>$변수</code>를 그대로 쓰면 됩니다.</p>
+      <p style="margin:0;font-size:14px;">토큰은 Figma 변수 컬렉션 4개를 그대로 옮깁니다: <strong>Primitive</strong>(hex가 있는 유일한 곳) → <strong>Theme</strong>(시맨틱 + 컴포넌트 별칭, Default·Dark 2모드) → 컴포넌트가 <code>var(--*)</code> 커스텀 프로퍼티로 참조합니다. 크기·반응형 축은 별도 컬렉션입니다 — <strong>Shape</strong>(Rounded·Square·Pill 3모드, <code>[data-shape]</code>로 전환)와 <strong>Breakpoint</strong>(Mobile·Tablet·Laptop·Desktop·Wide 5모드, 미디어쿼리로 전환).</p>
       <p style="margin:0;font-size:14px;">아이콘은 <code>icons/sprite.svg</code> 하나에 <code>&lt;symbol&gt;</code>로 묶여 있으며 <code>&lt;use href="assets/icons/sprite.svg#icon-base-check"&gt;</code> 형태로 참조합니다.</p>
       <p style="margin:0;font-size:14px;">왼쪽 사이드바에서 토큰과 컴포넌트별 문서 페이지로 이동할 수 있습니다. 각 컴포넌트 페이지는 실제 클래스 조합으로 만든 모든 변형을 나열합니다.</p>
     </div>
@@ -29,11 +29,13 @@
     <h2>구성</h2>
     <p class="doc-desc">폴더 구조</p>
     <div class="doc-card">
-      <pre style="margin:0;font-size:13px;font-family:'SFMono-Regular',Consolas,monospace;line-height:1.7;">scss/tokens/       _primitive, _semantic, _breakpoint, _shape
+      <pre style="margin:0;font-size:13px;font-family:'SFMono-Regular',Consolas,monospace;line-height:1.7;">scss/tokens/       _primitive, _theme, _shape, _breakpoint
+scss/abstracts/    _maps, _mixins, _functions
+scss/base/         _reset, _typography
 scss/components/   button, icon-button, social-button, chip, tabs, table, board,
                    calendar, modal, checkbox-radio, scrollbar 외
-scss/utilities/    _reset, _typography
 scss/main.scss     진입점
+scss/_project-overrides.example.scss   SI 프로젝트 커스터마이즈 템플릿(복사해서 사용)
 icons/             sprite.svg (아이콘), logo/ (워드마크)
 docs/              이 사이트(GitHub Pages)</pre>
     </div>
