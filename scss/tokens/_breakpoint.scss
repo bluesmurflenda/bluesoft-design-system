@@ -4,12 +4,16 @@
 //
 // $css-breakpoint-sm/md/lg 는 위와 별개다 — abstracts/_maps.scss($breakpoints 맵)·
 // components/_header.scss(모바일 nav 토글 등)가 @media 조건에 직접 쓰는 컴파일타임 픽셀 상수라
-// var()로 못 바꾼다(미디어쿼리 조건은 CSS 커스텀 프로퍼티를 못 읽는다). 이번 재작성 이전 값을
-// 그대로 유지했다 — lg가 1280인 이유는 _header.scss 자체 주석(laptop→desktop 전환점 실측)을 참조.
-// Figma Breakpoint의 Desktop 기준폭(1440)과 다르다는 걸 알고 남긴 것이지 실수가 아니다.
+// var()로 못 바꾼다(미디어쿼리 조건은 CSS 커스텀 프로퍼티를 못 읽는다).
 $css-breakpoint-sm: 768px;
 $css-breakpoint-md: 1024px;
-$css-breakpoint-lg: 1280px;
+// 2026-08-31: 1280 -> 1440. Header(833:40)의 "Width=full" 대표 프레임이 정확히 1440에서 그려져
+// 있고, 이 파일 자체의 --header-height도 1440에서 64->80으로 바뀐다(아래 111번째 줄
+// @media(min-width:1440px) 블록) — 즉 Figma가 실제로 보여주는 "데스크톱" 경계는 1440이다.
+// 1280은 Figma 어디에도 근거가 없는 값이었고, 이 상수의 실사용처(mq() 믹스인)도 현재 어떤
+// 컴포넌트에서도 호출되지 않아(_header.scss의 메뉴/햄버거 전환은 이 상수를 안 쓰고 sm(768)만
+// 쓴다) 값을 바꿔도 컴파일 결과에 영향이 없다 — 나중에 쓰일 때 Figma와 어긋나지 않도록 지금 고친다.
+$css-breakpoint-lg: 1440px;
 
 :root {
   --grid-columns: 4;

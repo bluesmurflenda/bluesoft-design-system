@@ -1,27 +1,20 @@
-// Figma DS Master > Navigation (Header, Footer) 페이지 (node 1299:424 _Side Nav/Item), 2026-08-28 라이브 인스턴스 실측
+// Figma DS Master > Navigation (Header, Footer) 페이지 (node 1299:424 _Side Nav/Item), 2026-08-31 재실측
 // Type(default|sub|icon) × Theme(light|dark) × State(default|hover|selected) = 18변형
-// dark 테마 hover/selected 배경은 문서에 이미 확정된 시맨틱 별칭을 그대로 쓴다(nav/dark/item/bg-hover→brand/800, bg-selected→brand/600).
-// dark 테마 hover/selected의 글자·아이콘 흰색 유지는 2026-08-28 노드 1299:270·1299:281 직접 조회로 확인 완료(nav-dark-fg가 두 상태 다 white).
 
 @use '../tokens/primitive' as *;
 @use '../abstracts/mixins' as mix;
 
-// 2026-08-28 Dark 모드 실측 — ⚠️ 확인 필요: nav/dark/item/bg-hover가 다크 모드에서 밝은 하늘색(#bfdbfe)으로
-// 바뀌는데, 다크 테마 아이템의 글자색(nav-dark-fg)은 여전히 흰색 고정으로 실측돼 있다(2026-08-28 별도 측정).
-// 흰 배경에 가까운 색 위에 흰 글자라 대비가 거의 없어 보인다 — Figma 쪽 다크 모드 설정 누락일 가능성이 있어
-// 값은 실측 그대로 반영하되 시각 확인 후 알려달라고 요청할 것.
+// figma/tokens.theme.json의 nav/item/*·nav/dark-item/* 를 그대로 옮겼다. 전부 라이트·다크 별칭
+// 대상이 같아 [data-theme=dark] 오버라이드가 없다 — dark-item(Theme=dark 스타일)의 hover/selected가
+// 사이트 다크모드에서 밝은 하늘색으로 뒤집히며 흰 글자와 대비가 무너지던 게 바로 이 "같은 대상인데
+// 오버라이드가 잘못 걸려 있던" 버그였다(2026-08-28 당시 "⚠️ 확인 필요"로 남겨뒀던 것 — Figma
+// 문제가 아니라 코드가 Theme=dark를 진짜 다크모드처럼 반전시키고 있었다). blue-800/blue-600 고정으로
+// 바로잡으면 글자(항상 흰색)와의 대비도 정상으로 돌아온다.
 :root {
-  --nav-item-bg-hover: #fafafa;
-  --nav-item-bg-selected: #f5f5f5;
-  --nav-dark-item-bg-hover: #1e40af;
-  --nav-dark-item-bg-selected: #2563eb;
-}
-
-[data-theme='dark'] {
-  --nav-item-bg-hover: #0a0a0a;
-  --nav-item-bg-selected: #262626;
-  --nav-dark-item-bg-hover: #bfdbfe;
-  --nav-dark-item-bg-selected: #60a5fa;
+  --nav-item-bg-hover: var(--surface-subtle);
+  --nav-item-bg-selected: var(--surface-muted);
+  --nav-dark-item-bg-hover: var(--blue-800);
+  --nav-dark-item-bg-selected: var(--blue-600);
 }
 
 .side-nav-item {

@@ -10,7 +10,8 @@
 ## 현재 단계
 
 ```
-6단계 완료 — 7단계(내비게이션 · 표시) 진행 대기
+7단계 완료 — 11장에 정의된 7단계 전부 완료. 남은 건 7단계 후 일괄 처리하기로 미뤄둔
+Figma 수정 3건(아래 "막힌 것") 뿐이다.
 ```
 
 ---
@@ -27,7 +28,7 @@
 | 4 | 입력 계열 | 완료 | 2026-08-31 | 아래 "4단계 완료 메모" 참조 |
 | 5 | 상태 표시 | 완료 | 2026-08-31 | 아래 "5단계 완료 메모" 참조 |
 | 6 | 테이블 · 보드 | 완료 | 2026-08-31 | 아래 "6단계 완료 메모" 참조 |
-| 7 | 내비게이션 · 표시 | 대기 | | |
+| 7 | 내비게이션 · 표시 | 완료 | 2026-08-31 | 아래 "7단계 완료 메모" 참조 |
 
 상태: `대기` → `진행` → `검사통과` → `완료`
 
@@ -58,7 +59,7 @@ Claude 앱이 확인해 문서를 고치거나 Figma 를 고친다.
 | 2026-08-30 | 다수 컴포넌트의 `neutral` 계열 하드코딩 hex가 실제로는 옛 `slate` 값 | `#f1f5f9`·`#e2e8f0`·`#0f172a` 등(slate 계열 값) | `neutral` 계열 값으로 대체됨 | **아직 남음 — 3~7단계 소관.** `button/tertiary/*`·`tabs/track/bg`·`tabs/border`·`tabs/segmented/fg-active`·`chip/neutral/*`·`table/border`·`table/row/bg-hover`·`con/*`·`tooltip/*` 등 컴포넌트별 인라인 hex가 대상(`check:tokens` S2 불일치 49건) |
 | 2026-08-30 | `_Checkbox base` validation 링(valid/invalid) | Figma에서 `green/*`·`red/*` 프리미티브 직접 바인딩 | (Figma 라이브 상태 그 자체가 원인) | **결정됨(ADR-019)** — 의도된 것, `D1_NODE_EXCEPTIONS`에 등록 |
 | 2026-08-30 | `Avatar`의 `Online` 표시 링 | Figma에서 `white` 프리미티브 직접 바인딩 | (Figma 라이브 상태 그 자체가 원인) | **결정됨(ADR-019)** — 의도된 것, `D1_NODE_EXCEPTIONS`에 등록(전역 허용 아님 — `Avatar`에서만) |
-| 2026-08-30 | `_header.scss`의 nav 전환 breakpoint | `$css-breakpoint-lg: 1280px`(컴파일타임 상수, `_header.scss` 자체 실측 근거) | `_breakpoint.scss` 신규 토큰 미디어쿼리는 Figma Desktop 기준폭(1440) 사용 | **7단계로 미룸(막힌 게 아니다)** — 1280~1440px 구간에서 헤더 레이아웃 전환과 디자인 토큰 값 전환이 어긋난다. 7단계(내비게이션) `_header.scss` 재실측 때 1280을 1440으로 맞출지 결정 |
+| 2026-08-30 | `_header.scss`의 nav 전환 breakpoint | `$css-breakpoint-lg: 1280px`(컴파일타임 상수, `_header.scss` 자체 실측 근거) | `_breakpoint.scss` 신규 토큰 미디어쿼리는 Figma Desktop 기준폭(1440) 사용 | **처리 완료(7단계)** — 1280→1440으로 정정. 근거는 아래 "7단계 완료 메모"의 "브레이크포인트 결정" 참조 |
 
 ---
 
@@ -417,20 +418,114 @@ WARN 그대로 둔다.
 
 ---
 
+## 7단계 완료 메모 — 내비게이션 · 표시(Header·_Nav/Menu Item·_Nav/Announcement·_Side Nav/Item·Logo·Tabs/Item·Tabs/Segmented·Pagination·_Pagination/Number·Calendar·Day Cell·Modal·_Modal/*·Avatar·Avatar Group·Progress bar·Scrollbar)
+
+**작업**: 16개 컴포넌트를 `get_variable_defs`·`get_metadata`·`use_figma`(componentPropertyDefinitions
+직접 조회)로 다시 확인해 `figma/tokens.theme.json`·`tokens.shape.json`과 대조·재작성했다.
+
+| 시점 | S1 | S2(누락·전용·불일치) |
+|---|---|---|
+| 6단계 종료 | 98 | 129 |
+| Header+Side Nav+Tabs 후 | 48 | 66 |
+| Pagination 후 | 36 | 52 |
+| Calendar 후 | 8 | 48 |
+| Modal+Avatar+Scrollbar 후 | 0(예외 처리 포함) | 9 |
+
+### 브레이크포인트 결정 — `$css-breakpoint-lg` 1280 → 1440
+
+**실측**: Header(833:40)의 `Width` 축은 `full`(1440 캔버스)·`1920`·`375` 세 값뿐이다 —
+375는 높이 64(모바일, 햄버거), full/1920은 높이 80(데스크톱, 풀 메뉴)이고 **768·1024 구간을
+보여주는 변형 자체가 없다.** `tokens/_breakpoint.scss`의 `--header-height`도 정확히
+`@media(min-width:1440px)`에서 64→80으로 바뀐다(이 미디어쿼리 자체는 Figma Breakpoint
+컬렉션의 실측 기준폭 768/1024/1440/1920을 그대로 쓴 것). 즉 Figma가 실제로 보여주는
+"데스크톱 진입점"은 1440이고, 1280은 근거가 된 적이 없다.
+
+**추가 확인**: `$css-breakpoint-lg`(1280이었던 그 상수)는 현재 `abstracts/_maps.scss`의
+`$breakpoints` 맵에만 쓰이는데, 그 맵을 소비하는 `mq()` 믹스인은 코드베이스 어디에서도
+호출되지 않는다(grep 확인, 죽은 코드). `_header.scss` 자신의 모바일 메뉴/햄버거 전환도 이
+상수를 안 쓰고 `$css-breakpoint-sm`(768)만 쓴다 — 즉 1280→1440 변경은 **현재 컴파일 결과에
+아무 영향이 없다**(회귀 위험 없음), 나중에 `mq('lg')`가 쓰이기 시작할 때를 위해 지금 Figma와
+맞춰뒀다.
+
+**결정**: `$css-breakpoint-lg: 1280px` → `1440px`. `tokens/_breakpoint.scss`에 근거 기록.
+
+**남는 질문(막을 필요는 없음)**: 768·1024 구간에서 메뉴가 어떻게 보여야 하는지는 Figma에
+데모 자체가 없어 여전히 근거가 없다 — 현재 코드는 768(sm) 이상에서 이미 풀 메뉴를 보여주는데,
+이걸 1440까지 미루는 게 맞는지는 별도 확인이 필요한 사안이라 손대지 않았다.
+
+### 컴포넌트별 요약
+
+- **Header**: `nav/*` 라이트·다크 별칭이 거의 다 같은 대상이라(`nav-announcement-bg`만 예외)
+  기존의 "site-header-dark가 사이트 다크모드에서 밝은 배경으로 반전" 하드코딩을 걷어냈다.
+  **Surface=floating**을 신규 확인·구현(반투명 배경 `nav/bg-floating` #ffffffcc + `backdrop-filter:
+  blur(16px)`) — 2026-08-28 당시 "확인 필요"로 남아 있던 것.
+- **_Side Nav/Item**: `nav/dark-item/bg-hover`·`bg-selected`가 라이트·다크 별칭 대상이 완전히
+  같다(둘 다 blue-800/blue-600 고정) — 기존 "⚠️ 확인 필요"(다크에서 밝은 하늘색으로 반전돼
+  흰 글자와 대비가 무너지는 것처럼 보였던 값)는 Figma 문제가 아니라 **코드가 Theme=dark를
+  진짜 다크모드처럼 반전시키던 버그**였다. 오버라이드를 없애 해결.
+- **Tabs**: "텍스트가 전 타입·전 사이즈 Body/Sm 고정"이라던 기존 실측이 틀렸다 — 실제로는
+  sm=Body/Sm(14)·md/lg=Body/Lg(16)·xl=Body/Xl(18)로 스케일한다(3개 Type 전부 동일 규칙,
+  get_variable_defs로 12개 조합 대조). `.tabs-item` 베이스의 고정 `text(body-sm)` 호출을
+  제거하고 사이즈별 맵으로 옮겼다 — 이전엔 md/lg/xl 탭이 전부 14px로 그려지고 있었다.
+  `tabs/underline/indicator`(neutral-800)는 `tabs/underline/fg-active`(icon/strong)와 라이트에서
+  같은 값(#262626)이라 currentColor로 합치고 싶어지지만 서로 다른 토큰이다 — 지시대로 별도
+  프로퍼티 유지. segmented가 pill보다 사이즈마다 정확히 4px 작다는 것도 get_metadata로 확인
+  (32/40/48/54 vs 28/36/44/50).
+- **Pagination**: Figma엔 `pagination/border`가 따로 없고 numbers 타입의 구분선과 button-group
+  테두리가 전부 `pagination/group/border` 하나를 같이 쓴다(get_variable_defs로 Type=numbers
+  확인) — 이름을 `group-border`로 맞춤. 아이콘 색은 `$neutral-600` 고정값이었는데 실제 바인딩은
+  `icon/primary`.
+- **Calendar·Day Cell**: State×Day 우선순위(default·today·available은 Day가 이기고 selected·
+  past·unavailable은 State가 이김)는 **기존 CSS 선언 순서가 이미 정확히 이 규칙대로였다** —
+  건드리지 않고 주석으로 근거만 남겼다. `calendar/cell/unavailable-border`를 신규 발견 — 배경·
+  글자색뿐 아니라 테두리도 있는데 기존 코드는 반영하지 않고 있었다.
+- **Modal**: `modal/bg`가 `white` 프리미티브 직접 참조라 다크모드에서도 흰 모달이 그려지던
+  문제(2026-08-28 "⚠️ 확인 필요")를 `modal/bg`(다크: neutral-800)로 해결. `modal/overlay`
+  (딤드 배경)가 기존 코드에 아예 없어 `.modal-overlay` 신규 추가. Layout×Breakpoint가
+  3×4=12가 아니라 8변형(alert 2종엔 lg·xl이 없음)이라는 걸 componentPropertyDefinitions로
+  확인 — `.modal-lg`·`.modal-xl`은 `.modal-form`에만 조합하라고 주석으로 명시(CSS로 강제할
+  방법은 없다).
+- **Avatar / Avatar Group**: 기존 Avatar Group 노드 주석(584:6107)이 **틀린 id였다**(그
+  id는 실제로 존재하지 않고 `_Doc/Header` 계열 문서 프레임 근방이었다) — 실제 Avatar Group은
+  1363:255. Avatar 자체(Type image/initials/placeholder × Size xs~xl, Online bool, 13색
+  Background 인스턴스 스왑)는 이전엔 "범위 밖"이라 32px 원형 하나만 최소 구현돼 있었는데
+  이번에 정식 컴포넌트로 확장했다. Online 표시 링은 지시대로 box-shadow로(사이즈 계산 보존),
+  크기는 아바타 크기의 정확히 1/4(get_metadata로 sm·xl 두 사이즈 대조 확인). avatar/c/01~13은
+  시맨틱이 없는 컴포넌트 고유 팔레트라 줄마다 `/* 예외: ... */` 주석을 달고 리터럴로 유지.
+- **Progress bar**: 이미 `width:%`로 구현돼 있었다(지시사항과 일치) — 손댈 것 없음. Figma
+  Theme 컬렉션에 `progress-bar/*` 그룹 자체가 없어(11단계 변형은 시안 표현용이라는 지시와
+  일치) 기존의 브랜드 램프 직접 참조($brand-600 등)도 그대로 유지.
+- **Scrollbar**: `scrollbar/track/bg`·`thumb/bg`만 값 교체(라이트·다크 대상이 다름). thumb-hover는
+  Figma에 대응 변수가 없어 기존처럼 primitive 상수 유지.
+- **Logo**: 색 토큰이 없는 SVG 워드마크 컴포넌트라 이번 단계에서 변경 없음.
+
+### 검증 없이 남겨둔 것 (Figma 수정 사안 아님 — 코드 스코프 밖이라 기록만)
+
+- `tabs/underline/bg-hover`·`tabs/underline/border-hover` — Theme 컬렉션에 존재하지만
+  Tabs/Item 컴포넌트 셋 전체(60변형)를 한 번에 조회해도 어디에도 바인딩되지 않는다(전수
+  확인). Tabs/Item 소관이 아닌 것으로 결론 — 다른 컴포넌트가 쓰거나 미사용 토큰으로 보인다.
+- `list/item/bg-selected`·`list/item/fg-supporting` — 4단계(`_dropdown.scss`)의 `_List/Item`
+  구현이 `bg-selected`를 별도로 안 두고 `bg-hover`를 재사용하고 있고, `fg-supporting`은 아예
+  없다. 4단계 소관이라 7단계에서 확장하지 않았다 — 필요하면 별도 확인.
+- `--avatar-online-ring`은 Figma의 553개 변수엔 없는 CSS 전용 별칭이다(ADR-019의 `white`
+  리터럴을 이름 붙인 것) — S2 CSS전용 1건으로 잡히지만 오탐이 아니라 의도된 것.
+
+---
+
 ## 막힌 것
 
 **`DECISIONS.md` 에 없는 판단이 필요해 멈춘 지점.**
 사람이 결정하면 ADR 로 옮기고 여기서 지운다.
 
-**Figma 수정이 필요한 항목(7건)은 7단계 완료 후 일괄 처리한다.** 작업 중간에 Figma를 고치고
-`figma/tokens.*.json`을 재추출하면 그 시점 전후로 S2 수치를 비교할 수 없게 된다 — 7단계까지는
-스냅샷을 그대로 두고 코드 작업만 계속한다.
+**7단계가 끝나 아래 3건이 이제 일괄 처리 대상이다.** 코드 작업 세션은 Figma 쓰기 API를 쓰지
+않으므로 여기서 처리하지 않는다 — Figma 작업 세션이 셋 다 고친 뒤 `figma/tokens.*.json`을
+재추출하면(퍼블리시 순서는 CLAUDE.md 9장) 그 스냅샷으로 `check:tokens` S2를 다시 돌려 확인한다.
 
 | 날짜 | 단계 | 내용 |
 |---|---|---|
-| 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | **[7단계 후 일괄 처리]** Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함). 코드 작업 세션은 Figma 쓰기 API를 안 쓰므로 여기서 멈추고 보고만 한다. **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 |
-| 2026-08-30 | 6단계 예정(테이블) | **[7단계 후 일괄 처리]** `table/header-col/bg`·`/fg`의 codeSyntax가 `-col` 없이 `--table-header-bg`/`-fg`를 가리킨다(`table/header-row/*`는 정상). Figma에서 실측 재확인 필요 |
-| 2026-08-30 | 5단계(con) | **[7단계 후 일괄 처리]** `con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`)의 codeSyntax가 서로 뒤섞여 있다(의도된 리네임이 아니라 데이터 오류로 보임). Figma에서 확인·수정 필요 |
+| 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함). **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 |
+| 2026-08-30 | 6단계(테이블) | `table/header-col/bg`·`/fg`의 codeSyntax가 `-col` 없이 `--table-header-bg`/`-fg`를 가리킨다(`table/header-row/*`는 정상). 코드는 정상 이름(`--table-header-col-*`)을 쓰고 있다 |
+| 2026-08-30 | 5단계(con) | `con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`)의 codeSyntax가 서로 뒤섞여 있다(의도된 리네임이 아니라 데이터 오류로 보임) |
 
 ---
 

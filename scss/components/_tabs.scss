@@ -1,45 +1,68 @@
-// Figma DS Master > Tabs/Item (node 368:3229) + Tabs/Segmented (1088:33), 2026-08-27 라이브 실측
+// Figma DS Master > Tabs/Item (node 368:3229) + Tabs/Segmented (1088:33), 2026-08-31 재실측
 // Type 4종(underline/underline-brand/pill/segmented) × Size 4(sm/md/lg/xl) × State 4(default/hover/selected/disabled)
-// 텍스트는 전 타입·전 사이즈 Body/Sm(14/20) 고정 — Size는 패딩·높이만 바꾼다(라이브 실측 확인).
+//
+// 2026-08-31 정정: "텍스트가 전 타입·전 사이즈 Body/Sm 고정"이라던 기존 실측이 틀렸다.
+// get_variable_defs로 각 사이즈의 실제 바인딩을 다시 대조하니 텍스트도 사이즈를 탄다 —
+// sm=Body/Sm(14/20), md·lg=Body/Lg(16/24), xl=Body/Xl(18/26). 세 Type(underline/pill/segmented)
+// 전부 같은 규칙이었다. 기존 코드는 .tabs-item 베이스에 body-sm을 고정해놔서 md/lg/xl 전부
+// 14px로 그려지고 있었다 — 사이즈별 맵에 type 키를 넣고 베이스의 고정 text() 호출을 제거했다.
 
 @use '../tokens/primitive' as *;
 @use '../abstracts/mixins' as mix;
+@use '../abstracts/maps' as maps;
 @use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측 — 실제로 쓰는 토큰만(pill border-hover 등 다크값 미확인인 건 primitive 상수 유지).
+// figma/tokens.theme.json의 tabs/* 를 그대로 옮겼다. underline의 fg-active(icon/strong 별칭)와
+// indicator(neutral-800 직접 참조)는 라이트에서 같은 값(#262626)이라 currentColor로 합치고 싶어지지만
+// 서로 다른 토큰이다 — 별개 프로퍼티로 유지한다(지시사항, ADR-010과 같은 이유).
 :root {
-  --tabs-fg: #475569;
-  --tabs-fg-hover: #334155;
-  --tabs-fg-active: #1e293b;
-  --tabs-fg-disabled: #94a3b8;
-  --tabs-underline-active: #1e293b;
-  --tabs-brand-fg-hover: #1d4ed8;
-  --tabs-brand-fg-active: #2563eb;
-  --tabs-pill-fg-active: #2563eb;
-  --tabs-pill-bg-active: #eff6ff;
-  --tabs-pill-border-active: #bfdbfe;
-  --tabs-segmented-fg-active: #0f172a;
-  --tabs-segmented-bg-active: #ffffff;
-  --tabs-track-bg: #f1f5f9;
-  --tabs-border: #e2e8f0;
+  --tabs-underline-fg: var(--text-tertiary);
+  --tabs-underline-fg-hover: var(--text-secondary);
+  --tabs-underline-fg-active: var(--icon-strong);
+  --tabs-underline-fg-disabled: var(--text-disabled);
+  --tabs-underline-indicator: var(--neutral-800);
+
+  --tabs-underline-brand-fg: var(--text-tertiary);
+  --tabs-underline-brand-fg-hover: var(--brand-700);
+  --tabs-underline-brand-fg-active: var(--brand-600);
+  --tabs-underline-brand-fg-disabled: var(--text-disabled);
+  --tabs-underline-brand-indicator: var(--brand-600);
+
+  --tabs-pill-fg: var(--text-tertiary);
+  --tabs-pill-fg-hover: var(--text-secondary);
+  --tabs-pill-fg-active: var(--brand-600);
+  --tabs-pill-fg-disabled: var(--text-disabled);
+  --tabs-pill-bg-hover: var(--surface-subtle);
+  --tabs-pill-bg-active: var(--brand-50);
+  --tabs-pill-border: var(--border-default);
+  --tabs-pill-border-hover: var(--border-strong);
+  --tabs-pill-border-active: var(--brand-200);
+
+  --tabs-segmented-fg: var(--text-tertiary);
+  --tabs-segmented-fg-hover: var(--text-secondary);
+  --tabs-segmented-fg-active: var(--neutral-900);
+  --tabs-segmented-fg-disabled: var(--text-disabled);
+  --tabs-segmented-bg-active: var(--white);
+
+  --tabs-track-bg: var(--neutral-100);
+  --tabs-border: var(--border-default);
 }
 
 [data-theme='dark'] {
-  --tabs-fg: #94a3b8;
-  --tabs-fg-hover: #cbd5e1;
-  --tabs-fg-active: #e2e8f0;
-  --tabs-fg-disabled: #475569;
-  --tabs-underline-active: #e2e8f0;
-  --tabs-brand-fg-hover: #93c5fd;
-  --tabs-brand-fg-active: #60a5fa;
-  --tabs-pill-fg-active: #60a5fa;
-  --tabs-pill-bg-active: #172554;
-  --tabs-pill-border-active: #1e40af;
-  --tabs-segmented-fg-active: #f1f5f9;
-  --tabs-segmented-bg-active: #0a0a0a;
-  --tabs-track-bg: #0f172a;
-  --tabs-border: #334155;
+  --tabs-underline-indicator: var(--neutral-200);
+  --tabs-segmented-fg-active: var(--neutral-100);
+  --tabs-segmented-bg-active: var(--neutral-950);
+  --tabs-track-bg: var(--neutral-900);
 }
+
+// 사이즈별 텍스트 스케일 — Type(underline/pill/segmented) 공통이다(get_variable_defs로 4사이즈
+// 전부 재확인). sm=body-sm, md·lg=body-lg(같은 스케일), xl=body-xl.
+$tabs-type-by-size: (
+  sm: body-sm,
+  md: body-lg,
+  lg: body-lg,
+  xl: body-xl,
+);
 
 // underline·underline-brand: 고정 높이 + 내부 Content가 FILL, 좌우 패딩은 Content 쪽에.
 $tabs-underline-sizes: (
@@ -57,7 +80,8 @@ $tabs-pill-sizes: (
   xl: (padding-y: 14px, padding-x: $space-7),
 );
 
-// segmented: 패딩 기반 HUG, 테두리 없음(선택 시 흰 배경+그림자로 표시).
+// segmented: 패딩 기반 HUG, 테두리 없음(선택 시 흰 배경+그림자로 표시). pill보다 사이즈마다
+// 정확히 4px씩 작다(get_metadata로 전 사이즈 대조 확인: 32/40/48/54 vs 28/36/44/50).
 $tabs-segmented-sizes: (
   sm: (padding-y: 4px, padding-x: $space-3),
   md: (padding-y: 6px, padding-x: $space-4),
@@ -73,38 +97,38 @@ $tabs-segment-track-bg: var(--tabs-track-bg);
 $tabs-segment-track-border: var(--tabs-border);
 
 $tabs-underline-colors: (
-  fg: var(--tabs-fg),
-  fg-hover: var(--tabs-fg-hover),
-  fg-active: var(--tabs-fg-active),
-  fg-disabled: var(--tabs-fg-disabled),
-  underline-active: var(--tabs-underline-active),
+  fg: var(--tabs-underline-fg),
+  fg-hover: var(--tabs-underline-fg-hover),
+  fg-active: var(--tabs-underline-fg-active),
+  fg-disabled: var(--tabs-underline-fg-disabled),
+  underline-active: var(--tabs-underline-indicator),
 );
 
 $tabs-underline-brand-colors: (
-  fg: var(--tabs-fg),
-  fg-hover: var(--tabs-brand-fg-hover),
-  fg-active: var(--tabs-brand-fg-active),
-  fg-disabled: var(--tabs-fg-disabled),
-  underline-active: var(--tabs-brand-fg-active),
+  fg: var(--tabs-underline-brand-fg),
+  fg-hover: var(--tabs-underline-brand-fg-hover),
+  fg-active: var(--tabs-underline-brand-fg-active),
+  fg-disabled: var(--tabs-underline-brand-fg-disabled),
+  underline-active: var(--tabs-underline-brand-indicator),
 );
 
 $tabs-pill-colors: (
-  fg: var(--tabs-fg),
-  fg-hover: var(--tabs-fg-hover),
+  fg: var(--tabs-pill-fg),
+  fg-hover: var(--tabs-pill-fg-hover),
   fg-active: var(--tabs-pill-fg-active),
-  fg-disabled: var(--tabs-fg-disabled),
-  border: var(--tabs-border),
-  border-hover: $neutral-300, // 다크 실측값 없음 — primitive 상수 유지
+  fg-disabled: var(--tabs-pill-fg-disabled),
+  border: var(--tabs-pill-border),
+  border-hover: var(--tabs-pill-border-hover),
   border-active: var(--tabs-pill-border-active),
-  bg-hover: $neutral-50, // 다크 실측값 없음 — primitive 상수 유지
+  bg-hover: var(--tabs-pill-bg-hover),
   bg-active: var(--tabs-pill-bg-active),
 );
 
 $tabs-segmented-colors: (
-  fg: var(--tabs-fg),
-  fg-hover: var(--tabs-fg-hover),
+  fg: var(--tabs-segmented-fg),
+  fg-hover: var(--tabs-segmented-fg-hover),
   fg-active: var(--tabs-segmented-fg-active),
-  fg-disabled: var(--tabs-fg-disabled),
+  fg-disabled: var(--tabs-segmented-fg-disabled),
   bg-active: var(--tabs-segmented-bg-active),
 );
 
@@ -112,12 +136,20 @@ $tabs-segmented-colors: (
   display: inline-flex;
   align-items: center;
   gap: $tabs-gap;
-  @include mix.text(body-sm, medium);
+  font-weight: $font-weight-medium; // size/line-height는 사이즈별 @each 루프에서 $tabs-type-by-size로 읽는다
   white-space: nowrap;
   cursor: pointer;
 
   &[aria-disabled='true'] {
     cursor: not-allowed;
+  }
+}
+
+@each $size, $key in $tabs-type-by-size {
+  .tabs-item-#{$size} {
+    $tabs-item-type: map.get(maps.$type-scale, $key);
+    font-size: map.get($tabs-item-type, size);
+    line-height: map.get($tabs-item-type, lh);
   }
 }
 

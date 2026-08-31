@@ -1,55 +1,146 @@
-// Figma DS Master > Avatar Group (node 584:6107), 2026-08-28 라이브 인스턴스 실측
-// Avatar 자체(Type=image|initials|placeholder)는 별도 요청 범위 밖이라, 그룹이 쓰는
-// initials 원형(sm=32) 하나만 이 파일 안에 최소 구현한다. 겹침은 -8, 링은 surface/default 2px.
+// Figma DS Master > Avatar(590:188) + Avatar Group(1363:255), 2026-08-31 재실측
+// 이전 코드는 Avatar Group을 잘못된 node(584:6107 — 실제로는 존재하지 않음, "_Doc/Header" 계열
+// 문서 프레임이었다)로 표기하고 있었고, Avatar 자체(Type=image|initials|placeholder × Size
+// xs~xl)는 "범위 밖"이라 초기화 상태(sm 원형 하나)만 최소 구현돼 있었다 — 이번 단계에서 정식
+// 컴포넌트로 확장한다.
+// Avatar: Type(image|initials|placeholder) × Size(xs 24|sm 32|md 40|lg 48|xl 56) + Online(bool) +
+// Background(초기이니셜 색 13종 인스턴스 스왑, avatar/c/01~13).
+// Avatar Group: Count(2|3|4|5) × Show more(bool) — 전부 sm(32) 아바타 하나만 쓴다(다른 사이즈
+// variant 없음). 겹침 -8px, 링은 surface/default 2px — border가 아니라 box-shadow로 만든다
+// (border면 box-sizing:border-box에서 32px 안쪽을 파먹어 겹침 계산이 틀어진다).
 
 @use '../tokens/primitive' as *;
 @use '../tokens/theme' as *;
 @use '../abstracts/mixins' as mix;
+@use 'sass:map';
 
-// 2026-08-28 Dark 모드 실측
+// figma/tokens.theme.json의 avatar/* 를 그대로 옮겼다. avatar/bg·avatar/online은 라이트·다크
+// 별칭 대상이 달라(neutral-100/900, green-500/400) 오버라이드가 있다. avatar/c/01~13(초기이니셜 배경 13색)은 전부
+// 라이트·다크가 다른 리터럴 hex 쌍이라(브랜드 램프가 아닌 전용 파스텔 팔레트) 프리미티브처럼
+// 원자값으로 등록한다 — 색이 아닌 다른 시맨틱으로 대체 불가한 컴포넌트 고유 톤이라 CLAUDE.md
+// 1장의 "컴포넌트 고유 톤" 예외에 해당한다.
 :root {
-  --avatar-bg: #f5f5f5;
-  --avatar-fg: #525252;
+  --avatar-bg: var(--neutral-100);
+  --avatar-fg: var(--text-tertiary);
+  --avatar-online: var(--green-500);
+  --avatar-online-ring: var(--white); // ADR-019: Online 표시 링은 프리미티브 직접 참조가 의도된 예외
+  --avatar-c-01: #fff3cd; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-02: #d7eee1; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-03: #d7ebee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-04: #dfedfb; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-05: #dadef0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-06: #f8dfe0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-07: #e0e0e0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-08: #eee6db; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-09: #dee3d4; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-10: #d1e1ec; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-11: #d8e1ef; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-12: #e0ddee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-13: #f8e9df; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
 [data-theme='dark'] {
-  --avatar-bg: #171717;
-  --avatar-fg: #a3a3a3;
+  --avatar-bg: var(--neutral-900);
+  --avatar-online: var(--green-400);
+  --avatar-c-01: #4a3c14; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-02: #1d3b2c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-03: #1c383c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-04: #1e3345; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-05: #26293e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-06: #452527; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-07: #333333; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-08: #3d362c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-09: #2e3327; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-10: #1f313c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-11: #252f3e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-12: #2d2a3d; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --avatar-c-13: #43342b; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
-$avatar-group-size: 32px;
-$avatar-group-overlap: -8px;
-$avatar-group-ring: 0 0 0 2px $surface-default; // outside 스트로크 — border 대신 box-shadow로(box-sizing:border-box에서 border는 32px 안쪽을 파먹는다)
 $avatar-bg: var(--avatar-bg);
 $avatar-fg: var(--avatar-fg);
+$avatar-online-bg: var(--avatar-online);
+$avatar-online-ring: var(--avatar-online-ring);
+$avatar-colors: c-01, c-02, c-03, c-04, c-05, c-06, c-07, c-08, c-09, c-10, c-11, c-12, c-13;
+
+// Size(box) × 텍스트 스케일 — get_variable_defs로 5사이즈 전부 대조: xs·sm은 같은 body-2xs를 쓴다.
+$avatar-sizes: (
+  xs: (box: 24px, type: body-2xs),
+  sm: (box: 32px, type: body-2xs),
+  md: (box: 40px, type: body-sm),
+  lg: (box: 48px, type: body-lg),
+  xl: (box: 56px, type: body-2xl),
+);
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: $radius-full;
+  background-color: $avatar-bg;
+  color: $avatar-fg;
+  overflow: hidden;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // Online 표시 — 아바타 크기의 1/4, 우하단 모서리에 겹쳐 배치(get_metadata로 sm·xl 대조: 8/32·
+  // 14/56 둘 다 정확히 0.25 비율). 링은 border가 아니라 box-shadow로(사이즈 계산에 영향 없게).
+  &__online {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: $radius-full;
+    background-color: $avatar-online-bg;
+    box-shadow: 0 0 0 2px $avatar-online-ring;
+  }
+}
+
+@each $size, $props in $avatar-sizes {
+  .avatar-#{$size} {
+    width: map.get($props, box);
+    height: map.get($props, box);
+    @include mix.text(map.get($props, type), medium);
+
+    .avatar__online {
+      width: calc(map.get($props, box) * 0.25);
+      height: calc(map.get($props, box) * 0.25);
+    }
+  }
+}
+
+@each $color in $avatar-colors {
+  .avatar-#{$color} {
+    background-color: var(--avatar-#{$color});
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// Avatar Group — sm(32) 아바타만 겹쳐 쌓는다. 이름 대신 사이징 축을 그대로 재사용(.avatar.avatar-sm).
+// ──────────────────────────────────────────────────────────────
+$avatar-group-overlap: -8px;
 
 .avatar-group {
   display: inline-flex;
   align-items: center;
-}
 
-.avatar-group > * {
-  margin-left: $avatar-group-overlap;
+  > * {
+    margin-left: $avatar-group-overlap;
+    box-shadow: 0 0 0 2px $surface-default; // outside 스트로크 — border 대신 box-shadow(겹침 계산 보존)
 
-  &:first-child {
-    margin-left: 0;
+    &:first-child {
+      margin-left: 0;
+    }
   }
-}
-
-.avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: $avatar-group-size;
-  height: $avatar-group-size;
-  border-radius: $radius-full;
-  box-shadow: $avatar-group-ring;
-  background-color: $avatar-bg;
-  color: $avatar-fg;
-  @include mix.text(body-2xs, medium);
 }
 
 .avatar-group__more {
   @extend .avatar;
+  @extend .avatar-sm;
   font-weight: $font-weight-semibold;
 }

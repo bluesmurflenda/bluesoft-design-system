@@ -1,5 +1,5 @@
 // Figma DS Master > Pagination 페이지 (node 359:3155 Pagination, 358:45 _Pagination/Number, 465:6816 Pagination Compact)
-// 2026-08-28 라이브 인스턴스 실측
+// 2026-08-31 재실측
 //
 // 기본 Pagination(Type 5종: numbers/numbers-buttons/simple/simple-icon/button-group × Size sm/md/lg)과
 // 모바일용 Pagination Compact는 Figma에서 같은 "Pagination" 페이지에 속한 한 묶음이라 이 파일 하나로 구현한다
@@ -9,23 +9,18 @@
 @use 'sass:map';
 @use '../abstracts/maps' as maps;
 
-// 2026-08-28 Dark 모드 실측
+// figma/tokens.theme.json의 pagination/* 를 그대로 옮겼다. 전부 라이트·다크 별칭 대상이 같아
+// [data-theme=dark] 오버라이드가 없다. border는 Figma에 pagination/border가 따로 없고 numbers·
+// simple의 구분선과 button-group의 테두리가 전부 pagination/group/border 하나를 같이 쓴다
+// (get_variable_defs로 Type=numbers 확인) — 이름을 그에 맞게 group-border로 리네임.
 :root {
-  --pagination-fg: #475569;
-  --pagination-fg-hover: #334155;
-  --pagination-bg-hover: #f8fafc;
-  --pagination-current-fg: #2563eb;
-  --pagination-current-bg: #eff6ff;
-  --pagination-border: #cbd5e1;
-}
-
-[data-theme='dark'] {
-  --pagination-fg: #94a3b8;
-  --pagination-fg-hover: #cbd5e1;
-  --pagination-bg-hover: #020617;
-  --pagination-current-fg: #60a5fa;
-  --pagination-current-bg: #172554;
-  --pagination-border: #475569;
+  --pagination-item-fg: var(--text-tertiary);
+  --pagination-item-fg-hover: var(--text-secondary);
+  --pagination-item-bg: var(--surface-default);
+  --pagination-item-bg-hover: var(--surface-subtle);
+  --pagination-current-fg: var(--brand-600);
+  --pagination-current-bg: var(--brand-50);
+  --pagination-group-border: var(--border-strong);
 }
 
 $pagination-sizes: (
@@ -34,14 +29,14 @@ $pagination-sizes: (
   lg: (item: 48px, type: body-xl, gap: $space-2),
 );
 
-$pagination-border: var(--pagination-border);
-$pagination-fg: var(--pagination-fg);
-$pagination-fg-hover: var(--pagination-fg-hover);
-$pagination-bg-hover: var(--pagination-bg-hover);
+$pagination-border: var(--pagination-group-border);
+$pagination-fg: var(--pagination-item-fg);
+$pagination-fg-hover: var(--pagination-item-fg-hover);
+$pagination-bg-hover: var(--pagination-item-bg-hover);
 $pagination-current-bg: var(--pagination-current-bg);
 $pagination-current-fg: var(--pagination-current-fg);
 $pagination-radius: var(--pagination-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
-$pagination-icon-fg: $neutral-600;
+$pagination-icon-fg: var(--icon-primary);
 
 // ──────────────────────────────────────────────────────────────
 // 공용 숫자 셀 — .pagination-number, 모든 Type에서 재사용
