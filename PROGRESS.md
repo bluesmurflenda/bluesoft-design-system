@@ -10,8 +10,8 @@
 ## 현재 단계
 
 ```
-7단계 완료 — 11장에 정의된 7단계 전부 완료. 남은 건 7단계 후 일괄 처리하기로 미뤄둔
-Figma 수정 3건(아래 "막힌 것") 뿐이다.
+7단계 완료 + Figma 수정 4건(effect/focus-ring·table/header-col·con/white/*·text/danger)
+반영 완료. 11장에 정의된 작업 전부 끝났다 — 남은 "막힌 것" 없음.
 ```
 
 ---
@@ -60,6 +60,10 @@ Claude 앱이 확인해 문서를 고치거나 Figma 를 고친다.
 | 2026-08-30 | `_Checkbox base` validation 링(valid/invalid) | Figma에서 `green/*`·`red/*` 프리미티브 직접 바인딩 | (Figma 라이브 상태 그 자체가 원인) | **결정됨(ADR-019)** — 의도된 것, `D1_NODE_EXCEPTIONS`에 등록 |
 | 2026-08-30 | `Avatar`의 `Online` 표시 링 | Figma에서 `white` 프리미티브 직접 바인딩 | (Figma 라이브 상태 그 자체가 원인) | **결정됨(ADR-019)** — 의도된 것, `D1_NODE_EXCEPTIONS`에 등록(전역 허용 아님 — `Avatar`에서만) |
 | 2026-08-30 | `_header.scss`의 nav 전환 breakpoint | `$css-breakpoint-lg: 1280px`(컴파일타임 상수, `_header.scss` 자체 실측 근거) | `_breakpoint.scss` 신규 토큰 미디어쿼리는 Figma Desktop 기준폭(1440) 사용 | **처리 완료(7단계)** — 1280→1440으로 정정. 근거는 아래 "7단계 완료 메모"의 "브레이크포인트 결정" 참조 |
+| 2026-08-31 | Figma `effect/focus ring` 변수명 | 공백 포함(`effect/focus ring`) | Figma 세션이 `effect/focus-ring`으로 정정 | **처리 완료** — `figma/tokens.*.json`·`tokens.ids.json` 재추출로 확인(`effect/focus-ring` 정상 표기). `scripts/lib/tokens.mjs`의 공백→하이픈 임시 우회 코드 제거(`cssVarName()`이 다시 슬래시만 치환) |
+| 2026-08-31 | `table/header-col/bg`·`fg`의 codeSyntax | `-col` 누락(`--table-header-bg`/`-fg`를 가리킴) | Figma 세션이 `--table-header-col-bg`/`-fg`로 정정 | **처리 완료** — 코드는 6단계부터 이미 정상 이름을 쓰고 있어 변경 없음. 재추출로 codeSyntax 일치 확인만 |
+| 2026-08-31 | `con/white/*` 6개의 codeSyntax | 서로 뒤섞임(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`) | Figma 세션이 각자 자기 이름을 가리키도록 정정 | **처리 완료** — 값 자체는 5단계 때부터 이미 정확했다(직접 enumeration으로 검증해뒀던 것과 일치). 재추출로 codeSyntax 일치 확인만, 코드 변경 없음 |
+| 2026-08-31 | `text/danger`의 codeSyntax | `--text-error`를 가리킴(변수 이름 자체는 항상 `text/danger`였다) | Figma 세션이 `--text-danger`로 정정(이름과 codeSyntax 일치) | **처리 완료** — 1단계에서 옛 codeSyntax(`--text-error`)를 신뢰해 코드를 그 이름으로 맞췄던 게 이제 반대로 어긋나게 돼, `_theme.scss`·`_checkbox-radio.scss`의 `--text-error`/`$text-error`를 `--text-danger`/`$text-danger`로 되돌렸다 |
 
 ---
 
@@ -517,15 +521,8 @@ WARN 그대로 둔다.
 **`DECISIONS.md` 에 없는 판단이 필요해 멈춘 지점.**
 사람이 결정하면 ADR 로 옮기고 여기서 지운다.
 
-**7단계가 끝나 아래 3건이 이제 일괄 처리 대상이다.** 코드 작업 세션은 Figma 쓰기 API를 쓰지
-않으므로 여기서 처리하지 않는다 — Figma 작업 세션이 셋 다 고친 뒤 `figma/tokens.*.json`을
-재추출하면(퍼블리시 순서는 CLAUDE.md 9장) 그 스냅샷으로 `check:tokens` S2를 다시 돌려 확인한다.
-
-| 날짜 | 단계 | 내용 |
-|---|---|---|
-| 2026-08-30 | 1단계(`figma/tokens.primitive.json`) | Figma `effect/focus ring` 변수명에 공백이 있다(`effect/focus-ring`이어야 함). **지금은** `scripts/lib/tokens.mjs`의 `cssVarName()`이 공백을 하이픈으로 치환해 임시로 우회하고 있다 |
-| 2026-08-30 | 6단계(테이블) | `table/header-col/bg`·`/fg`의 codeSyntax가 `-col` 없이 `--table-header-bg`/`-fg`를 가리킨다(`table/header-row/*`는 정상). 코드는 정상 이름(`--table-header-col-*`)을 쓰고 있다 |
-| 2026-08-30 | 5단계(con) | `con/white/*` 6개(`bg-hover`·`fg-hover`·`border-hover`·`fg-selected`·`bg-selected`·`border-selected`)의 codeSyntax가 서로 뒤섞여 있다(의도된 리네임이 아니라 데이터 오류로 보임) |
+**현재 없음** — 마지막으로 남아 있던 Figma 수정 3건(+text/danger 1건)이 2026-08-31에 전부
+처리됐다. 아래 "발견한 불일치" 표 참조.
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exportedAt": "2026-08-30",
+    "exportedAt": "2026-08-31",
     "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
     "collection": "Theme",
     "count": 290
@@ -425,21 +425,21 @@
     "Default": "var(--neutral-300)",
     "Dark": "var(--neutral-700)"
   },
-  "con/white/fg-hover": {
-    "Default": "var(--brand-600)",
-    "Dark": "var(--brand-600)"
-  },
   "toggle/track/bg-off-hover": {
     "Default": "var(--neutral-400)",
     "Dark": "var(--neutral-600)"
   },
-  "toggle/track/bg-on": {
-    "Default": "var(--brand-500)",
-    "Dark": "var(--brand-500)"
+  "con/white/fg-hover": {
+    "Default": "var(--brand-600)",
+    "Dark": "var(--brand-600)"
   },
   "con/white/border-hover": {
     "Default": "var(--brand-200)",
     "Dark": "var(--brand-200)"
+  },
+  "toggle/track/bg-on": {
+    "Default": "var(--brand-500)",
+    "Dark": "var(--brand-500)"
   },
   "con/white/fg-selected": {
     "Default": "var(--white)",
@@ -854,8 +854,8 @@
     "Dark": "var(--text-primary)"
   },
   "choice/label/fg-invalid": {
-    "Default": "var(--text-error)",
-    "Dark": "var(--text-error)"
+    "Default": "var(--text-danger)",
+    "Dark": "var(--text-danger)"
   },
   "choice/description/fg": {
     "Default": "var(--text-tertiary)",

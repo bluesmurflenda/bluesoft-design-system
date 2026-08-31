@@ -8,7 +8,7 @@ export const ALWAYS_ALLOWED_PRIMITIVES = [
   'social/kakao',
   'social/naver',
   'social/apple',
-  'effect/focus ring',
+  'effect/focus-ring',
 ];
 
 // 파일명(basename)이 이 목록에 있으면 D1/S4 대상에서 제외한다 — 로고·소셜 버튼(브랜드 자산 전용 컴포넌트).

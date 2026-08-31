@@ -20,7 +20,7 @@
   --text-disabled: var(--neutral-400);
   --text-inverse: var(--white);
   --text-brand: var(--blue-600);
-  --text-error: var(--red-600);
+  --text-danger: var(--red-600);
   --accent-50: var(--sky-50);
   --accent-100: var(--sky-100);
   --accent-200: var(--sky-200);
@@ -66,7 +66,7 @@
   --text-disabled: var(--neutral-600);
   --text-inverse: var(--neutral-900);
   --text-brand: var(--blue-400);
-  --text-error: var(--red-400);
+  --text-danger: var(--red-400);
   --accent-50: var(--sky-950);
   --accent-100: var(--sky-900);
   --accent-200: var(--sky-800);
@@ -111,7 +111,7 @@ $text-tertiary: var(--text-tertiary);
 $text-disabled: var(--text-disabled);
 $text-inverse: var(--text-inverse);
 $text-brand: var(--text-brand);
-$text-error: var(--text-error);
+$text-danger: var(--text-danger);
 $accent-50: var(--accent-50);
 $accent-100: var(--accent-100);
 $accent-200: var(--accent-200);
