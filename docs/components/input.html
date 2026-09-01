@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Input · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">폼 컴포넌트</a> / Input</div>
+  <div class="doc-page-header">
+    <h1>Input</h1>
+    <p>라벨 + 필드(선행 아이콘 슬롯 + <code>&lt;input&gt;</code>) + 힌트로 구성되며, 시맨틱(<code>field/*</code>)은 Select·Dropdown·Textarea와 공유합니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Size × Validation</h2>
+    <p class="doc-desc">filled(값이 채워진 상태)는 border/bg가 normal과 동일합니다 — 실제 <code>&lt;input&gt;</code>을 쓰므로 <code>::placeholder</code>로 자연히 구분되고 별도 클래스가 없습니다.</p>
+    <div class="doc-matrix" id="input-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Disabled</h2>
+    <p class="doc-desc">검증 상태별로 확인합니다(md 사이즈). <code>.input-disabled</code>를 검증 modifier와 함께 사용하며, 힌트 텍스트가 흐려집니다.</p>
+    <div class="doc-matrix" id="input-disabled"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>선행 아이콘 슬롯</h2>
+    <p class="doc-desc"><code>.input__icon</code>. 사이드바 검색창(<code>docs/assets/nav.js</code>)이 쓰는 실제 조합입니다.</p>
+    <div class="doc-matrix" id="input-icon"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var ICON_BASE = '../assets/icons/sprite.svg#icon-base-';
+  function iconSvg(cls, name) {
+    return '<svg class="' + cls + '"><use href="' + ICON_BASE + name + '"></use></svg>';
+  }
+
+  var SIZES = ['sm', 'md', 'lg', 'xl'];
+  var VALIDATIONS = ['normal', 'invalid', 'valid'];
+
+  function inputHtml(cls, opts) {
+    opts = opts || {};
+    var placeholder = opts.disabled ? '입력 불가' : '내용을 입력하세요';
+    var hint = opts.disabled ? '비활성화된 필드입니다' : 'Hint text가 표시되는 영역입니다';
+    return (
+      '<div class="' + cls + '" style="width:100%;">' +
+      '<label class="input__label">Label</label>' +
+      '<div class="input__field">' +
+      '<div class="input__content">' +
+      (opts.icon ? iconSvg('input__icon', opts.icon) : '') +
+      '<input class="input__control" placeholder="' + placeholder + '"' + (opts.disabled ? ' disabled' : '') + ' />' +
+      '</div>' +
+      '</div>' +
+      '<span class="input__hint">' + hint + '</span>' +
+      '</div>'
+    );
+  }
+
+  (function () {
+    var el = document.getElementById('input-matrix');
+    SIZES.forEach(function (size) {
+      VALIDATIONS.forEach(function (validation) {
+        var cls = 'input input-' + size + ' input-' + validation;
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML = inputHtml(cls) + '<span class="doc-cell__caption">' + cls + '</span>';
+        el.appendChild(cell);
+      });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('input-disabled');
+    VALIDATIONS.forEach(function (validation) {
+      var cls = 'input input-md input-' + validation + ' input-disabled';
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      cell.innerHTML = inputHtml(cls, { disabled: true }) + '<span class="doc-cell__caption">' + cls + '</span>';
+      el.appendChild(cell);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('input-icon');
+    var cls = 'input input-md input-normal';
+    var cell = document.createElement('div');
+    cell.className = 'doc-cell';
+    cell.innerHTML = inputHtml(cls, { icon: 'search' }) + '<span class="doc-cell__caption">' + cls + ' + input__icon</span>';
+    el.appendChild(cell);
+  })();
+</script>
+</body>
+</html>

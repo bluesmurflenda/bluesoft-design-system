@@ -15,7 +15,7 @@
   <div class="doc-breadcrumb"><a href="../index.html">토큰</a> / 간격 &amp; Radius</div>
   <div class="doc-page-header">
     <h1>간격 &amp; Radius</h1>
-    <p><code>$space-*</code> 전체 스케일과 <code>$radius-*</code> 스케일(Shape 컬렉션, Rounded 모드 기준).</p>
+    <p><code>$space-*</code> 전체 스케일과 <code>$radius-*</code> 스케일, 컴포넌트별 Radius(Shape 컬렉션).</p>
   </div>
 
   <section class="doc-section">
@@ -26,8 +26,14 @@
 
   <section class="doc-section">
     <h2>Radius</h2>
-    <p class="doc-desc">Shape 컬렉션 Rounded 모드. Square·Pill 모드는 현재 도구로 라이브 재검증이 불가해 문서화만 돼 있습니다.</p>
+    <p class="doc-desc"><code>--radius-*</code>는 Primitive 값이라 Shape 모드와 무관하게 항상 고정입니다.</p>
     <div class="doc-card doc-row" id="radius-demo"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>컴포넌트 Radius(Shape 컬렉션)</h2>
+    <p class="doc-desc">실제로 Shape 모드(<code>[data-shape]</code>)에 따라 바뀌는 것은 <code>--radius-*</code>가 아니라 이 컴포넌트 토큰들입니다. 아래는 기본값인 Rounded 모드가 실시간으로 렌더링된 것입니다. Square·Pill은 이 문서 사이트에 모드 전환 수단이 없어 라이브로 못 보여줍니다 — <code>tokens/_shape.scss</code>를 참조하세요.</p>
+    <div class="doc-card doc-row" id="component-radius-demo"></div>
   </section>
 
   <section class="doc-section">
@@ -50,7 +56,7 @@
 <script>
   (function () {
     var el = document.getElementById('space-demo');
-    var steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 16, 20];
+    var steps = [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 20];
     steps.forEach(function (s) {
       var row = document.createElement('div');
       row.style.display = 'flex';
@@ -73,6 +79,23 @@
       wrap.innerHTML =
         '<div style="width:64px;height:64px;background:var(--blue-100);border:1px solid var(--blue-300);border-radius:var(--radius-' + name + ');"></div>' +
         '<div class="doc-swatch__label">radius-' + name + '</div>';
+      el.appendChild(wrap);
+    });
+  })();
+
+  var COMPONENT_RADIUS_TOKENS = [
+    'button-radius', 'tabs-radius', 'pagination-radius', 'con-radius',
+    'calendar-radius', 'calendar-cell-radius', 'scrollbar-radius', 'card-radius',
+  ];
+
+  (function () {
+    var el = document.getElementById('component-radius-demo');
+    COMPONENT_RADIUS_TOKENS.forEach(function (token) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-swatch';
+      wrap.innerHTML =
+        '<div style="width:64px;height:64px;background:var(--blue-100);border:1px solid var(--blue-300);border-radius:var(--' + token + ');"></div>' +
+        '<div class="doc-swatch__label">' + token + '</div>';
       el.appendChild(wrap);
     });
   })();

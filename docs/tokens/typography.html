@@ -20,13 +20,13 @@
 
   <section class="doc-section">
     <h2>Display</h2>
-    <p class="doc-desc">랜딩·로그인 헤더 등 큰 타이틀에 사용.</p>
+    <p class="doc-desc">랜딩·로그인 헤더 등 큰 타이틀에 사용. Display는 전부 <code>tokens/_breakpoint.scss</code>가 만드는 반응형 <code>--type-display-*</code>를 씁니다 — 고정값이 아니라 <strong>브라우저 창 폭을 줄이면 실제로 작아집니다.</strong></p>
     <div class="doc-card doc-col" id="display-demo"></div>
   </section>
 
   <section class="doc-section">
     <h2>Body</h2>
-    <p class="doc-desc">2Xs ~ Xl. 대부분의 컴포넌트 텍스트가 이 스케일을 사용합니다.</p>
+    <p class="doc-desc">2Xs ~ 2Xl. 대부분의 컴포넌트 텍스트가 이 스케일을 사용합니다. 이 중 <strong>Lg·Xl·2Xl만</strong> 반응형 <code>--type-body-*</code>를 쓰고(창 폭에 따라 변함), 2Xs·Xs·Sm·Md는 반응형 변형이 없어 고정값입니다.</p>
     <div class="doc-card doc-col" id="body-demo"></div>
   </section>
 
@@ -48,22 +48,25 @@
       row.style.gap = '16px';
       row.innerHTML =
         '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Display/' + s.toUpperCase() + '</span>' +
-        '<span style="font-weight:600;font-size:var(--font-size-display-' + s + ');line-height:var(--font-leading-display-' + s + ');">Ag가나다 BLUESOFT</span>';
+        '<span style="font-weight:600;font-size:var(--type-display-' + s + '-size);line-height:var(--type-display-' + s + '-leading);">Ag가나다 BLUESOFT</span>';
       el.appendChild(row);
     });
   })();
 
   (function () {
     var el = document.getElementById('body-demo');
-    var items = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl'];
+    var items = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+    var RESPONSIVE = ['lg', 'xl', '2xl'];
     items.forEach(function (s) {
+      var sizeVar = RESPONSIVE.indexOf(s) !== -1 ? 'var(--type-body-' + s + '-size)' : 'var(--font-size-body-' + s + ')';
+      var leadingVar = RESPONSIVE.indexOf(s) !== -1 ? 'var(--type-body-' + s + '-leading)' : 'var(--font-leading-body-' + s + ')';
       var row = document.createElement('div');
       row.style.display = 'flex';
       row.style.alignItems = 'baseline';
       row.style.gap = '16px';
       row.innerHTML =
-        '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Body/' + s.toUpperCase() + '</span>' +
-        '<span style="font-size:var(--font-size-body-' + s + ');line-height:var(--font-leading-body-' + s + ');">Pretendard 타이포그래피 Ag가나다123</span>';
+        '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Body/' + s.toUpperCase() + (RESPONSIVE.indexOf(s) !== -1 ? ' *' : '') + '</span>' +
+        '<span style="font-size:' + sizeVar + ';line-height:' + leadingVar + ';">Pretendard 타이포그래피 Ag가나다123</span>';
       el.appendChild(row);
     });
   })();

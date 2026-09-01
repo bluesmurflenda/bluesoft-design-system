@@ -4,6 +4,15 @@
 
 (function () {
   var BASE = window.DOCS_BASE || '';
+  var THEME_KEY = 'bluesoft-docs-theme';
+
+  // 저장된 다크모드 선호를 최대한 일찍 적용한다 — render() 전에 실행해 깜빡임을 줄인다.
+  try {
+    var storedTheme = localStorage.getItem(THEME_KEY);
+    if (storedTheme === 'dark' || storedTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', storedTheme);
+    }
+  } catch (e) {}
 
   var NAV = [
     {
@@ -117,7 +126,13 @@
     if (!mount) return;
 
     var html = '';
-    html += '<div class="doc-sidebar__header"><a href="' + BASE + 'index.html"><img class="logo" src="' + BASE + 'assets/logo/logo-brand.svg" alt="BLUESOFT" /></a></div>';
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    html += '<div class="doc-sidebar__header">';
+    html += '<a href="' + BASE + 'index.html"><img class="logo" src="' + BASE + 'assets/logo/logo-brand.svg" alt="BLUESOFT" /></a>';
+    html += '<button type="button" class="icon-btn icon-btn-sm icon-btn-ghost" id="doc-theme-toggle" aria-label="다크모드 전환">' +
+      iconSvg(isDark ? 'sun' : 'moon', 'icon icon-sm') +
+      '</button>';
+    html += '</div>';
     html += '<div class="doc-sidebar__search">' +
       '<div class="input input-md input-normal"><div class="input__field"><div class="input__content">' +
       '<svg class="input__icon"><use href="' + BASE + 'assets/icons/sprite.svg#icon-base-search"></use></svg>' +
@@ -178,6 +193,16 @@
           toggle.setAttribute('aria-expanded', 'true');
         }
       });
+    });
+
+    // 다크모드 토글 — main.css의 [data-theme='dark']는 이미 전 컴포넌트가 대응하므로
+    // 여기서는 속성만 바꾸고 localStorage에 저장한다(페이지 이동 시 파일 맨 위 즉시-적용 코드가 읽는다).
+    var themeToggle = document.getElementById('doc-theme-toggle');
+    themeToggle.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      themeToggle.innerHTML = iconSvg(next === 'dark' ? 'sun' : 'moon', 'icon icon-sm');
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
     });
 
     // 검색 필터 — 하위 항목 텍스트로 필터링, 전부 숨겨진 그룹은 그룹째로 숨김.

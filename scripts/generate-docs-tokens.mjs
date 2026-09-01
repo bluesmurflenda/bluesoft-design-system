@@ -4,8 +4,9 @@
 // (실제로 slate 램프 삭제(ADR-001) 후에도 한참 안 지워져 있었다) — 매 build마다(postbuild)
 // 다시 뽑아서 항상 현재 스냅샷과 일치하게 한다.
 //
-// 대상은 두 가지뿐이다: Primitive 전체(색 램프 + social 브랜드색), Theme의 "일반 시맨틱" 44개
-// (accent·brand·border·surface·text·icon — tokens/_theme.scss가 담당하는 범위와 동일).
+// 대상은 두 가지뿐이다: Primitive 전체(색 램프 + social 브랜드색 + white/black/effect-focus-ring
+// 같은 단독 hex 값), Theme의 "일반 시맨틱" 44개(accent·brand·border·surface·text·icon —
+// tokens/_theme.scss가 담당하는 범위와 동일).
 // 나머지 246개 컴포넌트별 Theme 토큰(button/chip/tabs 등)은 각 컴포넌트 문서 페이지 소관이라
 // 여기서 다루지 않는다.
 import fs from 'node:fs';
@@ -24,9 +25,13 @@ function loadCollection(relPath) {
 const primitive = loadCollection('figma/tokens.primitive.json');
 const theme = loadCollection('figma/tokens.theme.json');
 
-// ── Primitive: 색 램프(family/step = hex) + social(브랜드색, 램프 아님) 자동 발견 ──────
+// ── Primitive: 색 램프(family/step = hex) + social(브랜드색) + 그 외 단독 hex 값 자동 발견 ──
+// "그 외"는 이름을 나열하지 않는다 — white/black처럼 지금 있는 것만 하드코딩하면 나중에
+// 새 단독 hex 프리미티브(예: 새 effect 토큰)가 추가돼도 조용히 안 나온다. 램프·social
+// 패턴에 안 맞는 hex 값은 전부 여기로 떨어지게 해서 자동으로 잡히게 한다.
 const ramps = new Map(); // family -> [{step, hex}]
 const social = [];
+const others = []; // 램프도 social도 아닌 단독 hex 값 (white, black, effect/focus-ring 등)
 for (const [key, value] of Object.entries(primitive)) {
   if (typeof value !== 'string' || !value.startsWith('#')) continue;
   const parts = key.split('/');
@@ -36,10 +41,13 @@ for (const [key, value] of Object.entries(primitive)) {
     ramps.get(family).push({ step: Number(parts[1]), hex: value });
   } else if (parts[0] === 'social' && parts.length === 2) {
     social.push({ name: parts[1], hex: value });
+  } else {
+    others.push({ name: key.replace(/\//g, '-'), hex: value });
   }
 }
 for (const steps of ramps.values()) steps.sort((a, b) => a.step - b.step);
 const familyNames = [...ramps.keys()].sort();
+others.sort((a, b) => a.name.localeCompare(b.name));
 
 // ── Theme: cssVarName -> {Default, Dark} 역방향 맵(별칭 체인 해석용) ────────────────
 const themeByCssName = new Map();
@@ -121,6 +129,16 @@ for (const family of familyNames) {
   }
   primitiveHtml.push('    </div>');
 }
+if (others.length) {
+  primitiveHtml.push('    <div class="doc-subhead">Base</div>');
+  primitiveHtml.push('    <div class="doc-row">');
+  for (const { name, hex } of others) {
+    primitiveHtml.push(
+      `      <div class="doc-swatch"><div class="doc-swatch__chip" style="width:120px;background-color:${hex};"></div><div class="doc-swatch__label">${name}</div></div>`
+    );
+  }
+  primitiveHtml.push('    </div>');
+}
 if (social.length) {
   primitiveHtml.push('    <div class="doc-subhead">Social</div>');
   primitiveHtml.push('    <div class="doc-row">');
@@ -170,7 +188,7 @@ colorsHtml = replaceBetweenMarkers(colorsHtml, 'THEME', themeHtml.join('\n'));
 fs.writeFileSync(colorsPath, colorsHtml, 'utf8');
 
 console.log(
-  `generate-docs-tokens: Primitive ${familyNames.length}개 램프(${familyNames.join(', ')}) + social ${social.length}개, ` +
+  `generate-docs-tokens: Primitive ${familyNames.length}개 램프(${familyNames.join(', ')}) + base ${others.length}개(${others.map((o) => o.name).join(', ')}) + social ${social.length}개, ` +
     `Theme 일반 시맨틱 ${themeCount}개 -> docs/tokens/colors.html`
 );
 if (themeCount !== 44) {

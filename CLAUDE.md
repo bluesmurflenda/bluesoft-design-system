@@ -308,9 +308,8 @@ scss/
 │  ├─ _shape.scss          :root + [data-shape="…"]
 │  └─ _breakpoint.scss     :root + 미디어쿼리
 ├─ abstracts/
-│  ├─ _maps.scss           $type-scale · $space · $radius · 컴포넌트 Map
-│  ├─ _mixins.scss         text() · mq() · container()
-│  └─ _functions.scss      space() · radius()
+│  ├─ _maps.scss           $type-scale · 컴포넌트 Map
+│  └─ _mixins.scss         text() · mq() · container()
 ├─ base/
 │  ├─ _reset.scss
 │  └─ _typography.scss     .text-* 유틸 (@each 생성)

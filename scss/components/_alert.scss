@@ -91,6 +91,13 @@ $alert-colors: (
     // 여기서 선언하면 나중에 나오는 .alert-{color}의 border 선언에 소스 순서상 덮어써진다.
   }
 
+  // inline·banner는 Figma 실측 폭이 있는데도 코드에 폭 규칙이 없었다(2026-09-01 확인) — 좁은
+  // 컨테이너에서 지나치게 눌리지 않도록 최소폭만 둔다. toast는 이미 width:400px 고정이라 대상 아님.
+  &-inline,
+  &-banner {
+    min-width: 480px;
+  }
+
   &__body {
     flex: 1;
     display: flex;
