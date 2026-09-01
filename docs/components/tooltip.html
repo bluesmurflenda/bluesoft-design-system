@@ -15,16 +15,16 @@
   <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Tooltip & Help Icon</div>
   <div class="doc-page-header">
     <h1>Tooltip & Help Icon</h1>
-    <p>Tooltip: Theme 2종(light/dark) × Arrow 5종(none/top/bottom/left/right) = 10. Help Icon: 16px 아이콘 + Tooltip 조합, 대표 Arrow 3종만 표시(풀 매트릭스 아님).</p>
+    <p>Tooltip: Theme(light/dark) × Arrow(none/top/bottom/left/right) 조합입니다. Help Icon: 아이콘 + Tooltip 조합이며, 대표 Arrow만 표시합니다(풀 매트릭스 아님).</p>
   </div>
 
   <section class="doc-section">
     <h2>Tooltip</h2>
     <p class="doc-desc">
-      <code>_tooltip.scss</code>에 실제로 정의된 arrow 클래스는 <code>tooltip-arrow-none/top/bottom/left/right</code> 5개뿐입니다.
+      <code>_tooltip.scss</code>에 실제로 정의된 arrow 클래스는 <code>tooltip-arrow-none/top/bottom/left/right</code>뿐입니다.
       Figma 축에 있는 <code>bottom-left</code>/<code>bottom-right</code>(코너 오프셋)는 대응하는 CSS 클래스가 아직 없어 이 페이지에서는 제외했습니다 — 추정으로 만들지 않습니다.
       <code>Theme=dark/light</code>는 사이트 다크모드가 아니라 컴포넌트 자체의 고정된 스타일(어두운 배경 스타일 / 밝은 배경 스타일)입니다 — 사이트를 다크모드로 바꿔도 이 배경·글자색은 반전되지 않습니다.
-      <code>tooltip-light</code>는 배경·글자·보조 텍스트가 전부 완전히 고정이고, <code>tooltip-dark</code>는 배경과 제목 글자는 고정이지만 보조 텍스트(<code>fg-supporting</code>)만 사이트 다크모드에서 흰색보다 살짝 죽인 회색(<code>neutral-300</code>)으로 대비를 낮춥니다 — 이 페이지는 라이트 테마로 고정돼 있어 그 차이는 보이지 않습니다.
+      <code>tooltip-light</code>는 배경·글자·보조 텍스트가 전부 완전히 고정이고, <code>tooltip-dark</code>는 배경과 제목 글자는 고정이지만 보조 텍스트(<code>fg-supporting</code>)만 사이트 다크모드에서 대비를 낮춘 색으로 바뀝니다 — 이 페이지는 라이트 테마로 고정돼 있어 그 차이는 보이지 않습니다.
     </p>
     <div class="doc-row" id="tooltip-matrix"></div>
   </section>
@@ -35,7 +35,7 @@
       <code>_help-icon.scss</code>는 <code>.tooltip</code>을 <code>:hover</code>/<code>:focus-visible</code>에서만 <code>display:flex</code>로 보여줍니다.
       정적 문서에서는 상호작용을 재현할 수 없어 <code>.tooltip</code> 엘리먼트에 인라인 <code>style="display:flex; position:static;"</code>를 직접 얹어 강제로 표시했습니다.
       또한 <code>_help-icon.scss</code> 자체는 테마를 고정하지 않습니다(어떤 <code>.tooltip-light</code>/<code>.tooltip-dark</code>를 조합할지는 사용하는 쪽 자유) — 아래 예시는 관례적으로 <code>tooltip-dark</code>를 사용했습니다.
-      Figma의 Property 축(top-left/top-right/top-no-arrow 포함)도 Tooltip 쪽 arrow 클래스와 1:1로 대응하지 않아, 실제 존재하는 클래스만으로 대표 3종(top/bottom/right)만 나열합니다.
+      Figma의 Property 축(top-left/top-right/top-no-arrow 포함)도 Tooltip 쪽 arrow 클래스와 1:1로 대응하지 않아, 실제 존재하는 클래스만으로 대표(top/bottom/right)만 나열합니다.
     </p>
     <div class="doc-row" id="help-icon-demo"></div>
   </section>

@@ -15,12 +15,12 @@
   <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Alert</div>
   <div class="doc-page-header">
     <h1>Alert</h1>
-    <p>Color 6종(brand/neutral/success/warning/error/info) × Layout 3종(inline/banner/toast) = 18. info는 brand와 <strong>라이트 모드에서만</strong> bg/fg/border 값이 같습니다(Chip과 동일 패턴) — 서로 다른 토큰이라 다크에서는 fg·border가 갈립니다(brand는 blue-300, info는 blue-400 등). bg만 다크에서도 계속 같습니다.</p>
+    <p>info는 brand와 <strong>라이트 모드에서만</strong> bg/fg/border 값이 같습니다(Chip과 동일 패턴) — 서로 다른 토큰이라 다크에서는 fg·border가 갈립니다. bg만 다크에서도 계속 같습니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>Inline</h2>
-    <p class="doc-desc">본문 안에 배치하는 기본 레이아웃. 보더 + <code>radius-lg</code>. 폭 480px 고정.</p>
+    <p class="doc-desc">본문 안에 배치하는 기본 레이아웃입니다. 보더가 있는 고정폭 카드형입니다.</p>
     <div class="doc-col" id="alert-inline-matrix"></div>
   </section>
 
@@ -32,13 +32,13 @@
 
   <section class="doc-section">
     <h2>Banner</h2>
-    <p class="doc-desc">화면 상단 등 전체 폭에 걸치는 레이아웃. 보더 없이 배경색만 채워지고 <code>border-radius: 0</code>입니다(실측: inline/toast와 다름).</p>
+    <p class="doc-desc">화면 상단 등 전체 폭에 걸치는 레이아웃입니다. 보더 없이 배경색만 채워지고 모서리가 각지며(실측: inline/toast와 다름), 화면 폭에 맞춰 늘어납니다.</p>
     <div class="doc-col" id="alert-banner-list"></div>
   </section>
 
   <section class="doc-section">
     <h2>Toast</h2>
-    <p class="doc-desc">고정폭 400px + 그림자(Shadow/lg)가 있는 플로팅 카드 레이아웃.</p>
+    <p class="doc-desc">고정폭 + 그림자가 있는 플로팅 카드 레이아웃입니다.</p>
     <div class="doc-col" id="alert-toast-list"></div>
   </section>
 </main>

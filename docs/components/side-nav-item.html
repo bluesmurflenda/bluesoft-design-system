@@ -15,13 +15,19 @@
   <div class="doc-breadcrumb"><a href="../index.html">네비게이션 컴포넌트</a> / Side Nav Item</div>
   <div class="doc-page-header">
     <h1>Side Nav Item</h1>
-    <p>Type 3종(default/sub/icon) × Theme 2종(light/dark) × State 2종(default/selected) = 12. hover는 정적 페이지로 재현할 수 없는 pseudo-state라 제외했습니다. 배지 슬롯(<code>.side-nav-item__badge</code>)은 별도로 1개 시연합니다. 이 문서 사이트의 왼쪽 사이드바 자체가 이 컴포넌트(<code>side-nav-item-light</code>)의 실제 사용 예시입니다.</p>
+    <p>hover는 매트릭스에서는 제외했습니다(Type 축과 조합하면 표가 지나치게 커짐). 배지 슬롯(<code>.side-nav-item__badge</code>)은 별도로 시연합니다. 이 문서 사이트의 왼쪽 사이드바 자체가 이 컴포넌트(<code>side-nav-item-light</code>)의 실제 사용 예시입니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>Type × Theme × State 매트릭스</h2>
-    <p class="doc-desc">dark 테마는 hover/selected 배경이 brand 계열(blue-800/blue-600)로 실측되어, 그보다 어두운 <code>var(--blue-900)</code> 배경 위에 올려 자연스러운 밝기 단계를 보여줍니다. light 테마는 흰 배경 위에 올렸습니다.</p>
+    <p class="doc-desc">dark 테마는 hover/selected 배경이 brand 계열로 실측되어, 그보다 어두운 <code>var(--blue-900)</code> 배경 위에 올려 자연스러운 밝기 단계를 보여줍니다. light 테마는 흰 배경 위에 올렸습니다.</p>
     <div class="doc-matrix" id="nav-item-matrix"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Hover — light/dark 비대칭</h2>
+    <p class="doc-desc">아래 항목에 실제로 마우스를 올려 확인하세요(인라인 스타일로 흉내낸 것이 아니라 <code>:hover</code> CSS를 그대로 씁니다). <strong>light</strong>는 배경과 글자·아이콘 색이 함께 <code>nav-fg-hover</code>로 바뀌지만, <strong>dark</strong>는 배경만 바뀌고 글자·아이콘 색은 흰색 그대로 고정입니다(<code>_side-nav-item.scss</code>의 light/dark 규칙 참고).</p>
+    <div class="doc-matrix" id="nav-item-hover-demo"></div>
   </section>
 
   <section class="doc-section">
@@ -91,6 +97,22 @@
           el.appendChild(cell);
         });
       });
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('nav-item-hover-demo');
+    THEMES.forEach(function (th) {
+      var wrapStyle = th[0] === 'dark'
+        ? 'background:var(--blue-900);padding:12px;border-radius:8px;width:100%;'
+        : 'background:#fff;padding:12px;border-radius:8px;width:100%;border:1px solid var(--neutral-200);';
+      var itemHtml = '<a class="side-nav-item ' + th[1] + '" href="javascript:void(0)">' + contentHtml('default', '마우스를 올려보세요') + '</a>';
+      var cell = document.createElement('div');
+      cell.className = 'doc-cell';
+      cell.innerHTML =
+        '<div style="' + wrapStyle + '">' + itemHtml + '</div>' +
+        '<span class="doc-cell__caption">' + th[1] + ' :hover</span>';
+      el.appendChild(cell);
     });
   })();
 </script>

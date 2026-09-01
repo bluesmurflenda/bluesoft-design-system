@@ -15,7 +15,7 @@
   <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Board</div>
   <div class="doc-page-header">
     <h1>Board</h1>
-    <p>행 종류 2종(post 기본/notice) × board-list 컨테이너 유무 2종 + 모바일 board-card 1종 + 페이지네이션 재사용 2종(container 유무에 따라 pagination-numbers/pagination-simple-icon). hover는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외합니다.</p>
+    <p>post 행과 notice 행, board-list 컨테이너 유무, 모바일 board-card 형태를 함께 확인합니다. 페이지네이션은 컨테이너 유무에 따라 <code>pagination-numbers</code> 또는 <code>pagination-simple-icon</code>을 재사용합니다. hover는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외합니다.</p>
   </div>
 
   <section class="doc-section">
@@ -35,7 +35,7 @@
         <span class="doc-cell__caption">board-row</span>
       </div>
       <div class="doc-cell" style="width:100%;">
-        <div class="board-row board-row-notice" style="width:100%;">
+        <div class="board-row" style="width:100%;">
           <div class="board-row__content">
             <span class="chip chip-sm chip-brand">공지</span>
             <span class="board-row__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
@@ -45,7 +45,7 @@
             <span class="board-cell board-cell-body">1,204</span>
           </div>
         </div>
-        <span class="doc-cell__caption">board-row board-row-notice</span>
+        <span class="doc-cell__caption">board-row + notice 배지</span>
       </div>
     </div>
   </section>
@@ -60,7 +60,7 @@
           <span class="board-cell board-cell-header">작성일</span>
           <span class="board-cell board-cell-header">조회수</span>
         </div>
-        <div class="board-row board-row-notice">
+        <div class="board-row">
           <div class="board-row__content">
             <span class="chip chip-sm chip-brand">공지</span>
             <span class="board-row__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>

@@ -9,22 +9,22 @@
     {
       standalone: true,
       icon: 'home',
-      label: '소개',
+      label: 'Introduction',
       href: BASE + 'index.html',
     },
     {
       icon: 'grid',
-      label: '토큰',
+      label: 'Tokens',
       href: BASE + 'tokens/colors.html',
       children: [
-        { label: '색상', href: BASE + 'tokens/colors.html' },
-        { label: '간격 & Radius', href: BASE + 'tokens/spacing.html' },
-        { label: '타이포그래피', href: BASE + 'tokens/typography.html' },
+        { label: 'Colors', href: BASE + 'tokens/colors.html' },
+        { label: 'Spacing & Radius', href: BASE + 'tokens/spacing.html' },
+        { label: 'Typography', href: BASE + 'tokens/typography.html' },
       ],
     },
     {
       icon: 'layout',
-      label: '기본 컴포넌트',
+      label: 'Basic Components',
       href: BASE + 'components/button.html',
       children: [
         { label: 'Button', href: BASE + 'components/button.html' },
@@ -37,7 +37,7 @@
     },
     {
       icon: 'edit',
-      label: '폼 컴포넌트',
+      label: 'Form Components',
       href: BASE + 'components/input.html',
       children: [
         { label: 'Input', href: BASE + 'components/input.html' },
@@ -49,7 +49,7 @@
     },
     {
       icon: 'bell',
-      label: '피드백 컴포넌트',
+      label: 'Feedback Components',
       href: BASE + 'components/alert.html',
       children: [
         { label: 'Alert', href: BASE + 'components/alert.html' },
@@ -61,7 +61,7 @@
     },
     {
       icon: 'bar-chart',
-      label: '데이터 컴포넌트',
+      label: 'Data Components',
       href: BASE + 'components/table.html',
       children: [
         { label: 'Table', href: BASE + 'components/table.html' },
@@ -74,7 +74,7 @@
     },
     {
       icon: 'menu',
-      label: '네비게이션 컴포넌트',
+      label: 'Navigation Components',
       href: BASE + 'components/side-nav-item.html',
       children: [
         { label: 'Side Nav Item', href: BASE + 'components/side-nav-item.html' },
@@ -86,9 +86,9 @@
     },
   ];
 
-  function iconSvg(name) {
+  function iconSvg(name, cls) {
     return (
-      '<svg class="side-nav-item__icon"><use href="' +
+      '<svg class="' + (cls || 'side-nav-item__icon') + '"><use href="' +
       BASE +
       'assets/icons/sprite.svg#icon-base-' +
       name +
@@ -105,6 +105,13 @@
     return '<a class="' + classes + '" data-nav' + attrs + ' href="' + item.href + '">' + content + '</a>';
   }
 
+  function groupMatchesCurrentFile(group, currentFile) {
+    if (group.href.split('/').pop() === currentFile) return true;
+    return group.children.some(function (child) {
+      return child.href.split('/').pop() === currentFile;
+    });
+  }
+
   function render() {
     var mount = document.getElementById('sidebar-mount');
     if (!mount) return;
@@ -117,17 +124,27 @@
       '<input class="input__control" id="doc-search" placeholder="컴포넌트 검색" autocomplete="off" />' +
       '</div></div></div></div>';
 
+    var currentFile = location.pathname.split('/').pop() || 'index.html';
+
     html += '<div class="doc-sidebar__nav">';
     NAV.forEach(function (group) {
       if (group.standalone) {
         html += '<div class="doc-nav-group">' + itemHtml(group, false) + '</div>';
         return;
       }
-      html += '<div class="doc-nav-group" data-nav-group>';
+      var isOpen = groupMatchesCurrentFile(group, currentFile);
+      html += '<div class="doc-nav-group' + (isOpen ? ' is-open' : '') + '" data-nav-group data-default-open="' + isOpen + '">';
+      html += '<div class="doc-nav-group__header">';
       html += itemHtml(group, false);
+      html += '<button type="button" class="doc-nav-group__toggle" data-nav-toggle aria-expanded="' + isOpen + '" aria-label="하위 메뉴 펼치기/접기">';
+      html += iconSvg('chevron-right', 'icon icon-sm doc-nav-group__chevron');
+      html += '</button>';
+      html += '</div>';
+      html += '<div class="doc-nav-group__children" data-nav-children><div class="doc-nav-group__children-inner">';
       group.children.forEach(function (child) {
         html += itemHtml(child, true);
       });
+      html += '</div></div>';
       html += '</div>';
     });
     html += '</div>';
@@ -140,15 +157,33 @@
     mount.innerHTML = html;
 
     // 현재 페이지 강조 — pathname 끝부분(파일명)을 비교한다.
-    var currentFile = location.pathname.split('/').pop() || 'index.html';
     mount.querySelectorAll('[data-nav]').forEach(function (a) {
       var hrefFile = a.getAttribute('href').split('/').pop();
       a.classList.toggle('side-nav-item-selected', hrefFile === currentFile);
     });
 
-    // 검색 필터 — 하위 항목 텍스트로 필터링, 전부 숨겨진 그룹은 그룹째로 숨김
-    var searchInput = document.getElementById('doc-search');
+    // 아코디언 — 한 번에 하나의 그룹만 펼쳐진다. 화살표 토글만 펼치기/접기하고
+    // 그룹 헤더 링크(label 부분)는 기존처럼 그대로 이동한다.
     var navGroups = mount.querySelectorAll('[data-nav-group]');
+    navGroups.forEach(function (group) {
+      var toggle = group.querySelector('[data-nav-toggle]');
+      toggle.addEventListener('click', function () {
+        var willOpen = !group.classList.contains('is-open');
+        navGroups.forEach(function (g) {
+          g.classList.remove('is-open');
+          g.querySelector('[data-nav-toggle]').setAttribute('aria-expanded', 'false');
+        });
+        if (willOpen) {
+          group.classList.add('is-open');
+          toggle.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // 검색 필터 — 하위 항목 텍스트로 필터링, 전부 숨겨진 그룹은 그룹째로 숨김.
+    // 검색 중에는 아코디언과 무관하게 매치된 그룹을 전부 펼치고, 검색어를 지우면
+    // 페이지 로드 시의 기본 상태(현재 페이지가 속한 그룹만 오픈)로 되돌린다.
+    var searchInput = document.getElementById('doc-search');
     searchInput.addEventListener('input', function () {
       var q = searchInput.value.trim().toLowerCase();
       navGroups.forEach(function (group) {
@@ -160,6 +195,12 @@
           if (match) anyVisible = true;
         });
         group.classList.toggle('doc-search-hidden', !!q && !anyVisible);
+
+        var toggle = group.querySelector('[data-nav-toggle]');
+        if (!toggle) return;
+        var shouldOpen = q ? anyVisible : group.dataset.defaultOpen === 'true';
+        group.classList.toggle('is-open', shouldOpen);
+        toggle.setAttribute('aria-expanded', String(shouldOpen));
       });
     });
   }

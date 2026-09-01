@@ -15,7 +15,6 @@
   <div class="doc-breadcrumb"><a href="../index.html">폼 컴포넌트</a> / Dropdown & Select</div>
   <div class="doc-page-header">
     <h1>Dropdown & Select</h1>
-    <p>Dropdown: Trigger 사이즈 4종(sm/md/lg/xl) + List Panel/Item 상태 3종(default/selected/disabled, 조립 예시 1개로 확인 — 사이즈 무관). Select: Size 4종(sm/md/lg/xl) × Validation 3종(normal/invalid/valid) = 12 + Disabled 3종(md 기준) = 15.</p>
   </div>
 
   <section class="doc-section">
@@ -26,7 +25,7 @@
 
   <section class="doc-section">
     <h2>Dropdown — 조립 예시(열림 상태)</h2>
-    <p class="doc-desc"><code>.dropdown__trigger[aria-expanded="true"]</code> + <code>.list-panel</code> 조합. 옵션 상태는 default/selected(<code>.list-item-selected</code>)/disabled(<code>.list-item-disabled</code>) 3종입니다.</p>
+    <p class="doc-desc"><code>.dropdown__trigger[aria-expanded="true"]</code> + <code>.list-panel</code> 조합. 옵션 상태는 default/selected(<code>.list-item-selected</code>)/disabled(<code>.list-item-disabled</code>)입니다.</p>
     <div class="doc-card" id="dropdown-assembled" style="display:inline-block;"></div>
   </section>
 
@@ -38,8 +37,14 @@
 
   <section class="doc-section">
     <h2>Select — Disabled</h2>
-    <p class="doc-desc">검증 상태별 3종(md 사이즈). <code>.select-disabled</code>를 검증 modifier와 함께 사용합니다.</p>
+    <p class="doc-desc">검증 상태별로 확인합니다(md 사이즈). <code>.select-disabled</code>를 검증 modifier와 함께 사용합니다.</p>
     <div class="doc-matrix" id="select-disabled"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Select — 선행 아이콘 슬롯</h2>
+    <p class="doc-desc"><code>.select__icon</code> — <code>.select__chevron</code>과 나란히 필드 안에 놓이는 선택적 슬롯입니다(사이즈와 무관하게 고정 크기입니다).</p>
+    <div class="doc-matrix" id="select-icon"></div>
   </section>
 </main>
 
@@ -124,6 +129,25 @@
       cell.innerHTML = selectHtml(cls, true) + '<span class="doc-cell__caption">' + cls + '</span>';
       el.appendChild(cell);
     });
+  })();
+
+  (function () {
+    var el = document.getElementById('select-icon');
+    var cls = 'select select-md select-normal';
+    var cell = document.createElement('div');
+    cell.className = 'doc-cell';
+    cell.innerHTML =
+      '<div class="' + cls + '" style="width:100%;">' +
+      '<label class="select__label">Label</label>' +
+      '<div class="select__field">' +
+      iconSvg('select__icon', 'calendar') +
+      '<span class="select__content">2026.08.28</span>' +
+      chevronDown('select__chevron') +
+      '</div>' +
+      '<span class="select__hint">Hint text가 표시되는 영역입니다</span>' +
+      '</div>' +
+      '<span class="doc-cell__caption">' + cls + ' + select__icon</span>';
+    el.appendChild(cell);
   })();
 </script>
 </body>

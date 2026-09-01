@@ -15,7 +15,7 @@
   <div class="doc-breadcrumb"><a href="../index.html">기본 컴포넌트</a> / Chip</div>
   <div class="doc-page-header">
     <h1>Chip</h1>
-    <p>색상 6종(brand/neutral/success/warning/error/info) × 사이즈 3(sm/md/lg) = 18. Dot 슬롯(<code>.chip__dot</code>)은 색상 축과 무관하게 사이즈별 1종씩 별도로 확인합니다(brand 기준 3개, 위 18과 별도).</p>
+    <p><code>.chip__dot</code> 슬롯은 색상 축과 무관하게 사이즈별로 별도 확인합니다. <strong>Chip Dot</strong>은 Chip과 별개 컴포넌트입니다.</p>
   </div>
 
   <section class="doc-section">
@@ -25,8 +25,14 @@
 
   <section class="doc-section">
     <h2>Dot 슬롯</h2>
-    <p class="doc-desc"><code>.chip__dot</code>을 라벨 앞에 추가한 형태 — 사이즈별 dot 지름(sm/md 6px, lg 8px)만 다릅니다.</p>
+    <p class="doc-desc"><code>.chip__dot</code>을 라벨 앞에 추가한 형태 — 사이즈별로 dot 지름만 다릅니다.</p>
     <div class="doc-card doc-row" id="chip-dot-demo"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Chip Dot(독립 컴포넌트)</h2>
+    <p class="doc-desc"><code>.chip-dot</code> — Chip과 별개 컴포넌트입니다(<code>_chip.scss</code> 주석: "배경 없이 점+텍스트만 있다"). 배경색이 없고 <code>.chip-dot__dot</code>과 텍스트 색만 컬러를 따릅니다. padding-x·dot 지름이 Chip의 <code>.chip__dot</code>과 다릅니다.</p>
+    <div class="doc-matrix" id="chip-dot-matrix"></div>
   </section>
 </main>
 
@@ -58,6 +64,20 @@
       wrap.innerHTML = '<span class="chip chip-' + size + ' chip-brand"><span class="chip__dot"></span><span>Brand</span></span>' +
         '<span class="doc-cell__caption">chip-' + size + ' chip-brand + .chip__dot</span>';
       el.appendChild(wrap);
+    });
+  })();
+
+  (function () {
+    var el = document.getElementById('chip-dot-matrix');
+    COLORS.forEach(function (color) {
+      SIZES.forEach(function (size) {
+        var cls = 'chip-dot chip-dot-' + size + ' chip-dot-' + color;
+        var cell = document.createElement('div');
+        cell.className = 'doc-cell';
+        cell.innerHTML = '<span class="' + cls + '"><span class="chip-dot__dot"></span><span>' + LABEL_TEXT[color] + '</span></span>' +
+          '<span class="doc-cell__caption">' + cls + '</span>';
+        el.appendChild(cell);
+      });
     });
   })();
 </script>
