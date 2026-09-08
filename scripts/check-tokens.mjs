@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// SCSS 검사 — scripts/README.md 의 S1~S7. 로컬 파일만 본다(Figma 스냅샷은 읽지만 REST/MCP 호출 없음).
+// SCSS 검사 — scripts/README.md 의 S1~S8. 로컬 파일만 본다(Figma 스냅샷은 읽지만 REST/MCP 호출 없음).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -403,6 +403,35 @@ function extractTopLevelBlocks(text) {
   rows.push(row('S7b', 'ID 셀렉터', idWarnings.length ? 'FAIL' : 'PASS', idWarnings.length,
     idWarnings[0] ? `예: ${idWarnings[0].selector}` : ''));
   addDetail('S7b', 'ID 셀렉터', idWarnings.map((w) => w.selector));
+}
+
+// ── S8. 문서 내 수치 하드코딩 ─────────────────────────────────────
+// 근거: ADR-013. 현재 상태를 서술하는 문서만 본다.
+//  - DECISIONS.md 는 날짜가 붙은 과거 기록이라 그 시점의 실측값을 담는 게 정상이다
+//  - scripts/README.md 는 검사 패턴·임계값 자체가 내용이다
+//  - 코드 블록(``` 펜스 · 4칸 이상 들여쓰기)은 예시 코드라 대상이 아니다
+{
+  const SCANNED = ['CLAUDE.md', 'FIGMA.md', 'SCSS.md', 'STATUS.md'];
+  const NUM_RE = /\d+\s*(?:px|rem)\b|\d{2,}\s*(?:개|건|줄|번)/g;
+  // 한 자리 개수("4개 파일")는 구조 설명이라 통과시킨다. 낡는 것은 실측 개수다.
+  const violations = [];
+  for (const name of SCANNED) {
+    const full = path.join(ROOT, name);
+    if (!fs.existsSync(full)) continue;
+    const lines = fs.readFileSync(full, 'utf8').split('\n');
+    let inFence = false;
+    lines.forEach((rawLine, i) => {
+      if (/^\s*```/.test(rawLine)) { inFence = !inFence; return; }
+      if (inFence) return;
+      if (/^ {4,}|^\t/.test(rawLine)) return;            // 들여쓴 코드 블록
+      if (/<!--\s*예외:/.test(rawLine)) return;           // 줄 단위 예외
+      const matches = rawLine.match(NUM_RE);
+      if (matches) violations.push({ file: name, line: i + 1, text: rawLine.trim(), matches });
+    });
+  }
+  rows.push(row('S8', '문서 내 수치', violations.length ? 'FAIL' : 'PASS', violations.length,
+    violations[0] ? `예: ${violations[0].file}:${violations[0].line}` : ''));
+  addDetail('S8', '문서 내 수치', violations.map((v) => `${v.file}:${v.line}  ${v.matches.join(' ')}  ${v.text.slice(0, 80)}`));
 }
 
 // ── 출력 ──────────────────────────────────────────────────────────

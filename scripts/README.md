@@ -8,12 +8,12 @@
 **Figma Variables REST API 는 Enterprise 플랜 전용이다.** 우리 계정에는 없다.
 따라서 검사를 세 갈래로 나눈다.
 
-| 검사군 | 대상 | 실행 방법 | CI |
-|---|---|---|---|
-| **N** 노드 스캔 | D1 · D2 · D10 | REST `file_content:read` | 가능 |
-| **T** 토큰 대조 | S2 | `tokens.json` 스냅샷 대조 | 가능 |
+| 검사군          | 대상            | 실행 방법                  | CI   |
+| --------------- | --------------- | -------------------------- | ---- |
+| **N** 노드 스캔 | D1 · D2 · D10   | REST `file_content:read`   | 가능 |
+| **T** 토큰 대조 | S2              | `tokens.json` 스냅샷 대조  | 가능 |
 | **V** 변수 검사 | D3~D9 · D11~D13 | **Figma MCP 로 수동 실행** | 불가 |
-| **S** SCSS | S1 · S3~S7 | 로컬 파일 | 가능 |
+| **S** SCSS      | S1 · S3~S8      | 로컬 파일                  | 가능 |
 
 ### tokens.json 스냅샷
 
@@ -34,29 +34,37 @@ S2 는 이 파일과 SCSS 를 대조한다. **퍼블리시 시점이 곧 값이 
 // Figma MCP 에서 실행
 const cols = await figma.variables.getLocalVariableCollectionsAsync();
 const vars = await figma.variables.getLocalVariablesAsync();
-const byId = {}; vars.forEach(v => byId[v.id] = v);
-const hex = c => {
-  if (!c || typeof c.r !== 'number') return c;
-  if (c.a != null && c.a < 1)
-    return `rgba(${Math.round(c.r*255)},${Math.round(c.g*255)},${Math.round(c.b*255)},${+c.a.toFixed(3)})`;
-  return '#' + [c.r,c.g,c.b].map(x => Math.round(x*255).toString(16).padStart(2,'0')).join('');
+const byId = {};
+vars.forEach((v) => (byId[v.id] = v));
+const hex = (c) => {
+    if (!c || typeof c.r !== "number") return c;
+    if (c.a != null && c.a < 1) return `rgba(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)},${+c.a.toFixed(3)})`;
+    return (
+        "#" +
+        [c.r, c.g, c.b]
+            .map((x) =>
+                Math.round(x * 255)
+                    .toString(16)
+                    .padStart(2, "0"),
+            )
+            .join("")
+    );
 };
-const cssVar = n => 'var(--' + n.replace(/\//g,'-') + ')';
-const out = { _meta: { exportedAt: '', source: '', counts: {} } };
+const cssVar = (n) => "var(--" + n.replace(/\//g, "-") + ")";
+const out = { _meta: { exportedAt: "", source: "", counts: {} } };
 for (const c of cols) {
-  out._meta.counts[c.name] = c.variableIds.length;
-  out[c.name] = { _modes: c.modes.map(m => m.name) };
-  for (const vid of c.variableIds) {
-    const v = byId[vid]; if (!v) continue;
-    const e = {};
-    for (const m of c.modes) {
-      const raw = v.valuesByMode[m.modeId];
-      e[m.name] = raw === undefined ? null
-        : (raw && raw.type === 'VARIABLE_ALIAS') ? cssVar((byId[raw.id]||{}).name || '?')
-        : (v.resolvedType === 'COLOR' ? hex(raw) : raw);
+    out._meta.counts[c.name] = c.variableIds.length;
+    out[c.name] = { _modes: c.modes.map((m) => m.name) };
+    for (const vid of c.variableIds) {
+        const v = byId[vid];
+        if (!v) continue;
+        const e = {};
+        for (const m of c.modes) {
+            const raw = v.valuesByMode[m.modeId];
+            e[m.name] = raw === undefined ? null : raw && raw.type === "VARIABLE_ALIAS" ? cssVar((byId[raw.id] || {}).name || "?") : v.resolvedType === "COLOR" ? hex(raw) : raw;
+        }
+        out[c.name][v.name] = c.modes.length === 1 ? e[c.modes[0].name] : e;
     }
-    out[c.name][v.name] = c.modes.length === 1 ? e[c.modes[0].name] : e;
-  }
 }
 return { json: JSON.stringify(out, null, 2) };
 ```
@@ -75,10 +83,10 @@ figma/tokens.breakpoint.json
 
 ### 형식
 
-| 컬렉션 | 형식 |
-|---|---|
-| 단일 모드 (Primitive) | `"neutral/900": "#171717"` |
-| 다중 모드 | `"card/bg": { "Default": "var(--white)", "Dark": "var(--neutral-800)" }` |
+| 컬렉션                | 형식                                                                     |
+| --------------------- | ------------------------------------------------------------------------ |
+| 단일 모드 (Primitive) | `"neutral/900": "#171717"`                                               |
+| 다중 모드             | `"card/bg": { "Default": "var(--white)", "Dark": "var(--neutral-800)" }` |
 
 **별칭은 CSS 변수 문자열로 저장한다.** 그래야 SCSS 와 그대로 대조된다.
 
@@ -94,11 +102,11 @@ figma/tokens.breakpoint.json
 
 ```js
 // 컬렉션 하나당 이렇게 뽑는다(값 없이 id/이름만이라 가볍다 — 4개 합쳐도 20KB 안쪽)
-const col = collections.find(c => c.name === TARGET);
+const col = collections.find((c) => c.name === TARGET);
 const out = {};
 for (const vid of col.variableIds) {
-  const v = await figma.variables.getVariableByIdAsync(vid);
-  if (v) out[vid.replace('VariableID:', '')] = v.name;
+    const v = await figma.variables.getVariableByIdAsync(vid);
+    if (v) out[vid.replace("VariableID:", "")] = v.name;
 }
 ```
 
@@ -115,10 +123,10 @@ for (const vid of col.variableIds) {
 
 ## 스크립트
 
-| 스크립트 | 검사군 | 실행 |
-|---|---|---|
-| `check-nodes.mjs` | N | REST API |
-| `check-tokens.mjs` | T · S | 로컬 파일 |
+| 스크립트           | 검사군 | 실행      |
+| ------------------ | ------ | --------- |
+| `check-nodes.mjs`  | N      | REST API  |
+| `check-tokens.mjs` | T · S  | 로컬 파일 |
 
 ```json
 // package.json
@@ -154,11 +162,11 @@ FIGMA_FILE_KEY=kJD5jv7RNKxLD1hP8oKtBG
 
 ---
 
-## check-ds.mjs — Figma 검사
+## check-nodes.mjs — Figma 검사
 
 ### D1. COLOR 프리미티브 직접 참조
 
-근거: 프로젝트 1장 · ADR-003
+근거: `FIGMA.md` 「토큰 계층」 · ADR-003
 
 **컴포넌트 노드가 색상 프리미티브를 직접 바인딩하면 실패.**
 
@@ -178,7 +186,7 @@ FIGMA_FILE_KEY=kJD5jv7RNKxLD1hP8oKtBG
 
 ### D2. 하드코딩 색상
 
-근거: 프로젝트 1장
+근거: `FIGMA.md` 「토큰 계층」
 
 **변수·스타일 바인딩 없이 SOLID 색을 가진 노드는 실패.**
 
@@ -189,15 +197,15 @@ FIGMA_FILE_KEY=kJD5jv7RNKxLD1hP8oKtBG
 
 ### D3. 대비
 
-근거: 프로젝트 3장
+근거: `FIGMA.md` 「대비 기준」
 
 **`*/fg*` 와 대응 `*/bg*` 쌍을 라이트·다크 양쪽에서 계산.**
 
-| 쌍 | 기준 |
-|---|---|
-| `X/fg` on `X/bg` | 4.5:1 |
+| 쌍                                 | 기준  |
+| ---------------------------------- | ----- |
+| `X/fg` on `X/bg`                   | 4.5:1 |
 | `X/fg-selected` on `X/bg-selected` | 4.5:1 |
-| 아이콘 토큰 | 3:1 |
+| 아이콘 토큰                        | 3:1   |
 
 ```
 제외: disabled · unavailable · past · placeholder (WCAG 예외)
@@ -208,7 +216,7 @@ FIGMA_FILE_KEY=kJD5jv7RNKxLD1hP8oKtBG
 
 ### D4. 형제 참조
 
-근거: 프로젝트 1장 · ADR-010
+근거: `FIGMA.md` 「토큰 계층」 · ADR-010
 
 **컴포넌트 토큰이 같은 그룹의 다른 하위그룹을 참조하면 실패.**
 
@@ -221,7 +229,7 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D5. dark/light 스타일 토큰 반전
 
-근거: 프로젝트 2장 · ADR-002
+근거: `FIGMA.md` 「컬렉션과 모드」 · ADR-002
 
 **토큰명에 `/dark/` 또는 `/light/` 가 들어가면 라이트·다크 값이 같아야 한다.**
 
@@ -239,7 +247,7 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D6. 시맨틱 경유 가능한데 안 하는 것
 
-근거: 프로젝트 1장 · ADR-003
+근거: `FIGMA.md` 「토큰 계층」 · ADR-003
 
 **컴포넌트 토큰이 프리미티브를 직접 참조하는데, 같은 값의 시맨틱이 존재하면 경고.**
 
@@ -247,7 +255,7 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D7. 깨진 참조
 
-근거: 프로젝트 7장 참조 구조
+근거: `FIGMA.md` 「토큰 위생」의 "참조 구조"
 
 - 존재하지 않는 변수 id 를 가리키는 노드
 - 존재하지 않는 변수 id 를 가리키는 별칭
@@ -266,18 +274,18 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D8. 순환 참조 · 과도한 별칭 사슬
 
-근거: `CLAUDE.md` 7장 참조 구조
+근거: `FIGMA.md` 「토큰 위생」의 "참조 구조"
 
 - 별칭이 자기 자신으로 돌아오면 실패
 - 사슬이 3단계를 넘으면 경고
 
 ### D9. 모드 값 무결성
 
-근거: `CLAUDE.md` 7장 모드 값
+근거: `FIGMA.md` 「토큰 위생」의 "모드 값"
 
-| 검사 | 실패 조건 |
-|---|---|
-| 값 누락 | 어떤 모드에 값이 없음 |
+| 검사                | 실패 조건                         |
+| ------------------- | --------------------------------- |
+| 값 누락             | 어떤 모드에 값이 없음             |
 | 브레이크포인트 역전 | Wide → Mobile 로 가면서 값이 커짐 |
 
 ```
@@ -287,7 +295,7 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D10. 컴포넌트 세트 규격
 
-근거: 프로젝트 6장 · ADR-011
+근거: `FIGMA.md` 「컴포넌트 세트 규격」 · ADR-011
 
 - 세트 프레임에 점선 테두리가 없으면 실패
 - 세트 프레임 배경이 `surface/default` 가 아니면 실패
@@ -298,25 +306,25 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D11. 네이밍 일관성
 
-근거: `CLAUDE.md` 7장 네이밍
+근거: `FIGMA.md` 「토큰 위생」의 "네이밍"
 
-| 검사 | 실패 조건 |
-|---|---|
-| 깊이 | 4단계 이상 |
+| 검사   | 실패 조건                                                                |
+| ------ | ------------------------------------------------------------------------ |
+| 깊이   | 4단계 이상                                                               |
 | 동의어 | 같은 뜻에 다른 접미사 (`fg-supporting` vs `fg-muted` vs `supporting-fg`) |
-| 순서 | `supporting-fg` 처럼 뒤집힌 것 |
-| 형식 | 같은 성격 그룹인데 접미사 규칙이 다름 |
+| 순서   | `supporting-fg` 처럼 뒤집힌 것                                           |
+| 형식   | 같은 성격 그룹인데 접미사 규칙이 다름                                    |
 
 ### D12. 메타데이터
 
-근거: `CLAUDE.md` 7장 메타데이터
+근거: `FIGMA.md` 「토큰 위생」의 "메타데이터"
 
 - `codeSyntax.WEB` 이 비어 있으면 경고
 - `scopes` 가 역할과 안 맞으면 경고 (아이콘 색인데 `SHAPE_FILL` 없음 등)
 
 ### D13. 고아 토큰
 
-근거: 프로젝트 5장 · 7장 메타데이터
+근거: `FIGMA.md` 「작업 순서」 · 「토큰 위생」의 "메타데이터"
 
 **어디서도 참조되지 않는 토큰을 나열한다.** 실패가 아니라 **목록 출력**이다.
 
@@ -331,7 +339,7 @@ tabs/pill/bg-hover → surface/subtle            통과
 
 ### D14. 요소별 토큰 매핑 대조
 
-근거: `CLAUDE.md` 6장(작업 대상별 참조) · ADR-023
+근거: ADR-023
 
 **`scripts/lib/element-map/*.mjs`에 매핑이 있는 컴포넌트만, 요소별 토큰 참조가 Figma와
 일치하는지 대조한다.** N군(REST)이라 `check-nodes.mjs`가 D1/D2/D10과 같은 호출 안에서 돈다.
@@ -367,7 +375,7 @@ specificity로 실제 적용되는 값이 뭔지는 시뮬레이션하지 않는
 SCSS 파싱(postcss)은 자동화되므로 매핑만 사람이 한 번 쓰면 회귀 검사로 계속 재사용된다.
 
 **D1/D2의 `walk()`와 인스턴스 처리가 다르다.** D1/D2는 인스턴스 경계에서 내려가지 않는다(같은
-위반을 파일 전체에서 중복 집계하지 않으려는 것 — figma.md). D14의 `walkForDump()`는 **내려간다**
+위반을 파일 전체에서 중복 집계하지 않으려는 것 — `figma-work-principles` 스킬 「B1. 인스턴스 내부와 자체 레이어를 구분한다」). D14의 `walkForDump()`는 **내려간다**
 — 위반 집계가 아니라 "이 자리에 실제로 어떤 색이 적용됐는가"를 봐야 하는데, REST는 INSTANCE
 노드도 오버라이드가 반영된 `children`을 그대로 반환하기 때문이다(실측: Alert의 `Icon` 인스턴스
 자체 `fills`는 빈 배열이고, 실제 색은 그 안의 중첩 벡터 `Icon/Icon`에 있었다 — 2026-09-01,
@@ -379,7 +387,7 @@ SCSS 파싱(postcss)은 자동화되므로 매핑만 사람이 한 번 쓰면 �
 
 ### S1. hex 하드코딩
 
-근거: 전역 4장
+근거: hex 는 `tokens/_primitive.scss` 와 Figma 스냅샷에만 둔다
 
 **`tokens/_primitive.scss` 밖에서 hex 를 쓰면 실패.**
 
@@ -392,31 +400,31 @@ SCSS 파싱(postcss)은 자동화되므로 매핑만 사람이 한 번 쓰면 �
 
 ### S2. Figma ↔ CSS 토큰 대조
 
-근거: 프로젝트 10장 · ADR-013
+근거: `FIGMA.md` 「검증」 · ADR-013
 
 **Figma 토큰 목록과 CSS 변수 목록을 대조.**
 
-| 결과 | 의미 |
-|---|---|
-| Figma 에만 있음 | CSS 누락 |
-| CSS 에만 있음 | 삭제된 토큰이 코드에 남음 |
-| 값 불일치 | 낡은 값 |
+| 결과            | 의미                      |
+| --------------- | ------------------------- |
+| Figma 에만 있음 | CSS 누락                  |
+| CSS 에만 있음   | 삭제된 토큰이 코드에 남음 |
+| 값 불일치       | 낡은 값                   |
 
 **이 항목이 핵심이다.** 사람이 눈으로 볼 일이 사라진다.
 
 **`figma/tokens.*.json` 스냅샷이 없을 때:**
 
-| 단계 | 판정 |
-|---|---|
-| 0단계 (검사 스크립트를 만드는 중, 아직 추출 전) | `SKIP` |
-| 1단계 이후 | `FAIL` — 기준값 없이 코드를 검증할 수 없다 |
+| 단계                                            | 판정                                       |
+| ----------------------------------------------- | ------------------------------------------ |
+| 0단계 (검사 스크립트를 만드는 중, 아직 추출 전) | `SKIP`                                     |
+| 1단계 이후                                      | `FAIL` — 기준값 없이 코드를 검증할 수 없다 |
 
 기본은 `FAIL`. `check-tokens.mjs --bootstrap` 로 실행했을 때만 `SKIP` 으로 낮춘다.
 0단계를 벗어나면(스냅샷이 커밋된 이후) `--bootstrap` 을 쓰지 않는다.
 
 ### S3. 미정의 변수
 
-근거: `CLAUDE.md` 7장 참조 구조
+근거: `FIGMA.md` 「토큰 위생」의 "참조 구조"
 
 **`var(--x)` 의 `--x` 가 어디에도 정의되지 않으면 실패.**
 
@@ -439,7 +447,7 @@ SCSS 파싱(postcss)은 자동화되므로 매핑만 사람이 한 번 쓰면 �
 
 ### S4. 컴포넌트의 프리미티브 직접 참조
 
-근거: 프로젝트 1장 · ADR-003
+근거: `FIGMA.md` 「토큰 계층」 · ADR-003
 
 **`components/` 파일이 프리미티브 변수를 참조하면 실패.**
 
@@ -447,35 +455,58 @@ D1 과 같은 규칙의 코드 버전. 허용 목록도 같다.
 
 ### S5. 중복 오버라이드
 
-근거: 전역 4장
+근거: `FIGMA.md` 「토큰 계층」의 "컴포넌트는 시맨틱을 거친다"
 
 **모드 블록에 `:root` 와 같은 값을 다시 선언하면 경고.**
 
 ```scss
 // 경고
-[data-theme='dark'] {
-  --tooltip-bg: var(--neutral-900);   // :root 와 동일
+[data-theme="dark"] {
+    --tooltip-bg: var(--neutral-900); // :root 와 동일
 }
 ```
 
 ### S6. 중첩 깊이
 
-근거: 전역 5장
+근거: 전역 `~/.claude/CLAUDE.md` 의 BEM · 중첩 규칙
 
 **`check-tokens.mjs`가 SCSS 소스를 직접 스캔해 검사한다. stylelint는 도입하지 않았다(ADR-020).**
 
 중괄호 균형을 세는 경량 스캐너다(S5의 `extractTopLevelBlocks`와 같은 방식) — 완전한 SCSS
 파서가 아니지만 이 프로젝트 규모에는 충분하다. 의사 클래스·의사 요소·속성 셀렉터(`&:hover`,
 `&::after`, `&[aria-disabled='true']`)는 깊이에서 제외하고, 요소(`&__x`)·수식어(`&-x`,
-`&--x`) 중첩은 전부 센다 — 전역 5장의 "금지" 예시(`.board{&__list{&-item{&--active{}}}}`)가
+`&--x`) 중첩은 전부 센다 — 전역 규칙의 "금지" 예시(`.board{&__list{&-item{&--active{}}}}`)가
 정확히 4단계로 걸리는 기준과 같다.
 
 ### S7. BEM 위반
 
-근거: 전역 5장
+근거: 전역 `~/.claude/CLAUDE.md` 의 BEM · 중첩 규칙
 
 - 요소 체이닝 (`.block__el1__el2`) — 컴파일된 CSS를 postcss로 파싱해 확인(S7a)
 - ID 셀렉터 사용 — 같은 postcss 파싱 결과를 재사용(S7b)
+
+### S8. 문서 내 수치 하드코딩
+
+근거: ADR-013 · `FIGMA.md` 「토큰 위생」의 "수치는 문서에 적지 않는다"
+
+**현재 상태를 서술하는 문서에 수치가 있으면 실패.** S1(hex 하드코딩)의 문서 버전이다.
+
+| | |
+| --- | --- |
+| 보는 문서 | `CLAUDE.md` · `FIGMA.md` · `SCSS.md` · `STATUS.md` |
+| 안 보는 문서 | `DECISIONS.md` — 날짜가 붙은 과거 기록이라 그 시점의 실측값을 담는 게 정상이다 |
+| | 이 파일 — 검사 패턴과 임계값 자체가 내용이다 |
+| 잡는 것 | 길이 단위가 붙은 수치 · 두 자리 이상의 개수 |
+| 안 잡는 것 | 한 자리 개수 — 구조 설명("파일 4개")이고 낡지 않는다 |
+| 대상 아님 | 코드 블록(``` 펜스 · 들여쓴 블록) — 예시 코드다 |
+| 줄 단위 예외 | 같은 줄에 `<!-- 예외: 이유 -->` |
+
+**왜 두 자리부터인가** — 낡는 것은 실측 개수다. 변수 총개수·불일치 건수처럼
+작업하면서 계속 변하는 값이 그 자리에 온다. 한 자리는 설계 구조를 세는 말이라 안 변한다.
+
+**이 항목이 없어서 실제로 낡았다.** 진행 기록에 추출 당시의 변수 총개수와 불일치 건수가
+적혀 있었는데, 그 뒤 변수가 늘고 불일치가 줄어도 문서는 그대로였다.
+`\d+px` 만 보는 정의로는 개수를 못 잡는다.
 
 ---
 
@@ -496,10 +527,11 @@ D13 고아 토큰      INFO   14    목록 출력
 
 새 문제가 나오면 여기에 한 줄 남긴다.
 
-| 날짜 | 항목 | 계기 |
-|---|---|---|
-| 2026-08-29 | D1~D13 · S1~S7 | 초기 정의. 이번 세션에서 발생한 문제 유형 |
-| 2026-08-31 | S3b | 4단계에서 `dropdown.scss`가 `--field-bg`를 선언 없이 참조하고 `select.scss`가 먼저 선언해서 우연히 통과하던 걸 발견 |
-| 2026-08-31 | S6·S7b | stylelint 도입 안 하기로 결정(ADR-020) — `check-tokens.mjs`가 직접 검사하도록 재작성 |
-| 2026-09-01 | D14 | Alert 대조 세션에서 하이브리드 방식(ADR-023) 도입 — 요소별 토큰 매핑을 `scripts/lib/element-map/`에 쌓고 REST+컴파일된 CSS로 자동 대조 |
-| 2026-09-01 | D7 | `getVariableByIdAsync` 성공을 참조 유효성 근거로 썼더니 `Con` 6변형이 삭제된 `con/gray/bg`를 계속 가리키는 걸 놓쳤다(화면 색은 정상이라 육안으로도 안 보임). id가 컬렉션의 `variableIds`에 있는지로 판정하도록 변경, 이름 대신 id로 대조(동명이인 변수 `con/white/bg-hover` 사례) |
+| 날짜       | 항목           | 계기                                                                                                                                                                                                                                                                              |
+| ---------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-08-29 | D1~D13 · S1~S7 | 초기 정의. 이번 세션에서 발생한 문제 유형                                                                                                                                                                                                                                         |
+| 2026-08-31 | S3b            | 4단계에서 `dropdown.scss`가 `--field-bg`를 선언 없이 참조하고 `select.scss`가 먼저 선언해서 우연히 통과하던 걸 발견                                                                                                                                                               |
+| 2026-08-31 | S6·S7b         | stylelint 도입 안 하기로 결정(ADR-020) — `check-tokens.mjs`가 직접 검사하도록 재작성                                                                                                                                                                                              |
+| 2026-09-01 | D14            | Alert 대조 세션에서 하이브리드 방식(ADR-023) 도입 — 요소별 토큰 매핑을 `scripts/lib/element-map/`에 쌓고 REST+컴파일된 CSS로 자동 대조                                                                                                                                            |
+| 2026-09-01 | D7             | `getVariableByIdAsync` 성공을 참조 유효성 근거로 썼더니 `Con` 6변형이 삭제된 `con/gray/bg`를 계속 가리키는 걸 놓쳤다(화면 색은 정상이라 육안으로도 안 보임). id가 컬렉션의 `variableIds`에 있는지로 판정하도록 변경, 이름 대신 id로 대조(동명이인 변수 `con/white/bg-hover` 사례) |
+| 2026-09-08 | S8             | 문서 정리 중에 **S8 이 이 파일에 정의만 있고 `check-tokens.mjs` 에 구현이 없다**는 것을 발견. 그래서 진행 기록의 낡은 실측 개수가 한 번도 걸리지 않았다. 구현하면서 대상 문서를 좁히고 개수 패턴을 추가했다 |
