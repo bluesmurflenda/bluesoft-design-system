@@ -291,10 +291,12 @@
   --breakpoint: 375px;
   --container-padding-x: var(--space-4);
   --container-width: 375px;
-  --section-gap: var(--space-8);
-  --section-gap-sub: var(--space-8);
-  --section-padding-top: var(--space-8);
-  --section-padding-bottom: var(--space-12);
+  --sections-gap: var(--space-12);
+  --sections-padding-top: var(--space-6);
+  --sections-padding-bottom: var(--space-12);
+  --sections-sub-gap: var(--space-8);
+  --sections-sub-padding-top: var(--space-12);
+  --sections-sub-padding-bottom: var(--space-16);
   --header-height: 64px;
   --sub-visual-height: 140px;
   --tabs-height: 48px;
@@ -329,9 +331,12 @@
     --breakpoint: 768px;
     --container-padding-x: var(--space-8);
     --container-width: 768px;
-    --section-gap: var(--space-10);
-    --section-padding-top: var(--space-10);
-    --section-padding-bottom: var(--space-16);
+    --sections-gap: var(--space-16);
+    --sections-padding-top: var(--space-10);
+    --sections-padding-bottom: var(--space-16);
+    --sections-sub-gap: var(--space-12);
+    --sections-sub-padding-top: var(--space-16);
+    --sections-sub-padding-bottom: var(--space-20);
     --sub-visual-height: 180px;
     --field-gap: var(--space-5);
     --field-body-gap: var(--space-4);
@@ -357,8 +362,7 @@
     --grid-columns: 12;
     --breakpoint: 1024px;
     --container-width: 1024px;
-    --section-gap-sub: var(--space-10);
-    --section-padding-bottom: var(--space-20);
+    --sections-padding-bottom: var(--space-20);
     --sub-visual-height: 220px;
     --tabs-height: 56px;
     --field-gap: var(--space-6);
@@ -385,9 +389,11 @@
     --breakpoint: 1440px;
     --container-padding-x: 0;
     --container-width: 1200px;
-    --section-gap: var(--space-20);
-    --section-padding-top: var(--space-20);
-    --section-padding-bottom: var(--space-32);
+    --sections-gap: var(--space-20);
+    --sections-padding-top: var(--space-20);
+    --sections-padding-bottom: var(--space-32);
+    --sections-sub-padding-top: var(--space-20);
+    --sections-sub-padding-bottom: var(--space-32);
     --header-height: 80px;
     --sub-visual-height: 260px;
     --table-col-label-width: 360px;
@@ -401,12 +407,6 @@
     --type-display-md-leading: var(--font-leading-display-md);
     --type-display-sm-size: var(--font-size-display-sm);
     --type-display-sm-leading: var(--font-leading-display-sm);
-  }
-}
-@media (min-width: 1920px) {
-  :root {
-    --grid-margin: 360px;
-    --breakpoint: 1920px;
   }
 }
 :root {
