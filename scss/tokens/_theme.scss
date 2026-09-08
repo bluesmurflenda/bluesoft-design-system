@@ -1,7 +1,7 @@
 // Figma DS Master > Theme collection(일반 시맨틱만: accent·brand·border·surface·text·icon) — 자동 생성.
 // 컴포넌트별 시맨틱(button/chip/tabs 등)은 여전히 각 컴포넌트 SCSS에서 채운다(3~7단계).
 // 출처: figma/tokens.theme.json. 값을 바꾸려면 Figma를 고치고 스냅샷을 다시 뽑은 뒤 재생성한다.
-// [data-theme='dark'] 는 Default와 값이 다른 항목만 오버라이드한다(전역 4장 — 상속되므로 같은 값 재선언 안 함).
+// [data-theme='dark'] 는 Default와 값이 다른 항목만 오버라이드한다(전역 「모드 오버라이드는 값이 다른 것만 쓴다」 — 상속되므로 같은 값 재선언 안 함).
 
 :root {
   --brand-50: var(--blue-50);

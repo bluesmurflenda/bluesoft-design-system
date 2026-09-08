@@ -47,7 +47,7 @@ $input-disabled-placeholder-fg: $neutral-300; // Figma에 disabled 전용 placeh
 $input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
 // 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응하는 시맨틱이 없다(의미 자체가
-// 색에 있는 경우, CLAUDE.md 1장). border-disabled의 red-200/green-200도 마찬가지.
+// 색에 있는 경우, FIGMA.md 「토큰 계층」). border-disabled의 red-200/green-200도 마찬가지.
 // invalid/valid의 ring은 스타일 이름이 "30%"라도 실제 바인딩은 solid red-200/green-100이다
 // (get_variable_defs로 확인 — 이름과 실제 alpha가 다르다).
 $input-validation-colors: (

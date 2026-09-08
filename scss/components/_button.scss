@@ -7,7 +7,8 @@
 
 // 커스텀 프로퍼티는 figma/tokens.theme.json의 button/* 를 그대로 옮긴 것 — 손으로 만든 값이
 // 아니다(1단계 tokens/ 재생성과 같은 방식). primary/danger 등 라이트·다크 별칭 대상 이름이
-// 동일한 토큰은 다크 블록에 다시 안 쓴다 — 별칭 체인이 알아서 다크값을 물어온다(전역 4장).
+// 동일한 토큰은 다크 블록에 다시 안 쓴다 — 별칭 체인이 알아서 다크값을 물어온다
+// (전역 「모드 오버라이드는 값이 다른 것만 쓴다」).
 :root {
   --button-primary-bg: var(--brand-600);
   --button-primary-bg-hover: var(--brand-700);

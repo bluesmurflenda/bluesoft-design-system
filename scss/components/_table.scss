@@ -23,7 +23,7 @@
 // table/header-col/* 의 codeSyntax가 깨져 있어(-col 누락, Figma Dev Mode엔 --table-header-bg로
 // 표시된다) 실제 이름과 다르지만, 코드는 정상 이름(--table-header-col-*)을 쓴다 — 7단계 후 Figma
 // 수정 예정(PROGRESS.md 막힌 것 참조). table/cell/fg-supporting도 기존 코드의 "muted" 대신
-// Figma 실제 이름 "supporting"으로 맞췄다(CLAUDE.md 7장 — 보조 텍스트 접미사 통일).
+// Figma 실제 이름 "supporting"으로 맞췄다(FIGMA.md 「토큰 위생」 — 보조 텍스트 접미사 통일).
 :root {
   --table-border: var(--border-default);
   --table-header-col-bg: var(--surface-subtle);
@@ -82,7 +82,7 @@ $table-cell-sizes: (
 
   // 컬럼 폭이 다른 테이블은 Table/Row(균등 flex:1) 대신 셀을 오토레이아웃으로 나열한다 —
   // 각 .table-cell에 개별 width/flex-basis를 지정하고 flex:1 0 0을 쓰지 않으면 된다(디태치 아님,
-  // 셀은 그대로 인스턴스로 마스터 변경을 계속 받는다. CLAUDE.md 4장).
+  // 셀은 그대로 인스턴스로 마스터 변경을 계속 받는다. FIGMA.md 「슬롯과 크기」).
 }
 
 .table-cell {

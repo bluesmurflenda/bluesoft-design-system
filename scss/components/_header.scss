@@ -10,7 +10,7 @@
 // full/1920(데스크톱) 두 상태만 있고 768/1024 구간의 메뉴 노출 방식은 실측 근거가 없어 기존 768
 // 그대로 둔다(범위 밖 — 필요하면 별도 확인).
 //
-// Theme=light/dark는 다크모드가 아니라 "밝은/어두운 스타일" 축이다(CLAUDE.md 2장) — 라이트·다크
+// Theme=light/dark는 다크모드가 아니라 "밝은/어두운 스타일" 축이다(FIGMA.md 「`Theme=dark` 는 다크모드가 아니다」) — 라이트·다크
 // 별칭 대상이 같은 토큰은 [data-theme=dark] 오버라이드를 두지 않는다. Surface=solid/floating은
 // 2026-08-28 당시 미확인이었으나 이번에 확인 완료 — floating은 반투명 배경(nav/bg-floating,
 // #ffffffcc·literal alpha라 별칭 불가) + backdrop-filter: blur(16px)다.

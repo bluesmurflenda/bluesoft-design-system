@@ -289,7 +289,7 @@ function extractTopLevelBlocks(text) {
 
 // ── S6. 중첩 깊이 — 직접 구현(ADR-020: stylelint 미도입, SCSS 소스를 직접 스캔한다) ──
 // 정확한 SCSS 파서가 아니라 중괄호 균형만 세는 경량 스캐너다(S5의 extractTopLevelBlocks와
-// 같은 방식 — 이 프로젝트 규모에는 충분하다). CLAUDE.md 5장 규칙대로 의사 클래스·의사 요소·
+// 같은 방식 — 이 프로젝트 규모에는 충분하다). 전역 「중첩은 3단계 이하」 규칙대로 의사 클래스·의사 요소·
 // 속성 셀렉터(&:hover, &::after, &[aria-disabled='true'])만 깊이에서 제외하고, 요소(&__x)·
 // 수식어(&-x, &--x) 중첩은 전부 센다 — "금지" 예시(.board{&__list{&-item{&--active{}}}})가
 // 4단계로 걸리는 것과 같은 기준.
