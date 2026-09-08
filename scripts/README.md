@@ -10,25 +10,31 @@
 
 | 검사군          | 대상            | 실행 방법                  | CI   |
 | --------------- | --------------- | -------------------------- | ---- |
-| **N** 노드 스캔 | D1 · D2 · D10   | REST `file_content:read`   | 가능 |
+| **N** 노드 스캔 | D1 · D2 · D10 · D14 | REST `file_content:read` | 가능 |
 | **T** 토큰 대조 | S2              | `tokens.json` 스냅샷 대조  | 가능 |
 | **V** 변수 검사 | D3~D9 · D11~D13 | **Figma MCP 로 수동 실행** | 불가 |
 | **S** SCSS      | S1 · S3~S8      | 로컬 파일                  | 가능 |
 
-### tokens.json 스냅샷
+### 변수 스냅샷
 
 Variables API 를 못 쓰므로 **MCP 로 뽑은 변수 목록을 파일로 둔다.**
+**컬렉션당 한 파일이다** — 한 번에 받으면 출력이 잘린다.
 
 ```
-figma/tokens.json    ← Figma 퍼블리시할 때마다 갱신
+figma/tokens.primitive.json     ┐
+figma/tokens.theme.json         │ 이름 → 값
+figma/tokens.shape.json         │
+figma/tokens.breakpoint.json    ┘
+figma/tokens.ids.json             변수 id → 이름 (컬렉션별로 나눠 담는다)
 ```
 
-S2 는 이 파일과 SCSS 를 대조한다. **퍼블리시 시점이 곧 값이 확정된 시점**이므로
-그때 갱신하면 낡지 않는다.
+S2 는 이 파일들과 SCSS 를 대조한다. **퍼블리시 시점이 곧 값이 확정된 시점**이므로
+Figma 퍼블리시할 때마다 다시 뽑으면 낡지 않는다.
 
-### tokens.json 생성 방법
+### 생성 방법
 
 **Figma MCP 로 직접 뽑는다.** 사람이 옮겨 적지 않는다.
+**컬렉션 하나씩 돌려서 파일 하나씩 만든다.**
 
 ```js
 // Figma MCP 에서 실행
@@ -51,35 +57,29 @@ const hex = (c) => {
     );
 };
 const cssVar = (n) => "var(--" + n.replace(/\//g, "-") + ")";
-const out = { _meta: { exportedAt: "", source: "", counts: {} } };
-for (const c of cols) {
-    out._meta.counts[c.name] = c.variableIds.length;
-    out[c.name] = { _modes: c.modes.map((m) => m.name) };
-    for (const vid of c.variableIds) {
-        const v = byId[vid];
-        if (!v) continue;
-        const e = {};
-        for (const m of c.modes) {
-            const raw = v.valuesByMode[m.modeId];
-            e[m.name] = raw === undefined ? null : raw && raw.type === "VARIABLE_ALIAS" ? cssVar((byId[raw.id] || {}).name || "?") : v.resolvedType === "COLOR" ? hex(raw) : raw;
-        }
-        out[c.name][v.name] = c.modes.length === 1 ? e[c.modes[0].name] : e;
+
+// TARGET 을 컬렉션 이름으로 바꿔가며 한 번씩 돌린다. 파일 하나가 컬렉션 하나다.
+const c = cols.find((x) => x.name === TARGET);
+const out = {
+    _meta: { exportedAt: "", source: "", collection: c.name, count: c.variableIds.length },
+    _modes: c.modes.map((m) => m.name),
+};
+for (const vid of c.variableIds) {
+    const v = byId[vid];
+    if (!v) continue;
+    const e = {};
+    for (const m of c.modes) {
+        const raw = v.valuesByMode[m.modeId];
+        e[m.name] = raw === undefined ? null : raw && raw.type === "VARIABLE_ALIAS" ? cssVar((byId[raw.id] || {}).name || "?") : v.resolvedType === "COLOR" ? hex(raw) : raw;
     }
+    out[v.name] = c.modes.length === 1 ? e[c.modes[0].name] : e;
 }
 return { json: JSON.stringify(out, null, 2) };
 ```
 
-**출력이 크므로 컬렉션별로 나눠 뽑는다.** 한 번에 받으면 잘린다.
-
-```
-figma/tokens.primitive.json
-figma/tokens.theme.json
-figma/tokens.shape.json
-figma/tokens.breakpoint.json
-```
-
-각 파일 상단에 `_meta` 로 뽑은 날짜와 개수를 남긴다.
+`_meta` 에 뽑은 날짜와 개수를 남긴다.
 **개수가 맞는지 먼저 확인한다** — 잘렸으면 개수가 안 맞는다.
+`tokens.ids.json` 의 컬렉션별 개수와도 맞아야 한다. 어긋나면 한쪽이 낡은 것이다.
 
 ### 형식
 
@@ -101,7 +101,7 @@ figma/tokens.breakpoint.json
 키는 `VariableID:` 접두사를 뗀 나머지(`"997:12"`)다.
 
 ```js
-// 컬렉션 하나당 이렇게 뽑는다(값 없이 id/이름만이라 가볍다 — 4개 합쳐도 20KB 안쪽)
+// 컬렉션 하나당 이렇게 뽑는다(값 없이 id/이름만이라 가볍다)
 const col = collections.find((c) => c.name === TARGET);
 const out = {};
 for (const vid of col.variableIds) {
