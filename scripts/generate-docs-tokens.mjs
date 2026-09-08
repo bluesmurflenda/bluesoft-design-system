@@ -150,7 +150,7 @@ if (social.length) {
   primitiveHtml.push('    </div>');
 }
 
-// ── Theme 일반 시맨틱 섹션 HTML(44개, CLAUDE.md 1장 순서: surface·text·border·icon·brand·accent) ──
+// ── Theme 일반 시맨틱 섹션 HTML(FIGMA.md 「토큰 계층」의 순서: surface·text·border·icon·brand·accent) ──
 const GENERAL_PREFIXES = ['surface', 'text', 'border', 'icon', 'brand', 'accent'];
 const themeHtml = [];
 let themeCount = 0;

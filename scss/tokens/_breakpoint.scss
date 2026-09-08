@@ -1,6 +1,10 @@
 // Figma DS Master > Breakpoint collection(Mobile/Tablet/Laptop/Desktop/Wide) — 자동 생성.
-// 출처: figma/tokens.breakpoint.json. 값(--x 커스텀 프로퍼티)의 미디어쿼리는 기준폭 그대로
-// (375/768/1024/1440/1920) 쓴다. 각 미디어쿼리는 "바로 앞 구간과 값이 다른 토큰"만 담는다(모바일-퍼스트).
+// 출처: figma/tokens.breakpoint.json. 값(--x 커스텀 프로퍼티)의 미디어쿼리는 각 모드의 breakpoint
+// 토큰값을 그대로 쓴다. 각 미디어쿼리는 "바로 앞 구간과 값이 다른 토큰"만 담는다(모바일-퍼스트).
+//
+// 최상단(Wide) 모드는 미디어쿼리로 만들지 않는다 — ADR-026. Figma 에서는 모드를 유지하되
+// (아트보드 폭에 바인딩돼 실제로 일한다) 코드에는 분기를 두지 않는다는 결정이다.
+// Wide 에서 Desktop 과 값이 갈리는 토큰은 grid/margin · breakpoint 둘뿐이고 둘 다 시안 전용이다.
 //
 // $css-breakpoint-sm/md/lg 는 위와 별개다 — abstracts/_maps.scss($breakpoints 맵)·
 // components/_header.scss(모바일 nav 토글 등)가 @media 조건에 직접 쓰는 컴파일타임 픽셀 상수라
@@ -22,10 +26,12 @@ $css-breakpoint-lg: 1440px;
   --breakpoint: 375px;
   --container-padding-x: var(--space-4);
   --container-width: 375px;
-  --section-gap: var(--space-8);
-  --section-gap-sub: var(--space-8);
-  --section-padding-top: var(--space-8);
-  --section-padding-bottom: var(--space-12);
+  --sections-gap: var(--space-12);
+  --sections-padding-top: var(--space-6);
+  --sections-padding-bottom: var(--space-12);
+  --sections-sub-gap: var(--space-8);
+  --sections-sub-padding-top: var(--space-12);
+  --sections-sub-padding-bottom: var(--space-16);
   --header-height: 64px;
   --sub-visual-height: 140px;
   --tabs-height: 48px;
@@ -60,9 +66,12 @@ $css-breakpoint-lg: 1440px;
     --breakpoint: 768px;
     --container-padding-x: var(--space-8);
     --container-width: 768px;
-    --section-gap: var(--space-10);
-    --section-padding-top: var(--space-10);
-    --section-padding-bottom: var(--space-16);
+    --sections-gap: var(--space-16);
+    --sections-padding-top: var(--space-10);
+    --sections-padding-bottom: var(--space-16);
+    --sections-sub-gap: var(--space-12);
+    --sections-sub-padding-top: var(--space-16);
+    --sections-sub-padding-bottom: var(--space-20);
     --sub-visual-height: 180px;
     --field-gap: var(--space-5);
     --field-body-gap: var(--space-4);
@@ -89,8 +98,7 @@ $css-breakpoint-lg: 1440px;
     --grid-columns: 12;
     --breakpoint: 1024px;
     --container-width: 1024px;
-    --section-gap-sub: var(--space-10);
-    --section-padding-bottom: var(--space-20);
+    --sections-padding-bottom: var(--space-20);
     --sub-visual-height: 220px;
     --tabs-height: 56px;
     --field-gap: var(--space-6);
@@ -118,9 +126,11 @@ $css-breakpoint-lg: 1440px;
     --breakpoint: 1440px;
     --container-padding-x: 0;
     --container-width: 1200px;
-    --section-gap: var(--space-20);
-    --section-padding-top: var(--space-20);
-    --section-padding-bottom: var(--space-32);
+    --sections-gap: var(--space-20);
+    --sections-padding-top: var(--space-20);
+    --sections-padding-bottom: var(--space-32);
+    --sections-sub-padding-top: var(--space-20);
+    --sections-sub-padding-bottom: var(--space-32);
     --header-height: 80px;
     --sub-visual-height: 260px;
     --table-col-label-width: 360px;
@@ -137,13 +147,6 @@ $css-breakpoint-lg: 1440px;
   }
 }
 
-@media (min-width: 1920px) {
-  :root {
-    --grid-margin: 360px;
-    --breakpoint: 1920px;
-  }
-}
-
 // ──────────────────────────────────────────────────────────────
 // SCSS 별칭
 // ──────────────────────────────────────────────────────────────
@@ -154,10 +157,12 @@ $grid-margin: var(--grid-margin);
 $breakpoint: var(--breakpoint);
 $container-padding-x: var(--container-padding-x);
 $container-width: var(--container-width);
-$section-gap: var(--section-gap);
-$section-gap-sub: var(--section-gap-sub);
-$section-padding-top: var(--section-padding-top);
-$section-padding-bottom: var(--section-padding-bottom);
+$sections-gap: var(--sections-gap);
+$sections-padding-top: var(--sections-padding-top);
+$sections-padding-bottom: var(--sections-padding-bottom);
+$sections-sub-gap: var(--sections-sub-gap);
+$sections-sub-padding-top: var(--sections-sub-padding-top);
+$sections-sub-padding-bottom: var(--sections-sub-padding-bottom);
 $header-height: var(--header-height);
 $sub-visual-height: var(--sub-visual-height);
 $tabs-height: var(--tabs-height);

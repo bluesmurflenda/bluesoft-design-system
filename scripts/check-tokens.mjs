@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
 
 import { printReport, row } from './lib/report.mjs';
-import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt } from './lib/allowlist.mjs';
+import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt, isS2ModeExempt } from './lib/allowlist.mjs';
 import {
   figmaSnapshotExists,
   loadFigmaCollections,
@@ -103,6 +103,7 @@ function addDetail(id, title, items) {
       for (const name of Object.keys(col.data)) {
         const varName = cssVarName(name).slice(2);
         for (const mode of col.modes) {
+          if (isS2ModeExempt(colName, name, mode)) continue;
           const expected = resolveFigmaValue(collections, reverseMap, colName, name, mode);
           if (expected && typeof expected === 'object' && expected.__error) {
             mismatch.push({ colName, name, mode, expected: `[${expected.__error}]`, compiled: '-' });

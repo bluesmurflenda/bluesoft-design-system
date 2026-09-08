@@ -1,5 +1,5 @@
 // D1(check-nodes)·S4(check-tokens) 공용 — "컴포넌트가 색상 프리미티브를 직접 참조해도 되는" 예외.
-// 근거: CLAUDE.md 1장 "프리미티브 직접 참조가 정상인 경우" 표 — 브랜드 자산·알파 토큰만
+// 근거: FIGMA.md 「토큰 계층」의 "프리미티브 직접 참조가 정상인 경우" 표 — 브랜드 자산·알파 토큰만
 // 이름으로 고정 허용한다. '의미색'·'유채색 배경 위 글자'·'컴포넌트 고유 톤'은 이름만으로
 // 기계적으로 구분할 수 없으므로 예외 컴포넌트 파일 목록 + 인라인 주석(S1과 동일한 방식)으로 처리한다.
 // white/black은 일부러 넣지 않는다 — 과거 실제로 이 두 값이 다크모드 회귀의 원인이었다(D1 '나온 배경').
@@ -46,4 +46,16 @@ export const S2_MISSING_EXEMPT = new Set([
 
 export function isS2MissingExempt(collection, name) {
   return S2_MISSING_EXEMPT.has(`${collection}/${name}`);
+}
+
+// S2 전용 — ADR-026. 특정 모드에서만 코드가 Figma 를 따라가지 않는 것(누락이 아니라 불일치로 잡힌다).
+// Wide 는 미디어쿼리를 만들지 않으므로 그 모드값을 조회하면 Desktop 값이 나온다. 모드까지 붙여
+// 좁힌다 — 같은 토큰의 다른 모드는 여전히 대조 대상이다.
+export const S2_MODE_EXEMPT = new Set([
+  'Breakpoint/grid/margin/Wide', // container/width 와 뷰포트 폭에서 나오는 종속값. margin-inline:auto 가 만든다
+  'Breakpoint/breakpoint/Wide', // 시안 프레임 폭 전용 — FIGMA.md 「모드와 프레임 폭은 다르다」
+]);
+
+export function isS2ModeExempt(collection, name, mode) {
+  return S2_MODE_EXEMPT.has(`${collection}/${name}/${mode}`);
 }

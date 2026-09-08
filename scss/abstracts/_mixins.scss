@@ -45,10 +45,12 @@
   margin-inline: auto;
 }
 
+// Figma 는 본문 섹션(sections/*)과 서브페이지 섹션(sections-sub/*) 두 그룹을 따로 둔다.
+// 이 믹스인은 앞쪽만 쓴다 — sections-sub/* 는 토큰만 내보내고, 쓰는 자리가 생길 때 형태를 정한다.
 @mixin section {
-  padding-top: var(--section-padding-top);
-  padding-bottom: var(--section-padding-bottom);
+  padding-top: var(--sections-padding-top);
+  padding-bottom: var(--sections-padding-bottom);
   display: flex;
   flex-direction: column;
-  gap: var(--section-gap);
+  gap: var(--sections-gap);
 }
