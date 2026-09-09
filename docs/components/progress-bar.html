@@ -15,12 +15,12 @@
   <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Progress Bar</div>
   <div class="doc-page-header">
     <h1>Progress Bar</h1>
-    <p>별도 컬러·사이즈 variant 없이 값 하나(0~100%)로 동작합니다. 값은 <code>--progress-bar-value</code> 커스텀 프로퍼티를 인라인 <code>style</code>로 넘겨 <code>.progress-bar__fill</code> 폭에 반영합니다.</p>
+    <p>별도 컬러·사이즈 variant 없이 값 하나(0~100%)로 동작합니다. 값은 <code>--bds-progress-bar-value</code> 커스텀 프로퍼티를 인라인 <code>style</code>로 넘겨 <code>.bds-progress-bar__fill</code> 폭에 반영합니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>0~100% (11단계)</h2>
-    <p class="doc-desc">구조: <code>.progress-bar &gt; .progress-bar__track &gt; .progress-bar__fill</code> + <code>.progress-bar__value</code>(텍스트).</p>
+    <p class="doc-desc">구조: <code>.bds-progress-bar &gt; .bds-progress-bar__track &gt; .bds-progress-bar__fill</code> + <code>.bds-progress-bar__value</code>(텍스트).</p>
     <div class="doc-col" id="progress-bar-list"></div>
   </section>
 </main>
@@ -35,13 +35,13 @@
       wrap.className = 'doc-cell';
       wrap.style.width = '100%';
       wrap.innerHTML =
-        '<div class="progress-bar" style="width:100%;">' +
-        '<div class="progress-bar__track">' +
-        '<div class="progress-bar__fill" style="--progress-bar-value: ' + value + '%;"></div>' +
+        '<div class="bds-progress-bar" style="width:100%;">' +
+        '<div class="bds-progress-bar__track">' +
+        '<div class="bds-progress-bar__fill" style="--bds-progress-bar-value: ' + value + '%;"></div>' +
         '</div>' +
-        '<div class="progress-bar__value">' + value + '%</div>' +
+        '<div class="bds-progress-bar__value">' + value + '%</div>' +
         '</div>' +
-        '<span class="doc-cell__caption">--progress-bar-value: ' + value + '%</span>';
+        '<span class="doc-cell__caption">--bds-progress-bar-value: ' + value + '%</span>';
       el.appendChild(wrap);
     }
   })();

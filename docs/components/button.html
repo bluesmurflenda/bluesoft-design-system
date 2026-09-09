@@ -25,11 +25,11 @@
       <table style="border-collapse:collapse;width:100%;">
         <thead>
           <tr>
-            <th style="text-align:left;padding:8px 16px 8px 0;font-size:12px;color:var(--neutral-500);"></th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">sm</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">md</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">lg</th>
-            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--neutral-500);">xl</th>
+            <th style="text-align:left;padding:8px 16px 8px 0;font-size:12px;color:var(--bds-neutral-500);"></th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--bds-neutral-500);">sm</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--bds-neutral-500);">md</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--bds-neutral-500);">lg</th>
+            <th style="text-align:left;padding:8px 16px;font-size:12px;color:var(--bds-neutral-500);">xl</th>
           </tr>
         </thead>
         <tbody id="btn-matrix"></tbody>
@@ -64,8 +64,8 @@
     VARIANTS.forEach(function (variant) {
       var row = document.createElement('tr');
       var labelCell = document.createElement('td');
-      labelCell.style.cssText = 'padding:8px 16px 8px 0;font-size:12px;font-family:monospace;color:var(--neutral-600);white-space:nowrap;';
-      labelCell.textContent = 'btn-' + variant;
+      labelCell.style.cssText = 'padding:8px 16px 8px 0;font-size:12px;font-family:monospace;color:var(--bds-neutral-600);white-space:nowrap;';
+      labelCell.textContent = 'bds-btn-' + variant;
       row.appendChild(labelCell);
       SIZES.forEach(function (size) {
         var cell = document.createElement('td');
@@ -96,16 +96,16 @@
   (function () {
     var el = document.getElementById('btn-icons');
     var configs = [
-      ['btn-primary', 'plus', null, 'Add'],
+      ['bds-btn-primary', 'plus', null, 'Add'],
       [null, null, 'chevron-right', 'Next'],
-      ['btn-outline', 'download', null, 'Download'],
+      ['bds-btn-outline', 'download', null, 'Download'],
     ];
     configs.forEach(function (c) {
-      var cls = c[0] || 'btn-outline';
-      var left = c[1] ? '<svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-' + c[1] + '"></use></svg>' : '';
-      var right = c[2] ? '<svg class="icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-' + c[2] + '"></use></svg>' : '';
+      var cls = c[0] || 'bds-btn-outline';
+      var left = c[1] ? '<svg class="bds-icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-' + c[1] + '"></use></svg>' : '';
+      var right = c[2] ? '<svg class="bds-icon icon-sm"><use href="../assets/icons/sprite.svg#icon-base-' + c[2] + '"></use></svg>' : '';
       var btn = document.createElement('button');
-      btn.className = 'btn btn-md ' + cls;
+      btn.className = 'bds-btn bds-btn-md ' + cls;
       btn.innerHTML = left + '<span>' + c[3] + '</span>' + right;
       el.appendChild(btn);
     });

@@ -8,13 +8,13 @@
 $login-header-title-fg: $text-primary;
 $login-header-supporting-fg: $text-secondary;
 
-.login-header {
+.bds-login-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: $space-4;
 
-  .logo {
+  .bds-logo {
     height: 18px; // 실측: 140×18
   }
 

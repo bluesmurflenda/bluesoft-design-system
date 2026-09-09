@@ -6,11 +6,11 @@ import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
 
 import { printReport, row } from './lib/report.mjs';
-import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt, isS2ModeExempt } from './lib/allowlist.mjs';
+import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt, isS2ModeExempt, isS2CssOnlyExempt } from './lib/allowlist.mjs';
 import {
   figmaSnapshotExists,
   loadFigmaCollections,
-  buildReverseCssVarMap,
+  buildFigmaAliasMap,
   resolveFigmaValue,
   cssVarName,
   parseCascade,
@@ -18,6 +18,8 @@ import {
   resolveCascadeValue,
   valuesEqual,
   BREAKPOINT_PX,
+  CSS_VAR_PREFIX,
+  THEME_GENERAL_PREFIXES,
 } from './lib/tokens.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -78,12 +80,35 @@ function addDetail(id, title, items) {
       'figma/tokens.*.json 없음 — check:tokens --bootstrap 으로만 건너뛸 수 있다'));
   } else {
     const collections = loadFigmaCollections();
-    const reverseMap = buildReverseCssVarMap(collections);
+    const aliasMap = buildFigmaAliasMap(collections);
     const compiled = sass.compile(path.join(SCSS_ROOT, 'main.scss'), { style: 'expanded' });
     const cascade = parseCascade(compiled.css);
 
+    // 아직 안 만든 컴포넌트의 토큰은 누락으로 세지 않는다(ADR-033 세션 결정, 2026-09-09).
+    // Theme의 컴포넌트 토큰은 각 컴포넌트 파일이 :root에 선언한다(SCSS.md 「클래스·변형 설계」 3번)
+    // — 그래서 "그 그룹을 선언하는 컴포넌트 파일이 하나도 없다"가 곧 "그 컴포넌트가 없다"다.
+    // 예외 목록을 만들지 않는 이유가 이것이다: 컴포넌트 파일이 그 그룹을 한 줄이라도 선언하는
+    // 순간 대조가 저절로 켜진다. 대신 건너뛴 그룹은 아래에서 반드시 출력한다 — 조용히 사라지면
+    // 다음 사람이 "왜 통과하는지" 알 수 없다.
+    const componentGroupsDeclared = new Set();
+    for (const file of ALL_SCSS_FILES) {
+      if (!rel(file).startsWith('scss/components/')) continue;
+      const text = fs
+        .readFileSync(file, 'utf8')
+        .split('\n')
+        .map((l) => l.replace(/\/\/.*$/, ''))
+        .join('\n');
+      for (const m of text.matchAll(/--([a-z0-9-]+)\s*:/gi)) {
+        componentGroupsDeclared.add(m[1].toLowerCase().replace(new RegExp('^' + CSS_VAR_PREFIX), '').split('-')[0]);
+      }
+    }
+    // 컴포넌트 파일이 아니라 tokens/_theme.scss 가 담당하는 일반 시맨틱 — 컴포넌트 존재 여부와 무관하다.
+    const isComponentOwned = (colName, name) =>
+      colName === 'Theme' && !THEME_GENERAL_PREFIXES.includes(name.split('/')[0]);
+
     const missing = [];
     const mismatch = [];
+    const skippedGroups = new Map(); // 'Theme/accordion' -> 건너뛴 토큰 수
 
     function compiledValueFor(colName, mode, varName) {
       if (colName === 'Primitive') return cascade.base.get(varName);
@@ -104,7 +129,7 @@ function addDetail(id, title, items) {
         const varName = cssVarName(name).slice(2);
         for (const mode of col.modes) {
           if (isS2ModeExempt(colName, name, mode)) continue;
-          const expected = resolveFigmaValue(collections, reverseMap, colName, name, mode);
+          const expected = resolveFigmaValue(collections, aliasMap, colName, name, mode);
           if (expected && typeof expected === 'object' && expected.__error) {
             mismatch.push({ colName, name, mode, expected: `[${expected.__error}]`, compiled: '-' });
             continue;
@@ -112,6 +137,12 @@ function addDetail(id, title, items) {
           const rawCompiled = compiledValueFor(colName, mode, varName);
           if (rawCompiled === undefined) {
             if (isS2MissingExempt(colName, name)) continue;
+            const group = name.split('/')[0];
+            if (isComponentOwned(colName, name) && !componentGroupsDeclared.has(group)) {
+              const key = `${colName}/${group}`;
+              skippedGroups.set(key, (skippedGroups.get(key) || 0) + 1);
+              continue;
+            }
             missing.push({ colName, name, mode, cssVar: '--' + varName });
             continue;
           }
@@ -126,7 +157,7 @@ function addDetail(id, title, items) {
       }
     }
 
-    // CSS에만 있음: 컴파일 결과에 선언됐지만 Figma 553개 토큰 어디에도 없는 커스텀 프로퍼티.
+    // CSS에만 있음: 컴파일 결과에 선언됐지만 Figma 토큰 어디에도 없는 커스텀 프로퍼티.
     const knownVarNames = new Set(
       Object.values(collections).flatMap((col) => Object.keys(col.data).map((n) => cssVarName(n).slice(2)))
     );
@@ -137,14 +168,19 @@ function addDetail(id, title, items) {
       ...cascade.shape.pill.keys(),
       ...cascade.media.flatMap((m) => [...m.decls.keys()]),
     ]);
-    const onlyInCss = [...declaredAnywhere].filter((n) => !knownVarNames.has(n));
+    // Figma 에 대응 토큰이 없는데 코드가 선언하는 것 중, 이름을 하나씩 등록해둔 것은 뺀다.
+    const onlyInCss = [...declaredAnywhere].filter((n) => !knownVarNames.has(n) && !isS2CssOnlyExempt(n));
 
     const total = missing.length + mismatch.length + onlyInCss.length;
+    const skippedTotal = [...skippedGroups.values()].reduce((a, b) => a + b, 0);
+    const skipNote = skippedGroups.size ? `·미작성컴포넌트 건너뜀 ${skippedGroups.size}종(${skippedTotal})` : '';
     rows.push(row('S2', 'Figma↔CSS 대조', total ? 'FAIL' : 'PASS', total,
-      `누락 ${missing.length}·CSS전용 ${onlyInCss.length}·불일치 ${mismatch.length}`));
+      `누락 ${missing.length}·CSS전용 ${onlyInCss.length}·불일치 ${mismatch.length}${skipNote}`));
     addDetail('S2-missing', 'Figma 에만 있음(CSS 누락)', missing.map((m) => `${m.colName}/${m.name} [${m.mode}] → ${m.cssVar} 없음`));
-    addDetail('S2-onlyincss', 'CSS 에만 있음(Figma 553개 토큰에 없음)', onlyInCss.sort().map((n) => `--${n}`));
+    addDetail('S2-onlyincss', `CSS 에만 있음(Figma ${knownVarNames.size}개 토큰에 없음)`, onlyInCss.sort().map((n) => '--' + n));
     addDetail('S2-mismatch', '값 불일치', mismatch.map((m) => `${m.colName}/${m.name} [${m.mode}] Figma=${JSON.stringify(m.expected)} CSS=${JSON.stringify(m.compiled)}`));
+    addDetail('S2-skipped', '컴포넌트 미작성으로 대조 건너뜀(그 그룹을 선언하는 scss/components/ 파일이 없다)',
+      [...skippedGroups].sort().map(([g, c]) => `${g}/* — ${c}건`));
   }
 }
 

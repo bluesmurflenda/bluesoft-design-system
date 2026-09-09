@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "exportedAt": "2026-09-07",
+    "exportedAt": "2026-09-09",
     "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
     "collection": "Shape",
-    "count": 40
+    "count": 41
   },
   "_modes": [
     "Rounded",
@@ -30,6 +30,11 @@
     "Square": 44,
     "Pill": 44
   },
+  "alert/radius": {
+    "Rounded": "var(--radius-md)",
+    "Square": "var(--radius-none)",
+    "Pill": "var(--radius-md)"
+  },
   "board/col/date": {
     "Rounded": 120,
     "Square": 120,
@@ -45,37 +50,37 @@
     "Square": 100,
     "Pill": 100
   },
-  "button/padding-x/lg": {
+  "btn/padding-x/lg": {
     "Rounded": "var(--space-6)",
     "Square": "var(--space-6)",
     "Pill": "var(--space-6)"
   },
-  "button/padding-x/md": {
+  "btn/padding-x/md": {
     "Rounded": "var(--space-5)",
     "Square": "var(--space-5)",
     "Pill": "var(--space-5)"
   },
-  "button/padding-x/sm": {
+  "btn/padding-x/sm": {
     "Rounded": "var(--space-3)",
     "Square": "var(--space-3)",
     "Pill": "var(--space-4)"
   },
-  "button/padding-x/xl": {
+  "btn/padding-x/xl": {
     "Rounded": "var(--space-6)",
     "Square": "var(--space-6)",
     "Pill": "var(--space-7)"
   },
-  "button/padding-x/xs": {
+  "btn/padding-x/xs": {
     "Rounded": "var(--space-2)",
     "Square": "var(--space-2)",
     "Pill": "var(--space-2)"
   },
-  "button/radius": {
+  "btn/radius": {
     "Rounded": "var(--radius-sm)",
     "Square": "var(--radius-none)",
     "Pill": "var(--radius-full)"
   },
-  "button/radius-xs": {
+  "btn/radius-xs": {
     "Rounded": "var(--radius-xsm)",
     "Square": "var(--radius-none)",
     "Pill": "var(--radius-full)"

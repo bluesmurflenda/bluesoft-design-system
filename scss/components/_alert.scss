@@ -9,64 +9,64 @@
 // figma/tokens.theme.json의 alert/* 를 그대로 옮겼다(2026-08-31) — 이전 값은 neutral이
 // 슬레이트 계열(ADR-001로 폐기된 램프)이었다.
 :root {
-  --alert-brand-bg: var(--brand-50);
-  --alert-brand-border: var(--brand-200);
-  --alert-brand-fg: var(--brand-700);
-  --alert-neutral-bg: var(--surface-subtle);
-  --alert-neutral-border: var(--border-default);
-  --alert-neutral-fg: var(--text-secondary);
-  --alert-success-bg: var(--green-50);
-  --alert-success-border: var(--green-200);
-  --alert-success-fg: var(--green-700);
-  --alert-warning-bg: var(--yellow-50);
-  --alert-warning-border: var(--yellow-200);
-  --alert-warning-fg: var(--yellow-700);
-  --alert-error-bg: var(--red-50);
-  --alert-error-border: var(--red-200);
-  --alert-error-fg: var(--red-700);
-  --alert-info-bg: var(--surface-brand-subtle);
-  --alert-info-border: var(--blue-200);
-  --alert-info-fg: var(--blue-700);
-  --alert-fg-supporting: var(--text-tertiary);
+  --bds-alert-brand-bg: var(--bds-brand-50);
+  --bds-alert-brand-border: var(--bds-brand-200);
+  --bds-alert-brand-fg: var(--bds-brand-700);
+  --bds-alert-neutral-bg: var(--bds-surface-subtle);
+  --bds-alert-neutral-border: var(--bds-border-default);
+  --bds-alert-neutral-fg: var(--bds-text-secondary);
+  --bds-alert-success-bg: var(--bds-green-50);
+  --bds-alert-success-border: var(--bds-green-200);
+  --bds-alert-success-fg: var(--bds-green-700);
+  --bds-alert-warning-bg: var(--bds-yellow-50);
+  --bds-alert-warning-border: var(--bds-yellow-200);
+  --bds-alert-warning-fg: var(--bds-yellow-700);
+  --bds-alert-error-bg: var(--bds-red-50);
+  --bds-alert-error-border: var(--bds-red-200);
+  --bds-alert-error-fg: var(--bds-red-700);
+  --bds-alert-info-bg: var(--bds-surface-brand-subtle);
+  --bds-alert-info-border: var(--bds-blue-200);
+  --bds-alert-info-fg: var(--bds-blue-700);
+  --bds-alert-fg-supporting: var(--bds-text-tertiary);
 }
 
 [data-theme='dark'] {
-  --alert-success-bg: var(--green-950);
-  --alert-success-border: var(--green-700);
-  --alert-success-fg: var(--green-400);
-  --alert-warning-bg: var(--yellow-950);
-  --alert-warning-border: var(--yellow-700);
-  --alert-warning-fg: var(--yellow-400);
-  --alert-error-bg: var(--red-950);
-  --alert-error-border: var(--red-700);
-  --alert-error-fg: var(--red-400);
-  --alert-info-border: var(--blue-700);
-  --alert-info-fg: var(--blue-400);
+  --bds-alert-success-bg: var(--bds-green-950);
+  --bds-alert-success-border: var(--bds-green-700);
+  --bds-alert-success-fg: var(--bds-green-400);
+  --bds-alert-warning-bg: var(--bds-yellow-950);
+  --bds-alert-warning-border: var(--bds-yellow-700);
+  --bds-alert-warning-fg: var(--bds-yellow-400);
+  --bds-alert-error-bg: var(--bds-red-950);
+  --bds-alert-error-border: var(--bds-red-700);
+  --bds-alert-error-fg: var(--bds-red-400);
+  --bds-alert-info-border: var(--bds-blue-700);
+  --bds-alert-info-fg: var(--bds-blue-400);
 }
 
-$alert-fg-supporting: var(--alert-fg-supporting);
+$alert-fg-supporting: var(--bds-alert-fg-supporting);
 
 $alert-colors: (
-  brand: (bg: var(--alert-brand-bg), fg: var(--alert-brand-fg), border: var(--alert-brand-border)),
-  neutral: (bg: var(--alert-neutral-bg), fg: var(--alert-neutral-fg), border: var(--alert-neutral-border)),
-  success: (bg: var(--alert-success-bg), fg: var(--alert-success-fg), border: var(--alert-success-border)),
-  warning: (bg: var(--alert-warning-bg), fg: var(--alert-warning-fg), border: var(--alert-warning-border)),
-  error: (bg: var(--alert-error-bg), fg: var(--alert-error-fg), border: var(--alert-error-border)),
-  info: (bg: var(--alert-info-bg), fg: var(--alert-info-fg), border: var(--alert-info-border)),
+  brand: (bg: var(--bds-alert-brand-bg), fg: var(--bds-alert-brand-fg), border: var(--bds-alert-brand-border)),
+  neutral: (bg: var(--bds-alert-neutral-bg), fg: var(--bds-alert-neutral-fg), border: var(--bds-alert-neutral-border)),
+  success: (bg: var(--bds-alert-success-bg), fg: var(--bds-alert-success-fg), border: var(--bds-alert-success-border)),
+  warning: (bg: var(--bds-alert-warning-bg), fg: var(--bds-alert-warning-fg), border: var(--bds-alert-warning-border)),
+  error: (bg: var(--bds-alert-error-bg), fg: var(--bds-alert-error-fg), border: var(--bds-alert-error-border)),
+  info: (bg: var(--bds-alert-info-bg), fg: var(--bds-alert-info-fg), border: var(--bds-alert-info-border)),
 );
 
-.alert {
+.bds-alert {
   display: flex;
   align-items: flex-start;
   gap: $space-3;
 
-  .alert__icon {
+  .bds-alert__icon {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
   }
 
-  .alert__close {
+  .bds-alert__close {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
@@ -75,7 +75,9 @@ $alert-colors: (
   &-inline,
   &-toast {
     padding: $space-4;
-    border-radius: $radius-lg;
+    // ADR-034: Shape 컬렉션의 alert/radius 를 쓴다. 프리미티브(radius/md)를 직접 물면 각진 모드에서
+    // 이 컴포넌트만 둥글게 남는다 — 다른 컴포넌트는 전부 자기 Shape 토큰을 갖고 있었다.
+    border-radius: var(--bds-alert-radius);
   }
 
   &-toast {
@@ -86,9 +88,9 @@ $alert-colors: (
 
   &-banner {
     padding: $space-4 $space-6;
-    border-radius: 0;
+    border-radius: $radius-none; // Figma 는 radius/none 토큰을 바인딩한다. 리터럴 0 이었다.
     // border: none 은 아래 @each 이후로 뺐다 — 같은 specificity(단일 클래스)라
-    // 여기서 선언하면 나중에 나오는 .alert-{color}의 border 선언에 소스 순서상 덮어써진다.
+    // 여기서 선언하면 나중에 나오는 .bds-alert-{color}의 border 선언에 소스 순서상 덮어써진다.
   }
 
   // inline·banner는 Figma 실측 폭이 있는데도 코드에 폭 규칙이 없었다(2026-09-01 확인) — 좁은
@@ -122,20 +124,20 @@ $alert-colors: (
 }
 
 @each $color, $c in $alert-colors {
-  .alert-#{$color} {
+  .bds-alert-#{$color} {
     background-color: map.get($c, bg);
     color: map.get($c, fg);
     border: 1px solid map.get($c, border);
 
-    .alert__title {
+    .bds-alert__title {
       color: map.get($c, fg);
     }
   }
 }
 
 // 2026-08-28 실측: banner 는 보더가 없다(node 761:44, border 변수 자체가 없음).
-// 위 @each 보다 뒤에 와야 .alert-{color} 의 border 선언을 이긴다(동일 specificity, 소스 순서 승).
-.alert-banner {
+// 위 @each 보다 뒤에 와야 .bds-alert-{color} 의 border 선언을 이긴다(동일 specificity, 소스 순서 승).
+.bds-alert-banner {
   border: none;
 }
 

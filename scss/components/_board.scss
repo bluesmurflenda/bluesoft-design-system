@@ -1,6 +1,6 @@
 // Figma DS Master > board-row(1028:5850) · board-header(1030:37) · board-card(1031:9664)
 // board-cell(1038:889) · board-list(1040:830), 2026-08-27 라이브 실측
-// 게시판형 목록. Notice/New 배지는 chip 컴포넌트를 그대로 재사용한다(.chip .chip-sm .chip-brand 등).
+// 게시판형 목록. Notice/New 배지는 chip 컴포넌트를 그대로 재사용한다(.bds-badge .bds-badge-sm .bds-badge-brand 등).
 
 @use '../tokens/primitive' as *;
 @use '../tokens/theme' as *;
@@ -14,14 +14,14 @@ $board-title-fg: $text-primary;
 $board-meta-fg: $text-tertiary;
 // 2026-08-31 재확인(get_variable_defs, board-header 1030:37): table/header-col/* 를 그대로
 // 재사용한다 — codeSyntax가 깨져 있어도(-col 누락) 코드는 정상 이름(table.scss 6단계에서 rename)을 쓴다.
-$board-header-bg: var(--table-header-col-bg);
-$board-header-fg: var(--table-header-col-fg);
+$board-header-bg: var(--bds-table-header-col-bg);
+$board-header-fg: var(--bds-table-header-col-fg);
 // 2026-08-31: 리터럴 120px 대신 tokens/_shape.scss의 board/col/meta 변수를 그대로 참조한다 —
-// board.scss엔 date/views 구분 클래스가 아예 없어서(.board-cell 하나뿐) meta 하나면 충분하다.
+// board.scss엔 date/views 구분 클래스가 아예 없어서(.bds-board-cell 하나뿐) meta 하나면 충분하다.
 // board/col/views(100)는 아직 어떤 코드에서도 참조하지 않는 미사용 토큰으로 남아 있다.
-$board-col-width: var(--board-col-meta);
+$board-col-width: var(--bds-board-col-meta);
 
-.board-row {
+.bds-board-row {
   display: flex;
   align-items: center;
   gap: $space-4;
@@ -30,7 +30,7 @@ $board-col-width: var(--board-col-meta);
   border-bottom: $border-hairline solid $board-border;
 
   &:hover {
-    background-color: var(--table-row-bg-hover); // table과 공유하는 토큰(table-nav-spec 확인)
+    background-color: var(--bds-table-row-bg-hover); // table과 공유하는 토큰(table-nav-spec 확인)
   }
 
   &__content {
@@ -51,9 +51,9 @@ $board-col-width: var(--board-col-meta);
 
   // 2026-08-31 정정: get_metadata로 Kind=post(1028:5816)·Kind=notice(1028:5840)의 Title 노드
   // 크기를 직접 대조하니 둘 다 height 22로 동일했다 — "Body/2Xs/Medium"은 Title이 아니라 그
-  // 옆에 붙는 Notice 배지(.chip)의 텍스트 스타일이었다(chip-brand-fg·chip-brand-bg와 함께 묶여
+  // 옆에 붙는 Notice 배지(.bds-badge)의 텍스트 스타일이었다(chip-brand-fg·chip-brand-bg와 함께 묶여
   // 바인딩됨). Title 자체는 Kind에 상관없이 항상 body-md/regular다 — 아래 &-notice 오버라이드 제거.
-  // "공지" 표시는 .board-row__content 안에 .chip.chip-sm.chip-brand를 조건부로 넣는 것으로 끝난다.
+  // "공지" 표시는 .bds-board-row__content 안에 .bds-badge.chip-sm.chip-brand를 조건부로 넣는 것으로 끝난다.
 
   &__meta {
     display: flex;
@@ -62,7 +62,7 @@ $board-col-width: var(--board-col-meta);
   }
 }
 
-.board-cell {
+.bds-board-cell {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@ $board-col-width: var(--board-col-meta);
   }
 }
 
-.board-header {
+.bds-board-header {
   display: flex;
   align-items: center;
   gap: $space-4;
@@ -100,7 +100,7 @@ $board-col-width: var(--board-col-meta);
   }
 }
 
-.board-list {
+.bds-board-list {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -115,7 +115,7 @@ $board-col-width: var(--board-col-meta);
 }
 
 // board-card — 모바일용 카드형 게시글
-.board-card {
+.bds-board-card {
   display: flex;
   flex-direction: column;
   gap: $space-2;
@@ -124,11 +124,11 @@ $board-col-width: var(--board-col-meta);
   border-bottom: $border-hairline solid $board-border;
 
   &:hover {
-    background-color: var(--table-row-bg-hover);
+    background-color: var(--bds-table-row-bg-hover);
   }
 
   // 2026-08-31 신규 발견(get_metadata, Kind=notice 1031:9648 vs Kind=post 1031:9618): notice는
-  // post보다 높이가 30px 크다 — Title 위에 Notice(.chip) 배지 줄이 조건부로 추가되기 때문이다
+  // post보다 높이가 30px 크다 — Title 위에 Notice(.bds-badge) 배지 줄이 조건부로 추가되기 때문이다
   // (board-row와 달리 배지가 인라인이 아니라 별도 줄). Title 자체 크기는 board-row와 마찬가지로
   // Kind에 상관없이 동일 — 기존 코드에 이 줄 자체가 아예 없었다.
   &__tags {
@@ -159,9 +159,9 @@ $board-col-width: var(--board-col-meta);
 }
 
 // Pagination — board-list(container=no)는 numbers 타입, container=yes는 table과 같은 simple-icon 타입(table-pagination 재사용)
-// 2026-08-28: 여기 있던 자체 .pagination-numbers 구현을 제거했다. _pagination.scss가 나중에 만들어지면서
-// 같은 클래스명(.pagination-numbers)을 다른 구조(BEM __prev/__next/__page가 아니라 .pagination-number 단일 셀 +
-// .pagination__nav)로 재정의해 로드 순서상 이 블록의 스타일을 덮어써버리는 충돌이 있었다.
-// board-list(container=no)는 이제 _pagination.scss의 .pagination-numbers(sm 사이즈: .pagination-sm 병기) +
-// .pagination-number + .pagination__nav 를 그대로 재사용한다 — 값도 동일해서(fg slate-600, current bg/fg
+// 2026-08-28: 여기 있던 자체 .bds-pagination-numbers 구현을 제거했다. _pagination.scss가 나중에 만들어지면서
+// 같은 클래스명(.bds-pagination-numbers)을 다른 구조(BEM __prev/__next/__page가 아니라 .bds-pagination-number 단일 셀 +
+// .bds-pagination__nav)로 재정의해 로드 순서상 이 블록의 스타일을 덮어써버리는 충돌이 있었다.
+// board-list(container=no)는 이제 _pagination.scss의 .bds-pagination-numbers(sm 사이즈: .bds-pagination-sm 병기) +
+// .bds-pagination-number + .bds-pagination__nav 를 그대로 재사용한다 — 값도 동일해서(fg slate-600, current bg/fg
 // blue-50/blue-600, radius 8, 셀 32×32) 중복 정의였을 뿐 별도 값 손실은 없다.

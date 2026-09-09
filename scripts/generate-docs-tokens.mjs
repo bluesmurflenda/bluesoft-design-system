@@ -13,6 +13,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// 이름 변환은 lib/tokens.mjs 한 곳에서만 만든다(ADR-033 접두사). 여기서 또 문자열을 조립하면
+// 접두사 규칙이 두 군데로 갈린다.
+import { cssVarName, figmaVarName, CSS_VAR_PREFIX, THEME_GENERAL_PREFIXES } from './lib/tokens.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
@@ -42,7 +46,7 @@ for (const [key, value] of Object.entries(primitive)) {
   } else if (parts[0] === 'social' && parts.length === 2) {
     social.push({ name: parts[1], hex: value });
   } else {
-    others.push({ name: key.replace(/\//g, '-'), hex: value });
+    others.push({ name: cssVarName(key).slice(2), hex: value });
   }
 }
 for (const steps of ramps.values()) steps.sort((a, b) => a.step - b.step);
@@ -50,9 +54,11 @@ const familyNames = [...ramps.keys()].sort();
 others.sort((a, b) => a.name.localeCompare(b.name));
 
 // ── Theme: cssVarName -> {Default, Dark} 역방향 맵(별칭 체인 해석용) ────────────────
-const themeByCssName = new Map();
+// 스냅샷 값에 든 별칭은 "var(--sky-25)"처럼 접두사가 없는 Figma 이름이다 — 여기에 접두사를
+// 붙이면 키가 어긋나 별칭이 하나도 안 풀리고 전부 #000000으로 떨어진다.
+const themeByFigmaName = new Map();
 for (const [key, value] of Object.entries(theme)) {
-  themeByCssName.set(key.replace(/\//g, '-'), value);
+  themeByFigmaName.set(figmaVarName(key).slice(2), value);
 }
 
 // var(--x) 문자열을 리터럴 hex까지 재귀 해석한다. Theme 토큰끼리도 서로 별칭할 수 있어서
@@ -78,8 +84,8 @@ function resolveHex(value, mode, seen = new Set()) {
       return typeof v === 'string' && v.startsWith('#') ? v : resolveHex(v, mode, seen);
     }
   }
-  if (themeByCssName.has(cssName)) {
-    const entry = themeByCssName.get(cssName);
+  if (themeByFigmaName.has(cssName)) {
+    const entry = themeByFigmaName.get(cssName);
     return resolveHex(entry[mode] ?? entry.Default, mode, seen);
   }
   return '#000000';
@@ -89,7 +95,8 @@ function resolveHex(value, mode, seen = new Set()) {
 // 바로 다음 대상만 보여줘야 "왜 이 색인지" 설명이 된다. 다 풀어버리면 전부 primitive 색 이름으로 수렴돼 의미가 없다).
 function aliasLabel(value) {
   const m = /^var\(--(.+)\)$/.exec(value);
-  return m ? m[1] : value;
+  // 스냅샷은 Figma 이름을 담고 있지만, 문서는 코드에 쓰는 이름을 보여줘야 복사해 쓸 수 있다.
+  return m ? CSS_VAR_PREFIX + m[1] : value;
 }
 
 function familyLabel(name) {
@@ -125,7 +132,7 @@ for (const family of familyNames) {
   primitiveHtml.push(`    <div class="doc-subhead">${familyLabel(family)}</div>`);
   primitiveHtml.push('    <div class="doc-grid">');
   for (const { step, hex } of ramps.get(family)) {
-    primitiveHtml.push(primitiveSwatch(`${family}-${step}`, hex));
+    primitiveHtml.push(primitiveSwatch(cssVarName(`${family}/${step}`).slice(2), hex));
   }
   primitiveHtml.push('    </div>');
 }
@@ -144,14 +151,14 @@ if (social.length) {
   primitiveHtml.push('    <div class="doc-row">');
   for (const { name, hex } of social) {
     primitiveHtml.push(
-      `      <div class="doc-swatch"><div class="doc-swatch__chip" style="width:120px;background-color:${hex};"></div><div class="doc-swatch__label">social-${name}</div></div>`
+      `      <div class="doc-swatch"><div class="doc-swatch__chip" style="width:120px;background-color:${hex};"></div><div class="doc-swatch__label">${cssVarName(`social/${name}`).slice(2)}</div></div>`
     );
   }
   primitiveHtml.push('    </div>');
 }
 
 // ── Theme 일반 시맨틱 섹션 HTML(FIGMA.md 「토큰 계층」의 순서: surface·text·border·icon·brand·accent) ──
-const GENERAL_PREFIXES = ['surface', 'text', 'border', 'icon', 'brand', 'accent'];
+const GENERAL_PREFIXES = THEME_GENERAL_PREFIXES;
 const themeHtml = [];
 let themeCount = 0;
 for (const prefix of GENERAL_PREFIXES) {
@@ -163,7 +170,7 @@ for (const prefix of GENERAL_PREFIXES) {
   themeHtml.push(`    <div class="doc-subhead">${familyLabel(prefix)}</div>`);
   themeHtml.push('    <div class="doc-grid">');
   for (const [key, entry] of entries) {
-    themeHtml.push(themeSwatch(key.replace(/\//g, '-'), entry));
+    themeHtml.push(themeSwatch(cssVarName(key).slice(2), entry));
     themeCount++;
   }
   themeHtml.push('    </div>');
@@ -191,6 +198,18 @@ console.log(
   `generate-docs-tokens: Primitive ${familyNames.length}개 램프(${familyNames.join(', ')}) + base ${others.length}개(${others.map((o) => o.name).join(', ')}) + social ${social.length}개, ` +
     `Theme 일반 시맨틱 ${themeCount}개 -> docs/tokens/colors.html`
 );
-if (themeCount !== 44) {
-  console.warn(`generate-docs-tokens: 경고 — Theme 일반 시맨틱이 44개가 아니라 ${themeCount}개다. tokens/_theme.scss 범위와 어긋났을 수 있으니 확인 필요.`);
+// 이 경고의 목적은 "이 생성기의 범위가 tokens/_theme.scss 와 갈라졌는지"를 잡는 것이다.
+// 기대 개수를 숫자로 박아두면 토큰이 늘 때마다 낡는다(실제로 44 로 박혀 있다가 brand/25·
+// border/control 이 들어오면서 틀렸다) — 그 파일에서 직접 센다.
+const themeScss = fs.readFileSync(path.join(ROOT, 'scss/tokens/_theme.scss'), 'utf8');
+const rootBlock = themeScss.slice(themeScss.indexOf('{', themeScss.indexOf(':root')), themeScss.indexOf('\n}'));
+const declaredGeneral = new Set(
+  [...rootBlock.matchAll(/--bds-([a-z0-9-]+)\s*:/g)]
+    .map((m) => m[1])
+    .filter((n) => GENERAL_PREFIXES.includes(n.split('-')[0]))
+);
+if (themeCount !== declaredGeneral.size) {
+  console.warn(
+    `generate-docs-tokens: 경고 — 스냅샷의 일반 시맨틱 ${themeCount}개와 tokens/_theme.scss 가 선언한 ${declaredGeneral.size}개가 다르다. 한쪽이 밀렸다.`
+  );
 }

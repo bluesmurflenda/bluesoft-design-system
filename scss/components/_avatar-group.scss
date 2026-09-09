@@ -20,47 +20,47 @@
 // 원자값으로 등록한다 — 색이 아닌 다른 시맨틱으로 대체 불가한 컴포넌트 고유 톤이라 CLAUDE.md
 // 1장의 "컴포넌트 고유 톤" 예외에 해당한다.
 :root {
-  --avatar-bg: var(--neutral-100);
-  --avatar-fg: var(--text-tertiary);
-  --avatar-online: var(--green-500);
-  --avatar-online-ring: var(--white); // ADR-019: Online 표시 링은 프리미티브 직접 참조가 의도된 예외
-  --avatar-c-01: #fff3cd; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-02: #d7eee1; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-03: #d7ebee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-04: #dfedfb; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-05: #dadef0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-06: #f8dfe0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-07: #e0e0e0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-08: #eee6db; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-09: #dee3d4; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-10: #d1e1ec; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-11: #d8e1ef; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-12: #e0ddee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-13: #f8e9df; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-bg: var(--bds-neutral-100);
+  --bds-avatar-fg: var(--bds-text-tertiary);
+  --bds-avatar-online: var(--bds-green-500);
+  --bds-avatar-online-ring: var(--bds-white); // ADR-019: Online 표시 링은 프리미티브 직접 참조가 의도된 예외
+  --bds-avatar-c-01: #fff3cd; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-02: #d7eee1; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-03: #d7ebee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-04: #dfedfb; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-05: #dadef0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-06: #f8dfe0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-07: #e0e0e0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-08: #eee6db; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-09: #dee3d4; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-10: #d1e1ec; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-11: #d8e1ef; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-12: #e0ddee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-13: #f8e9df; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
 [data-theme='dark'] {
-  --avatar-bg: var(--neutral-900);
-  --avatar-online: var(--green-400);
-  --avatar-c-01: #4a3c14; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-02: #1d3b2c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-03: #1c383c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-04: #1e3345; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-05: #26293e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-06: #452527; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-07: #333333; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-08: #3d362c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-09: #2e3327; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-10: #1f313c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-11: #252f3e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-12: #2d2a3d; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
-  --avatar-c-13: #43342b; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-bg: var(--bds-neutral-900);
+  --bds-avatar-online: var(--bds-green-400);
+  --bds-avatar-c-01: #4a3c14; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-02: #1d3b2c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-03: #1c383c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-04: #1e3345; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-05: #26293e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-06: #452527; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-07: #333333; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-08: #3d362c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-09: #2e3327; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-10: #1f313c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-11: #252f3e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-12: #2d2a3d; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  --bds-avatar-c-13: #43342b; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
-$avatar-bg: var(--avatar-bg);
-$avatar-fg: var(--avatar-fg);
-$avatar-online-bg: var(--avatar-online);
-$avatar-online-ring: var(--avatar-online-ring);
+$avatar-bg: var(--bds-avatar-bg);
+$avatar-fg: var(--bds-avatar-fg);
+$avatar-online-bg: var(--bds-avatar-online);
+$avatar-online-ring: var(--bds-avatar-online-ring);
 $avatar-colors: c-01, c-02, c-03, c-04, c-05, c-06, c-07, c-08, c-09, c-10, c-11, c-12, c-13;
 
 // Size(box) × 텍스트 스케일 — get_variable_defs로 5사이즈 전부 대조: xs·sm은 같은 body-2xs를 쓴다.
@@ -72,7 +72,7 @@ $avatar-sizes: (
   xl: (box: 56px, type: body-2xl),
 );
 
-.avatar {
+.bds-avatar {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -102,12 +102,12 @@ $avatar-sizes: (
 }
 
 @each $size, $props in $avatar-sizes {
-  .avatar-#{$size} {
+  .bds-avatar-#{$size} {
     width: map.get($props, box);
     height: map.get($props, box);
     @include mix.text(map.get($props, type), medium);
 
-    .avatar__online {
+    .bds-avatar__online {
       width: calc(map.get($props, box) * 0.25);
       height: calc(map.get($props, box) * 0.25);
     }
@@ -115,17 +115,17 @@ $avatar-sizes: (
 }
 
 @each $color in $avatar-colors {
-  .avatar-#{$color} {
-    background-color: var(--avatar-#{$color});
+  .bds-avatar-#{$color} {
+    background-color: var(--bds-avatar-#{$color});
   }
 }
 
 // ──────────────────────────────────────────────────────────────
-// Avatar Group — sm(32) 아바타만 겹쳐 쌓는다. 이름 대신 사이징 축을 그대로 재사용(.avatar.avatar-sm).
+// Avatar Group — sm(32) 아바타만 겹쳐 쌓는다. 이름 대신 사이징 축을 그대로 재사용(.bds-avatar.avatar-sm).
 // ──────────────────────────────────────────────────────────────
 $avatar-group-overlap: -8px;
 
-.avatar-group {
+.bds-avatar-group {
   display: inline-flex;
   align-items: center;
 
@@ -139,8 +139,8 @@ $avatar-group-overlap: -8px;
   }
 }
 
-.avatar-group__more {
-  @extend .avatar;
-  @extend .avatar-sm;
+.bds-avatar-group__more {
+  @extend .bds-avatar;
+  @extend .bds-avatar-sm;
   font-weight: $font-weight-semibold;
 }

@@ -17,31 +17,32 @@
 // 막는다 — 이전 코드는 bg-selected만 고쳐져 있고 fg-selected·border-selected는 여전히
 // 반전되고 있었다(검정/밝은 파랑으로 바뀜, 대비 붕괴).
 :root {
-  --con-fg: var(--text-secondary);
-  --con-gray-border: var(--border-default);
-  --con-gray-bg-hover: var(--neutral-100);
-  --con-bg-selected: var(--brand-100);
-  --con-fg-selected: var(--brand-700);
-  --con-border-selected: var(--brand-200);
-  --con-color-bg: var(--brand-50);
-  --con-color-bg-hover: var(--brand-100);
-  --con-color-border: var(--brand-200);
-  --con-white-bg: var(--white);
-  --con-white-border: var(--border-default);
-  --con-white-bg-hover: var(--brand-100);
-  --con-white-fg-hover: var(--brand-600);
-  --con-white-border-hover: var(--brand-200);
-  --con-white-fg-selected: var(--white);
-  --con-white-bg-selected: var(--brand-600);
-  --con-white-border-selected: var(--brand-600);
+  --bds-con-fg: var(--bds-text-secondary);
+  --bds-con-gray-border: var(--bds-border-default);
+  --bds-con-gray-bg-hover: var(--bds-neutral-100);
+  --bds-con-bg-selected: var(--bds-brand-100);
+  --bds-con-fg-selected: var(--bds-brand-700);
+  --bds-con-border-selected: var(--bds-brand-200);
+  --bds-con-color-bg: var(--bds-brand-50);
+  --bds-con-color-bg-hover: var(--bds-brand-100);
+  --bds-con-color-border: var(--bds-brand-200);
+  --bds-con-white-bg: var(--bds-white);
+  --bds-con-white-border: var(--bds-border-default);
+  --bds-con-white-bg-hover: var(--bds-brand-100);
+  --bds-con-white-fg-hover: var(--bds-brand-600);
+  --bds-con-white-border-hover: var(--bds-brand-200);
+  --bds-con-white-fg-selected: var(--bds-white);
+  --bds-con-white-bg-selected: var(--bds-brand-600);
+  --bds-con-white-border-selected: var(--bds-brand-600);
+  --bds-con-gray-bg: var(--bds-surface-subtle);
 }
 
 [data-theme='dark'] {
-  --con-gray-bg-hover: var(--neutral-900);
-  --con-color-border: var(--brand-700);
-  --con-white-bg: var(--neutral-950);
-  --con-white-bg-selected: var(--blue-600);
-  --con-white-border-selected: var(--blue-600);
+  --bds-con-gray-bg-hover: var(--bds-neutral-900);
+  --bds-con-color-border: var(--bds-brand-700);
+  --bds-con-white-bg: var(--bds-neutral-950);
+  --bds-con-white-bg-selected: var(--bds-blue-600);
+  --bds-con-white-border-selected: var(--bds-blue-600);
 }
 
 $con-sizes: (
@@ -50,33 +51,33 @@ $con-sizes: (
   lg: (height: 48px, padding-x: $space-6, type: body-xl),
 );
 
-$con-fg: var(--con-fg);
-$con-fg-selected: var(--con-fg-selected);
-$con-bg-selected-shared: var(--con-bg-selected);
-$con-border-selected-shared: var(--con-border-selected);
+$con-fg: var(--bds-con-fg);
+$con-fg-selected: var(--bds-con-fg-selected);
+$con-bg-selected-shared: var(--bds-con-bg-selected);
+$con-border-selected-shared: var(--bds-con-border-selected);
 
 $con-themes: (
-  'color': (bg: var(--con-color-bg), bg-hover: var(--con-color-bg-hover), border: var(--con-color-border), fg-hover: null, border-hover: null,
+  'color': (bg: var(--bds-con-color-bg), bg-hover: var(--bds-con-color-bg-hover), border: var(--bds-con-color-border), fg-hover: null, border-hover: null,
     bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
   // 2026-08-28 확인(status-spec 예외1): gray의 default bg는 투명이 아니라 con/white/bg다 —
   // con/gray/bg 토큰 자체가 존재하지 않는다(Theme 이름과 실제 참조가 어긋나 있는 게 Figma 실측 그대로).
-  'gray': (bg: var(--con-white-bg), bg-hover: var(--con-gray-bg-hover), border: var(--con-gray-border), fg-hover: null, border-hover: null,
+  'gray': (bg: var(--bds-con-white-bg), bg-hover: var(--bds-con-gray-bg-hover), border: var(--bds-con-gray-border), fg-hover: null, border-hover: null,
     bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
-  'white': (bg: var(--con-white-bg), bg-hover: var(--con-white-bg-hover), border: var(--con-white-border), fg-hover: var(--con-white-fg-hover), border-hover: var(--con-white-border-hover),
-    bg-selected: var(--con-white-bg-selected), border-selected: var(--con-white-border-selected), fg-selected: var(--con-white-fg-selected)),
+  'white': (bg: var(--bds-con-white-bg), bg-hover: var(--bds-con-white-bg-hover), border: var(--bds-con-white-border), fg-hover: var(--bds-con-white-fg-hover), border-hover: var(--bds-con-white-border-hover),
+    bg-selected: var(--bds-con-white-bg-selected), border-selected: var(--bds-con-white-border-selected), fg-selected: var(--bds-con-white-fg-selected)),
 );
 
-.con {
+.bds-con {
   display: inline-flex;
   align-items: center;
   gap: $space-2;
-  border-radius: var(--con-radius); // 2026-08-28 재확인(status-spec): Square 모드에서 radius/none — 모드 무관 아니었음
+  border-radius: var(--bds-con-radius); // 2026-08-28 재확인(status-spec): Square 모드에서 radius/none — 모드 무관 아니었음
   border: 1px solid transparent;
   color: $con-fg;
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   cursor: pointer;
 
-  .con__icon {
+  .bds-con__icon {
     flex-shrink: 0;
     width: 20px; // 2026-08-28 확인: Leading·Close 아이콘은 전 사이즈 20×20 고정(사이즈별 가변 아님)
     height: 20px;
@@ -84,7 +85,7 @@ $con-themes: (
 }
 
 @each $size, $props in $con-sizes {
-  .con-#{$size} {
+  .bds-con-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     @include mix.text(map.get($props, type), medium);
@@ -92,11 +93,11 @@ $con-themes: (
 }
 
 @each $theme, $c in $con-themes {
-  .con-#{$theme} {
+  .bds-con-#{$theme} {
     background-color: map.get($c, bg);
     border-color: map.get($c, border);
 
-    &:hover:not(.con-disabled) {
+    &:hover:not(.bds-con-disabled) {
       background-color: map.get($c, bg-hover);
       @if map.get($c, fg-hover) {
         color: map.get($c, fg-hover);
@@ -106,7 +107,7 @@ $con-themes: (
       }
     }
 
-    &.con-selected {
+    &.bds-con-selected {
       background-color: map.get($c, bg-selected);
       border-color: map.get($c, border-selected);
       color: map.get($c, fg-selected);
@@ -118,7 +119,7 @@ $con-themes: (
   }
 }
 
-.con {
+.bds-con {
   &-disabled {
     opacity: 0.4;
     pointer-events: none;

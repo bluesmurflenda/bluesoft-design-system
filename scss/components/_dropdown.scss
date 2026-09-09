@@ -12,24 +12,26 @@
 // 이전엔 select.scss·dropdown.scss·input.scss 세 곳에 흩어져 중복 선언돼 있었다).
 // dropdown 트리거 글자색은 list/item/fg 와 값이 같아 그 토큰을 공유한다(get_variable_defs 확인).
 :root {
-  --list-item-fg: var(--text-secondary);
-  --list-item-fg-selected: var(--brand-600);
-  --list-panel-border: var(--border-default);
-  --list-panel-bg: var(--white);
-  --list-item-bg-hover: var(--surface-subtle);
+  --bds-list-item-fg: var(--bds-text-secondary);
+  --bds-list-item-fg-selected: var(--bds-brand-600);
+  --bds-list-panel-border: var(--bds-border-default);
+  --bds-list-panel-bg: var(--bds-white);
+  --bds-list-item-bg-hover: var(--bds-surface-subtle);
+  --bds-list-item-bg-selected: var(--bds-surface-subtle);
+  --bds-list-item-fg-supporting: var(--bds-text-tertiary);
 }
 
 [data-theme='dark'] {
-  --list-panel-bg: var(--neutral-800);
+  --bds-list-panel-bg: var(--bds-neutral-800);
 }
 
 // 2026-08-28 확인(inputs-spec): 트리거 radius는 field/radius가 아니라 button/radius 공유.
 // 셰브론도 Select와 동일하게 12/16/20/20으로 사이즈별로 갈린다(문서: "트리거 규격은 _Select base와 동일").
 $dropdown-sizes: (
-  sm: (height: 32px, padding-x: $space-3, radius: var(--button-radius), chevron: 12px),
-  md: (height: 40px, padding-x: $space-4, radius: var(--button-radius), chevron: 16px),
-  lg: (height: 48px, padding-x: $space-5, radius: var(--button-radius), chevron: 20px),
-  xl: (height: 56px, padding-x: $space-6, radius: var(--button-radius), chevron: 20px),
+  sm: (height: 32px, padding-x: $space-3, radius: var(--bds-btn-radius), chevron: 12px),
+  md: (height: 40px, padding-x: $space-4, radius: var(--bds-btn-radius), chevron: 16px),
+  lg: (height: 48px, padding-x: $space-5, radius: var(--bds-btn-radius), chevron: 20px),
+  xl: (height: 56px, padding-x: $space-6, radius: var(--bds-btn-radius), chevron: 20px),
 );
 
 // _List/Item 높이 — 사이즈별 32/40/48/56. 문서 권고대로 padding-y(6/8/11/15, 폰트에서 파생된 값이라
@@ -41,18 +43,18 @@ $list-item-heights: (
   xl: 56px,
 );
 
-$dropdown-border: var(--field-border);
-$dropdown-fg: var(--list-item-fg);
+$dropdown-border: var(--bds-field-border);
+$dropdown-fg: var(--bds-list-item-fg);
 // icon/primary — 2026-08-28 당시엔 코드에 icon/* 시맨틱이 없어 primitive 고정값으로 남겨뒀던
 // 것을 1단계에서 icon/* 를 추가한 뒤 바로잡는다(값은 동일, 다크 대응이 새로 생김).
-$dropdown-chevron: var(--icon-primary);
-$list-panel-border: var(--list-panel-border);
-$list-panel-bg: var(--list-panel-bg);
-$list-item-bg-hover: var(--list-item-bg-hover);
-$list-item-fg: var(--list-item-fg);
-$list-item-fg-selected: var(--list-item-fg-selected);
+$dropdown-chevron: var(--bds-icon-primary);
+$list-panel-border: var(--bds-list-panel-border);
+$list-panel-bg: var(--bds-list-panel-bg);
+$list-item-bg-hover: var(--bds-list-item-bg-hover);
+$list-item-fg: var(--bds-list-item-fg);
+$list-item-fg-selected: var(--bds-list-item-fg-selected);
 
-.dropdown {
+.bds-dropdown {
   display: inline-flex;
   flex-direction: column;
   gap: $space-1;
@@ -62,23 +64,23 @@ $list-item-fg-selected: var(--list-item-fg-selected);
     align-items: center;
     gap: $space-2;
     border: 1px solid $dropdown-border;
-    background-color: var(--field-bg);
+    background-color: var(--bds-field-bg);
     color: $dropdown-fg;
     // font-weight는 아래 @each의 text()로 이동
     cursor: pointer;
 
     &:hover {
-      border-color: var(--field-border-hover);
+      border-color: var(--bds-field-border-hover);
     }
 
     &[aria-expanded='true'] {
-      border-color: var(--field-border-focus);
+      border-color: var(--bds-field-border-focus);
       box-shadow: 0 0 0 2px $effect-focus-ring;
     }
 
-    // &[aria-expanded='true'] 안에 .dropdown__chevron을 한 번 더 중첩하면 4단이 되므로
+    // &[aria-expanded='true'] 안에 .bds-dropdown__chevron을 한 번 더 중첩하면 4단이 되므로
     // 복합 선택자로 펼친다(컴파일 결과 동일).
-    &[aria-expanded='true'] .dropdown__chevron {
+    &[aria-expanded='true'] .bds-dropdown__chevron {
       transform: rotate(180deg);
     }
   }
@@ -112,22 +114,22 @@ $list-item-font: (
 );
 
 @each $size, $props in $dropdown-sizes {
-  .dropdown-#{$size} {
-    .dropdown__trigger {
+  .bds-dropdown-#{$size} {
+    .bds-dropdown__trigger {
       height: map.get($props, height);
       padding-inline: map.get($props, padding-x);
       border-radius: map.get($props, radius);
       @include mix.text(map.get($dropdown-font, $size), medium);
     }
 
-    .dropdown__chevron {
+    .bds-dropdown__chevron {
       width: map.get($props, chevron);
       height: map.get($props, chevron);
     }
 
-    .list-item {
+    .bds-list-item {
       height: map.get($list-item-heights, $size);
-      // font-weight는 아래 기본 .list-item 규칙(medium, 사이즈 무관)이 그대로 적용되므로
+      // font-weight는 아래 기본 .bds-list-item 규칙(medium, 사이즈 무관)이 그대로 적용되므로
       // 여기서는 재선언하지 않고 size/lh만 $type-scale에서 가져온다.
       $list-item-type: map.get(maps.$type-scale, map.get($list-item-font, $size));
       font-size: map.get($list-item-type, size);
@@ -136,7 +138,7 @@ $list-item-font: (
   }
 }
 
-.list-panel {
+.bds-list-panel {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -146,14 +148,14 @@ $list-item-font: (
   background-color: $list-panel-bg;
 }
 
-.list-item {
+.bds-list-item {
   display: flex;
   align-items: center;
   gap: $space-2;
   padding-inline: $space-3; // 문서 권고: padding-y(6/8/11/15, 폰트 파생값) 대신 height로 세로 크기 고정
   border-radius: $radius-sm;
   color: $list-item-fg;
-  @include mix.text(body-lg, medium); // 기본값(md 상당). size/lh는 .dropdown-{size}/.select-{size} 스코프에서 덮어씀. weight(medium)는 사이즈 무관 고정값이라 이 규칙 하나로 전체를 커버함
+  @include mix.text(body-lg, medium); // 기본값(md 상당). size/lh는 .bds-dropdown-{size}/.bds-select-{size} 스코프에서 덮어씀. weight(medium)는 사이즈 무관 고정값이라 이 규칙 하나로 전체를 커버함
   cursor: pointer;
 
   &:hover {
@@ -167,18 +169,18 @@ $list-item-font: (
     box-shadow: 0 0 0 2px $effect-focus-ring;
   }
 
-  &.list-item-selected {
+  &.bds-list-item-selected {
     background-color: $list-item-bg-hover;
     color: $list-item-fg-selected;
     justify-content: space-between;
   }
 
-  &.list-item-disabled {
+  &.bds-list-item-disabled {
     opacity: 0.4;
     pointer-events: none;
   }
 
-  .list-item__check {
+  .bds-list-item__check {
     width: 20px;
     height: 20px;
     flex-shrink: 0;

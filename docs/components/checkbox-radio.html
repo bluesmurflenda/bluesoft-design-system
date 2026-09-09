@@ -19,7 +19,7 @@
 
   <section class="doc-section">
     <h2>Checkbox — Validation × State</h2>
-    <p class="doc-desc">normal은 modifier 클래스 없음, valid/invalid는 <code>.choice--valid</code> / <code>.choice--invalid</code>(더블 대시). indeterminate는 HTML 속성이 없어 렌더 후 JS로 <code>el.indeterminate = true</code>를 설정합니다.</p>
+    <p class="doc-desc">normal은 modifier 클래스 없음, valid/invalid는 <code>.bds-choice--valid</code> / <code>.bds-choice--invalid</code>(더블 대시). indeterminate는 HTML 속성이 없어 렌더 후 JS로 <code>el.indeterminate = true</code>를 설정합니다.</p>
     <div class="doc-matrix" id="checkbox-matrix"></div>
   </section>
 
@@ -31,7 +31,7 @@
 
   <section class="doc-section">
     <h2>Radio — Validation × State</h2>
-    <p class="doc-desc"><code>.choice-radio</code> modifier로 원형 글리프가 됩니다. Indeterminate 상태는 라디오에 없습니다.</p>
+    <p class="doc-desc"><code>.bds-choice-radio</code> modifier로 원형 글리프가 됩니다. Indeterminate 상태는 라디오에 없습니다.</p>
     <div class="doc-matrix" id="radio-matrix"></div>
   </section>
 
@@ -42,7 +42,7 @@
 
   <section class="doc-section">
     <h2>Toggle</h2>
-    <p class="doc-desc">Checkbox/Radio와 별도 마크업(<code>.toggle</code> &gt; <code>.toggle__input</code> + <code>.toggle__track</code> &gt; <code>.toggle__knob</code>). 검증 상태 modifier는 없습니다.</p>
+    <p class="doc-desc">Checkbox/Radio와 별도 마크업(<code>.bds-toggle</code> &gt; <code>.bds-toggle__input</code> + <code>.bds-toggle__track</code> &gt; <code>.bds-toggle__knob</code>). 검증 상태 modifier는 없습니다.</p>
     <div class="doc-matrix" id="toggle-matrix"></div>
   </section>
 </main>
@@ -52,12 +52,12 @@
 <script>
   var VALIDATIONS = [
     ['normal', ''],
-    ['valid', ' choice--valid'],
-    ['invalid', ' choice--invalid'],
+    ['valid', ' bds-choice--valid'],
+    ['invalid', ' bds-choice--invalid'],
   ];
 
   function choiceCell(type, validationCls, labelText, state) {
-    var cls = 'choice choice-' + type + validationCls;
+    var cls = 'bds-choice bds-choice-' + type + validationCls;
     var attrs = '';
     var stateLabel = state;
     if (state === 'checked') attrs = ' checked';
@@ -66,9 +66,9 @@
     return (
       '<span class="doc-label">' + stateLabel + '</span>' +
       '<label class="' + cls + '">' +
-      '<input class="choice__input" type="' + inputType + '"' + attrs + '>' +
-      '<span class="choice__box"></span>' +
-      '<span class="choice__text"><span class="choice__label">' + labelText + '</span></span>' +
+      '<input class="bds-choice__input" type="' + inputType + '"' + attrs + '>' +
+      '<span class="bds-choice__box"></span>' +
+      '<span class="bds-choice__text"><span class="bds-choice__label">' + labelText + '</span></span>' +
       '</label>' +
       '<span class="doc-cell__caption">' + cls + '</span>'
     );
@@ -92,14 +92,14 @@
     ['unchecked', 'checked'].forEach(function (state) {
       var cell = document.createElement('div');
       cell.className = 'doc-cell';
-      var cls = 'choice choice-checkbox';
+      var cls = 'bds-choice bds-choice-checkbox';
       var attrs = (state === 'checked' ? ' checked' : '') + ' disabled';
       cell.innerHTML =
         '<span class="doc-label">' + state + '</span>' +
         '<label class="' + cls + '">' +
-        '<input class="choice__input" type="checkbox"' + attrs + '>' +
-        '<span class="choice__box"></span>' +
-        '<span class="choice__text"><span class="choice__label">항목 선택</span></span>' +
+        '<input class="bds-choice__input" type="checkbox"' + attrs + '>' +
+        '<span class="bds-choice__box"></span>' +
+        '<span class="bds-choice__text"><span class="bds-choice__label">항목 선택</span></span>' +
         '</label>' +
         '<span class="doc-cell__caption">' + cls + ' (input disabled)</span>';
       el.appendChild(cell);
@@ -123,13 +123,13 @@
     var el = document.getElementById('radio-disabled');
     var cell = document.createElement('div');
     cell.className = 'doc-cell';
-    var cls = 'choice choice-radio';
+    var cls = 'bds-choice bds-choice-radio';
     cell.innerHTML =
       '<span class="doc-label">checked</span>' +
       '<label class="' + cls + '">' +
-      '<input class="choice__input" type="radio" checked disabled>' +
-      '<span class="choice__box"></span>' +
-      '<span class="choice__text"><span class="choice__label">옵션 선택</span></span>' +
+      '<input class="bds-choice__input" type="radio" checked disabled>' +
+      '<span class="bds-choice__box"></span>' +
+      '<span class="bds-choice__text"><span class="bds-choice__label">옵션 선택</span></span>' +
       '</label>' +
       '<span class="doc-cell__caption">' + cls + ' (input disabled)</span>';
     el.appendChild(cell);
@@ -150,10 +150,10 @@
       cell.className = 'doc-cell';
       cell.innerHTML =
         '<span class="doc-label">' + label + '</span>' +
-        '<label class="toggle">' +
-        '<input class="toggle__input" type="checkbox"' + attrs + '>' +
-        '<span class="toggle__track"><span class="toggle__knob"></span></span>' +
-        '<span class="toggle__label">Toggle 라벨</span>' +
+        '<label class="bds-toggle">' +
+        '<input class="bds-toggle__input" type="checkbox"' + attrs + '>' +
+        '<span class="bds-toggle__track"><span class="bds-toggle__knob"></span></span>' +
+        '<span class="bds-toggle__label">Toggle 라벨</span>' +
         '</label>' +
         '<span class="doc-cell__caption">toggle</span>';
       el.appendChild(cell);

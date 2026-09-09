@@ -19,14 +19,14 @@ $social-brand-colors: (
   apple: $social-apple,
 );
 
-.social-btn {
+.bds-social-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: $social-height;
   gap: $social-gap;
-  border-radius: btn.$button-radius;
+  border-radius: btn.$btn-radius;
   font-weight: $font-weight-semibold;
   font-size: $font-size-body-lg;
   line-height: $font-leading-body-lg;
@@ -76,24 +76,24 @@ $social-brand-colors: (
 }
 
 // google의 아이콘 전용 로고(Icon/social-google)는 실측상 24px — label 타입은 20px 그대로.
-.social-btn-icon.social-btn-google .social-btn__logo {
+.bds-social-btn-icon.social-btn-google .bds-social-btn__logo {
   width: 24px;
   height: 24px;
 }
 
 // outline 테마 — 4개 소셜 공통(naver/kakao/apple의 outline 변형 + google 전체)
-.social-btn-outline,
-.social-btn-google {
+.bds-social-btn-outline,
+.bds-social-btn-google {
   // get_variable_defs로 확인(2026-08-30): 배경은 button/outline/bg가 아니라 surface/default에
   // 직접 바인딩돼 있다 — 값은 라이트에서 같지만(둘 다 white) 다크에서 다르다(neutral-900 vs -950).
-  background-color: var(--surface-default);
-  border: 1px solid var(--button-outline-border);
-  color: var(--button-outline-fg);
+  background-color: var(--bds-surface-default);
+  border: 1px solid var(--bds-btn-outline-border);
+  color: var(--bds-btn-outline-fg);
 }
 
 // brand 테마 — naver/kakao/apple만 (google은 위 outline 규칙을 그대로 씀)
 @each $social, $bg in $social-brand-colors {
-  .social-btn-brand.social-btn-#{$social} {
+  .bds-social-btn-brand.social-btn-#{$social} {
     background-color: $bg;
     border: none;
     color: $white;
@@ -101,6 +101,6 @@ $social-brand-colors: (
 }
 
 // 2026-08-28 재실측: kakao만 글자색이 검정으로 바뀌어 있다(카카오 공식 가이드와 일치, 이전 실측의 흰색은 stale).
-.social-btn-brand.social-btn-kakao {
+.bds-social-btn-brand.social-btn-kakao {
   color: $black;
 }

@@ -20,55 +20,57 @@
 // (둘 다 #fafafa=neutral-50=surface/subtle) 전부 제거했다. header-col/bg와 header-row/bg가 다른
 // 값이라던 기존 주석은 slate→neutral 정리 이전의 낡은 측정이었다.
 //
-// table/header-col/* 의 codeSyntax가 깨져 있어(-col 누락, Figma Dev Mode엔 --table-header-bg로
-// 표시된다) 실제 이름과 다르지만, 코드는 정상 이름(--table-header-col-*)을 쓴다 — 7단계 후 Figma
+// table/header-col/* 의 codeSyntax가 깨져 있어(-col 누락, Figma Dev Mode엔 --bds-table-header-bg로
+// 표시된다) 실제 이름과 다르지만, 코드는 정상 이름(--bds-table-header-col-*)을 쓴다 — 7단계 후 Figma
 // 수정 예정(PROGRESS.md 막힌 것 참조). table/cell/fg-supporting도 기존 코드의 "muted" 대신
 // Figma 실제 이름 "supporting"으로 맞췄다(FIGMA.md 「토큰 위생」 — 보조 텍스트 접미사 통일).
 :root {
-  --table-border: var(--border-default);
-  --table-header-col-bg: var(--surface-subtle);
-  --table-header-col-fg: var(--text-primary);
-  --table-header-row-bg: var(--surface-subtle);
-  --table-header-row-fg: var(--text-primary);
-  --table-cell-fg: var(--text-secondary);
-  --table-cell-fg-supporting: var(--text-tertiary);
-  --table-row-bg-hover: var(--surface-subtle);
-  --table-row-bg-alt: var(--surface-subtle); // 신규 발견: 지그재그(zebra) 행 배경. markup.md 규칙대로 :nth-child(even)로 적용
+  --bds-table-border: var(--bds-border-default);
+  --bds-table-header-col-bg: var(--bds-surface-accent-subtle);
+  --bds-table-header-col-fg: var(--bds-text-primary);
+  --bds-table-header-row-bg: var(--bds-surface-subtle);
+  --bds-table-header-row-fg: var(--bds-text-primary);
+  --bds-table-cell-fg: var(--bds-text-tertiary);
+  --bds-table-cell-fg-supporting: var(--bds-text-tertiary);
+  --bds-table-row-bg-hover: var(--bds-surface-subtle);
+  --bds-table-row-bg-alt: var(--bds-surface-subtle); // 신규 발견: 지그재그(zebra) 행 배경. markup.md 규칙대로 :nth-child(even)로 적용
+  --bds-table-border-strong: var(--bds-border-control);
+  --bds-table-header-row-border-top: var(--bds-border-strong);
 }
 
-$table-border: var(--table-border);
-$table-header-col-bg: var(--table-header-col-bg);
-$table-header-col-fg: var(--table-header-col-fg);
-$table-header-row-bg: var(--table-header-row-bg);
-$table-header-row-fg: var(--table-header-row-fg);
-$table-cell-fg: var(--table-cell-fg);
-$table-cell-fg-supporting: var(--table-cell-fg-supporting);
-$table-row-bg-hover: var(--table-row-bg-hover);
-$table-row-bg-alt: var(--table-row-bg-alt);
+$table-border: var(--bds-table-border);
+$table-header-col-bg: var(--bds-table-header-col-bg);
+$table-header-col-fg: var(--bds-table-header-col-fg);
+$table-header-row-bg: var(--bds-table-header-row-bg);
+$table-header-row-fg: var(--bds-table-header-row-fg);
+$table-cell-fg: var(--bds-table-cell-fg);
+$table-cell-fg-supporting: var(--bds-table-cell-fg-supporting);
+$table-row-bg-hover: var(--bds-table-row-bg-hover);
+$table-row-bg-alt: var(--bds-table-row-bg-alt);
 
 // height·padding-x는 tokens/_shape.scss가 이미 내보낸 table/cell/min-height·padding-x Shape
 // 컬렉션 변수를 그대로 참조한다(1단계에서 만들어졌지만 이 파일이 안 쓰고 리터럴 px를 중복 선언하고
 // 있었다 — 값은 같았지만 소스가 둘이라 6단계에서 하나로 합쳤다).
 $table-cell-sizes: (
-  sm: (height: var(--table-cell-min-height-sm), padding-x: var(--table-cell-padding-x-sm), type: body-sm),
-  md: (height: var(--table-cell-min-height-md), padding-x: var(--table-cell-padding-x-md), type: body-sm),
-  lg: (height: var(--table-cell-min-height-lg), padding-x: var(--table-cell-padding-x-lg), type: body-lg),
+  sm: (height: var(--bds-table-cell-min-height-sm), padding-x: var(--bds-table-cell-padding-x-sm), type: body-sm),
+  md: (height: var(--bds-table-cell-min-height-md), padding-x: var(--bds-table-cell-padding-x-md), type: body-sm),
+  lg: (height: var(--bds-table-cell-min-height-lg), padding-x: var(--bds-table-cell-padding-x-lg), type: body-lg),
 );
 
-.table {
+.bds-table {
   display: flex;
   flex-direction: column;
   width: 100%;
   background-color: $surface-default;
 }
 
-.table-header {
+.bds-table-header {
   display: flex;
   // 2026-08-28 확인(table-nav-spec): Table/Header 자체는 border 없음 — 위쪽 선은 Figma에 없는데
   // 코드에만 있던 것이라 제거. 헤더-바디 경계는 각 셀의 border-bottom이 담당.
 }
 
-.table-row {
+.bds-table-row {
   display: flex;
 
   // 지그재그 배경 — 실제로는 :nth-child(even)다(markup.md 규칙). hover가 항상 이기도록 이 뒤에 선언.
@@ -81,11 +83,11 @@ $table-cell-sizes: (
   }
 
   // 컬럼 폭이 다른 테이블은 Table/Row(균등 flex:1) 대신 셀을 오토레이아웃으로 나열한다 —
-  // 각 .table-cell에 개별 width/flex-basis를 지정하고 flex:1 0 0을 쓰지 않으면 된다(디태치 아님,
+  // 각 .bds-table-cell에 개별 width/flex-basis를 지정하고 flex:1 0 0을 쓰지 않으면 된다(디태치 아님,
   // 셀은 그대로 인스턴스로 마스터 변경을 계속 받는다. FIGMA.md 「슬롯과 크기」).
 }
 
-.table-cell {
+.bds-table-cell {
   display: flex;
   align-items: center;
   justify-content: center; // Align=center 기본
@@ -98,7 +100,7 @@ $table-cell-sizes: (
   &-align-left {
     justify-content: flex-start;
 
-    .table-cell__text {
+    .bds-table-cell__text {
       align-items: flex-start;
       text-align: left;
     }
@@ -114,7 +116,7 @@ $table-cell-sizes: (
 }
 
 @each $size, $props in $table-cell-sizes {
-  .table-cell-#{$size} {
+  .bds-table-cell-#{$size} {
     // 2026-08-28 확인(table-nav-spec): counterAxisSizingMode AUTO + minHeight다 — height 고정 금지.
     // 한 줄이면 이 값과 같고 텍스트가 여러 줄이면 셀이 늘어난다(고정 44라 잘리던 결함의 재발 방지).
     // padding-y는 0 — 세로 여백은 align-items:center가 만든다(패딩과 함께 쓰면 여러 줄에서 과도해짐).
@@ -127,12 +129,12 @@ $table-cell-sizes: (
   }
 }
 
-.table-cell {
+.bds-table-cell {
   &-body {
     color: $table-cell-fg;
     font-weight: $font-weight-medium;
 
-    .table-cell__supporting {
+    .bds-table-cell__supporting {
       color: $table-cell-fg-supporting;
       @include mix.text(body-2xs, medium);
     }
@@ -161,7 +163,7 @@ $table-cell-sizes: (
   }
 
   &-lg {
-    .table-cell__leading {
+    .bds-table-cell__leading {
       width: 32px;
       height: 32px;
     }
@@ -169,5 +171,5 @@ $table-cell-sizes: (
 }
 
 // 2026-08-28: 자체 .table-pagination 구현을 제거했다 — board.scss와 같은 이유로,
-// 값이 _pagination.scss의 .pagination-simple-icon(패딩 20 고정, "Page 1 of 10" 텍스트)과 완전히 같아서
-// 중복 정의였다. 테이블 하단 페이지네이션은 .pagination-simple-icon(+ .pagination-sm 등 사이즈 클래스)을 그대로 쓴다.
+// 값이 _pagination.scss의 .bds-pagination-simple-icon(패딩 20 고정, "Page 1 of 10" 텍스트)과 완전히 같아서
+// 중복 정의였다. 테이블 하단 페이지네이션은 .bds-pagination-simple-icon(+ .bds-pagination-sm 등 사이즈 클래스)을 그대로 쓴다.

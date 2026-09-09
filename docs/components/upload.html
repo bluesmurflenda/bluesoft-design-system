@@ -20,24 +20,24 @@
 
   <section class="doc-section">
     <h2>Dropzone</h2>
-    <p class="doc-desc"><code>.featured-icon</code>(neutral/sm) + <code>.upload-dropzone__action</code>(link 버튼 + 안내 텍스트) + <code>.upload-dropzone__supporting</code>(하단 안내문) 조합.</p>
+    <p class="doc-desc"><code>.bds-featured-icon</code>(neutral/sm) + <code>.bds-upload-dropzone__action</code>(link 버튼 + 안내 텍스트) + <code>.bds-upload-dropzone__supporting</code>(하단 안내문) 조합.</p>
     <div class="doc-card" style="max-width:480px;">
-      <div class="upload-dropzone">
-        <span class="featured-icon featured-icon-sm featured-icon-neutral">
-          <svg class="featured-icon__icon"><use href="../assets/icons/sprite.svg#icon-base-upload-cloud"></use></svg>
+      <div class="bds-upload-dropzone">
+        <span class="bds-featured-icon bds-featured-icon-sm bds-featured-icon-neutral">
+          <svg class="bds-featured-icon__icon"><use href="../assets/icons/sprite.svg#icon-base-upload-cloud"></use></svg>
         </span>
-        <div class="upload-dropzone__action">
-          <button type="button" class="btn btn-md btn-link">Click to upload</button>
+        <div class="bds-upload-dropzone__action">
+          <button type="button" class="bds-btn bds-btn-md bds-btn-link">Click to upload</button>
           <span>또는 파일을 끌어다 놓으세요</span>
         </div>
-        <span class="upload-dropzone__supporting">SVG, PNG, JPG or GIF (최대 800×400px)</span>
+        <span class="bds-upload-dropzone__supporting">SVG, PNG, JPG or GIF (최대 800×400px)</span>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
     <h2>Upload Item — 상태 3종</h2>
-    <p class="doc-desc">uploading/error는 <code>.upload-item__action</code>에 ghost 아이콘버튼(취소/삭제), done은 라벨 없는 <code>.choice.choice-checkbox</code>(box만)를 배치합니다.</p>
+    <p class="doc-desc">uploading/error는 <code>.bds-upload-item__action</code>에 ghost 아이콘버튼(취소/삭제), done은 라벨 없는 <code>.bds-choice.choice-checkbox</code>(box만)를 배치합니다.</p>
     <div class="doc-col" id="upload-items" style="max-width:480px;"></div>
   </section>
 </main>
@@ -51,9 +51,9 @@
   }
   function progressBar(value) {
     return (
-      '<div class="progress-bar">' +
-      '<div class="progress-bar__track"><div class="progress-bar__fill" style="--progress-bar-value:' + value + '%;"></div></div>' +
-      '<span class="progress-bar__value">' + value + '%</span>' +
+      '<div class="bds-progress-bar">' +
+      '<div class="bds-progress-bar__track"><div class="bds-progress-bar__fill" style="--bds-progress-bar-value:' + value + '%;"></div></div>' +
+      '<span class="bds-progress-bar__value">' + value + '%</span>' +
       '</div>'
     );
   }
@@ -88,28 +88,28 @@
   (function () {
     var el = document.getElementById('upload-items');
     ITEMS.forEach(function (item) {
-      var cls = 'upload-item upload-item-' + item.state;
+      var cls = 'bds-upload-item bds-upload-item-' + item.state;
       var trailing = '';
       if (item.checkbox) {
         trailing =
-          '<label class="choice choice-checkbox">' +
-          '<input class="choice__input" type="checkbox" checked>' +
-          '<span class="choice__box"></span>' +
+          '<label class="bds-choice bds-choice-checkbox">' +
+          '<input class="bds-choice__input" type="checkbox" checked>' +
+          '<span class="bds-choice__box"></span>' +
           '</label>';
       } else if (item.action) {
         trailing =
-          '<div class="upload-item__action">' +
-          '<button type="button" class="icon-btn icon-btn-sm icon-btn-ghost" aria-label="' + item.action.label + '">' +
+          '<div class="bds-upload-item__action">' +
+          '<button type="button" class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-ghost" aria-label="' + item.action.label + '">' +
           iconSvg('icon icon-sm', item.action.icon) +
           '</button>' +
           '</div>';
       }
       var html =
         '<div class="' + cls + '">' +
-        '<div class="upload-item__icon">' + iconSvg('icon', item.icon) + '</div>' +
-        '<div class="upload-item__content">' +
-        '<span class="upload-item__title">' + item.title + '</span>' +
-        '<span class="upload-item__supporting">' + item.supporting + '</span>' +
+        '<div class="bds-upload-item__icon">' + iconSvg('bds-icon', item.icon) + '</div>' +
+        '<div class="bds-upload-item__content">' +
+        '<span class="bds-upload-item__title">' + item.title + '</span>' +
+        '<span class="bds-upload-item__supporting">' + item.supporting + '</span>' +
         progressBar(item.progress) +
         '</div>' +
         trailing +

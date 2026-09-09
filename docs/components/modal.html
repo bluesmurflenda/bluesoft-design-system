@@ -15,20 +15,20 @@
   <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Modal</div>
   <div class="doc-page-header">
     <h1>Modal</h1>
-    <p>alert-centered·alert-horizontal은 Figma에 lg·xl 변형이 없어 sm·md만 나열합니다. 폭 클래스는 <code>.modal</code>에 직접 붙는 별도 축이라 CSS로는 어떤 조합도 가능하지만, <code>.modal-lg</code>·<code>.modal-xl</code>은 <code>.modal-form</code>에만 씁니다. 실제로는 <code>open/close</code> 상호작용이 있는 다이얼로그지만, 이 페이지에서는 정적 카드로만 렌더링합니다.</p>
+    <p>alert-centered·alert-horizontal은 Figma에 lg·xl 변형이 없어 sm·md만 나열합니다. 폭 클래스는 <code>.bds-modal</code>에 직접 붙는 별도 축이라 CSS로는 어떤 조합도 가능하지만, <code>.bds-modal-lg</code>·<code>.bds-modal-xl</code>은 <code>.modal-form</code>에만 씁니다. 실제로는 <code>open/close</code> 상호작용이 있는 다이얼로그지만, 이 페이지에서는 정적 카드로만 렌더링합니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>Overlay(딤드 배경)</h2>
-    <p class="doc-desc"><code>.modal-overlay</code> — 모달 뒤에 형제로 두는 딤드 배경입니다. 실제로는 <code>position:fixed;inset:0</code>로 뷰포트 전체를 덮지만, 이 페이지에서는 카드 안에 가두기 위해 <code>position:absolute</code>를 인라인으로 얹었습니다.</p>
+    <p class="doc-desc"><code>.bds-modal-overlay</code> — 모달 뒤에 형제로 두는 딤드 배경입니다. 실제로는 <code>position:fixed;inset:0</code>로 뷰포트 전체를 덮지만, 이 페이지에서는 카드 안에 가두기 위해 <code>position:absolute</code>를 인라인으로 얹었습니다.</p>
     <div class="doc-card" style="position:relative; height:240px; overflow:hidden; padding:0;">
-      <div style="position:absolute; inset:0; background:var(--neutral-100);"></div>
-      <div class="modal-overlay" style="position:absolute;"></div>
-      <div class="modal modal-sm" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); max-width:260px;">
-        <div class="modal__header modal-header-left">
-          <div class="modal__text">
-            <div class="modal__title">모달 제목</div>
-            <div class="modal__description">오버레이 위에 뜬 모습입니다.</div>
+      <div style="position:absolute; inset:0; background:var(--bds-neutral-100);"></div>
+      <div class="bds-modal-overlay" style="position:absolute;"></div>
+      <div class="bds-modal bds-modal-sm" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); max-width:260px;">
+        <div class="bds-modal__header bds-modal-header-left">
+          <div class="bds-modal__text">
+            <div class="bds-modal__title">모달 제목</div>
+            <div class="bds-modal__description">오버레이 위에 뜬 모습입니다.</div>
           </div>
         </div>
       </div>
@@ -37,19 +37,19 @@
 
   <section class="doc-section">
     <h2>Form</h2>
-    <p class="doc-desc">전용 layout modifier 클래스가 없는 기본형 — <code>.modal</code> + breakpoint 클래스만 사용합니다. 헤더는 <code>.modal-header-left</code>(아이콘 없이 텍스트만), 본문은 <code>.modal__slot</code> 플레이스홀더, 액션은 기본 <code>.modal__actions</code>(가로 배치).</p>
+    <p class="doc-desc">전용 layout modifier 클래스가 없는 기본형 — <code>.bds-modal</code> + breakpoint 클래스만 사용합니다. 헤더는 <code>.bds-modal-header-left</code>(아이콘 없이 텍스트만), 본문은 <code>.bds-modal__slot</code> 플레이스홀더, 액션은 기본 <code>.bds-modal__actions</code>(가로 배치).</p>
     <div id="modal-form-rows"></div>
   </section>
 
   <section class="doc-section">
     <h2>Alert Centered</h2>
-    <p class="doc-desc"><code>.modal-alert-centered</code> + <code>.modal-header-center</code>(아이콘·제목·설명 세로 중앙 정렬) 조합. 아이콘은 <code>.modal-featured-icon</code>(Featured Icon과 색상 커스텀 프로퍼티 공유). 액션은 <code>.modal-actions-stacked</code>로 세로 배치했습니다 — stacked/horizontal 액션 정렬은 레이아웃과 독립된 별도 modifier라 강제 규칙은 아니며, 아래는 자주 쓰이는 조합 예시입니다. Figma에 lg·xl 변형이 없어 sm·md만 나열합니다.</p>
+    <p class="doc-desc"><code>.bds-modal-alert-centered</code> + <code>.bds-modal-header-center</code>(아이콘·제목·설명 세로 중앙 정렬) 조합. 아이콘은 <code>.bds-modal-featured-icon</code>(Featured Icon과 색상 커스텀 프로퍼티 공유). 액션은 <code>.bds-modal-actions-stacked</code>로 세로 배치했습니다 — stacked/horizontal 액션 정렬은 레이아웃과 독립된 별도 modifier라 강제 규칙은 아니며, 아래는 자주 쓰이는 조합 예시입니다. Figma에 lg·xl 변형이 없어 sm·md만 나열합니다.</p>
     <div id="modal-alert-centered-rows"></div>
   </section>
 
   <section class="doc-section">
     <h2>Alert Horizontal</h2>
-    <p class="doc-desc"><code>.modal-alert-horizontal</code> + <code>.modal__content</code>(Featured Icon과 헤더를 한 줄에 배치하는 wrapper) 조합. 액션은 기본 <code>.modal__actions</code>(가로 배치, stacked 아님). Figma에 lg·xl 변형이 없어 sm·md만 나열합니다.</p>
+    <p class="doc-desc"><code>.bds-modal-alert-horizontal</code> + <code>.bds-modal__content</code>(Featured Icon과 헤더를 한 줄에 배치하는 wrapper) 조합. 액션은 기본 <code>.bds-modal__actions</code>(가로 배치, stacked 아님). Figma에 lg·xl 변형이 없어 sm·md만 나열합니다.</p>
     <div id="modal-alert-horizontal-rows"></div>
   </section>
 </main>
@@ -70,21 +70,21 @@
   ];
 
   function icon(name) {
-    return '<svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
+    return '<svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
   }
 
   function formModal(bp) {
     return (
       '<div class="modal modal-' + bp + '">' +
-      '<div class="modal__header modal-header-left">' +
-      '<div class="modal__text">' +
-      '<div class="modal__title">설정을 변경하시겠습니까?</div>' +
-      '<div class="modal__description">변경 사항은 저장 후 즉시 적용됩니다.</div>' +
+      '<div class="bds-modal__header bds-modal-header-left">' +
+      '<div class="bds-modal__text">' +
+      '<div class="bds-modal__title">설정을 변경하시겠습니까?</div>' +
+      '<div class="bds-modal__description">변경 사항은 저장 후 즉시 적용됩니다.</div>' +
       '</div></div>' +
-      '<div class="modal__slot">Content slot</div>' +
-      '<div class="modal__actions">' +
-      '<button class="btn btn-md btn-outline">취소</button>' +
-      '<button class="btn btn-md btn-primary">확인</button>' +
+      '<div class="bds-modal__slot">Content slot</div>' +
+      '<div class="bds-modal__actions">' +
+      '<button class="bds-btn bds-btn-md bds-btn-outline">취소</button>' +
+      '<button class="bds-btn bds-btn-md bds-btn-primary">확인</button>' +
       '</div></div>'
     );
   }
@@ -92,14 +92,14 @@
   function alertCenteredModal(bp) {
     return (
       '<div class="modal modal-' + bp + ' modal-alert-centered">' +
-      '<div class="modal__header modal-header-center">' +
-      '<div class="modal-featured-icon modal-featured-icon-md modal-featured-icon-warning">' + icon('alert-triangle') + '</div>' +
-      '<div class="modal__title">정말 삭제하시겠습니까?</div>' +
-      '<div class="modal__description">삭제한 항목은 복구할 수 없습니다.</div>' +
+      '<div class="bds-modal__header bds-modal-header-center">' +
+      '<div class="bds-modal-featured-icon bds-modal-featured-icon-md bds-modal-featured-icon-warning">' + icon('alert-triangle') + '</div>' +
+      '<div class="bds-modal__title">정말 삭제하시겠습니까?</div>' +
+      '<div class="bds-modal__description">삭제한 항목은 복구할 수 없습니다.</div>' +
       '</div>' +
-      '<div class="modal__actions modal-actions-stacked">' +
-      '<button class="btn btn-md btn-primary">삭제</button>' +
-      '<button class="btn btn-md btn-outline">취소</button>' +
+      '<div class="bds-modal__actions bds-modal-actions-stacked">' +
+      '<button class="bds-btn bds-btn-md bds-btn-primary">삭제</button>' +
+      '<button class="bds-btn bds-btn-md bds-btn-outline">취소</button>' +
       '</div></div>'
     );
   }
@@ -107,16 +107,16 @@
   function alertHorizontalModal(bp) {
     return (
       '<div class="modal modal-' + bp + ' modal-alert-horizontal">' +
-      '<div class="modal__content">' +
-      '<div class="modal-featured-icon modal-featured-icon-md modal-featured-icon-warning">' + icon('alert-triangle') + '</div>' +
-      '<div class="modal__header modal-header-left">' +
-      '<div class="modal__text">' +
-      '<div class="modal__title">저장하지 않은 변경 사항이 있습니다</div>' +
-      '<div class="modal__description">지금 나가면 변경 사항이 사라집니다.</div>' +
+      '<div class="bds-modal__content">' +
+      '<div class="bds-modal-featured-icon bds-modal-featured-icon-md bds-modal-featured-icon-warning">' + icon('alert-triangle') + '</div>' +
+      '<div class="bds-modal__header bds-modal-header-left">' +
+      '<div class="bds-modal__text">' +
+      '<div class="bds-modal__title">저장하지 않은 변경 사항이 있습니다</div>' +
+      '<div class="bds-modal__description">지금 나가면 변경 사항이 사라집니다.</div>' +
       '</div></div></div>' +
-      '<div class="modal__actions">' +
-      '<button class="btn btn-md btn-outline">취소</button>' +
-      '<button class="btn btn-md btn-primary">확인</button>' +
+      '<div class="bds-modal__actions">' +
+      '<button class="bds-btn bds-btn-md bds-btn-outline">취소</button>' +
+      '<button class="bds-btn bds-btn-md bds-btn-primary">확인</button>' +
       '</div></div>'
     );
   }
@@ -131,7 +131,7 @@
       var caption = document.createElement('div');
       caption.className = 'doc-cell__caption';
       caption.style.marginBottom = '4px';
-      caption.textContent = 'modal modal-' + bp[0] + classSuffix + ' (' + bp[1] + ')';
+      caption.textContent = 'bds-modal bds-modal-' + bp[0] + classSuffix + ' (' + bp[1] + ')';
       row.appendChild(caption);
 
       var scroll = document.createElement('div');
@@ -148,8 +148,8 @@
   }
 
   renderRows('modal-form-rows', 'Form', '', formModal);
-  renderRows('modal-alert-centered-rows', 'Alert Centered', ' modal-alert-centered', alertCenteredModal, ALERT_BREAKPOINTS);
-  renderRows('modal-alert-horizontal-rows', 'Alert Horizontal', ' modal-alert-horizontal', alertHorizontalModal, ALERT_BREAKPOINTS);
+  renderRows('modal-alert-centered-rows', 'Alert Centered', ' bds-modal-alert-centered', alertCenteredModal, ALERT_BREAKPOINTS);
+  renderRows('modal-alert-horizontal-rows', 'Alert Horizontal', ' bds-modal-alert-horizontal', alertHorizontalModal, ALERT_BREAKPOINTS);
 </script>
 </body>
 </html>

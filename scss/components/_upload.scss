@@ -1,18 +1,18 @@
 // Figma DS Master > Inputs & Textarea & File 페이지 (node 1366:17664 Dropzone, 1366:17718 Item), 2026-08-28 재실측
-// 2026-08-28 전체 재구성: 실제 Figma 구조는 Featured Icon(.featured-icon)·Progress Bar(.progress-bar)·
-// Checkbox(.choice)·Icon Button(.icon-btn)을 조합한 것이라, 이 파일은 그 조합에 필요한 레이아웃/오버라이드만
+// 2026-08-28 전체 재구성: 실제 Figma 구조는 Featured Icon(.bds-featured-icon)·Progress Bar(.bds-progress-bar)·
+// Checkbox(.bds-choice)·Icon Button(.bds-icon-btn)을 조합한 것이라, 이 파일은 그 조합에 필요한 레이아웃/오버라이드만
 // 담당한다. 각 부품 자체 색상·크기는 해당 컴포넌트 파일이 단일 소스다(중복 토큰 두지 않음).
 //
 // 마크업 조합 예:
-//   .upload-dropzone
-//     .featured-icon.featured-icon-sm.featured-icon-neutral > .featured-icon__icon(아이콘)
-//     .upload-dropzone__action > button.btn.btn-link.btn-md("Click to upload") + span(hint)
-//     .upload-dropzone__supporting(안내문구)
-//   .upload-item.upload-item-{uploading|done|error}
-//     .upload-item__icon > .icon(16px, 파일타입 아이콘)
-//     .upload-item__content > .upload-item__title/.upload-item__supporting + .progress-bar
-//     (done)             .choice.choice-checkbox (showLabel 없이 box만)
-//     (uploading|error)  .upload-item__action > button.icon-btn.icon-btn-sm.icon-btn-ghost
+//   .bds-upload-dropzone
+//     .bds-featured-icon.featured-icon-sm.featured-icon-neutral > .bds-featured-icon__icon(아이콘)
+//     .bds-upload-dropzone__action > button.btn.btn-link.btn-md("Click to upload") + span(hint)
+//     .bds-upload-dropzone__supporting(안내문구)
+//   .bds-upload-item.upload-item-{uploading|done|error}
+//     .bds-upload-item__icon > .bds-icon(16px, 파일타입 아이콘)
+//     .bds-upload-item__content > .bds-upload-item__title/.bds-upload-item__supporting + .bds-progress-bar
+//     (done)             .bds-choice.choice-checkbox (showLabel 없이 box만)
+//     (uploading|error)  .bds-upload-item__action > button.icon-btn.icon-btn-sm.icon-btn-ghost
 
 @use '../tokens/primitive' as *;
 @use '../tokens/theme' as *;
@@ -21,20 +21,20 @@
 // 2026-08-30 get_variable_defs로 재확인: dropzone·uploading 테두리는 실제로 border/default다
 // (#e5e5e5) — 2026-08-28 당시 "field/border(#d4d4d4)가 맞다"고 재확인했다는 기록이 있었지만
 // 이번 라이브 조회 결과와 다르다. 라이브가 이긴다(전역 「값의 출처」) — field/border 참조를 border/default로 되돌린다.
-$upload-border: var(--border-default);
+$upload-border: var(--bds-border-default);
 $upload-fg-title: $text-primary;
 $upload-fg-supporting: $text-secondary; // 2026-08-28 재실측: neutral-600 아니라 700(#404040)
 $upload-icon-badge-bg: $surface-brand-subtle;
 $upload-icon-badge-border: $brand-100; // outside 링이 아니라 32px 안쪽을 파먹는 border-4(실측)
-$upload-icon-fg: var(--icon-primary); // 2026-08-31 확인: brand/600이 아니라 icon/primary다 — brand/600은 progress-bar의 Fill이었다(전체 바인딩 재확인 완료)
+$upload-icon-fg: var(--bds-icon-primary); // 2026-08-31 확인: brand/600이 아니라 icon/primary다 — brand/600은 progress-bar의 Fill이었다(전체 바인딩 재확인 완료)
 
 $upload-item-state-border: (
-  uploading: var(--border-default),
+  uploading: var(--bds-border-default),
   done: $border-brand,
   error: $border-danger,
 );
 
-.upload-dropzone {
+.bds-upload-dropzone {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,7 +65,7 @@ $upload-item-state-border: (
   }
 }
 
-.upload-item {
+.bds-upload-item {
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -92,7 +92,7 @@ $upload-item-state-border: (
     border: 4px solid $upload-icon-badge-border;
     background-color: $upload-icon-badge-bg;
 
-    .icon {
+    .bds-icon {
       width: 16px;
       height: 16px;
       color: $upload-icon-fg;
@@ -129,4 +129,4 @@ $upload-item-state-border: (
   }
 }
 
-// done 상태의 체크박스는 .choice.choice-checkbox(showLabel 없이 box만)를 그대로 배치한다.
+// done 상태의 체크박스는 .bds-choice.choice-checkbox(showLabel 없이 box만)를 그대로 배치한다.

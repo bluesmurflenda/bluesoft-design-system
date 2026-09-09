@@ -15,12 +15,12 @@
   <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Calendar</div>
   <div class="doc-page-header">
     <h1>Calendar</h1>
-    <p>day-cell 상태를 <code>.is-*</code> 모디파이어별로 한눈에 보고, 상태 × 요일유형 매트릭스와 조립된 월간 달력 예시로 확인합니다. hover는 정적 페이지로 재현할 수 없어 제외합니다.</p>
+    <p>day-cell 상태를 <code>.bds-is-*</code> 모디파이어별로 한눈에 보고, 상태 × 요일유형 매트릭스와 조립된 월간 달력 예시로 확인합니다. hover는 정적 페이지로 재현할 수 없어 제외합니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>상태 한눈에 보기</h2>
-    <p class="doc-desc">평일 셀 위에 <code>.calendar-day</code> 모디파이어를 하나씩만 올린 레퍼런스입니다.</p>
+    <p class="doc-desc">평일 셀 위에 <code>.bds-calendar-day</code> 모디파이어를 하나씩만 올린 레퍼런스입니다.</p>
     <div class="doc-matrix" id="state-showcase"></div>
   </section>
 
@@ -32,9 +32,9 @@
 
   <section class="doc-section">
     <h2>조립 예시 — 2026년 8월</h2>
-    <p class="doc-desc">Type=Card(<code>.calendar-card</code>). 8/1~27은 is-past, 8/28(금)은 is-today, 8/29(토)는 is-available, 8/30(일)은 is-unavailable, 8/31(월)은 is-selected로 구성했습니다. 이전/다음 달 버튼은 <code>icon-btn icon-btn-sm icon-btn-ghost</code>를 재사용합니다.</p>
+    <p class="doc-desc">Type=Card(<code>.bds-calendar-card</code>). 8/1~27은 is-past, 8/28(금)은 is-today, 8/29(토)는 is-available, 8/30(일)은 is-unavailable, 8/31(월)은 is-selected로 구성했습니다. 이전/다음 달 버튼은 <code>bds-icon-btn bds-icon-btn-sm bds-icon-btn-ghost</code>를 재사용합니다.</p>
     <div class="doc-card" style="display:inline-block;">
-      <div class="calendar calendar-card" id="assembled-calendar"></div>
+      <div class="bds-calendar bds-calendar-card" id="assembled-calendar"></div>
     </div>
   </section>
 </main>
@@ -43,20 +43,20 @@
 <script src="../assets/nav.js"></script>
 <script>
   function iconUse(name) {
-    return '<svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
+    return '<svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-' + name + '"></use></svg>';
   }
 
   // ── 상태 한눈에 보기 (요일유형은 평일 고정, 모디파이어 1개씩) ──
   var SHOWCASE = [
     ['default', '', '24'],
-    ['is-saturday', 'is-saturday', '25'],
-    ['is-sunday', 'is-sunday', '26'],
-    ['is-available', 'is-available', '18'],
-    ['is-unavailable', 'is-unavailable', '19'],
-    ['is-today', 'is-today', '28'],
-    ['is-selected', 'is-selected', '30'],
-    ['is-past', 'is-past', '10'],
-    ['is-empty', 'is-empty', ''],
+    ['bds-is-saturday', 'bds-is-saturday', '25'],
+    ['bds-is-sunday', 'bds-is-sunday', '26'],
+    ['bds-is-available', 'bds-is-available', '18'],
+    ['bds-is-unavailable', 'bds-is-unavailable', '19'],
+    ['bds-is-today', 'bds-is-today', '28'],
+    ['bds-is-selected', 'bds-is-selected', '30'],
+    ['bds-is-past', 'bds-is-past', '10'],
+    ['bds-is-empty', 'bds-is-empty', ''],
   ];
 
   (function () {
@@ -64,9 +64,9 @@
     SHOWCASE.forEach(function (item) {
       var cell = document.createElement('div');
       cell.className = 'doc-cell';
-      var cls = 'calendar-day' + (item[1] ? ' ' + item[1] : '');
+      var cls = 'bds-calendar-day' + (item[1] ? ' ' + item[1] : '');
       cell.innerHTML =
-        '<div style="width:44px;height:44px;background:var(--neutral-50);border-radius:8px;display:flex;align-items:center;justify-content:center;">' +
+        '<div style="width:44px;height:44px;background:var(--bds-neutral-50);border-radius:8px;display:flex;align-items:center;justify-content:center;">' +
         '<div class="' + cls + '" style="width:44px;height:44px;">' + item[2] + '</div>' +
         '</div>' +
         '<span class="doc-cell__caption">' + item[0] + '</span>';
@@ -77,16 +77,16 @@
   // ── 상태 × 요일유형 매트릭스 ──
   var STATES = [
     ['default', ''],
-    ['available', 'is-available'],
-    ['unavailable', 'is-unavailable'],
-    ['today', 'is-today'],
-    ['selected', 'is-selected'],
-    ['past', 'is-past'],
+    ['available', 'bds-is-available'],
+    ['unavailable', 'bds-is-unavailable'],
+    ['today', 'bds-is-today'],
+    ['selected', 'bds-is-selected'],
+    ['past', 'bds-is-past'],
   ];
   var DAYTYPES = [
     ['평일', ''],
-    ['토요일', 'is-saturday'],
-    ['일요일', 'is-sunday'],
+    ['토요일', 'bds-is-saturday'],
+    ['일요일', 'bds-is-sunday'],
   ];
 
   (function () {
@@ -95,9 +95,9 @@
       DAYTYPES.forEach(function (daytype) {
         var cell = document.createElement('div');
         cell.className = 'doc-cell';
-        var cls = 'calendar-day' + (state[1] ? ' ' + state[1] : '') + (daytype[1] ? ' ' + daytype[1] : '');
+        var cls = 'bds-calendar-day' + (state[1] ? ' ' + state[1] : '') + (daytype[1] ? ' ' + daytype[1] : '');
         cell.innerHTML =
-          '<div style="width:44px;height:44px;background:var(--neutral-50);border-radius:8px;display:flex;align-items:center;justify-content:center;">' +
+          '<div style="width:44px;height:44px;background:var(--bds-neutral-50);border-radius:8px;display:flex;align-items:center;justify-content:center;">' +
           '<div class="' + cls + '" style="width:44px;height:44px;">15</div>' +
           '</div>' +
           '<span class="doc-cell__caption">' + state[0] + ' / ' + daytype[0] + '</span>';
@@ -110,48 +110,48 @@
   var WEEKDAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
   // 각 행: [day, extraClass] · day=null이면 is-empty. 8/1(토)로 시작.
   var WEEKS = [
-    [null, null, null, null, null, null, [1, 'is-saturday is-past']],
-    [[2, 'is-sunday is-past'], [3, 'is-past'], [4, 'is-past'], [5, 'is-past'], [6, 'is-past'], [7, 'is-past'], [8, 'is-saturday is-past']],
-    [[9, 'is-sunday is-past'], [10, 'is-past'], [11, 'is-past'], [12, 'is-past'], [13, 'is-past'], [14, 'is-past'], [15, 'is-saturday is-past']],
-    [[16, 'is-sunday is-past'], [17, 'is-past'], [18, 'is-past'], [19, 'is-past'], [20, 'is-past'], [21, 'is-past'], [22, 'is-saturday is-past']],
-    [[23, 'is-sunday is-past'], [24, 'is-past'], [25, 'is-past'], [26, 'is-past'], [27, 'is-past'], [28, 'is-today'], [29, 'is-saturday is-available']],
-    [[30, 'is-sunday is-unavailable'], [31, 'is-selected'], null, null, null, null, null],
+    [null, null, null, null, null, null, [1, 'bds-is-saturday bds-is-past']],
+    [[2, 'bds-is-sunday bds-is-past'], [3, 'bds-is-past'], [4, 'bds-is-past'], [5, 'bds-is-past'], [6, 'bds-is-past'], [7, 'bds-is-past'], [8, 'bds-is-saturday bds-is-past']],
+    [[9, 'bds-is-sunday bds-is-past'], [10, 'bds-is-past'], [11, 'bds-is-past'], [12, 'bds-is-past'], [13, 'bds-is-past'], [14, 'bds-is-past'], [15, 'bds-is-saturday bds-is-past']],
+    [[16, 'bds-is-sunday bds-is-past'], [17, 'bds-is-past'], [18, 'bds-is-past'], [19, 'bds-is-past'], [20, 'bds-is-past'], [21, 'bds-is-past'], [22, 'bds-is-saturday bds-is-past']],
+    [[23, 'bds-is-sunday bds-is-past'], [24, 'bds-is-past'], [25, 'bds-is-past'], [26, 'bds-is-past'], [27, 'bds-is-past'], [28, 'bds-is-today'], [29, 'bds-is-saturday bds-is-available']],
+    [[30, 'bds-is-sunday bds-is-unavailable'], [31, 'bds-is-selected'], null, null, null, null, null],
   ];
 
   (function () {
     var root = document.getElementById('assembled-calendar');
 
     var header = document.createElement('div');
-    header.className = 'calendar__header';
+    header.className = 'bds-calendar__header';
     header.innerHTML =
-      '<span class="calendar__month-label">2026년 8월</span>' +
-      '<div class="calendar__nav">' +
-      '<button class="icon-btn icon-btn-sm icon-btn-ghost" aria-label="이전 달">' + iconUse('chevron-left') + '</button>' +
-      '<button class="icon-btn icon-btn-sm icon-btn-ghost" aria-label="다음 달">' + iconUse('chevron-right') + '</button>' +
+      '<span class="bds-calendar__month-label">2026년 8월</span>' +
+      '<div class="bds-calendar__nav">' +
+      '<button class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-ghost" aria-label="이전 달">' + iconUse('chevron-left') + '</button>' +
+      '<button class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-ghost" aria-label="다음 달">' + iconUse('chevron-right') + '</button>' +
       '</div>';
     root.appendChild(header);
 
     var weekdayRow = document.createElement('div');
-    weekdayRow.className = 'calendar__weekday-row';
+    weekdayRow.className = 'bds-calendar__weekday-row';
     WEEKDAY_LABELS.forEach(function (label, i) {
       var el = document.createElement('div');
-      el.className = 'calendar__weekday' + (i === 0 ? ' is-sunday' : i === 6 ? ' is-saturday' : '');
+      el.className = 'bds-calendar__weekday' + (i === 0 ? ' bds-is-sunday' : i === 6 ? ' bds-is-saturday' : '');
       el.textContent = label;
       weekdayRow.appendChild(el);
     });
     root.appendChild(weekdayRow);
 
     var weeksWrap = document.createElement('div');
-    weeksWrap.className = 'calendar__weeks';
+    weeksWrap.className = 'bds-calendar__weeks';
     WEEKS.forEach(function (week) {
       var weekEl = document.createElement('div');
-      weekEl.className = 'calendar__week';
+      weekEl.className = 'bds-calendar__week';
       week.forEach(function (cell) {
         var dayEl = document.createElement('div');
         if (!cell) {
-          dayEl.className = 'calendar-day is-empty';
+          dayEl.className = 'bds-calendar-day bds-is-empty';
         } else {
-          dayEl.className = 'calendar-day ' + cell[1];
+          dayEl.className = 'bds-calendar-day ' + cell[1];
           dayEl.textContent = cell[0];
         }
         weekEl.appendChild(dayEl);

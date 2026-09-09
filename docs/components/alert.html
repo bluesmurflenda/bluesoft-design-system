@@ -63,17 +63,17 @@
   function alertHtml(layout, color, icon, text, withActions) {
     return (
       '<div class="alert alert-' + layout + ' alert-' + color + '">' +
-      iconSvg(icon, 'icon alert__icon') +
-      '<div class="alert__body">' +
-      '<div class="alert__title">Alert 제목</div>' +
-      '<div class="alert__text">' + text + '</div>' +
+      iconSvg(icon, 'bds-icon bds-alert__icon') +
+      '<div class="bds-alert__body">' +
+      '<div class="bds-alert__title">Alert 제목</div>' +
+      '<div class="bds-alert__text">' + text + '</div>' +
       (withActions ?
-        '<div class="alert__actions">' +
-        '<button class="btn btn-sm btn-tertiary">Action 1</button>' +
-        '<button class="btn btn-sm btn-tertiary">Action 2</button>' +
+        '<div class="bds-alert__actions">' +
+        '<button class="bds-btn bds-btn-sm bds-btn-tertiary">Action 1</button>' +
+        '<button class="bds-btn bds-btn-sm bds-btn-tertiary">Action 2</button>' +
         '</div>' : '') +
       '</div>' +
-      iconSvg('x', 'icon alert__close') +
+      iconSvg('x', 'bds-icon bds-alert__close') +
       '</div>'
     );
   }

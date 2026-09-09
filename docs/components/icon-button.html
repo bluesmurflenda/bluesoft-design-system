@@ -43,9 +43,9 @@
   function lightWrap(html) { return '<div style="background:#ddd;padding:8px;border-radius:8px;display:inline-block;">' + html + '</div>'; }
 
   function iconBtnHtml(variant, size, disabled) {
-    var cls = 'icon-btn icon-btn-' + size + ' icon-btn-' + variant;
+    var cls = 'bds-icon-btn bds-icon-btn-' + size + ' bds-icon-btn-' + variant;
     var attr = disabled ? ' disabled' : '';
-    var html = '<button class="' + cls + '"' + attr + '><svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-star"></use></svg></button>';
+    var html = '<button class="' + cls + '"' + attr + '><svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-star"></use></svg></button>';
     if (DARK_WRAP_VARIANTS.indexOf(variant) !== -1) html = darkWrap(html);
     if (LIGHT_WRAP_VARIANTS.indexOf(variant) !== -1) html = lightWrap(html);
     return html;

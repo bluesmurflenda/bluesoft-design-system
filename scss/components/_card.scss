@@ -13,31 +13,31 @@
 // figma/tokens.theme.json의 card/* 를 그대로 옮겼다(2026-08-31). card/fg는 문서상 "글자색"
 // 설명이지만 실측 별칭 대상은 icon/strong이다 — 라이브가 맞다고 보고 그대로 옮긴다.
 :root {
-  --card-bg: var(--white);
-  --card-bg-tinted: var(--neutral-50);
-  --card-border: var(--border-default);
-  --card-border-hover: var(--accent-400);
-  --card-fg: var(--icon-strong);
-  --card-fg-supporting: var(--text-tertiary);
+  --bds-card-bg: var(--bds-white);
+  --bds-card-bg-tinted: var(--bds-neutral-50);
+  --bds-card-border: var(--bds-border-default);
+  --bds-card-border-hover: var(--bds-accent-400);
+  --bds-card-fg: var(--bds-icon-strong);
+  --bds-card-fg-supporting: var(--bds-text-tertiary);
 }
 
 [data-theme='dark'] {
-  --card-bg: var(--neutral-800);
-  --card-bg-tinted: var(--neutral-700);
+  --bds-card-bg: var(--bds-neutral-800);
+  --bds-card-bg-tinted: var(--bds-neutral-700);
 }
 
 $card-radius: $radius-lg;
-$card-bg: var(--card-bg);
-$card-bg-tinted: var(--card-bg-tinted);
-$card-border: var(--card-border);
-$card-border-hover: var(--card-border-hover);
-$card-fg: var(--card-fg);
-$card-fg-supporting: var(--card-fg-supporting);
+$card-bg: var(--bds-card-bg);
+$card-bg-tinted: var(--bds-card-bg-tinted);
+$card-border: var(--bds-card-border);
+$card-border-hover: var(--bds-card-border-hover);
+$card-fg: var(--bds-card-fg);
+$card-fg-supporting: var(--bds-card-fg-supporting);
 // 2026-08-28 라이브 실측: Default 상태는 레이어 2개 중 1개만 보임(2번째 alpha=0), Hover는 둘 다 보임.
 $card-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
 $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.1);
 
-.card {
+.bds-card {
   display: flex;
   border-radius: $card-radius;
   background-color: $card-bg;
@@ -52,12 +52,12 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
   &-horizontal {
     flex-direction: row;
 
-    .card__media {
+    .bds-card__media {
       width: 160px;
       flex-shrink: 0;
     }
 
-    .card__body {
+    .bds-card__body {
       flex: 1;
     }
   }

@@ -14,21 +14,21 @@ $textarea-sizes: (
 );
 
 // field/* 는 input.scss 가 소유 — 여기서는 참조만 한다.
-$textarea-label-fg: var(--field-label-fg);
-$textarea-fg: var(--field-fg);
-$textarea-placeholder-fg: var(--field-fg-placeholder);
-$textarea-disabled-bg: var(--field-bg-disabled);
+$textarea-label-fg: var(--bds-field-label-fg);
+$textarea-fg: var(--bds-field-fg);
+$textarea-placeholder-fg: var(--bds-field-fg-placeholder);
+$textarea-disabled-bg: var(--bds-field-bg-disabled);
 $textarea-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs, input과 공용
 
 // 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응 시맨틱이 없다.
 // invalid/valid ring은 이름에 "30%"가 붙어있어도 실제로는 solid(get_variable_defs 확인).
 $textarea-validation-colors: (
-  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: var(--field-border-focus), ring: $effect-focus-ring, border-disabled: var(--field-border-disabled), hint-fg: var(--field-hint-fg)),
+  normal: (border: var(--bds-field-border), border-hover: var(--bds-field-border-hover), border-focus: var(--bds-field-border-focus), ring: $effect-focus-ring, border-disabled: var(--bds-field-border-disabled), hint-fg: var(--bds-field-hint-fg)),
   invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
-  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: var(--field-hint-fg)),
+  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: var(--bds-field-hint-fg)),
 );
 
-.textarea {
+.bds-textarea {
   display: flex;
   flex-direction: column;
   gap: 6px; // input과 동일한 실측 리터럴
@@ -43,8 +43,8 @@ $textarea-validation-colors: (
     display: flex;
     align-items: flex-start;
     gap: $space-2;
-    border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
-    background-color: var(--field-bg);
+    border-radius: var(--bds-field-radius); // ADR-027: 입력 전용 field/radius 토큰이 생겨 버튼 토큰 공유를 끝냈다
+    background-color: var(--bds-field-bg);
     box-shadow: $textarea-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;
   }
@@ -71,21 +71,21 @@ $textarea-validation-colors: (
 }
 
 @each $size, $props in $textarea-sizes {
-  .textarea-#{$size} {
-    .textarea__field {
+  .bds-textarea-#{$size} {
+    .bds-textarea__field {
       height: map.get($props, height);
       padding: map.get($props, padding-y) map.get($props, padding-x);
     }
 
-    .textarea__control {
+    .bds-textarea__control {
       @include mix.text(map.get($props, type), regular);
     }
   }
 }
 
 @each $validation, $c in $textarea-validation-colors {
-  .textarea-#{$validation} {
-    .textarea__field {
+  .bds-textarea-#{$validation} {
+    .bds-textarea__field {
       border: 1px solid map.get($c, border);
 
       &:hover {
@@ -98,24 +98,24 @@ $textarea-validation-colors: (
       }
     }
 
-    .textarea__hint {
+    .bds-textarea__hint {
       color: map.get($c, hint-fg);
     }
 
-    &.textarea-disabled .textarea__field {
+    &.bds-textarea-disabled .bds-textarea__field {
       border-color: map.get($c, border-disabled);
     }
   }
 }
 
-.textarea {
+.bds-textarea {
   &-disabled {
-    .textarea__field {
+    .bds-textarea__field {
       background-color: $textarea-disabled-bg;
       box-shadow: $textarea-shadow;
     }
 
-    .textarea__hint {
+    .bds-textarea__hint {
       opacity: 0.4;
     }
   }

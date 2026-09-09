@@ -11,33 +11,33 @@
 // 하드코딩 hex → 별칭 참조로만 바꾼다. 라이트·다크 별칭 대상이 같은 토큰(예: bg-selected,
 // track/bg-on)은 다크 블록에 다시 안 쓴다.
 :root {
-  --choice-box-bg: var(--surface-default);
-  --choice-box-border: var(--border-strong);
-  --choice-box-bg-hover: var(--neutral-200);
-  --choice-box-border-hover: var(--neutral-400);
-  --choice-box-bg-selected: var(--blue-600);
-  --choice-box-fg-selected: var(--white);
-  --choice-box-bg-disabled: var(--surface-muted);
-  --choice-box-border-disabled: var(--border-default);
-  --choice-label-fg: var(--text-primary);
-  --choice-label-fg-invalid: var(--text-danger);
-  --choice-label-fg-valid: var(--green-600);
-  --choice-description-fg: var(--text-tertiary);
-  --toggle-track-bg-off: var(--neutral-300);
-  --toggle-track-bg-off-hover: var(--neutral-400);
-  --toggle-track-bg-on: var(--brand-500);
-  --toggle-track-bg-on-hover: var(--brand-600);
-  --toggle-knob-bg: var(--white);
-  --toggle-fg: var(--icon-strong);
+  --bds-choice-box-bg: var(--bds-surface-default);
+  --bds-choice-box-border: var(--bds-border-control);
+  --bds-choice-box-bg-hover: var(--bds-neutral-200);
+  --bds-choice-box-border-hover: var(--bds-neutral-400);
+  --bds-choice-box-bg-selected: var(--bds-blue-600);
+  --bds-choice-box-fg-selected: var(--bds-white);
+  --bds-choice-box-bg-disabled: var(--bds-surface-muted);
+  --bds-choice-box-border-disabled: var(--bds-border-default);
+  --bds-choice-label-fg: var(--bds-text-primary);
+  --bds-choice-label-fg-invalid: var(--bds-text-danger);
+  --bds-choice-label-fg-valid: var(--bds-green-600);
+  --bds-choice-description-fg: var(--bds-text-tertiary);
+  --bds-toggle-track-bg-off: var(--bds-neutral-300);
+  --bds-toggle-track-bg-off-hover: var(--bds-neutral-400);
+  --bds-toggle-track-bg-on: var(--bds-brand-500);
+  --bds-toggle-track-bg-on-hover: var(--bds-brand-600);
+  --bds-toggle-knob-bg: var(--bds-white);
+  --bds-toggle-fg: var(--bds-icon-strong);
 }
 
 [data-theme='dark'] {
-  --choice-box-bg-hover: var(--neutral-700);
-  --choice-box-border-hover: var(--neutral-500);
-  --choice-label-fg-valid: var(--green-400);
-  --toggle-track-bg-off: var(--neutral-700);
-  --toggle-track-bg-off-hover: var(--neutral-600);
-  --toggle-knob-bg: var(--neutral-950);
+  --bds-choice-box-bg-hover: var(--bds-neutral-700);
+  --bds-choice-box-border-hover: var(--bds-neutral-500);
+  --bds-choice-label-fg-valid: var(--bds-green-400);
+  --bds-toggle-track-bg-off: var(--bds-neutral-700);
+  --bds-toggle-track-bg-off-hover: var(--bds-neutral-600);
+  --bds-toggle-knob-bg: var(--bds-neutral-950);
 }
 
 $choice-size: 20px;
@@ -50,32 +50,32 @@ $checkbox-radius: 6px;
 // 배경이 되는 버그였다).
 $choice-colors: (
   normal: (
-    border: var(--choice-box-border),
-    border-hover: var(--choice-box-border-hover),
+    border: var(--bds-choice-box-border),
+    border-hover: var(--bds-choice-box-border-hover),
     ring: $effect-focus-ring,
-    selected-bg: var(--choice-box-bg-selected),
+    selected-bg: var(--bds-choice-box-bg-selected),
     selected-bg-hover: $blue-700,
-    label-fg: var(--choice-label-fg),
+    label-fg: var(--bds-choice-label-fg),
   ),
   valid: (
     border: $green-600,
     border-hover: $green-700,
     ring: $green-100,
-    label-fg: var(--choice-label-fg-valid),
+    label-fg: var(--bds-choice-label-fg-valid),
   ),
   invalid: (
     border: $red-500,
     border-hover: $red-600,
     ring: $red-200,
-    label-fg: var(--choice-label-fg-invalid),
+    label-fg: var(--bds-choice-label-fg-invalid),
   ),
 );
 
-$choice-bg-hover: var(--choice-box-bg-hover); // unselected hover 배경(검증 상태 무관 공통)
-$choice-description-fg: var(--choice-description-fg);
+$choice-bg-hover: var(--bds-choice-box-bg-hover); // unselected hover 배경(검증 상태 무관 공통)
+$choice-description-fg: var(--bds-choice-description-fg);
 
 // 체크박스·라디오 공용 글리프
-.choice {
+.bds-choice {
   &__box {
     position: relative;
     display: inline-block;
@@ -83,18 +83,18 @@ $choice-description-fg: var(--choice-description-fg);
     width: $choice-size;
     height: $choice-size;
     border: $choice-border-width solid map.get(map.get($choice-colors, normal), border);
-    background-color: var(--choice-box-bg);
+    background-color: var(--bds-choice-box-bg);
     transition: background-color $motion-fast, border-color $motion-fast, box-shadow $motion-fast;
   }
 
   &-checkbox {
-    .choice__box {
+    .bds-choice__box {
       border-radius: $checkbox-radius;
     }
   }
 
   &-radio {
-    .choice__box {
+    .bds-choice__box {
       border-radius: $radius-full;
     }
   }
@@ -110,54 +110,54 @@ $choice-description-fg: var(--choice-description-fg);
     white-space: nowrap;
     border: 0;
 
-    &:hover:not(:disabled) + .choice__box {
+    &:hover:not(:disabled) + .bds-choice__box {
       background-color: $choice-bg-hover;
       border-color: map.get(map.get($choice-colors, normal), border-hover);
     }
 
-    &:focus-visible + .choice__box {
+    &:focus-visible + .bds-choice__box {
       box-shadow: 0 0 0 2px map.get(map.get($choice-colors, normal), ring);
     }
 
-    &:checked + .choice__box,
-    &:indeterminate + .choice__box {
+    &:checked + .bds-choice__box,
+    &:indeterminate + .bds-choice__box {
       border-color: transparent;
       background-color: map.get(map.get($choice-colors, normal), selected-bg);
     }
 
-    &:checked:hover:not(:disabled) + .choice__box,
-    &:indeterminate:hover:not(:disabled) + .choice__box {
+    &:checked:hover:not(:disabled) + .bds-choice__box,
+    &:indeterminate:hover:not(:disabled) + .bds-choice__box {
       background-color: map.get(map.get($choice-colors, normal), selected-bg-hover);
     }
 
-    &:disabled + .choice__box {
+    &:disabled + .bds-choice__box {
       opacity: 0.5;
     }
   }
 }
 
-// 검증 상태(valid/invalid) — .choice가 modifier 클래스를 받는다.
-.choice {
+// 검증 상태(valid/invalid) — .bds-choice가 modifier 클래스를 받는다.
+.bds-choice {
   @each $validation in (valid, invalid) {
     $c: map.get($choice-colors, $validation);
 
     &--#{$validation} {
-      .choice__box {
+      .bds-choice__box {
         border-color: map.get($c, border);
       }
 
-      // .choice__input 내부에 상태를 한 번 더 중첩하면 4단이 되므로(.choice > &--valid > .choice__input > &:hover)
+      // .bds-choice__input 내부에 상태를 한 번 더 중첩하면 4단이 되므로(.bds-choice > &--bds-valid > .bds-choice__input > &:hover)
       // 복합 선택자로 펼쳐 3단을 유지한다. 컴파일 결과는 기존과 동일하다.
-      .choice__input:hover:not(:disabled) + .choice__box {
+      .bds-choice__input:hover:not(:disabled) + .bds-choice__box {
         border-color: map.get($c, border-hover);
       }
-      .choice__input:focus-visible + .choice__box {
+      .bds-choice__input:focus-visible + .bds-choice__box {
         box-shadow: 0 0 0 2px map.get($c, ring);
       }
       // checked·indeterminate(selected)는 검증 상태와 무관하게 normal의 브랜드색을 그대로 쓴다 —
       // 여기서 배경색을 덮어쓰지 않는다(문서 실측: "selected는 브랜드색을 유지한다").
 
-      .choice__label {
+      .bds-choice__label {
         color: map.get($c, label-fg);
       }
     }
@@ -165,33 +165,33 @@ $choice-description-fg: var(--choice-description-fg);
 }
 
 // 체크/인디터미네이트 글리프(아이콘 폰트·SVG 대신 CSS만으로 표시)
-.choice {
+.bds-choice {
   &-checkbox {
-    .choice__input:checked + .choice__box::after {
+    .bds-choice__input:checked + .bds-choice__box::after {
       content: '';
       position: absolute;
       inset: 0;
       margin: auto;
       width: 10px;
       height: 6px;
-      border-left: 2px solid var(--choice-box-fg-selected);
-      border-bottom: 2px solid var(--choice-box-fg-selected);
+      border-left: 2px solid var(--bds-choice-box-fg-selected);
+      border-bottom: 2px solid var(--bds-choice-box-fg-selected);
       transform: rotate(-45deg) translateY(-1px);
     }
 
-    .choice__input:indeterminate + .choice__box::after {
+    .bds-choice__input:indeterminate + .bds-choice__box::after {
       content: '';
       position: absolute;
       top: 44.25%;
       bottom: 43.75%;
       left: 25%;
       right: 25%;
-      background-color: var(--choice-box-fg-selected);
+      background-color: var(--bds-choice-box-fg-selected);
     }
   }
 
   &-radio {
-    .choice__input:checked + .choice__box::after {
+    .bds-choice__input:checked + .bds-choice__box::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -199,19 +199,19 @@ $choice-description-fg: var(--choice-description-fg);
       width: 8px;
       height: 8px;
       border-radius: $radius-full;
-      background-color: var(--choice-box-fg-selected);
+      background-color: var(--bds-choice-box-fg-selected);
     }
   }
 }
 
 // 라벨 + 설명
-.choice {
+.bds-choice {
   display: inline-flex;
   align-items: flex-start;
   gap: $space-2;
   cursor: pointer;
 
-  &:has(.choice__input:disabled) {
+  &:has(.bds-choice__input:disabled) {
     cursor: not-allowed;
   }
 
@@ -225,7 +225,7 @@ $choice-description-fg: var(--choice-description-fg);
     font-weight: $font-weight-regular;
     font-size: $font-size-body-md;
     line-height: $font-leading-body-md;
-    color: var(--choice-label-fg);
+    color: var(--bds-choice-label-fg);
   }
 
   &__description {
@@ -243,20 +243,20 @@ $toggle-knob-size: $space-4; // 16px = space-4(step 4*4px)
 $toggle-knob-inset: 2px; // 예외: space 스케일 최소 단위가 4px(space-1) — 2px 없음, 리터럴 유지
 
 $toggle-colors: (
-  bg-on: var(--toggle-track-bg-on),
-  bg-on-hover: var(--toggle-track-bg-on-hover),
-  bg-off: var(--toggle-track-bg-off),
-  bg-off-hover: var(--toggle-track-bg-off-hover),
-  knob: var(--toggle-knob-bg),
+  bg-on: var(--bds-toggle-track-bg-on),
+  bg-on-hover: var(--bds-toggle-track-bg-on-hover),
+  bg-off: var(--bds-toggle-track-bg-off),
+  bg-off-hover: var(--bds-toggle-track-bg-off-hover),
+  knob: var(--bds-toggle-knob-bg),
 );
 
-.toggle {
+.bds-toggle {
   display: inline-flex;
   align-items: center;
   gap: $space-2;
   cursor: pointer;
 
-  &:has(.toggle__input:disabled) {
+  &:has(.bds-toggle__input:disabled) {
     cursor: not-allowed;
   }
 
@@ -293,29 +293,29 @@ $toggle-colors: (
     white-space: nowrap;
     border: 0;
 
-    &:hover:not(:disabled) + .toggle__track {
+    &:hover:not(:disabled) + .bds-toggle__track {
       background-color: map.get($toggle-colors, bg-off-hover);
     }
 
-    &:focus-visible + .toggle__track {
+    &:focus-visible + .bds-toggle__track {
       box-shadow: 0 0 0 3px $effect-focus-ring;
     }
 
-    &:checked + .toggle__track {
+    &:checked + .bds-toggle__track {
       background-color: map.get($toggle-colors, bg-on);
     }
 
-    // &:checked + .toggle__track 안에 .toggle__knob을 한 번 더 중첩하면 4단이 되므로
+    // &:checked + .bds-toggle__track 안에 .bds-toggle__knob을 한 번 더 중첩하면 4단이 되므로
     // 복합 선택자로 펼친다(컴파일 결과 동일).
-    &:checked + .toggle__track .toggle__knob {
+    &:checked + .bds-toggle__track .bds-toggle__knob {
       transform: translateX(calc(#{$toggle-width} - #{$toggle-knob-size} - #{$toggle-knob-inset} * 2));
     }
 
-    &:checked:hover:not(:disabled) + .toggle__track {
+    &:checked:hover:not(:disabled) + .bds-toggle__track {
       background-color: map.get($toggle-colors, bg-on-hover);
     }
 
-    &:disabled + .toggle__track {
+    &:disabled + .bds-toggle__track {
       opacity: 0.5;
     }
   }
@@ -324,6 +324,6 @@ $toggle-colors: (
     font-weight: $font-weight-regular;
     font-size: $font-size-body-md;
     line-height: $font-leading-body-md;
-    color: var(--toggle-fg);
+    color: var(--bds-toggle-fg);
   }
 }

@@ -2,7 +2,7 @@
 // + _Modal/Slot(430:2259) + Featured Icon(429:2267), 2026-08-31 재실측
 // Layout 3종(form/alert-centered/alert-horizontal) × Breakpoint 4(sm/md/lg/xl) — 단, alert 계열
 // 2종은 sm·md만 있다(8변형: form×4 + alert-centered×2 + alert-horizontal×2, lg·xl 없음 —
-// get_variable_defs로 전 변형 이름 확인). .modal-lg·.modal-xl은 .modal-form에만 조합한다.
+// get_variable_defs로 전 변형 이름 확인). .bds-modal-lg·.bds-modal-xl은 .modal-form에만 조합한다.
 // 폭: sm 300 / md 500 / lg 800 / xl 1000 (modal/width/xl은 1140이 아니라 1000 — 2026-08-28 재확인)
 
 @use '../tokens/primitive' as *;
@@ -22,35 +22,35 @@ $modal-widths: (
 // 별칭 대상이 달라 오버라이드가 있다 — 이전 코드는 white 프리미티브를 직접 참조해 다크모드에서도
 // 흰 모달이 그려지고 있었다(2026-08-28 당시 "⚠️ 확인 필요"로 남겨뒀던 것, 이번에 해결).
 :root {
-  --modal-bg: var(--white);
-  --modal-fg: var(--neutral-900);
-  --modal-fg-supporting: var(--neutral-600);
-  --modal-overlay: #0000007a; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
-  --modal-slot-bg: var(--neutral-50);
-  --modal-slot-border: var(--border-strong);
+  --bds-modal-bg: var(--bds-white);
+  --bds-modal-fg: var(--bds-neutral-900);
+  --bds-modal-fg-supporting: var(--bds-neutral-600);
+  --bds-modal-overlay: #0000007a; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --bds-modal-slot-bg: var(--bds-neutral-50);
+  --bds-modal-slot-border: var(--bds-border-control);
 }
 
 [data-theme='dark'] {
-  --modal-bg: var(--neutral-800);
-  --modal-fg: var(--neutral-50);
-  --modal-fg-supporting: var(--neutral-300);
-  --modal-slot-bg: var(--neutral-900);
+  --bds-modal-bg: var(--bds-neutral-800);
+  --bds-modal-fg: var(--bds-neutral-50);
+  --bds-modal-fg-supporting: var(--bds-neutral-300);
+  --bds-modal-slot-bg: var(--bds-neutral-900);
 }
 
-$modal-bg: var(--modal-bg);
-$modal-title-fg: var(--modal-fg);
-$modal-description-fg: var(--modal-fg-supporting);
+$modal-bg: var(--bds-modal-bg);
+$modal-title-fg: var(--bds-modal-fg);
+$modal-description-fg: var(--bds-modal-fg-supporting);
 // Shadow/xl — 2026-08-28 재실측: blur·spread 값이 부정확했음(12→24, 4→8, spread -4px 누락)
 $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0, 0.03);
 
-// 모달 뒤 딤드 배경 — 기존 코드에 아예 없었다. 마크업에서 .modal과 형제로 둔다.
-.modal-overlay {
+// 모달 뒤 딤드 배경 — 기존 코드에 아예 없었다. 마크업에서 .bds-modal과 형제로 둔다.
+.bds-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: var(--modal-overlay);
+  background-color: var(--bds-modal-overlay);
 }
 
-.modal {
+.bds-modal {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -63,13 +63,13 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
 
   // 핸드오프 시 고정폭 대신 계산식으로 전달한다: mobile calc(100% - 32px), 그 외는 min(토큰폭, 100% - 32px)
   @each $bp, $width in $modal-widths {
-    &.modal-#{$bp} {
+    &.bds-modal-#{$bp} {
       max-width: min(#{$width}, calc(100% - #{$space-8}));
     }
   }
 
   // 2026-08-28 확인(nav-display-spec): sm만 패딩이 다르다(상20/우16/하16/좌16). md·lg·xl은 24 균일(위 기본값).
-  &.modal-sm {
+  &.bds-modal-sm {
     padding: $space-5 $space-4 $space-4;
   }
 
@@ -105,7 +105,7 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
   }
 
   &-header-left {
-    .modal__text {
+    .bds-modal__text {
       display: flex;
       flex-direction: column;
       gap: $space-2;
@@ -125,40 +125,40 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
 }
 
 // Featured Icon과 완전히 같은 색상 맵이라 chip/* 커스텀 프로퍼티를 그대로 재사용한다(featured-icon도
-// 이걸 직접 참조한다 — 2026-08-31 수정: 이전엔 _featured-icon.scss가 자체 --featured-icon-* 를
+// 이걸 직접 참조한다 — 2026-08-31 수정: 이전엔 _featured-icon.scss가 자체 --bds-featured-icon-* 를
 // 뒀었지만 그 프로퍼티가 제거되면서 여기 참조가 끊겨 있었다, S3 미정의 변수로 발견).
 $modal-icon-colors: (
-  brand: (bg: var(--chip-brand-bg), fg: var(--chip-brand-fg)),
-  neutral: (bg: var(--chip-neutral-bg), fg: var(--chip-neutral-fg)),
-  success: (bg: var(--chip-success-bg), fg: var(--chip-success-fg)),
-  warning: (bg: var(--chip-warning-bg), fg: var(--chip-warning-fg)),
-  error: (bg: var(--chip-error-bg), fg: var(--chip-error-fg)),
+  brand: (bg: var(--bds-badge-brand-bg), fg: var(--bds-badge-brand-fg)),
+  neutral: (bg: var(--bds-badge-neutral-bg), fg: var(--bds-badge-neutral-fg)),
+  success: (bg: var(--bds-badge-success-bg), fg: var(--bds-badge-success-fg)),
+  warning: (bg: var(--bds-badge-warning-bg), fg: var(--bds-badge-warning-fg)),
+  error: (bg: var(--bds-badge-error-bg), fg: var(--bds-badge-error-fg)),
 );
 
-.modal-featured-icon {
+.bds-modal-featured-icon {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   border-radius: $radius-full;
 
-  &.modal-featured-icon-sm {
+  &.bds-modal-featured-icon-sm {
     padding: 10px;
   }
-  &.modal-featured-icon-md {
+  &.bds-modal-featured-icon-md {
     padding: 12px;
   }
 }
 
 @each $color, $c in $modal-icon-colors {
-  .modal-featured-icon-#{$color} {
+  .bds-modal-featured-icon-#{$color} {
     background-color: map.get($c, bg);
     color: map.get($c, fg);
   }
 }
 
-.modal {
-  // 액션 버튼 영역 — 실제 버튼은 .btn .btn-lg .btn-primary/.btn-outline 재사용.
+.bds-modal {
+  // 액션 버튼 영역 — 실제 버튼은 .bds-btn .bds-btn-lg .bds-btn-primary/.bds-btn-outline 재사용.
   // horizontal: 가로 배치, secondary(outline) 먼저·primary 나중, 버튼 flex:1.
   // stacked: 세로 배치, primary 먼저(위)·secondary(outline) 나중(아래), 버튼 폭 100%.
   &__actions {
@@ -166,7 +166,7 @@ $modal-icon-colors: (
     gap: $space-3;
     width: 100%;
 
-    .btn {
+    .bds-btn {
       flex: 1 0 0;
     }
   }
@@ -174,7 +174,7 @@ $modal-icon-colors: (
   &-actions-stacked {
     flex-direction: column;
 
-    .btn {
+    .bds-btn {
       width: 100%;
     }
   }
@@ -185,9 +185,9 @@ $modal-icon-colors: (
     align-items: center;
     justify-content: center;
     width: 100%;
-    border: 1px dashed var(--modal-slot-border);
+    border: 1px dashed var(--bds-modal-slot-border);
     border-radius: $radius-sm;
-    background-color: var(--modal-slot-bg);
+    background-color: var(--bds-modal-slot-bg);
     color: $modal-description-fg;
     // font-weight 선언이 원래 없던 자리라 text() 믹스인(weight 강제 포함)을 쓰지 않고
     // $type-scale에서 size/lh만 뽑아 쓴다(규칙 3 대체 경로).

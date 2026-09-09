@@ -14,13 +14,13 @@
 // simple의 구분선과 button-group의 테두리가 전부 pagination/group/border 하나를 같이 쓴다
 // (get_variable_defs로 Type=numbers 확인) — 이름을 그에 맞게 group-border로 리네임.
 :root {
-  --pagination-item-fg: var(--text-tertiary);
-  --pagination-item-fg-hover: var(--text-secondary);
-  --pagination-item-bg: var(--surface-default);
-  --pagination-item-bg-hover: var(--surface-subtle);
-  --pagination-current-fg: var(--brand-600);
-  --pagination-current-bg: var(--brand-50);
-  --pagination-group-border: var(--border-strong);
+  --bds-pagination-item-fg: var(--bds-text-tertiary);
+  --bds-pagination-item-fg-hover: var(--bds-text-secondary);
+  --bds-pagination-item-bg: var(--bds-surface-default);
+  --bds-pagination-item-bg-hover: var(--bds-surface-subtle);
+  --bds-pagination-current-fg: var(--bds-brand-600);
+  --bds-pagination-current-bg: var(--bds-brand-50);
+  --bds-pagination-group-border: var(--bds-border-control);
 }
 
 $pagination-sizes: (
@@ -29,19 +29,19 @@ $pagination-sizes: (
   lg: (item: 48px, type: body-xl, gap: $space-2),
 );
 
-$pagination-border: var(--pagination-group-border);
-$pagination-fg: var(--pagination-item-fg);
-$pagination-fg-hover: var(--pagination-item-fg-hover);
-$pagination-bg-hover: var(--pagination-item-bg-hover);
-$pagination-current-bg: var(--pagination-current-bg);
-$pagination-current-fg: var(--pagination-current-fg);
-$pagination-radius: var(--pagination-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
-$pagination-icon-fg: var(--icon-primary);
+$pagination-border: var(--bds-pagination-group-border);
+$pagination-fg: var(--bds-pagination-item-fg);
+$pagination-fg-hover: var(--bds-pagination-item-fg-hover);
+$pagination-bg-hover: var(--bds-pagination-item-bg-hover);
+$pagination-current-bg: var(--bds-pagination-current-bg);
+$pagination-current-fg: var(--bds-pagination-current-fg);
+$pagination-radius: var(--bds-pagination-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
+$pagination-icon-fg: var(--bds-icon-primary);
 
 // ──────────────────────────────────────────────────────────────
-// 공용 숫자 셀 — .pagination-number, 모든 Type에서 재사용
+// 공용 숫자 셀 — .bds-pagination-number, 모든 Type에서 재사용
 // ──────────────────────────────────────────────────────────────
-.pagination-number {
+.bds-pagination-number {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -50,19 +50,19 @@ $pagination-icon-fg: var(--icon-primary);
   font-weight: $font-weight-medium;
   cursor: pointer;
 
-  &:hover:not(.pagination-number-current) {
+  &:hover:not(.bds-pagination-number-current) {
     background-color: $pagination-bg-hover;
     color: $pagination-fg-hover;
   }
 
-  &.pagination-number-current {
+  &.bds-pagination-number-current {
     background-color: $pagination-current-bg;
     color: $pagination-current-fg;
     font-weight: $font-weight-semibold;
     cursor: default;
   }
 
-  &.pagination-ellipsis {
+  &.bds-pagination-ellipsis {
     cursor: default;
     pointer-events: none;
   }
@@ -80,11 +80,11 @@ $pagination-icon-fg: var(--icon-primary);
 }
 
 @each $size, $props in $pagination-sizes {
-  .pagination-#{$size} {
+  .bds-pagination-#{$size} {
     // font-weight는 State(현재 페이지 여부) 축이라 사이즈와 분리 — size/line-height만 $type-scale에서 읽는다.
     $pagination-type: map.get(maps.$type-scale, map.get($props, type));
 
-    .pagination-number {
+    .bds-pagination-number {
       width: map.get($props, item);
       height: map.get($props, item);
       font-size: map.get($pagination-type, size);
@@ -92,13 +92,13 @@ $pagination-icon-fg: var(--icon-primary);
     }
 
     // "Page 1 of 10" 텍스트, numbers/group의 Prev·Next 라벨도 셀과 같은 사이즈 스케일을 탄다(실측 일치).
-    &.pagination-simple,
-    &.pagination-simple-icon {
+    &.bds-pagination-simple,
+    &.bds-pagination-simple-icon {
       font-size: map.get($pagination-type, size);
       line-height: map.get($pagination-type, lh);
     }
 
-    .pagination__nav {
+    .bds-pagination__nav {
       font-size: map.get($pagination-type, size);
       line-height: map.get($pagination-type, lh);
     }
@@ -108,7 +108,7 @@ $pagination-icon-fg: var(--icon-primary);
 // ──────────────────────────────────────────────────────────────
 // Type=numbers — 테두리 없는 텍스트 Prev/Next + 번호. 위쪽에 구분선(border-top)이 붙는다.
 // ──────────────────────────────────────────────────────────────
-.pagination-numbers {
+.bds-pagination-numbers {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -116,7 +116,7 @@ $pagination-icon-fg: var(--icon-primary);
   padding-top: $space-12; // 위 콘텐츠와의 구분선 여백(실측: sm 40/md 48/lg 64 — md 기준값, sm·lg는 아래 사이즈 오버라이드)
   border-top: 1px solid $pagination-border;
 
-  .pagination__nav {
+  .bds-pagination__nav {
     display: inline-flex;
     align-items: center;
     gap: $space-2;
@@ -124,31 +124,31 @@ $pagination-icon-fg: var(--icon-primary);
     font-weight: $font-weight-medium;
     cursor: pointer;
 
-    .icon {
+    .bds-icon {
       width: 20px;
       height: 20px;
       color: $pagination-icon-fg;
     }
   }
 
-  .pagination__numbers {
+  .bds-pagination__numbers {
     display: inline-flex;
     align-items: center;
     gap: 2px;
   }
 }
 
-.pagination-numbers.pagination-sm {
+.bds-pagination-numbers.pagination-sm {
   padding-top: $space-10;
 }
-.pagination-numbers.pagination-lg {
+.bds-pagination-numbers.pagination-lg {
   padding-top: $space-16;
 }
 
 // ──────────────────────────────────────────────────────────────
-// Type=simple — "Page 1 of 10" 텍스트 + Prev/Next 버튼(.btn .btn-outline 재사용)
+// Type=simple — "Page 1 of 10" 텍스트 + Prev/Next 버튼(.bds-btn .bds-btn-outline 재사용)
 // ──────────────────────────────────────────────────────────────
-.pagination-simple {
+.bds-pagination-simple {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -158,24 +158,24 @@ $pagination-icon-fg: var(--icon-primary);
   color: $pagination-fg;
   font-weight: $font-weight-medium;
 
-  .pagination__actions {
+  .bds-pagination__actions {
     display: flex;
     gap: $space-3;
   }
 }
 
-.pagination-simple.pagination-sm {
+.bds-pagination-simple.pagination-sm {
   padding-top: $space-10;
 }
-.pagination-simple.pagination-lg {
+.bds-pagination-simple.pagination-lg {
   padding-top: $space-16;
 }
 
 // ──────────────────────────────────────────────────────────────
-// Type=simple-icon — 아이콘 전용 Prev/Next(.icon-btn .icon-btn-outline 재사용) + "Page 1 of 10"
+// Type=simple-icon — 아이콘 전용 Prev/Next(.bds-icon-btn .bds-icon-btn-outline 재사용) + "Page 1 of 10"
 // 테이블 하단(.table-pagination이었던 것)도 이 클래스를 그대로 쓴다 — 패딩 20px은 sm/md/lg 전부 동일(실측 확인).
 // ──────────────────────────────────────────────────────────────
-.pagination-simple-icon {
+.bds-pagination-simple-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -187,23 +187,23 @@ $pagination-icon-fg: var(--icon-primary);
 
 // ──────────────────────────────────────────────────────────────
 // Type=numbers-buttons / button-group — Prev·번호·Next가 하나의 테두리 그룹으로 붙어있다.
-// numbers-buttons: Prev/Next만 독립 버튼(.btn .btn-outline), 번호만 그룹으로 붙음.
+// numbers-buttons: Prev/Next만 독립 버튼(.bds-btn .bds-btn-outline), 번호만 그룹으로 붙음.
 // button-group: Prev/Next까지 포함해 전부 하나의 그룹으로 붙음.
 // ──────────────────────────────────────────────────────────────
-.pagination-group {
+.bds-pagination-group {
   display: inline-flex;
   align-items: stretch;
   border-radius: $radius-md;
   border: 1px solid $pagination-border;
   overflow: hidden;
 
-  .pagination-number-square {
+  .bds-pagination-number-square {
     border-top: none;
     border-bottom: none;
     border-radius: 0;
   }
 
-  .pagination__nav {
+  .bds-pagination__nav {
     display: inline-flex;
     align-items: center;
     gap: $space-2;
@@ -216,7 +216,7 @@ $pagination-icon-fg: var(--icon-primary);
       background-color: $pagination-bg-hover;
     }
 
-    .icon {
+    .bds-icon {
       width: 16px;
       height: 16px;
       color: $pagination-icon-fg;
@@ -224,7 +224,7 @@ $pagination-icon-fg: var(--icon-primary);
   }
 }
 
-.pagination-numbers-buttons {
+.bds-pagination-numbers-buttons {
   display: flex;
   align-items: center;
   gap: $space-3;
@@ -233,7 +233,7 @@ $pagination-icon-fg: var(--icon-primary);
 // ──────────────────────────────────────────────────────────────
 // Pagination Compact — 모바일용. Prev/Next 아이콘 버튼(32×32, ghost) + 번호 배지. 상하 테두리.
 // ──────────────────────────────────────────────────────────────
-.pagination-compact {
+.bds-pagination-compact {
   display: inline-flex;
   align-items: center;
   width: 100%;
@@ -264,7 +264,7 @@ $pagination-icon-fg: var(--icon-primary);
       pointer-events: none;
     }
 
-    .icon {
+    .bds-icon {
       width: 18px;
       height: 18px;
     }

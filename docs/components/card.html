@@ -26,7 +26,7 @@
 
   <section class="doc-section">
     <h2>State — Disabled</h2>
-    <p class="doc-desc"><code>.card-disabled</code> — 투명도를 낮추고 <code>pointer-events: none</code>을 적용합니다. Style 축과 독립적으로 적용됩니다.</p>
+    <p class="doc-desc"><code>.bds-card-disabled</code> — 투명도를 낮추고 <code>pointer-events: none</code>을 적용합니다. Style 축과 독립적으로 적용됩니다.</p>
     <div class="doc-matrix doc-matrix-wide" id="card-disabled-matrix"></div>
   </section>
 </main>
@@ -39,14 +39,14 @@
 
   function cardBody() {
     return '' +
-      '<div class="card__body">' +
-      '<div class="card__content">' +
-      '<span class="card__eyebrow">CATEGORY</span>' +
-      '<h3 class="card__title">카드 제목이 들어가는 영역</h3>' +
-      '<p class="card__description">카드 설명 텍스트가 한두 줄 정도 들어가는 영역입니다.</p>' +
+      '<div class="bds-card__body">' +
+      '<div class="bds-card__content">' +
+      '<span class="bds-card__eyebrow">CATEGORY</span>' +
+      '<h3 class="bds-card__title">카드 제목이 들어가는 영역</h3>' +
+      '<p class="bds-card__description">카드 설명 텍스트가 한두 줄 정도 들어가는 영역입니다.</p>' +
       '</div>' +
-      '<span class="card__meta">2026.08.28</span>' +
-      '<div class="card__action"><button class="btn btn-sm btn-outline">자세히 보기</button></div>' +
+      '<span class="bds-card__meta">2026.08.28</span>' +
+      '<div class="bds-card__action"><button class="bds-btn bds-btn-sm bds-btn-outline">자세히 보기</button></div>' +
       '</div>';
   }
 
@@ -58,11 +58,11 @@
         cell.className = 'doc-cell';
         cell.style.width = '100%';
         var mediaStyle = orientation === 'horizontal'
-          ? 'background:var(--neutral-100);width:160px;flex-shrink:0;height:200px;'
-          : 'background:var(--neutral-100);width:100%;height:200px;';
+          ? 'background:var(--bds-neutral-100);width:160px;flex-shrink:0;height:200px;'
+          : 'background:var(--bds-neutral-100);width:100%;height:200px;';
         cell.innerHTML =
           '<div class="card card-' + orientation + ' card-' + style + '" style="width:100%;">' +
-          '<div class="card__media" style="' + mediaStyle + '"></div>' +
+          '<div class="bds-card__media" style="' + mediaStyle + '"></div>' +
           cardBody() +
           '</div>' +
           '<span class="doc-cell__caption">card card-' + orientation + ' card-' + style + '</span>';
@@ -79,7 +79,7 @@
       cell.style.width = '100%';
       cell.innerHTML =
         '<div class="card card-vertical card-' + style + ' card-disabled" style="width:100%;">' +
-        '<div class="card__media" style="background:var(--neutral-100);width:100%;height:200px;"></div>' +
+        '<div class="bds-card__media" style="background:var(--bds-neutral-100);width:100%;height:200px;"></div>' +
         cardBody() +
         '</div>' +
         '<span class="doc-cell__caption">card card-vertical card-' + style + ' card-disabled</span>';

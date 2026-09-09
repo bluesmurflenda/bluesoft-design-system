@@ -10,26 +10,26 @@
 // dark/light 둘 다 "스타일"이라 bg·fg는 고정이고, dark의 fg-supporting만 라이트(white)보다
 // 살짝 죽인 neutral-300으로 실제로 갈린다(대비 확보) — 이것만 진짜 오버라이드가 필요하다.
 :root {
-  --tooltip-dark-bg: var(--neutral-900);
-  --tooltip-dark-fg: var(--white);
-  --tooltip-dark-fg-supporting: var(--white);
-  --tooltip-light-bg: var(--white);
-  --tooltip-light-fg: var(--neutral-700);
-  --tooltip-light-fg-supporting: var(--neutral-600);
+  --bds-tooltip-dark-bg: var(--bds-neutral-900);
+  --bds-tooltip-dark-fg: var(--bds-white);
+  --bds-tooltip-dark-fg-supporting: var(--bds-white);
+  --bds-tooltip-light-bg: var(--bds-white);
+  --bds-tooltip-light-fg: var(--bds-neutral-700);
+  --bds-tooltip-light-fg-supporting: var(--bds-neutral-600);
 }
 
 [data-theme='dark'] {
-  --tooltip-dark-fg-supporting: var(--neutral-300);
+  --bds-tooltip-dark-fg-supporting: var(--bds-neutral-300);
 }
 
-$tooltip-dark-bg: var(--tooltip-dark-bg);
-$tooltip-dark-fg: var(--tooltip-dark-fg);
-$tooltip-dark-fg-supporting: var(--tooltip-dark-fg-supporting);
-$tooltip-light-bg: var(--tooltip-light-bg);
-$tooltip-light-fg: var(--tooltip-light-fg);
-$tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
+$tooltip-dark-bg: var(--bds-tooltip-dark-bg);
+$tooltip-dark-fg: var(--bds-tooltip-dark-fg);
+$tooltip-dark-fg-supporting: var(--bds-tooltip-dark-fg-supporting);
+$tooltip-light-bg: var(--bds-tooltip-light-bg);
+$tooltip-light-fg: var(--bds-tooltip-light-fg);
+$tooltip-light-fg-supporting: var(--bds-tooltip-light-fg-supporting);
 
-.tooltip {
+.bds-tooltip {
   position: relative;
   display: inline-flex;
   flex-direction: column;
@@ -62,38 +62,38 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
   }
 
   &-dark {
-    .tooltip__content {
+    .bds-tooltip__content {
       background-color: $tooltip-dark-bg;
     }
-    .tooltip__title {
+    .bds-tooltip__title {
       color: $tooltip-dark-fg;
     }
-    .tooltip__supporting {
+    .bds-tooltip__supporting {
       color: $tooltip-dark-fg-supporting;
     }
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       background-color: $tooltip-dark-bg;
     }
   }
 
   &-light {
-    .tooltip__content {
+    .bds-tooltip__content {
       background-color: $tooltip-light-bg;
     }
-    .tooltip__title {
+    .bds-tooltip__title {
       color: $tooltip-light-fg;
     }
-    .tooltip__supporting {
+    .bds-tooltip__supporting {
       color: $tooltip-light-fg-supporting;
     }
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       background-color: $tooltip-light-bg;
     }
   }
 
   // Arrow 위치 — bottom(위쪽에 툴팁, 화살표 아래) 기준 실측. top/left/right는 대칭 반전.
   &-arrow-bottom {
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       bottom: -6px;
       left: 50%;
       margin-left: -6px;
@@ -101,7 +101,7 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
   }
 
   &-arrow-top {
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       top: -6px;
       left: 50%;
       margin-left: -6px;
@@ -109,7 +109,7 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
   }
 
   &-arrow-left {
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       left: -6px;
       top: 50%;
       margin-top: -6px;
@@ -117,7 +117,7 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
   }
 
   &-arrow-right {
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       right: -6px;
       top: 50%;
       margin-top: -6px;
@@ -125,7 +125,7 @@ $tooltip-light-fg-supporting: var(--tooltip-light-fg-supporting);
   }
 
   &-arrow-none {
-    .tooltip__arrow {
+    .bds-tooltip__arrow {
       display: none;
     }
   }

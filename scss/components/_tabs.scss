@@ -4,7 +4,7 @@
 // 2026-08-31 정정: "텍스트가 전 타입·전 사이즈 Body/Sm 고정"이라던 기존 실측이 틀렸다.
 // get_variable_defs로 각 사이즈의 실제 바인딩을 다시 대조하니 텍스트도 사이즈를 탄다 —
 // sm=Body/Sm(14/20), md·lg=Body/Lg(16/24), xl=Body/Xl(18/26). 세 Type(underline/pill/segmented)
-// 전부 같은 규칙이었다. 기존 코드는 .tabs-item 베이스에 body-sm을 고정해놔서 md/lg/xl 전부
+// 전부 같은 규칙이었다. 기존 코드는 .bds-tabs-item 베이스에 body-sm을 고정해놔서 md/lg/xl 전부
 // 14px로 그려지고 있었다 — 사이즈별 맵에 type 키를 넣고 베이스의 고정 text() 호출을 제거했다.
 
 @use '../tokens/primitive' as *;
@@ -16,43 +16,45 @@
 // indicator(neutral-800 직접 참조)는 라이트에서 같은 값(#262626)이라 currentColor로 합치고 싶어지지만
 // 서로 다른 토큰이다 — 별개 프로퍼티로 유지한다(지시사항, ADR-010과 같은 이유).
 :root {
-  --tabs-underline-fg: var(--text-tertiary);
-  --tabs-underline-fg-hover: var(--text-secondary);
-  --tabs-underline-fg-active: var(--icon-strong);
-  --tabs-underline-fg-disabled: var(--text-disabled);
-  --tabs-underline-indicator: var(--neutral-800);
+  --bds-tabs-underline-fg: var(--bds-text-tertiary);
+  --bds-tabs-underline-fg-hover: var(--bds-text-secondary);
+  --bds-tabs-underline-fg-active: var(--bds-icon-strong);
+  --bds-tabs-underline-fg-disabled: var(--bds-text-disabled);
+  --bds-tabs-underline-indicator: var(--bds-neutral-800);
 
-  --tabs-underline-brand-fg: var(--text-tertiary);
-  --tabs-underline-brand-fg-hover: var(--brand-700);
-  --tabs-underline-brand-fg-active: var(--brand-600);
-  --tabs-underline-brand-fg-disabled: var(--text-disabled);
-  --tabs-underline-brand-indicator: var(--brand-600);
+  --bds-tabs-underline-brand-fg: var(--bds-text-tertiary);
+  --bds-tabs-underline-brand-fg-hover: var(--bds-brand-700);
+  --bds-tabs-underline-brand-fg-active: var(--bds-brand-600);
+  --bds-tabs-underline-brand-fg-disabled: var(--bds-text-disabled);
+  --bds-tabs-underline-brand-indicator: var(--bds-brand-600);
 
-  --tabs-pill-fg: var(--text-tertiary);
-  --tabs-pill-fg-hover: var(--text-secondary);
-  --tabs-pill-fg-active: var(--brand-600);
-  --tabs-pill-fg-disabled: var(--text-disabled);
-  --tabs-pill-bg-hover: var(--surface-subtle);
-  --tabs-pill-bg-active: var(--brand-50);
-  --tabs-pill-border: var(--border-default);
-  --tabs-pill-border-hover: var(--border-strong);
-  --tabs-pill-border-active: var(--brand-200);
+  --bds-tabs-pill-fg: var(--bds-text-tertiary);
+  --bds-tabs-pill-fg-hover: var(--bds-text-secondary);
+  --bds-tabs-pill-fg-active: var(--bds-brand-600);
+  --bds-tabs-pill-fg-disabled: var(--bds-text-disabled);
+  --bds-tabs-pill-bg-hover: var(--bds-surface-subtle);
+  --bds-tabs-pill-bg-active: var(--bds-brand-50);
+  --bds-tabs-pill-border: var(--bds-border-default);
+  --bds-tabs-pill-border-hover: var(--bds-border-control);
+  --bds-tabs-pill-border-active: var(--bds-brand-200);
 
-  --tabs-segmented-fg: var(--text-tertiary);
-  --tabs-segmented-fg-hover: var(--text-secondary);
-  --tabs-segmented-fg-active: var(--neutral-900);
-  --tabs-segmented-fg-disabled: var(--text-disabled);
-  --tabs-segmented-bg-active: var(--white);
+  --bds-tabs-segmented-fg: var(--bds-text-tertiary);
+  --bds-tabs-segmented-fg-hover: var(--bds-text-secondary);
+  --bds-tabs-segmented-fg-active: var(--bds-neutral-900);
+  --bds-tabs-segmented-fg-disabled: var(--bds-text-disabled);
+  --bds-tabs-segmented-bg-active: var(--bds-white);
 
-  --tabs-track-bg: var(--neutral-100);
-  --tabs-border: var(--border-default);
+  --bds-tabs-track-bg: var(--bds-neutral-100);
+  --bds-tabs-border: var(--bds-border-default);
+  --bds-tabs-underline-bg-hover: var(--bds-surface-subtle);
+  --bds-tabs-underline-border-hover: var(--bds-border-control);
 }
 
 [data-theme='dark'] {
-  --tabs-underline-indicator: var(--neutral-200);
-  --tabs-segmented-fg-active: var(--neutral-100);
-  --tabs-segmented-bg-active: var(--neutral-950);
-  --tabs-track-bg: var(--neutral-900);
+  --bds-tabs-underline-indicator: var(--bds-neutral-200);
+  --bds-tabs-segmented-fg-active: var(--bds-neutral-100);
+  --bds-tabs-segmented-bg-active: var(--bds-neutral-950);
+  --bds-tabs-track-bg: var(--bds-neutral-900);
 }
 
 // 사이즈별 텍스트 스케일 — Type(underline/pill/segmented) 공통이다(get_variable_defs로 4사이즈
@@ -90,49 +92,49 @@ $tabs-segmented-sizes: (
 );
 
 $tabs-gap: $space-2; // Shape 컬렉션 tabs-gap-pill/underline — 3모드 전부 동일해 모드 무관 상수로 취급
-$tabs-radius: var(--tabs-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
+$tabs-radius: var(--bds-tabs-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
 $tabs-segment-container-padding: 2px;
 $tabs-segment-items-gap: 2px;
-$tabs-segment-track-bg: var(--tabs-track-bg);
-$tabs-segment-track-border: var(--tabs-border);
+$tabs-segment-track-bg: var(--bds-tabs-track-bg);
+$tabs-segment-track-border: var(--bds-tabs-border);
 
 $tabs-underline-colors: (
-  fg: var(--tabs-underline-fg),
-  fg-hover: var(--tabs-underline-fg-hover),
-  fg-active: var(--tabs-underline-fg-active),
-  fg-disabled: var(--tabs-underline-fg-disabled),
-  underline-active: var(--tabs-underline-indicator),
+  fg: var(--bds-tabs-underline-fg),
+  fg-hover: var(--bds-tabs-underline-fg-hover),
+  fg-active: var(--bds-tabs-underline-fg-active),
+  fg-disabled: var(--bds-tabs-underline-fg-disabled),
+  underline-active: var(--bds-tabs-underline-indicator),
 );
 
 $tabs-underline-brand-colors: (
-  fg: var(--tabs-underline-brand-fg),
-  fg-hover: var(--tabs-underline-brand-fg-hover),
-  fg-active: var(--tabs-underline-brand-fg-active),
-  fg-disabled: var(--tabs-underline-brand-fg-disabled),
-  underline-active: var(--tabs-underline-brand-indicator),
+  fg: var(--bds-tabs-underline-brand-fg),
+  fg-hover: var(--bds-tabs-underline-brand-fg-hover),
+  fg-active: var(--bds-tabs-underline-brand-fg-active),
+  fg-disabled: var(--bds-tabs-underline-brand-fg-disabled),
+  underline-active: var(--bds-tabs-underline-brand-indicator),
 );
 
 $tabs-pill-colors: (
-  fg: var(--tabs-pill-fg),
-  fg-hover: var(--tabs-pill-fg-hover),
-  fg-active: var(--tabs-pill-fg-active),
-  fg-disabled: var(--tabs-pill-fg-disabled),
-  border: var(--tabs-pill-border),
-  border-hover: var(--tabs-pill-border-hover),
-  border-active: var(--tabs-pill-border-active),
-  bg-hover: var(--tabs-pill-bg-hover),
-  bg-active: var(--tabs-pill-bg-active),
+  fg: var(--bds-tabs-pill-fg),
+  fg-hover: var(--bds-tabs-pill-fg-hover),
+  fg-active: var(--bds-tabs-pill-fg-active),
+  fg-disabled: var(--bds-tabs-pill-fg-disabled),
+  border: var(--bds-tabs-pill-border),
+  border-hover: var(--bds-tabs-pill-border-hover),
+  border-active: var(--bds-tabs-pill-border-active),
+  bg-hover: var(--bds-tabs-pill-bg-hover),
+  bg-active: var(--bds-tabs-pill-bg-active),
 );
 
 $tabs-segmented-colors: (
-  fg: var(--tabs-segmented-fg),
-  fg-hover: var(--tabs-segmented-fg-hover),
-  fg-active: var(--tabs-segmented-fg-active),
-  fg-disabled: var(--tabs-segmented-fg-disabled),
-  bg-active: var(--tabs-segmented-bg-active),
+  fg: var(--bds-tabs-segmented-fg),
+  fg-hover: var(--bds-tabs-segmented-fg-hover),
+  fg-active: var(--bds-tabs-segmented-fg-active),
+  fg-disabled: var(--bds-tabs-segmented-fg-disabled),
+  bg-active: var(--bds-tabs-segmented-bg-active),
 );
 
-.tabs-item {
+.bds-tabs-item {
   display: inline-flex;
   align-items: center;
   gap: $tabs-gap;
@@ -146,7 +148,7 @@ $tabs-segmented-colors: (
 }
 
 @each $size, $key in $tabs-type-by-size {
-  .tabs-item-#{$size} {
+  .bds-tabs-item-#{$size} {
     $tabs-item-type: map.get(maps.$type-scale, $key);
     font-size: map.get($tabs-item-type, size);
     line-height: map.get($tabs-item-type, lh);
@@ -160,7 +162,7 @@ $tabs-segmented-colors: (
   gap: 0;
   color: map.get($colors, fg);
 
-  .tabs-item__content {
+  .bds-tabs-item__content {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -168,7 +170,7 @@ $tabs-segmented-colors: (
     flex: 1 0 0;
   }
 
-  .tabs-item__underline {
+  .bds-tabs-item__underline {
     height: 2px;
     width: 100%;
     background-color: transparent;
@@ -178,10 +180,10 @@ $tabs-segmented-colors: (
     color: map.get($colors, fg-hover);
   }
 
-  &.is-selected {
+  &.bds-is-selected {
     color: map.get($colors, fg-active);
 
-    .tabs-item__underline {
+    .bds-tabs-item__underline {
       background-color: map.get($colors, underline-active);
     }
   }
@@ -191,27 +193,27 @@ $tabs-segmented-colors: (
   }
 }
 
-.tabs-item-underline {
+.bds-tabs-item-underline {
   @include tabs-underline-type($tabs-underline-colors);
 }
 
-.tabs-item-underline-brand {
+.bds-tabs-item-underline-brand {
   @include tabs-underline-type($tabs-underline-brand-colors);
 }
 
 @each $size, $props in $tabs-underline-sizes {
-  .tabs-item-underline.tabs-item-#{$size},
-  .tabs-item-underline-brand.tabs-item-#{$size} {
+  .bds-tabs-item-underline.tabs-item-#{$size},
+  .bds-tabs-item-underline-brand.tabs-item-#{$size} {
     height: map.get($props, height);
 
-    .tabs-item__content {
+    .bds-tabs-item__content {
       padding-inline: map.get($props, padding-x);
     }
   }
 }
 
 // pill
-.tabs-item-pill {
+.bds-tabs-item-pill {
   border: 1px solid map.get($tabs-pill-colors, border);
   border-radius: $tabs-radius;
   color: map.get($tabs-pill-colors, fg);
@@ -223,7 +225,7 @@ $tabs-segmented-colors: (
     color: map.get($tabs-pill-colors, fg-hover);
   }
 
-  &.is-selected {
+  &.bds-is-selected {
     border-color: map.get($tabs-pill-colors, border-active);
     background-color: map.get($tabs-pill-colors, bg-active);
     color: map.get($tabs-pill-colors, fg-active);
@@ -235,14 +237,14 @@ $tabs-segmented-colors: (
 }
 
 @each $size, $props in $tabs-pill-sizes {
-  .tabs-item-pill.tabs-item-#{$size} {
+  .bds-tabs-item-pill.tabs-item-#{$size} {
     padding-block: map.get($props, padding-y);
     padding-inline: map.get($props, padding-x);
   }
 }
 
-// segmented (개별 아이템 — 바깥 Segment 컨테이너는 .tabs-segment 참조)
-.tabs-item-segmented {
+// segmented (개별 아이템 — 바깥 Segment 컨테이너는 .bds-tabs-segment 참조)
+.bds-tabs-item-segmented {
   border-radius: $tabs-radius;
   color: map.get($tabs-segmented-colors, fg);
   background-color: transparent;
@@ -251,7 +253,7 @@ $tabs-segmented-colors: (
     color: map.get($tabs-segmented-colors, fg-hover);
   }
 
-  &.is-selected {
+  &.bds-is-selected {
     background-color: map.get($tabs-segmented-colors, bg-active);
     color: map.get($tabs-segmented-colors, fg-active);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs — 2026-08-28 재실측: blur 1px 아니라 2px
@@ -263,14 +265,14 @@ $tabs-segmented-colors: (
 }
 
 @each $size, $props in $tabs-segmented-sizes {
-  .tabs-item-segmented.tabs-item-#{$size} {
+  .bds-tabs-item-segmented.tabs-item-#{$size} {
     padding-block: map.get($props, padding-y);
     padding-inline: map.get($props, padding-x);
   }
 }
 
 // Segment 컨테이너 — segmented 타입 아이템을 감싼다.
-.tabs-segment {
+.bds-tabs-segment {
   display: inline-flex;
   align-items: center;
   gap: $tabs-segment-items-gap;

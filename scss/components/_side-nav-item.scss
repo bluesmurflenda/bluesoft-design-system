@@ -11,13 +11,13 @@
 // 문제가 아니라 코드가 Theme=dark를 진짜 다크모드처럼 반전시키고 있었다). blue-800/blue-600 고정으로
 // 바로잡으면 글자(항상 흰색)와의 대비도 정상으로 돌아온다.
 :root {
-  --nav-item-bg-hover: var(--surface-subtle);
-  --nav-item-bg-selected: var(--surface-muted);
-  --nav-dark-item-bg-hover: var(--blue-800);
-  --nav-dark-item-bg-selected: var(--blue-600);
+  --bds-nav-item-bg-hover: var(--bds-surface-subtle);
+  --bds-nav-item-bg-selected: var(--bds-surface-muted);
+  --bds-nav-dark-item-bg-hover: var(--bds-blue-800);
+  --bds-nav-dark-item-bg-selected: var(--bds-blue-600);
 }
 
-.side-nav-item {
+.bds-side-nav-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -73,39 +73,39 @@
   }
 
   &-light {
-    color: var(--nav-fg);
+    color: var(--bds-nav-fg);
 
-    .side-nav-item__icon {
-      color: var(--nav-fg);
+    .bds-side-nav-item__icon {
+      color: var(--bds-nav-fg);
     }
 
     &:hover {
-      background-color: var(--nav-item-bg-hover);
-      color: var(--nav-fg-hover);
+      background-color: var(--bds-nav-item-bg-hover);
+      color: var(--bds-nav-fg-hover);
     }
 
-    &:hover .side-nav-item__icon {
-      color: var(--nav-fg-hover);
+    &:hover .bds-side-nav-item__icon {
+      color: var(--bds-nav-fg-hover);
     }
 
-    &.side-nav-item-selected {
-      background-color: var(--nav-item-bg-selected);
+    &.bds-side-nav-item-selected {
+      background-color: var(--bds-nav-item-bg-selected);
     }
   }
 
   &-dark {
     color: $white;
 
-    .side-nav-item__icon {
+    .bds-side-nav-item__icon {
       color: $white;
     }
 
     &:hover {
-      background-color: var(--nav-dark-item-bg-hover);
+      background-color: var(--bds-nav-dark-item-bg-hover);
     }
 
-    &.side-nav-item-selected {
-      background-color: var(--nav-dark-item-bg-selected);
+    &.bds-side-nav-item-selected {
+      background-color: var(--bds-nav-dark-item-bg-selected);
     }
   }
 }

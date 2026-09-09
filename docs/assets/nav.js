@@ -39,7 +39,7 @@
         { label: 'Button', href: BASE + 'components/button.html' },
         { label: 'Icon Button', href: BASE + 'components/icon-button.html' },
         { label: 'Social Button', href: BASE + 'components/social-button.html' },
-        { label: 'Chip', href: BASE + 'components/chip.html' },
+        { label: 'Badge', href: BASE + 'components/badge.html' },
         { label: 'Con', href: BASE + 'components/con-chip.html' },
         { label: 'Tabs', href: BASE + 'components/tabs.html' },
       ],
@@ -106,10 +106,10 @@
   }
 
   function itemHtml(item, isChild) {
-    var classes = 'side-nav-item side-nav-item-light' + (isChild ? ' side-nav-item-sub' : '');
+    var classes = 'bds-side-nav-item bds-side-nav-item-light' + (isChild ? ' bds-side-nav-item-sub' : '');
     var content = isChild
       ? item.label
-      : '<span class="side-nav-item__content">' + iconSvg(item.icon) + '<span class="side-nav-item__label">' + item.label + '</span></span>';
+      : '<span class="bds-side-nav-item__content">' + iconSvg(item.icon) + '<span class="bds-side-nav-item__label">' + item.label + '</span></span>';
     var attrs = isChild ? ' data-nav-child' : '';
     return '<a class="' + classes + '" data-nav' + attrs + ' href="' + item.href + '">' + content + '</a>';
   }
@@ -128,15 +128,15 @@
     var html = '';
     var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     html += '<div class="doc-sidebar__header">';
-    html += '<a href="' + BASE + 'index.html"><img class="logo" src="' + BASE + 'assets/logo/logo-brand.svg" alt="BLUESOFT" /></a>';
-    html += '<button type="button" class="icon-btn icon-btn-sm icon-btn-ghost" id="doc-theme-toggle" aria-label="다크모드 전환">' +
+    html += '<a href="' + BASE + 'index.html"><img class="bds-logo" src="' + BASE + 'assets/logo/logo-brand.svg" alt="BLUESOFT" /></a>';
+    html += '<button type="button" class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-ghost" id="doc-theme-toggle" aria-label="다크모드 전환">' +
       iconSvg(isDark ? 'sun' : 'moon', 'icon icon-sm') +
       '</button>';
     html += '</div>';
     html += '<div class="doc-sidebar__search">' +
-      '<div class="input input-md input-normal"><div class="input__field"><div class="input__content">' +
-      '<svg class="input__icon"><use href="' + BASE + 'assets/icons/sprite.svg#icon-base-search"></use></svg>' +
-      '<input class="input__control" id="doc-search" placeholder="컴포넌트 검색" autocomplete="off" />' +
+      '<div class="bds-input bds-input-md bds-input-normal"><div class="bds-input__field"><div class="bds-input__content">' +
+      '<svg class="bds-input__icon"><use href="' + BASE + 'assets/icons/sprite.svg#icon-base-search"></use></svg>' +
+      '<input class="bds-input__control" id="doc-search" placeholder="컴포넌트 검색" autocomplete="off" />' +
       '</div></div></div></div>';
 
     var currentFile = location.pathname.split('/').pop() || 'index.html';
@@ -165,8 +165,8 @@
     html += '</div>';
 
     html += '<div class="doc-sidebar__footer">' +
-      '<a class="side-nav-item side-nav-item-light" href="https://github.com/bluesmurflenda/bluesoft-design-system" target="_blank" rel="noopener">' +
-      '<span class="side-nav-item__content">' + iconSvg('external-link') + '<span class="side-nav-item__label">GitHub 저장소</span></span>' +
+      '<a class="bds-side-nav-item bds-side-nav-item-light" href="https://github.com/bluesmurflenda/bluesoft-design-system" target="_blank" rel="noopener">' +
+      '<span class="bds-side-nav-item__content">' + iconSvg('external-link') + '<span class="bds-side-nav-item__label">GitHub 저장소</span></span>' +
       '</a></div>';
 
     mount.innerHTML = html;
@@ -174,7 +174,7 @@
     // 현재 페이지 강조 — pathname 끝부분(파일명)을 비교한다.
     mount.querySelectorAll('[data-nav]').forEach(function (a) {
       var hrefFile = a.getAttribute('href').split('/').pop();
-      a.classList.toggle('side-nav-item-selected', hrefFile === currentFile);
+      a.classList.toggle('bds-side-nav-item-selected', hrefFile === currentFile);
     });
 
     // 아코디언 — 한 번에 하나의 그룹만 펼쳐진다. 화살표 토글만 펼치기/접기하고

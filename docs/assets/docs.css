@@ -6,14 +6,14 @@
 html, body { margin: 0; padding: 0; }
 body {
   /* font-family는 main.css의 reset(body 셀렉터)이 이미 선언 + 상속되므로 여기서 다시 안 씀 */
-  background-color: var(--surface-subtle);
-  color: var(--text-primary);
+  background-color: var(--bds-surface-subtle);
+  color: var(--bds-text-primary);
   display: flex;
   min-height: 100vh;
 }
 
 /* ---------- Sidebar — Figma "Sidebar navigation" 샘플(node 1240:11809) 구조.
-   시각 스타일(라운드·색·간격)은 컴포넌트 CSS(.side-nav-item, .input, .logo)가 담당하고
+   시각 스타일(라운드·색·간격)은 컴포넌트 CSS(.bds-side-nav-item, .bds-input, .bds-logo)가 담당하고
    여기서는 레이아웃(배치·패딩·스크롤)만 잡는다. ---------- */
 .doc-sidebar {
   position: fixed;
@@ -22,8 +22,8 @@ body {
   width: 312px;
   height: 100vh;
   overflow-y: auto;
-  background-color: var(--surface-default);
-  border-right: 1px solid var(--border-default);
+  background-color: var(--bds-surface-default);
+  border-right: 1px solid var(--bds-border-default);
   display: flex;
   flex-direction: column;
 }
@@ -46,11 +46,11 @@ body {
 .doc-nav-group + .doc-nav-group {
   margin-top: 16px;
 }
-.doc-sidebar__nav .side-nav-item {
+.doc-sidebar__nav .bds-side-nav-item {
   text-decoration: none;
   cursor: pointer;
 }
-.doc-sidebar__nav .side-nav-item + .side-nav-item {
+.doc-sidebar__nav .bds-side-nav-item + .bds-side-nav-item {
   margin-top: 2px;
 }
 
@@ -61,7 +61,7 @@ body {
   display: flex;
   align-items: center;
 }
-.doc-nav-group__header .side-nav-item {
+.doc-nav-group__header .bds-side-nav-item {
   flex: 1;
   min-width: 0;
 }
@@ -99,9 +99,9 @@ body {
 }
 .doc-sidebar__footer {
   padding: 16px;
-  border-top: 1px solid var(--border-default);
+  border-top: 1px solid var(--bds-border-default);
 }
-.doc-sidebar__footer .side-nav-item {
+.doc-sidebar__footer .bds-side-nav-item {
   text-decoration: none;
 }
 .doc-search-hidden {
@@ -119,7 +119,7 @@ body {
 .doc-page-header {
   margin-bottom: 32px;
   padding-bottom: 24px;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--bds-border-default);
 }
 .doc-page-header h1 {
   margin: 0 0 8px;
@@ -129,19 +129,19 @@ body {
 .doc-page-header p {
   margin: 0;
   font-size: 15px;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
 }
 .doc-breadcrumb {
   margin: 0 0 12px;
   font-size: 13px;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
 }
 .doc-breadcrumb a {
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
   text-decoration: none;
 }
 .doc-breadcrumb a:hover {
-  color: var(--blue-600);
+  color: var(--bds-blue-600);
 }
 
 .doc-section {
@@ -153,17 +153,17 @@ body {
   font-weight: 700;
   margin: 0 0 4px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--bds-border-default);
 }
 .doc-section > p.doc-desc {
   margin: 12px 0 20px;
   font-size: 13px;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
 }
 .doc-subhead {
   font-size: 12px;
   font-weight: 700;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin: 24px 0 10px;
@@ -173,8 +173,8 @@ body {
 }
 
 .doc-card {
-  background: var(--surface-default);
-  border: 1px solid var(--border-default);
+  background: var(--bds-surface-default);
+  border: 1px solid var(--bds-border-default);
   border-radius: 12px;
   padding: 24px;
 }
@@ -202,17 +202,17 @@ body {
 .doc-swatch__chip {
   height: 56px;
   border-radius: 8px;
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--bds-border-default);
 }
 .doc-swatch__label {
   font-size: 12px;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
   font-family: 'SFMono-Regular', Consolas, monospace;
 }
 .doc-label {
   font-size: 11px;
   font-weight: 600;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 6px;
@@ -234,21 +234,58 @@ body {
   align-items: flex-start;
   gap: 8px;
   padding: 16px;
-  background: var(--surface-subtle);
+  background: var(--bds-surface-subtle);
   border-radius: 8px;
 }
 .doc-cell__caption {
   font-size: 11px;
   font-family: 'SFMono-Regular', Consolas, monospace;
-  color: var(--text-tertiary);
+  color: var(--bds-text-tertiary);
 }
 .doc-scroll-x {
   overflow-x: auto;
   padding-bottom: 4px;
 }
 
+/* ---------- 사용법 블록 — 코드 예시·주석·키 목록. 색은 디자인시스템 토큰을 그대로 참조하므로
+   라이트/다크 모드를 따라간다. ---------- */
+.doc-code {
+  margin: 0 0 12px;
+  padding: 16px;
+  background: var(--bds-surface-subtle);
+  border: 1px solid var(--bds-border-default);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--bds-text-primary);
+}
+.doc-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--bds-text-tertiary);
+}
+/* 키 이름 나열 — 읽기용 칩이다. code 전체에 스타일을 주면 다른 페이지의 본문 인라인 코드까지
+   바뀌므로 이 컨테이너 안으로 한정한다. */
+.doc-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.doc-keys code {
+  padding: 3px 8px;
+  background: var(--bds-surface-subtle);
+  border: 1px solid var(--bds-border-default);
+  border-radius: 6px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 12px;
+  color: var(--bds-text-secondary);
+}
+
 /* 스프라이트 아이콘은 path에 fill이 이미 박혀 있는 solid 아이콘이다(stroke 기반 아님).
-   부모(.icon)에 stroke를 얹으면 path 자체엔 stroke 지정이 없어 그대로 상속돼 버려서
+   부모(.bds-icon)에 stroke를 얹으면 path 자체엔 stroke 지정이 없어 그대로 상속돼 버려서
    채워진 도형 위에 불필요한 2px 윤곽선이 겹쳐 보이는 버그가 있었다 — 사이즈만 지정한다. */
-.icon { width: 20px; height: 20px; }
+.bds-icon { width: 20px; height: 20px; }
 .icon-sm { width: 16px; height: 16px; }

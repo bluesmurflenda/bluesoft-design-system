@@ -20,13 +20,13 @@
 
   <section class="doc-section">
     <h2>Display</h2>
-    <p class="doc-desc">랜딩·로그인 헤더 등 큰 타이틀에 사용. Display는 전부 <code>tokens/_breakpoint.scss</code>가 만드는 반응형 <code>--type-display-*</code>를 씁니다 — 고정값이 아니라 <strong>브라우저 창 폭을 줄이면 실제로 작아집니다.</strong></p>
+    <p class="doc-desc">랜딩·로그인 헤더 등 큰 타이틀에 사용. Display는 전부 <code>tokens/_breakpoint.scss</code>가 만드는 반응형 <code>--bds-type-display-*</code>를 씁니다 — 고정값이 아니라 <strong>브라우저 창 폭을 줄이면 실제로 작아집니다.</strong></p>
     <div class="doc-card doc-col" id="display-demo"></div>
   </section>
 
   <section class="doc-section">
     <h2>Body</h2>
-    <p class="doc-desc">2Xs ~ 2Xl. 대부분의 컴포넌트 텍스트가 이 스케일을 사용합니다. 이 중 <strong>Lg·Xl·2Xl만</strong> 반응형 <code>--type-body-*</code>를 쓰고(창 폭에 따라 변함), 2Xs·Xs·Sm·Md는 반응형 변형이 없어 고정값입니다.</p>
+    <p class="doc-desc">2Xs ~ 2Xl. 대부분의 컴포넌트 텍스트가 이 스케일을 사용합니다. 이 중 <strong>Lg·Xl·2Xl만</strong> 반응형 <code>--bds-type-body-*</code>를 쓰고(창 폭에 따라 변함), 2Xs·Xs·Sm·Md는 반응형 변형이 없어 고정값입니다.</p>
     <div class="doc-card doc-col" id="body-demo"></div>
   </section>
 
@@ -34,38 +34,96 @@
     <h2>Weight</h2>
     <div class="doc-card doc-row" id="weight-demo"></div>
   </section>
+
+  <section class="doc-section">
+    <h2>사용법</h2>
+    <p class="doc-desc">스케일을 적용하는 방법은 두 가지입니다. 화면 마크업에서는 클래스를 쓰고, 디자인시스템 컴포넌트를 만들 때는 <code>text()</code> 믹스인을 씁니다. 둘 다 <code>abstracts/_maps.scss</code>의 같은 맵을 읽으므로 값이 갈릴 일이 없습니다.</p>
+
+    <div class="doc-card doc-col">
+      <div>
+        <div class="doc-subhead">1. 클래스 — 화면 마크업에서</div>
+        <pre class="doc-code">&lt;h2 class="bds-text-display-xs bds-fw-bold"&gt;제목&lt;/h2&gt;
+&lt;p class="bds-text-body-md"&gt;본문&lt;/p&gt;
+&lt;span class="bds-text-body-sm bds-fw-medium"&gt;보조 텍스트&lt;/span&gt;</pre>
+        <p class="doc-note"><code>.bds-text-*</code>가 사이즈와 행간을 담당하고(Display는 폰트 패밀리까지), <code>.bds-fw-*</code>가 굵기를 담당합니다. 굵기 클래스는 생략할 수 있으며, 생략하면 부모에서 상속받은 굵기를 그대로 씁니다.</p>
+      </div>
+
+      <div>
+        <div class="doc-subhead">2. 믹스인 — 컴포넌트 SCSS에서</div>
+        <pre class="doc-code">@use '../abstracts/mixins' as mix;      // 파일 맨 위에 한 번
+
+.my-card__title {
+  @include mix.text(display-xs, bold);  // 사이즈, 굵기
+}
+
+.my-card__body {
+  @include mix.text(body-md);           // 굵기 생략
+}</pre>
+        <p class="doc-note">굵기를 생략하면 <code>font-weight</code> 선언 자체가 나가지 않습니다. 상속값을 유지해야 하는 자리에서 이 형태를 씁니다. 없는 키를 쓰면 컴파일이 실패하면서 쓸 수 있는 키 목록을 출력하므로, 오타가 조용히 넘어가지 않습니다.</p>
+      </div>
+
+      <div>
+        <div class="doc-subhead">어느 쪽을 쓰나</div>
+        <p class="doc-note">프로젝트 화면 마크업은 <strong>클래스</strong>, 디자인시스템 컴포넌트는 <strong>믹스인</strong>입니다. 컴포넌트가 마크업에 클래스를 요구하면 쓰는 쪽이 매번 두 클래스를 정확히 붙여야 하고, 하나라도 빠지면 컴포넌트가 깨집니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>쓸 수 있는 키</h2>
+    <p class="doc-desc">클래스로 쓸 때는 앞에 <code>bds-text-</code> · <code>bds-fw-</code>를 붙이고, 믹스인에는 키 이름을 그대로 넣습니다.</p>
+    <div class="doc-card doc-col">
+      <div>
+        <div class="doc-subhead">사이즈 — Body</div>
+        <div class="doc-keys" id="keys-body"></div>
+      </div>
+      <div>
+        <div class="doc-subhead">사이즈 — Display</div>
+        <div class="doc-keys" id="keys-display"></div>
+      </div>
+      <div>
+        <div class="doc-subhead">굵기</div>
+        <div class="doc-keys" id="keys-weight"></div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <script>window.DOCS_BASE = '../';</script>
 <script src="../assets/nav.js"></script>
 <script>
+  // 스케일 키 목록은 이 파일에서 여기 한 번만 적는다 — 위 데모와 아래 「쓸 수 있는 키」가
+  // 같은 배열을 읽는다. 두 곳에 따로 적으면 한쪽만 고쳐져 어긋난다.
+  var DISPLAY = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+  var BODY = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+  var BODY_RESPONSIVE = ['lg', 'xl', '2xl'];
+  var WEIGHTS = [['regular', 400], ['medium', 500], ['semibold', 600], ['bold', 700]];
+
   (function () {
     var el = document.getElementById('display-demo');
-    ['xs', 'sm', 'md', 'lg', 'xl', '2xl'].forEach(function (s) {
+    DISPLAY.forEach(function (s) {
       var row = document.createElement('div');
       row.style.display = 'flex';
       row.style.alignItems = 'baseline';
       row.style.gap = '16px';
       row.innerHTML =
         '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Display/' + s.toUpperCase() + '</span>' +
-        '<span style="font-weight:600;font-size:var(--type-display-' + s + '-size);line-height:var(--type-display-' + s + '-leading);">Ag가나다 BLUESOFT</span>';
+        '<span style="font-weight:600;font-size:var(--bds-type-display-' + s + '-size);line-height:var(--bds-type-display-' + s + '-leading);">Ag가나다 BLUESOFT</span>';
       el.appendChild(row);
     });
   })();
 
   (function () {
     var el = document.getElementById('body-demo');
-    var items = ['2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
-    var RESPONSIVE = ['lg', 'xl', '2xl'];
-    items.forEach(function (s) {
-      var sizeVar = RESPONSIVE.indexOf(s) !== -1 ? 'var(--type-body-' + s + '-size)' : 'var(--font-size-body-' + s + ')';
-      var leadingVar = RESPONSIVE.indexOf(s) !== -1 ? 'var(--type-body-' + s + '-leading)' : 'var(--font-leading-body-' + s + ')';
+    BODY.forEach(function (s) {
+      var sizeVar = BODY_RESPONSIVE.indexOf(s) !== -1 ? 'var(--bds-type-body-' + s + '-size)' : 'var(--bds-font-size-body-' + s + ')';
+      var leadingVar = BODY_RESPONSIVE.indexOf(s) !== -1 ? 'var(--bds-type-body-' + s + '-leading)' : 'var(--bds-font-leading-body-' + s + ')';
       var row = document.createElement('div');
       row.style.display = 'flex';
       row.style.alignItems = 'baseline';
       row.style.gap = '16px';
       row.innerHTML =
-        '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Body/' + s.toUpperCase() + (RESPONSIVE.indexOf(s) !== -1 ? ' *' : '') + '</span>' +
+        '<span class="doc-swatch__label" style="width:90px;flex-shrink:0;">Body/' + s.toUpperCase() + (BODY_RESPONSIVE.indexOf(s) !== -1 ? ' *' : '') + '</span>' +
         '<span style="font-size:' + sizeVar + ';line-height:' + leadingVar + ';">Pretendard 타이포그래피 Ag가나다123</span>';
       el.appendChild(row);
     });
@@ -73,11 +131,27 @@
 
   (function () {
     var el = document.getElementById('weight-demo');
-    [['regular', 400], ['medium', 500], ['semibold', 600], ['bold', 700]].forEach(function (pair) {
+    WEIGHTS.forEach(function (pair) {
       var wrap = document.createElement('div');
       wrap.innerHTML = '<span style="font-size:16px;font-weight:' + pair[1] + ';">' + pair[0] + ' (' + pair[1] + ')</span>';
       el.appendChild(wrap);
     });
+  })();
+
+  // 「쓸 수 있는 키」 칩 — 위 배열에서 만든다
+  (function () {
+    function fill(id, keys) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      keys.forEach(function (k) {
+        var c = document.createElement('code');
+        c.textContent = k;
+        el.appendChild(c);
+      });
+    }
+    fill('keys-body', BODY.map(function (s) { return 'body-' + s; }));
+    fill('keys-display', DISPLAY.map(function (s) { return 'display-' + s; }));
+    fill('keys-weight', WEIGHTS.map(function (p) { return p[0]; }));
   })();
 </script>
 </body>

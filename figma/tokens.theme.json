@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exportedAt": "2026-09-07",
+    "exportedAt": "2026-09-09",
     "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
     "collection": "Theme",
     "count": 302
@@ -213,6 +213,54 @@
     "Default": "var(--green-500)",
     "Dark": "var(--green-400)"
   },
+  "badge/brand/bg": {
+    "Default": "var(--brand-50)",
+    "Dark": "var(--brand-50)"
+  },
+  "badge/brand/fg": {
+    "Default": "var(--brand-700)",
+    "Dark": "var(--brand-700)"
+  },
+  "badge/error/bg": {
+    "Default": "var(--red-50)",
+    "Dark": "var(--red-950)"
+  },
+  "badge/error/fg": {
+    "Default": "var(--red-700)",
+    "Dark": "var(--red-400)"
+  },
+  "badge/info/bg": {
+    "Default": "var(--surface-brand-subtle)",
+    "Dark": "var(--surface-brand-subtle)"
+  },
+  "badge/info/fg": {
+    "Default": "var(--blue-700)",
+    "Dark": "var(--blue-400)"
+  },
+  "badge/neutral/bg": {
+    "Default": "var(--surface-subtle)",
+    "Dark": "var(--surface-subtle)"
+  },
+  "badge/neutral/fg": {
+    "Default": "var(--text-tertiary)",
+    "Dark": "var(--text-tertiary)"
+  },
+  "badge/success/bg": {
+    "Default": "var(--green-50)",
+    "Dark": "var(--green-950)"
+  },
+  "badge/success/fg": {
+    "Default": "var(--green-700)",
+    "Dark": "var(--green-400)"
+  },
+  "badge/warning/bg": {
+    "Default": "var(--yellow-50)",
+    "Dark": "var(--yellow-950)"
+  },
+  "badge/warning/fg": {
+    "Default": "var(--yellow-700)",
+    "Dark": "var(--yellow-400)"
+  },
   "border/accent": {
     "Default": "var(--sky-500)",
     "Dark": "var(--sky-500)"
@@ -281,221 +329,221 @@
     "Default": "var(--blue-900)",
     "Dark": "var(--blue-100)"
   },
-  "button-group/divider": {
-    "Default": "var(--border-default)",
-    "Dark": "var(--border-default)"
-  },
-  "button/danger/bg": {
+  "btn/danger/bg": {
     "Default": "var(--red-600)",
     "Dark": "var(--red-600)"
   },
-  "button/danger/bg-hover": {
+  "btn/danger/bg-hover": {
     "Default": "var(--red-700)",
     "Dark": "var(--red-700)"
   },
-  "button/danger/bg-pressed": {
+  "btn/danger/bg-pressed": {
     "Default": "var(--red-800)",
     "Dark": "var(--red-800)"
   },
-  "button/danger/fg": {
+  "btn/danger/fg": {
     "Default": "var(--white)",
     "Dark": "var(--white)"
   },
-  "button/disabled/bg": {
+  "btn/disabled/bg": {
     "Default": "var(--neutral-100)",
     "Dark": "var(--neutral-900)"
   },
-  "button/disabled/border": {
+  "btn/disabled/border": {
     "Default": "var(--border-default)",
     "Dark": "var(--border-default)"
   },
-  "button/disabled/fg": {
+  "btn/disabled/fg": {
     "Default": "var(--text-disabled)",
     "Dark": "var(--text-disabled)"
   },
-  "button/ghost-brand/bg": {
+  "btn/ghost-brand/bg": {
     "Default": "#ffffff00",
     "Dark": "#ffffff00"
   },
-  "button/ghost-brand/bg-hover": {
+  "btn/ghost-brand/bg-hover": {
     "Default": "var(--brand-50)",
     "Dark": "var(--brand-50)"
   },
-  "button/ghost-brand/bg-pressed": {
+  "btn/ghost-brand/bg-pressed": {
     "Default": "var(--brand-100)",
     "Dark": "var(--brand-100)"
   },
-  "button/ghost-brand/fg": {
+  "btn/ghost-brand/fg": {
     "Default": "var(--text-brand)",
     "Dark": "var(--text-brand)"
   },
-  "button/ghost-brand/fg-disabled": {
+  "btn/ghost-brand/fg-disabled": {
     "Default": "var(--text-disabled)",
     "Dark": "var(--text-disabled)"
   },
-  "button/ghost-inverse/bg": {
+  "btn/ghost-inverse/bg": {
     "Default": "#ffffff00",
     "Dark": "#ffffff00"
   },
-  "button/ghost-inverse/bg-hover": {
+  "btn/ghost-inverse/bg-hover": {
     "Default": "#ffffff1a",
     "Dark": "#ffffff1a"
   },
-  "button/ghost-inverse/bg-pressed": {
+  "btn/ghost-inverse/bg-pressed": {
     "Default": "#ffffff29",
     "Dark": "#ffffff29"
   },
-  "button/ghost-inverse/fg": {
+  "btn/ghost-inverse/fg": {
     "Default": "var(--white)",
     "Dark": "var(--neutral-950)"
   },
-  "button/ghost-white/bg": {
+  "btn/ghost-white/bg": {
     "Default": "#ffffff00",
     "Dark": "#ffffff00"
   },
-  "button/ghost-white/bg-hover": {
+  "btn/ghost-white/bg-hover": {
     "Default": "var(--neutral-100)",
     "Dark": "var(--neutral-900)"
   },
-  "button/ghost-white/bg-pressed": {
+  "btn/ghost-white/bg-pressed": {
     "Default": "var(--neutral-200)",
     "Dark": "var(--neutral-800)"
   },
-  "button/ghost-white/fg": {
+  "btn/ghost-white/fg": {
     "Default": "var(--white)",
     "Dark": "var(--neutral-950)"
   },
-  "button/ghost/bg": {
+  "btn/ghost/bg": {
     "Default": "#ffffff00",
     "Dark": "#ffffff00"
   },
-  "button/ghost/bg-hover": {
+  "btn/ghost/bg-hover": {
     "Default": "var(--neutral-100)",
     "Dark": "var(--neutral-900)"
   },
-  "button/ghost/bg-pressed": {
+  "btn/ghost/bg-pressed": {
     "Default": "var(--neutral-200)",
     "Dark": "var(--neutral-800)"
   },
-  "button/ghost/fg": {
+  "btn/ghost/fg": {
     "Default": "var(--text-secondary)",
     "Dark": "var(--text-secondary)"
   },
-  "button/link/fg": {
+  "btn/link/fg": {
     "Default": "var(--text-secondary)",
     "Dark": "var(--text-secondary)"
   },
-  "button/link/fg-disabled": {
+  "btn/link/fg-disabled": {
     "Default": "var(--text-disabled)",
     "Dark": "var(--text-disabled)"
   },
-  "button/link/fg-hover": {
+  "btn/link/fg-hover": {
     "Default": "var(--brand-600)",
     "Dark": "var(--brand-600)"
   },
-  "button/link/fg-pressed": {
+  "btn/link/fg-pressed": {
     "Default": "var(--brand-800)",
     "Dark": "var(--brand-800)"
   },
-  "button/outline/bg": {
+  "btn/outline/bg": {
     "Default": "var(--white)",
     "Dark": "var(--neutral-950)"
   },
-  "button/outline/bg-hover": {
+  "btn/outline/bg-hover": {
     "Default": "var(--surface-subtle)",
     "Dark": "var(--surface-subtle)"
   },
-  "button/outline/bg-pressed": {
+  "btn/outline/bg-pressed": {
     "Default": "var(--neutral-100)",
     "Dark": "var(--neutral-900)"
   },
-  "button/outline/border": {
+  "btn/outline/border": {
     "Default": "var(--border-default)",
     "Dark": "var(--border-default)"
   },
-  "button/outline/fg": {
+  "btn/outline/fg": {
     "Default": "var(--text-secondary)",
     "Dark": "var(--text-secondary)"
   },
-  "button/primary/bg": {
+  "btn/primary/bg": {
     "Default": "var(--brand-600)",
     "Dark": "var(--blue-600)"
   },
-  "button/primary/bg-hover": {
+  "btn/primary/bg-hover": {
     "Default": "var(--brand-700)",
     "Dark": "var(--blue-700)"
   },
-  "button/primary/bg-pressed": {
+  "btn/primary/bg-pressed": {
     "Default": "var(--brand-800)",
     "Dark": "var(--blue-800)"
   },
-  "button/primary/fg": {
+  "btn/primary/fg": {
     "Default": "var(--white)",
     "Dark": "var(--white)"
   },
-  "button/scrim-dark/bg": {
+  "btn/scrim-dark/bg": {
     "Default": "#0000004d",
     "Dark": "#0000004d"
   },
-  "button/scrim-dark/bg-hover": {
+  "btn/scrim-dark/bg-hover": {
     "Default": "#00000099",
     "Dark": "#00000099"
   },
-  "button/scrim-dark/bg-pressed": {
+  "btn/scrim-dark/bg-pressed": {
     "Default": "#000000cc",
     "Dark": "#000000cc"
   },
-  "button/scrim-dark/fg": {
+  "btn/scrim-dark/fg": {
     "Default": "var(--white)",
     "Dark": "var(--neutral-950)"
   },
-  "button/scrim-light/bg": {
+  "btn/scrim-light/bg": {
     "Default": "#ffffff4d",
     "Dark": "#ffffff4d"
   },
-  "button/scrim-light/bg-hover": {
+  "btn/scrim-light/bg-hover": {
     "Default": "#ffffff99",
     "Dark": "#ffffff99"
   },
-  "button/scrim-light/bg-pressed": {
+  "btn/scrim-light/bg-pressed": {
     "Default": "#ffffffcc",
     "Dark": "#ffffffcc"
   },
-  "button/scrim-light/fg": {
+  "btn/scrim-light/fg": {
     "Default": "var(--neutral-900)",
     "Dark": "var(--neutral-100)"
   },
-  "button/secondary/bg": {
+  "btn/secondary/bg": {
     "Default": "var(--brand-50)",
     "Dark": "var(--brand-50)"
   },
-  "button/secondary/bg-hover": {
+  "btn/secondary/bg-hover": {
     "Default": "var(--brand-100)",
     "Dark": "var(--brand-100)"
   },
-  "button/secondary/bg-pressed": {
+  "btn/secondary/bg-pressed": {
     "Default": "var(--brand-200)",
     "Dark": "var(--brand-200)"
   },
-  "button/secondary/fg": {
+  "btn/secondary/fg": {
     "Default": "var(--brand-700)",
     "Dark": "var(--brand-700)"
   },
-  "button/tertiary/bg": {
+  "btn/tertiary/bg": {
     "Default": "var(--neutral-600)",
     "Dark": "var(--neutral-400)"
   },
-  "button/tertiary/bg-hover": {
+  "btn/tertiary/bg-hover": {
     "Default": "var(--neutral-700)",
     "Dark": "var(--neutral-300)"
   },
-  "button/tertiary/bg-pressed": {
+  "btn/tertiary/bg-pressed": {
     "Default": "var(--neutral-800)",
     "Dark": "var(--neutral-200)"
   },
-  "button/tertiary/fg": {
+  "btn/tertiary/fg": {
     "Default": "var(--white)",
     "Dark": "var(--neutral-950)"
+  },
+  "button-group/divider": {
+    "Default": "var(--border-default)",
+    "Dark": "var(--border-default)"
   },
   "calendar/bg": {
     "Default": "var(--surface-subtle)",
@@ -584,54 +632,6 @@
   "card/fg-supporting": {
     "Default": "var(--text-tertiary)",
     "Dark": "var(--text-tertiary)"
-  },
-  "chip/brand/bg": {
-    "Default": "var(--brand-50)",
-    "Dark": "var(--brand-50)"
-  },
-  "chip/brand/fg": {
-    "Default": "var(--brand-700)",
-    "Dark": "var(--brand-700)"
-  },
-  "chip/error/bg": {
-    "Default": "var(--red-50)",
-    "Dark": "var(--red-950)"
-  },
-  "chip/error/fg": {
-    "Default": "var(--red-700)",
-    "Dark": "var(--red-400)"
-  },
-  "chip/info/bg": {
-    "Default": "var(--surface-brand-subtle)",
-    "Dark": "var(--surface-brand-subtle)"
-  },
-  "chip/info/fg": {
-    "Default": "var(--blue-700)",
-    "Dark": "var(--blue-400)"
-  },
-  "chip/neutral/bg": {
-    "Default": "var(--surface-subtle)",
-    "Dark": "var(--surface-subtle)"
-  },
-  "chip/neutral/fg": {
-    "Default": "var(--text-tertiary)",
-    "Dark": "var(--text-tertiary)"
-  },
-  "chip/success/bg": {
-    "Default": "var(--green-50)",
-    "Dark": "var(--green-950)"
-  },
-  "chip/success/fg": {
-    "Default": "var(--green-700)",
-    "Dark": "var(--green-400)"
-  },
-  "chip/warning/bg": {
-    "Default": "var(--yellow-50)",
-    "Dark": "var(--yellow-950)"
-  },
-  "chip/warning/fg": {
-    "Default": "var(--yellow-700)",
-    "Dark": "var(--yellow-400)"
   },
   "choice/box/bg": {
     "Default": "var(--surface-default)",

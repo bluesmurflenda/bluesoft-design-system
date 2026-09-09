@@ -1,7 +1,7 @@
 // Figma DS Master > Chip (node 401:1594), 2026-08-27 라이브 인스턴스 실측
 // 색상 6종(brand/neutral/success/warning/error/info) × 사이즈 3(sm/md/lg)
 // dot/icon-left/count/removable은 컴포넌트 자체의 슬롯(불리언)이라 별도 컴포넌트가 아니라
-// 이 파일 하나의 클래스 조합(.chip__dot 등)으로 구현한다.
+// 이 파일 하나의 클래스 조합(.bds-badge__dot 등)으로 구현한다.
 
 @use '../tokens/primitive' as *;
 @use '../abstracts/mixins' as mix;
@@ -14,46 +14,46 @@
 // 라이트만 같았던 것이지 별칭을 공유하는 게 아니다(ADR-010, 형제 참조 금지와 같은 이유로 각자
 // 독립 토큰을 쓴다).
 :root {
-  --chip-brand-bg: var(--brand-50);
-  --chip-brand-fg: var(--brand-700);
-  --chip-neutral-bg: var(--surface-subtle);
-  --chip-neutral-fg: var(--text-tertiary);
-  --chip-success-bg: var(--green-50);
-  --chip-success-fg: var(--green-700);
-  --chip-warning-bg: var(--yellow-50);
-  --chip-warning-fg: var(--yellow-700);
-  --chip-error-bg: var(--red-50);
-  --chip-error-fg: var(--red-700);
-  --chip-info-bg: var(--surface-brand-subtle);
-  --chip-info-fg: var(--blue-700);
+  --bds-badge-brand-bg: var(--bds-brand-50);
+  --bds-badge-brand-fg: var(--bds-brand-700);
+  --bds-badge-neutral-bg: var(--bds-surface-subtle);
+  --bds-badge-neutral-fg: var(--bds-text-tertiary);
+  --bds-badge-success-bg: var(--bds-green-50);
+  --bds-badge-success-fg: var(--bds-green-700);
+  --bds-badge-warning-bg: var(--bds-yellow-50);
+  --bds-badge-warning-fg: var(--bds-yellow-700);
+  --bds-badge-error-bg: var(--bds-red-50);
+  --bds-badge-error-fg: var(--bds-red-700);
+  --bds-badge-info-bg: var(--bds-surface-brand-subtle);
+  --bds-badge-info-fg: var(--bds-blue-700);
 }
 
 [data-theme='dark'] {
-  --chip-success-bg: var(--green-950);
-  --chip-success-fg: var(--green-400);
-  --chip-warning-bg: var(--yellow-950);
-  --chip-warning-fg: var(--yellow-400);
-  --chip-error-bg: var(--red-950);
-  --chip-error-fg: var(--red-400);
-  --chip-info-fg: var(--blue-400);
+  --bds-badge-success-bg: var(--bds-green-950);
+  --bds-badge-success-fg: var(--bds-green-400);
+  --bds-badge-warning-bg: var(--bds-yellow-950);
+  --bds-badge-warning-fg: var(--bds-yellow-400);
+  --bds-badge-error-bg: var(--bds-red-950);
+  --bds-badge-error-fg: var(--bds-red-400);
+  --bds-badge-info-fg: var(--bds-blue-400);
 }
 
-$chip-sizes: (
+$badge-sizes: (
   sm: (height: 22px, padding-x: $space-2, gap: $space-1, type: body-2xs, icon: 12px, dot: 6px),
   md: (height: 24px, padding-x: 10px, gap: $space-1, type: body-sm, icon: 14px, dot: 6px),
   lg: (height: 28px, padding-x: $space-3, gap: 6px, type: body-sm, icon: 16px, dot: 8px),
 );
 
-$chip-colors: (
-  brand: (bg: var(--chip-brand-bg), fg: var(--chip-brand-fg)),
-  neutral: (bg: var(--chip-neutral-bg), fg: var(--chip-neutral-fg)),
-  success: (bg: var(--chip-success-bg), fg: var(--chip-success-fg)),
-  warning: (bg: var(--chip-warning-bg), fg: var(--chip-warning-fg)),
-  error: (bg: var(--chip-error-bg), fg: var(--chip-error-fg)),
-  info: (bg: var(--chip-info-bg), fg: var(--chip-info-fg)),
+$badge-colors: (
+  brand: (bg: var(--bds-badge-brand-bg), fg: var(--bds-badge-brand-fg)),
+  neutral: (bg: var(--bds-badge-neutral-bg), fg: var(--bds-badge-neutral-fg)),
+  success: (bg: var(--bds-badge-success-bg), fg: var(--bds-badge-success-fg)),
+  warning: (bg: var(--bds-badge-warning-bg), fg: var(--bds-badge-warning-fg)),
+  error: (bg: var(--bds-badge-error-bg), fg: var(--bds-badge-error-fg)),
+  info: (bg: var(--bds-badge-info-bg), fg: var(--bds-badge-info-fg)),
 );
 
-.chip {
+.bds-badge {
   display: inline-flex;
   align-items: center;
   border-radius: $radius-full;
@@ -61,21 +61,21 @@ $chip-colors: (
   white-space: nowrap;
 }
 
-@each $size, $props in $chip-sizes {
-  .chip-#{$size} {
+@each $size, $props in $badge-sizes {
+  .bds-badge-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
     @include mix.text(map.get($props, type), medium);
 
-    .chip__icon,
-    .chip__close {
+    .bds-badge__icon,
+    .bds-badge__close {
       width: map.get($props, icon);
       height: map.get($props, icon);
       flex-shrink: 0;
     }
 
-    .chip__dot {
+    .bds-badge__dot {
       width: map.get($props, dot);
       height: map.get($props, dot);
       border-radius: $radius-full;
@@ -84,12 +84,12 @@ $chip-colors: (
   }
 }
 
-@each $color, $c in $chip-colors {
-  .chip-#{$color} {
+@each $color, $c in $badge-colors {
+  .bds-badge-#{$color} {
     background-color: map.get($c, bg);
     color: map.get($c, fg);
 
-    .chip__dot {
+    .bds-badge__dot {
       background-color: map.get($c, fg);
     }
   }
@@ -97,14 +97,14 @@ $chip-colors: (
 
 // Chip/dot(node 1010:1783) — Chip과 별개 컴포넌트. 배경 없이 점+텍스트만 있다(2026-08-28 확인,
 // status-spec 2장). height·텍스트 스케일은 Chip과 같지만 padding-x(8/8/9)·점 크기(6/8/10)가 다르다
-// — .chip__dot(위, Chip 내부 Dot 슬롯)과는 별개라 이름 충돌을 피해 .chip-dot__dot으로 둔다.
-$chip-dot-sizes: (
+// — .bds-badge__dot(위, Chip 내부 Dot 슬롯)과는 별개라 이름 충돌을 피해 .bds-badge-dot__dot으로 둔다.
+$badge-dot-sizes: (
   sm: (height: 22px, padding-x: 8px, gap: $space-1, type: body-2xs, dot: 6px),
   md: (height: 24px, padding-x: 8px, gap: $space-1, type: body-sm, dot: 8px),
   lg: (height: 28px, padding-x: 9px, gap: 6px, type: body-sm, dot: 10px),
 );
 
-.chip-dot {
+.bds-badge-dot {
   display: inline-flex;
   align-items: center;
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
@@ -116,25 +116,25 @@ $chip-dot-sizes: (
   }
 }
 
-@each $size, $props in $chip-dot-sizes {
-  .chip-dot-#{$size} {
+@each $size, $props in $badge-dot-sizes {
+  .bds-badge-dot-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
     @include mix.text(map.get($props, type), medium);
 
-    .chip-dot__dot {
+    .bds-badge-dot__dot {
       width: map.get($props, dot);
       height: map.get($props, dot);
     }
   }
 }
 
-@each $color, $c in $chip-colors {
-  .chip-dot-#{$color} {
+@each $color, $c in $badge-colors {
+  .bds-badge-dot-#{$color} {
     color: map.get($c, fg);
 
-    .chip-dot__dot {
+    .bds-badge-dot__dot {
       background-color: map.get($c, fg);
     }
   }

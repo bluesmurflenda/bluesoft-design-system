@@ -20,25 +20,25 @@
 
   <section class="doc-section">
     <h2>Underline</h2>
-    <p class="doc-desc"><code>.tabs-item-underline</code> — 내부 <code>.tabs-item__content</code>(레이블) + <code>.tabs-item__underline</code>(하단 밑줄 바) 구조가 필수입니다.</p>
+    <p class="doc-desc"><code>.bds-tabs-item-underline</code> — 내부 <code>.bds-tabs-item__content</code>(레이블) + <code>.bds-tabs-item__underline</code>(하단 밑줄 바) 구조가 필수입니다.</p>
     <div class="doc-matrix" id="tabs-underline-matrix"></div>
   </section>
 
   <section class="doc-section">
     <h2>Underline (Brand)</h2>
-    <p class="doc-desc"><code>.tabs-item-underline-brand</code> — 구조는 underline과 동일, selected 색만 브랜드 블루로 바뀝니다.</p>
+    <p class="doc-desc"><code>.bds-tabs-item-underline-brand</code> — 구조는 underline과 동일, selected 색만 브랜드 블루로 바뀝니다.</p>
     <div class="doc-matrix" id="tabs-underline-brand-matrix"></div>
   </section>
 
   <section class="doc-section">
     <h2>Pill</h2>
-    <p class="doc-desc"><code>.tabs-item-pill</code> — 내부 슬롯 구조 없이 텍스트만 직접 넣습니다.</p>
+    <p class="doc-desc"><code>.bds-tabs-item-pill</code> — 내부 슬롯 구조 없이 텍스트만 직접 넣습니다.</p>
     <div class="doc-matrix" id="tabs-pill-matrix"></div>
   </section>
 
   <section class="doc-section">
     <h2>Segmented</h2>
-    <p class="doc-desc"><code>.tabs-item-segmented</code> — 트랙 배경·보더를 담당하는 <code>.tabs-segment</code> 컨테이너로 감싸야 정상적으로 보입니다.</p>
+    <p class="doc-desc"><code>.bds-tabs-item-segmented</code> — 트랙 배경·보더를 담당하는 <code>.bds-tabs-segment</code> 컨테이너로 감싸야 정상적으로 보입니다.</p>
     <div class="doc-matrix" id="tabs-segmented-matrix"></div>
   </section>
 </main>
@@ -56,20 +56,20 @@
   ];
 
   function tabsItemHtml(type, size, state) {
-    var classes = ['tabs-item', 'tabs-item-' + type, 'tabs-item-' + size];
-    if (state === 'selected') classes.push('is-selected');
+    var classes = ['bds-tabs-item', 'bds-tabs-item-' + type, 'bds-tabs-item-' + size];
+    if (state === 'selected') classes.push('bds-is-selected');
     var attr = state === 'disabled' ? ' aria-disabled="true"' : '';
     var inner = (type === 'underline' || type === 'underline-brand')
-      ? '<span class="tabs-item__content">Tab</span><span class="tabs-item__underline"></span>'
+      ? '<span class="bds-tabs-item__content">Tab</span><span class="bds-tabs-item__underline"></span>'
       : 'Tab';
     var html = '<div class="' + classes.join(' ') + '"' + attr + '>' + inner + '</div>';
-    if (type === 'segmented') html = '<div class="tabs-segment">' + html + '</div>';
+    if (type === 'segmented') html = '<div class="bds-tabs-segment">' + html + '</div>';
     return html;
   }
 
   function captionFor(type, size, state) {
-    var caption = 'tabs-item-' + type + ' tabs-item-' + size;
-    if (state === 'selected') caption += ' is-selected';
+    var caption = 'bds-tabs-item-' + type + ' bds-tabs-item-' + size;
+    if (state === 'selected') caption += ' bds-is-selected';
     if (state === 'disabled') caption += ' aria-disabled="true"';
     return caption;
   }

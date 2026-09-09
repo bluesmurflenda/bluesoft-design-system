@@ -26,7 +26,7 @@
 
   <section class="doc-section">
     <h2>Google</h2>
-    <p class="doc-desc">별도 브랜드 테마가 없어 outline과 동일 규칙(<code>.social-btn-outline, .social-btn-google</code>)을 공유합니다.</p>
+    <p class="doc-desc">별도 브랜드 테마가 없어 outline과 동일 규칙(<code>.bds-social-btn-outline, .bds-social-btn-google</code>)을 공유합니다.</p>
     <div class="doc-matrix" id="social-google-matrix"></div>
   </section>
 </main>
@@ -41,10 +41,10 @@
   var LABEL_TEXT = { naver: '네이버 로그인', kakao: '카카오 로그인', apple: '애플 로그인', google: '구글 로그인' };
 
   function socialBtnHtml(social, theme, type) {
-    var classes = ['social-btn', 'social-btn-' + type];
-    if (theme) classes.push('social-btn-' + theme);
-    classes.push('social-btn-' + social);
-    var logo = '<svg class="icon social-btn__logo"><use href="../assets/icons/sprite.svg#icon-base-' + LOGO[social] + '"></use></svg>';
+    var classes = ['bds-social-btn', 'bds-social-btn-' + type];
+    if (theme) classes.push('bds-social-btn-' + theme);
+    classes.push('bds-social-btn-' + social);
+    var logo = '<svg class="bds-icon bds-social-btn__logo"><use href="../assets/icons/sprite.svg#icon-base-' + LOGO[social] + '"></use></svg>';
     var text = type === 'label' ? '<span>' + LABEL_TEXT[social] + '</span>' : '';
     return '<button class="' + classes.join(' ') + '">' + logo + text + '</button>';
   }

@@ -15,12 +15,12 @@
   <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Avatar Group</div>
   <div class="doc-page-header">
     <h1>Avatar Group</h1>
-    <p>CSS에는 개수별 전용 클래스가 없고 <code>.avatar</code> 자식 개수와 <code>.avatar-group__more</code> 유무로만 구분됩니다.</p>
+    <p>CSS에는 개수별 전용 클래스가 없고 <code>.bds-avatar</code> 자식 개수와 <code>.bds-avatar-group__more</code> 유무로만 구분됩니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>Count × Show more</h2>
-    <p class="doc-desc">겹침과 흰색 링은 <code>.avatar-group &gt; *</code>가 처리합니다. <code>.avatar</code> 자체는 크기가 없는 공용 베이스라 <code>.avatar-sm</code> 같은 사이즈 클래스를 반드시 함께 써야 합니다(Avatar Group은 항상 sm 사이즈를 씁니다). Show more=true는 전체 인원을 7명으로 가정해 나머지를 <code>.avatar-group__more</code>에 표시했습니다.</p>
+    <p class="doc-desc">겹침과 흰색 링은 <code>.bds-avatar-group &gt; *</code>가 처리합니다. <code>.bds-avatar</code> 자체는 크기가 없는 공용 베이스라 <code>.bds-avatar-sm</code> 같은 사이즈 클래스를 반드시 함께 써야 합니다(Avatar Group은 항상 sm 사이즈를 씁니다). Show more=true는 전체 인원을 7명으로 가정해 나머지를 <code>.bds-avatar-group__more</code>에 표시했습니다.</p>
     <div class="doc-matrix" id="avatar-matrix"></div>
   </section>
 </main>
@@ -39,13 +39,13 @@
       SHOW_MORE.forEach(function (showMore) {
         var cell = document.createElement('div');
         cell.className = 'doc-cell';
-        var html = '<div class="avatar-group">';
+        var html = '<div class="bds-avatar-group">';
         for (var i = 0; i < count; i++) {
-          html += '<span class="avatar avatar-sm">' + INITIALS[i] + '</span>';
+          html += '<span class="bds-avatar bds-avatar-sm">' + INITIALS[i] + '</span>';
         }
         var caption = 'avatar-group · avatar×' + count;
         if (showMore) {
-          html += '<span class="avatar-group__more">+' + (TOTAL - count) + '</span>';
+          html += '<span class="bds-avatar-group__more">+' + (TOTAL - count) + '</span>';
           caption += ' + avatar-group__more';
         }
         html += '</div>';

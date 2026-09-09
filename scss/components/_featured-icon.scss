@@ -3,7 +3,7 @@
 // sm: 40×40, 아이콘 20×20, 패딩 10 / md: 48×48, 아이콘 24×24, 패딩 12 — 원형(radius full), 패딩=(size-icon)/2 실측 확인.
 //
 // 2026-08-28 재확인(bluesoft-missing-measurements.md G5): 배경·아이콘 색 모두 전용 토큰이 없고
-// chip/* 토큰을 그대로 재사용한다 — 이전에 별도로 뒀던 --featured-icon-* 커스텀 프로퍼티(값이
+// chip/* 토큰을 그대로 재사용한다 — 이전에 별도로 뒀던 --bds-featured-icon-* 커스텀 프로퍼티(값이
 // chip과 라이트·다크 전부 우연이 아니라 완전히 동일했다)는 중복이라 제거하고 chip 쪽을 직접 참조한다.
 
 @use '../tokens/primitive' as *;
@@ -15,14 +15,14 @@ $featured-icon-sizes: (
 );
 
 $featured-icon-colors: (
-  brand: (bg: var(--chip-brand-bg), fg: var(--chip-brand-fg)),
-  neutral: (bg: var(--chip-neutral-bg), fg: var(--chip-neutral-fg)),
-  success: (bg: var(--chip-success-bg), fg: var(--chip-success-fg)),
-  warning: (bg: var(--chip-warning-bg), fg: var(--chip-warning-fg)),
-  error: (bg: var(--chip-error-bg), fg: var(--chip-error-fg)),
+  brand: (bg: var(--bds-badge-brand-bg), fg: var(--bds-badge-brand-fg)),
+  neutral: (bg: var(--bds-badge-neutral-bg), fg: var(--bds-badge-neutral-fg)),
+  success: (bg: var(--bds-badge-success-bg), fg: var(--bds-badge-success-fg)),
+  warning: (bg: var(--bds-badge-warning-bg), fg: var(--bds-badge-warning-fg)),
+  error: (bg: var(--bds-badge-error-bg), fg: var(--bds-badge-error-fg)),
 );
 
-.featured-icon {
+.bds-featured-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -31,12 +31,12 @@ $featured-icon-colors: (
 }
 
 @each $size, $props in $featured-icon-sizes {
-  .featured-icon-#{$size} {
+  .bds-featured-icon-#{$size} {
     width: map.get($props, box);
     height: map.get($props, box);
     padding: map.get($props, padding);
 
-    .featured-icon__icon {
+    .bds-featured-icon__icon {
       width: map.get($props, icon);
       height: map.get($props, icon);
     }
@@ -44,7 +44,7 @@ $featured-icon-colors: (
 }
 
 @each $color, $c in $featured-icon-colors {
-  .featured-icon-#{$color} {
+  .bds-featured-icon-#{$color} {
     background-color: map.get($c, bg);
     color: map.get($c, fg);
   }

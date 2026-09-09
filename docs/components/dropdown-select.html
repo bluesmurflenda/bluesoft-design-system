@@ -25,25 +25,25 @@
 
   <section class="doc-section">
     <h2>Dropdown — 조립 예시(열림 상태)</h2>
-    <p class="doc-desc"><code>.dropdown__trigger[aria-expanded="true"]</code> + <code>.list-panel</code> 조합. 옵션 상태는 default/selected(<code>.list-item-selected</code>)/disabled(<code>.list-item-disabled</code>)입니다.</p>
+    <p class="doc-desc"><code>.bds-dropdown__trigger[aria-expanded="true"]</code> + <code>.bds-list-panel</code> 조합. 옵션 상태는 default/selected(<code>.bds-list-item-selected</code>)/disabled(<code>.bds-list-item-disabled</code>)입니다.</p>
     <div class="doc-card" id="dropdown-assembled" style="display:inline-block;"></div>
   </section>
 
   <section class="doc-section">
     <h2>Select — Size × Validation</h2>
-    <p class="doc-desc">라벨 + 필드(콘텐츠 텍스트 + chevron) + 힌트로 구성. 패널·옵션은 Dropdown의 <code>.list-panel</code>/<code>.list-item</code>을 재사용합니다.</p>
+    <p class="doc-desc">라벨 + 필드(콘텐츠 텍스트 + chevron) + 힌트로 구성. 패널·옵션은 Dropdown의 <code>.bds-list-panel</code>/<code>.bds-list-item</code>을 재사용합니다.</p>
     <div class="doc-matrix" id="select-matrix"></div>
   </section>
 
   <section class="doc-section">
     <h2>Select — Disabled</h2>
-    <p class="doc-desc">검증 상태별로 확인합니다(md 사이즈). <code>.select-disabled</code>를 검증 modifier와 함께 사용합니다.</p>
-    <div class="doc-matrix" id="select-disabled"></div>
+    <p class="doc-desc">검증 상태별로 확인합니다(md 사이즈). <code>.bds-select-disabled</code>를 검증 modifier와 함께 사용합니다.</p>
+    <div class="doc-matrix" id="bds-select-disabled"></div>
   </section>
 
   <section class="doc-section">
     <h2>Select — 선행 아이콘 슬롯</h2>
-    <p class="doc-desc"><code>.select__icon</code> — <code>.select__chevron</code>과 나란히 필드 안에 놓이는 선택적 슬롯입니다(사이즈와 무관하게 고정 크기입니다).</p>
+    <p class="doc-desc"><code>.bds-select__icon</code> — <code>.bds-select__chevron</code>과 나란히 필드 안에 놓이는 선택적 슬롯입니다(사이즈와 무관하게 고정 크기입니다).</p>
     <div class="doc-matrix" id="select-icon"></div>
   </section>
 </main>
@@ -62,13 +62,13 @@
   (function () {
     var el = document.getElementById('dropdown-trigger-matrix');
     ['sm', 'md', 'lg', 'xl'].forEach(function (size) {
-      var cls = 'dropdown dropdown-' + size;
+      var cls = 'bds-dropdown bds-dropdown-' + size;
       var cell = document.createElement('div');
       cell.className = 'doc-cell';
       cell.innerHTML =
         '<div class="' + cls + '">' +
-        '<button type="button" class="dropdown__trigger" aria-expanded="false">' +
-        '<span>옵션 선택</span>' + chevronDown('dropdown__chevron') +
+        '<button type="button" class="bds-dropdown__trigger" aria-expanded="false">' +
+        '<span>옵션 선택</span>' + chevronDown('bds-dropdown__chevron') +
         '</button>' +
         '</div>' +
         '<span class="doc-cell__caption">' + cls + '</span>';
@@ -79,14 +79,14 @@
   (function () {
     var el = document.getElementById('dropdown-assembled');
     el.innerHTML =
-      '<div class="dropdown dropdown-md">' +
-      '<button type="button" class="dropdown__trigger" aria-expanded="true">' +
-      '<span>옵션 선택됨</span>' + chevronDown('dropdown__chevron') +
+      '<div class="bds-dropdown bds-dropdown-md">' +
+      '<button type="button" class="bds-dropdown__trigger" aria-expanded="true">' +
+      '<span>옵션 선택됨</span>' + chevronDown('bds-dropdown__chevron') +
       '</button>' +
-      '<div class="list-panel">' +
-      '<div class="list-item">기본 옵션</div>' +
-      '<div class="list-item list-item-selected">선택된 옵션' + iconSvg('list-item__check', 'check') + '</div>' +
-      '<div class="list-item list-item-disabled">비활성 옵션</div>' +
+      '<div class="bds-list-panel">' +
+      '<div class="bds-list-item">기본 옵션</div>' +
+      '<div class="bds-list-item bds-list-item-selected">선택된 옵션' + iconSvg('list-item__check', 'check') + '</div>' +
+      '<div class="bds-list-item bds-list-item-disabled">비활성 옵션</div>' +
       '</div>' +
       '</div>';
   })();
@@ -97,12 +97,12 @@
   function selectHtml(cls, disabled) {
     return (
       '<div class="' + cls + '" style="width:100%;">' +
-      '<label class="select__label">Label</label>' +
-      '<div class="select__field">' +
-      '<span class="select__content">' + (disabled ? '선택 불가' : '옵션을 선택하세요') + '</span>' +
-      chevronDown('select__chevron') +
+      '<label class="bds-select__label">Label</label>' +
+      '<div class="bds-select__field">' +
+      '<span class="bds-select__content">' + (disabled ? '선택 불가' : '옵션을 선택하세요') + '</span>' +
+      chevronDown('bds-select__chevron') +
       '</div>' +
-      '<span class="select__hint">' + (disabled ? '비활성화된 필드입니다' : 'Hint text가 표시되는 영역입니다') + '</span>' +
+      '<span class="bds-select__hint">' + (disabled ? '비활성화된 필드입니다' : 'Hint text가 표시되는 영역입니다') + '</span>' +
       '</div>'
     );
   }
@@ -111,7 +111,7 @@
     var el = document.getElementById('select-matrix');
     SELECT_SIZES.forEach(function (size) {
       VALIDATIONS.forEach(function (validation) {
-        var cls = 'select select-' + size + ' select-' + validation;
+        var cls = 'bds-select bds-select-' + size + ' bds-select-' + validation;
         var cell = document.createElement('div');
         cell.className = 'doc-cell';
         cell.innerHTML = selectHtml(cls, false) + '<span class="doc-cell__caption">' + cls + '</span>';
@@ -121,9 +121,9 @@
   })();
 
   (function () {
-    var el = document.getElementById('select-disabled');
+    var el = document.getElementById('bds-select-disabled');
     VALIDATIONS.forEach(function (validation) {
-      var cls = 'select select-md select-' + validation + ' select-disabled';
+      var cls = 'bds-select bds-select-md bds-select-' + validation + ' bds-select-disabled';
       var cell = document.createElement('div');
       cell.className = 'doc-cell';
       cell.innerHTML = selectHtml(cls, true) + '<span class="doc-cell__caption">' + cls + '</span>';
@@ -133,18 +133,18 @@
 
   (function () {
     var el = document.getElementById('select-icon');
-    var cls = 'select select-md select-normal';
+    var cls = 'bds-select bds-select-md bds-select-normal';
     var cell = document.createElement('div');
     cell.className = 'doc-cell';
     cell.innerHTML =
       '<div class="' + cls + '" style="width:100%;">' +
-      '<label class="select__label">Label</label>' +
-      '<div class="select__field">' +
-      iconSvg('select__icon', 'calendar') +
-      '<span class="select__content">2026.08.28</span>' +
-      chevronDown('select__chevron') +
+      '<label class="bds-select__label">Label</label>' +
+      '<div class="bds-select__field">' +
+      iconSvg('bds-select__icon', 'calendar') +
+      '<span class="bds-select__content">2026.08.28</span>' +
+      chevronDown('bds-select__chevron') +
       '</div>' +
-      '<span class="select__hint">Hint text가 표시되는 영역입니다</span>' +
+      '<span class="bds-select__hint">Hint text가 표시되는 영역입니다</span>' +
       '</div>' +
       '<span class="doc-cell__caption">' + cls + ' + select__icon</span>';
     el.appendChild(cell);

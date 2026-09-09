@@ -29,8 +29,8 @@
 <script>
   var SIZES = [
     ['default', ''],
-    ['lg', 'logo-lg'],
-    ['xl', 'logo-xl'],
+    ['lg', 'bds-logo-lg'],
+    ['xl', 'bds-logo-xl'],
   ];
   var COLORS = ['light', 'brand', 'dark'];
 
@@ -38,14 +38,14 @@
     if (color === 'light') {
       return '<div style="background:#262626;padding:16px;border-radius:8px;display:inline-block;">' + html + '</div>';
     }
-    return '<div style="background:#fff;padding:16px;border-radius:8px;display:inline-block;border:1px solid var(--neutral-200);">' + html + '</div>';
+    return '<div style="background:#fff;padding:16px;border-radius:8px;display:inline-block;border:1px solid var(--bds-neutral-200);">' + html + '</div>';
   }
 
   (function () {
     var el = document.getElementById('logo-matrix');
     SIZES.forEach(function (size) {
       COLORS.forEach(function (color) {
-        var cls = 'logo' + (size[1] ? ' ' + size[1] : '');
+        var cls = 'bds-logo' + (size[1] ? ' ' + size[1] : '');
         var imgHtml = '<img class="' + cls + '" src="../assets/logo/logo-' + color + '.svg" alt="BLUESOFT" />';
         var cell = document.createElement('div');
         cell.className = 'doc-cell';

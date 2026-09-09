@@ -1,101 +1,118 @@
 // Figma DS Master > Shape collection(Rounded/Square/Pill) — 자동 생성, 손으로 고치지 않는다.
 // 출처: figma/tokens.shape.json. 값을 바꾸려면 Figma를 고치고 스냅샷을 다시 뽑은 뒤 재생성한다.
 // 기본값은 Rounded. [data-shape='square'|'pill'] 는 Rounded와 값이 다른 항목만 오버라이드한다.
-// 예외: button/radius-xs·button/padding-x/xs는 Figma Shape에 있지만 내보내지 않는다(ADR-015 —
+// 예외: btn/radius-xs·btn/padding-x/xs는 Figma Shape에 있지만 내보내지 않는다(ADR-015 —
 // Button Size xs는 코드에서 제외, 실사용 0건).
 
 :root {
-  --button-radius: var(--radius-sm);
-  --tabs-radius: var(--radius-lg);
-  --pagination-radius: var(--radius-sm);
-  --con-radius: var(--radius-sm);
-  --button-padding-x-sm: var(--space-3);
-  --button-padding-x-md: var(--space-5);
-  --button-padding-x-lg: var(--space-6);
-  --button-padding-x-xl: var(--space-6);
-  --calendar-radius: var(--radius-lg);
-  --calendar-cell-radius: var(--radius-full);
-  --tabs-gap-underline: var(--space-2);
-  --tabs-gap-pill: var(--space-2);
-  --modal-width-sm: 300px;
-  --modal-width-md: 500px;
-  --modal-width-lg: 800px;
-  --modal-width-xl: 1000px;
-  --board-col-date: 120px;
-  --board-col-views: 100px;
-  --board-col-meta: 120px;
-  --table-cell-padding-x-sm: var(--space-4);
-  --table-cell-padding-x-md: var(--space-4);
-  --table-cell-padding-x-lg: var(--space-4);
-  --calendar-gap-cell: var(--space-1);
-  --calendar-gap-row: var(--space-1);
-  --calendar-min-width: 280px;
-  --calendar-max-width: 420px;
-  --calendar-min-height: 354px;
-  --calendar-max-height: 474px;
-  --table-cell-min-height-sm: 36px;
-  --table-cell-min-height-md: 44px;
-  --table-cell-min-height-lg: 64px;
-  --scrollbar-radius: var(--radius-full);
-  --card-radius: var(--radius-lg);
+  --bds-btn-radius: var(--bds-radius-sm);
+  --bds-tabs-radius: var(--bds-radius-lg);
+  --bds-pagination-radius: var(--bds-radius-sm);
+  --bds-con-radius: var(--bds-radius-sm);
+  --bds-btn-padding-x-sm: var(--bds-space-3);
+  --bds-btn-padding-x-md: var(--bds-space-5);
+  --bds-btn-padding-x-lg: var(--bds-space-6);
+  --bds-btn-padding-x-xl: var(--bds-space-6);
+  --bds-calendar-radius: var(--bds-radius-lg);
+  --bds-calendar-cell-radius: var(--bds-radius-full);
+  --bds-tabs-gap-underline: var(--bds-space-2);
+  --bds-tabs-gap-pill: var(--bds-space-2);
+  --bds-modal-width-sm: 300px;
+  --bds-modal-width-md: 500px;
+  --bds-modal-width-lg: 800px;
+  --bds-modal-width-xl: 1000px;
+  --bds-board-col-date: 120px;
+  --bds-board-col-views: 100px;
+  --bds-board-col-meta: 120px;
+  --bds-table-cell-padding-x-sm: var(--bds-space-4);
+  --bds-table-cell-padding-x-md: var(--bds-space-4);
+  --bds-table-cell-padding-x-lg: var(--bds-space-4);
+  --bds-calendar-gap-cell: var(--bds-space-1);
+  --bds-calendar-gap-row: var(--bds-space-1);
+  --bds-calendar-min-width: 280px;
+  --bds-calendar-max-width: 420px;
+  --bds-calendar-min-height: 354px;
+  --bds-calendar-max-height: 474px;
+  --bds-table-cell-min-height-sm: 36px;
+  --bds-table-cell-min-height-md: 44px;
+  --bds-table-cell-min-height-lg: 64px;
+  --bds-scrollbar-radius: var(--bds-radius-full);
+  --bds-card-radius: var(--bds-radius-lg);
+  --bds-accordion-rounded-radius: var(--bds-radius-sm);
+  --bds-accordion-trigger-min-height-lg: 64px;
+  --bds-accordion-trigger-min-height-md: 56px;
+  --bds-accordion-trigger-min-height-sm: 44px;
+  --bds-alert-radius: var(--bds-radius-md);
+  --bds-field-radius: var(--bds-radius-sm);
 }
 
 [data-shape='square'] {
-  --button-radius: var(--radius-none);
-  --tabs-radius: var(--radius-none);
-  --pagination-radius: var(--radius-none);
-  --con-radius: var(--radius-none);
-  --calendar-radius: var(--radius-none);
-  --calendar-cell-radius: var(--radius-none);
-  --scrollbar-radius: var(--radius-none);
-  --card-radius: var(--radius-none);
+  --bds-btn-radius: var(--bds-radius-none);
+  --bds-tabs-radius: var(--bds-radius-none);
+  --bds-pagination-radius: var(--bds-radius-none);
+  --bds-con-radius: var(--bds-radius-none);
+  --bds-calendar-radius: var(--bds-radius-none);
+  --bds-calendar-cell-radius: var(--bds-radius-none);
+  --bds-scrollbar-radius: var(--bds-radius-none);
+  --bds-card-radius: var(--bds-radius-none);
+  --bds-accordion-rounded-radius: var(--bds-radius-none);
+  --bds-alert-radius: var(--bds-radius-none);
+  --bds-field-radius: var(--bds-radius-none);
 }
 
 [data-shape='pill'] {
-  --button-radius: var(--radius-full);
-  --tabs-radius: var(--radius-full);
-  --pagination-radius: var(--radius-full);
-  --con-radius: var(--radius-full);
-  --button-padding-x-sm: var(--space-4);
-  --button-padding-x-xl: var(--space-7);
-  --calendar-radius: var(--radius-2xl);
-  --card-radius: var(--radius-2xl);
+  --bds-btn-radius: var(--bds-radius-full);
+  --bds-tabs-radius: var(--bds-radius-full);
+  --bds-pagination-radius: var(--bds-radius-full);
+  --bds-con-radius: var(--bds-radius-full);
+  --bds-btn-padding-x-sm: var(--bds-space-4);
+  --bds-btn-padding-x-xl: var(--bds-space-7);
+  --bds-calendar-radius: var(--bds-radius-2xl);
+  --bds-card-radius: var(--bds-radius-2xl);
+  --bds-accordion-rounded-radius: var(--bds-radius-full);
+  --bds-field-radius: var(--bds-radius-full);
 }
 
 // ──────────────────────────────────────────────────────────────
 // SCSS 별칭
 // ──────────────────────────────────────────────────────────────
 
-$button-radius: var(--button-radius);
-$tabs-radius: var(--tabs-radius);
-$pagination-radius: var(--pagination-radius);
-$con-radius: var(--con-radius);
-$button-padding-x-sm: var(--button-padding-x-sm);
-$button-padding-x-md: var(--button-padding-x-md);
-$button-padding-x-lg: var(--button-padding-x-lg);
-$button-padding-x-xl: var(--button-padding-x-xl);
-$calendar-radius: var(--calendar-radius);
-$calendar-cell-radius: var(--calendar-cell-radius);
-$tabs-gap-underline: var(--tabs-gap-underline);
-$tabs-gap-pill: var(--tabs-gap-pill);
-$modal-width-sm: var(--modal-width-sm);
-$modal-width-md: var(--modal-width-md);
-$modal-width-lg: var(--modal-width-lg);
-$modal-width-xl: var(--modal-width-xl);
-$board-col-date: var(--board-col-date);
-$board-col-views: var(--board-col-views);
-$board-col-meta: var(--board-col-meta);
-$table-cell-padding-x-sm: var(--table-cell-padding-x-sm);
-$table-cell-padding-x-md: var(--table-cell-padding-x-md);
-$table-cell-padding-x-lg: var(--table-cell-padding-x-lg);
-$calendar-gap-cell: var(--calendar-gap-cell);
-$calendar-gap-row: var(--calendar-gap-row);
-$calendar-min-width: var(--calendar-min-width);
-$calendar-max-width: var(--calendar-max-width);
-$calendar-min-height: var(--calendar-min-height);
-$calendar-max-height: var(--calendar-max-height);
-$table-cell-min-height-sm: var(--table-cell-min-height-sm);
-$table-cell-min-height-md: var(--table-cell-min-height-md);
-$table-cell-min-height-lg: var(--table-cell-min-height-lg);
-$scrollbar-radius: var(--scrollbar-radius);
-$card-radius: var(--card-radius);
+$btn-radius: var(--bds-btn-radius);
+$tabs-radius: var(--bds-tabs-radius);
+$pagination-radius: var(--bds-pagination-radius);
+$con-radius: var(--bds-con-radius);
+$btn-padding-x-sm: var(--bds-btn-padding-x-sm);
+$btn-padding-x-md: var(--bds-btn-padding-x-md);
+$btn-padding-x-lg: var(--bds-btn-padding-x-lg);
+$btn-padding-x-xl: var(--bds-btn-padding-x-xl);
+$calendar-radius: var(--bds-calendar-radius);
+$calendar-cell-radius: var(--bds-calendar-cell-radius);
+$tabs-gap-underline: var(--bds-tabs-gap-underline);
+$tabs-gap-pill: var(--bds-tabs-gap-pill);
+$modal-width-sm: var(--bds-modal-width-sm);
+$modal-width-md: var(--bds-modal-width-md);
+$modal-width-lg: var(--bds-modal-width-lg);
+$modal-width-xl: var(--bds-modal-width-xl);
+$board-col-date: var(--bds-board-col-date);
+$board-col-views: var(--bds-board-col-views);
+$board-col-meta: var(--bds-board-col-meta);
+$table-cell-padding-x-sm: var(--bds-table-cell-padding-x-sm);
+$table-cell-padding-x-md: var(--bds-table-cell-padding-x-md);
+$table-cell-padding-x-lg: var(--bds-table-cell-padding-x-lg);
+$calendar-gap-cell: var(--bds-calendar-gap-cell);
+$calendar-gap-row: var(--bds-calendar-gap-row);
+$calendar-min-width: var(--bds-calendar-min-width);
+$calendar-max-width: var(--bds-calendar-max-width);
+$calendar-min-height: var(--bds-calendar-min-height);
+$calendar-max-height: var(--bds-calendar-max-height);
+$table-cell-min-height-sm: var(--bds-table-cell-min-height-sm);
+$table-cell-min-height-md: var(--bds-table-cell-min-height-md);
+$table-cell-min-height-lg: var(--bds-table-cell-min-height-lg);
+$scrollbar-radius: var(--bds-scrollbar-radius);
+$card-radius: var(--bds-card-radius);
+$accordion-rounded-radius: var(--bds-accordion-rounded-radius);
+$accordion-trigger-min-height-lg: var(--bds-accordion-trigger-min-height-lg);
+$accordion-trigger-min-height-md: var(--bds-accordion-trigger-min-height-md);
+$accordion-trigger-min-height-sm: var(--bds-accordion-trigger-min-height-sm);
+$alert-radius: var(--bds-alert-radius);
+$field-radius: var(--bds-field-radius);

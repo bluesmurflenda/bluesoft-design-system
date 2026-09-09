@@ -3,8 +3,8 @@
 // _Nav/Announcement(832:33) 를 한 파일로 묶는다 — 전부 헤더 하나를 구성하는 부품이라 Pagination
 // 때와 같은 이유로 파일을 분리하지 않는다.
 //
-// 높이는 breakpoint 토큰(--header-height)을 그대로 쓴다: mobile/tablet/laptop 64, desktop/wide 80.
-// laptop→desktop 전환점은 tokens/_breakpoint.scss 자체가 1440에서 --header-height를 64->80으로
+// 높이는 breakpoint 토큰(--bds-header-height)을 그대로 쓴다: mobile/tablet/laptop 64, desktop/wide 80.
+// laptop→desktop 전환점은 tokens/_breakpoint.scss 자체가 1440에서 --bds-header-height를 64->80으로
 // 바꾸는 지점과 같다(7단계에서 $css-breakpoint-lg를 1280->1440으로 정정 — 아래 "브레이크포인트
 // 결정" 참고). 다만 메뉴/햄버거 전환 자체는 이 lg 상수를 안 쓰고 sm(768)만 쓴다 — Figma엔 375(모바일)·
 // full/1920(데스크톱) 두 상태만 있고 768/1024 구간의 메뉴 노출 방식은 실측 근거가 없어 기존 768
@@ -24,36 +24,36 @@
 // 대상이 달라(blue-800/blue-700) 오버라이드가 있다 — 나머지는 전부 동일 대상이라 이전 코드가
 // 갖고 있던 다크 전용 반전값(site-header-dark가 다크에서 밝은 배경으로 뒤집히던 것)을 없앴다.
 :root {
-  --nav-bg: var(--surface-default);
-  --nav-fg: var(--text-primary);
-  --nav-fg-hover: var(--text-brand);
-  --nav-border: var(--border-default);
-  --nav-dark-bg: var(--neutral-800);
-  --nav-dark-fg: var(--white);
-  --nav-announcement-bg: var(--blue-800);
-  --nav-announcement-fg: var(--white);
-  --nav-bg-floating: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
-  --nav-dark-bg-floating: #262626cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴, Theme=dark 스타일이라 라이트·다크 공통 */
+  --bds-nav-bg: var(--bds-surface-default);
+  --bds-nav-fg: var(--bds-text-primary);
+  --bds-nav-fg-hover: var(--bds-text-brand);
+  --bds-nav-border: var(--bds-border-default);
+  --bds-nav-dark-bg: var(--bds-neutral-800);
+  --bds-nav-dark-fg: var(--bds-white);
+  --bds-nav-announcement-bg: var(--bds-blue-800);
+  --bds-nav-announcement-fg: var(--bds-white);
+  --bds-nav-bg-floating: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  --bds-nav-dark-bg-floating: #262626cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴, Theme=dark 스타일이라 라이트·다크 공통 */
 }
 
 [data-theme='dark'] {
-  --nav-announcement-bg: var(--blue-700);
+  --bds-nav-announcement-bg: var(--bds-blue-700);
 }
 
-$header-bg-light: var(--nav-bg);
-$header-border-light: var(--nav-border);
-$header-bg-dark: var(--nav-dark-bg);
-$header-bg-floating: var(--nav-bg-floating);
-$header-bg-dark-floating: var(--nav-dark-bg-floating);
+$header-bg-light: var(--bds-nav-bg);
+$header-border-light: var(--bds-nav-border);
+$header-bg-dark: var(--bds-nav-dark-bg);
+$header-bg-floating: var(--bds-nav-bg-floating);
+$header-bg-dark-floating: var(--bds-nav-dark-bg-floating);
 
-$nav-menu-fg-light: var(--nav-fg);
-$nav-menu-fg-hover-light: var(--nav-fg-hover); // hover/selected 동일 색(실측)
-$nav-menu-fg-dark: var(--nav-dark-fg); // dark는 default/hover/selected 전부 동일 고정(실측)
+$nav-menu-fg-light: var(--bds-nav-fg);
+$nav-menu-fg-hover-light: var(--bds-nav-fg-hover); // hover/selected 동일 색(실측)
+$nav-menu-fg-dark: var(--bds-nav-dark-fg); // dark는 default/hover/selected 전부 동일 고정(실측)
 
-$announcement-bg: var(--nav-announcement-bg);
-$announcement-fg: var(--nav-announcement-fg);
+$announcement-bg: var(--bds-nav-announcement-bg);
+$announcement-fg: var(--bds-nav-announcement-fg);
 
-.site-header {
+.bds-site-header {
   width: 100%;
 
   &__announcement {
@@ -76,7 +76,7 @@ $announcement-fg: var(--nav-announcement-fg);
     align-items: center;
     justify-content: space-between; // 모바일에서 Menu·Right가 숨고 Logo+메뉴버튼만 남을 때 양끝 배치용
     gap: $space-10;
-    height: var(--header-height);
+    height: var(--bds-header-height);
     padding-inline: $space-4;
 
     @media (min-width: bp.$css-breakpoint-md) {
@@ -85,21 +85,21 @@ $announcement-fg: var(--nav-announcement-fg);
   }
 
   &-light {
-    .site-header__main {
+    .bds-site-header__main {
       background-color: $header-bg-light;
       border-bottom: 1px solid $header-border-light;
     }
   }
 
   &-dark {
-    .site-header__main {
+    .bds-site-header__main {
       background-color: $header-bg-dark;
     }
   }
 
   // Surface=floating — 반투명 배경 + 블러(2026-08-31 신규 확인). border는 solid와 동일하게 유지.
   &-floating {
-    .site-header__main {
+    .bds-site-header__main {
       background-color: $header-bg-floating;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -107,7 +107,7 @@ $announcement-fg: var(--nav-announcement-fg);
   }
 
   &-dark.site-header-floating {
-    .site-header__main {
+    .bds-site-header__main {
       background-color: $header-bg-dark-floating;
     }
   }
@@ -144,7 +144,7 @@ $announcement-fg: var(--nav-announcement-fg);
   }
 }
 
-.nav-menu-item {
+.bds-nav-menu-item {
   display: inline-flex;
   align-items: center;
   padding: $space-3 $space-4;
@@ -153,21 +153,21 @@ $announcement-fg: var(--nav-announcement-fg);
   cursor: pointer;
 
   &:hover,
-  &.is-selected {
+  &.bds-is-selected {
     color: $nav-menu-fg-hover-light;
   }
 }
 
-// &-dark 안에 .nav-menu-item을 중첩하고 그 안에서 다시 &:hover 상태를 쓰면 4단이 되므로
+// &-dark 안에 .bds-nav-menu-item을 중첩하고 그 안에서 다시 &:hover 상태를 쓰면 4단이 되므로
 // 복합 선택자로 펼친다(컴파일 결과 동일).
-.site-header {
+.bds-site-header {
   &-dark {
-    .nav-menu-item {
+    .bds-nav-menu-item {
       color: $nav-menu-fg-dark;
     }
 
-    .nav-menu-item:hover,
-    .nav-menu-item.is-selected {
+    .bds-nav-menu-item:hover,
+    .bds-nav-menu-item.is-selected {
       color: $nav-menu-fg-dark;
     }
   }

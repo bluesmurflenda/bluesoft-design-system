@@ -9,25 +9,25 @@
 @use 'sass:map';
 
 // field/* 는 Input·Textarea·Select·Dropdown 이 공유하는 시맨틱이라 여기(입력 계열 중 처음
-// 다루는 파일)서만 선언한다 — 다른 파일은 var(--field-*)만 참조한다(get_variable_defs로
+// 다루는 파일)서만 선언한다 — 다른 파일은 var(--bds-field-*)만 참조한다(get_variable_defs로
 // Input 실제 바인딩 확인, 2026-08-30). 값이 같은 대상을 가리키는 항목은 다크 블록에 안 쓴다.
 :root {
-  --field-bg: var(--white);
-  --field-bg-disabled: var(--surface-muted);
-  --field-border: var(--border-strong);
-  --field-border-hover: var(--neutral-400);
-  --field-border-focus: var(--brand-500);
-  --field-border-disabled: var(--border-default);
-  --field-fg: var(--text-primary);
-  --field-fg-placeholder: var(--neutral-400);
-  --field-label-fg: var(--text-primary);
-  --field-hint-fg: var(--text-tertiary);
+  --bds-field-bg: var(--bds-white);
+  --bds-field-bg-disabled: var(--bds-surface-muted);
+  --bds-field-border: var(--bds-border-control);
+  --bds-field-border-hover: var(--bds-neutral-400);
+  --bds-field-border-focus: var(--bds-brand-500);
+  --bds-field-border-disabled: var(--bds-border-default);
+  --bds-field-fg: var(--bds-text-primary);
+  --bds-field-fg-placeholder: var(--bds-neutral-400);
+  --bds-field-label-fg: var(--bds-text-primary);
+  --bds-field-hint-fg: var(--bds-text-tertiary);
 }
 
 [data-theme='dark'] {
-  --field-bg: var(--neutral-950);
-  --field-border-hover: var(--neutral-600);
-  --field-fg-placeholder: var(--neutral-500);
+  --bds-field-bg: var(--bds-neutral-950);
+  --bds-field-border-hover: var(--bds-neutral-600);
+  --bds-field-fg-placeholder: var(--bds-neutral-500);
 }
 
 // 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
@@ -38,10 +38,10 @@ $input-sizes: (
   xl: (height: 56px, padding-x: $space-4, type: body-lg, icon: 20px),
 );
 
-$input-label-fg: var(--field-label-fg);
-$input-fg: var(--field-fg);
-$input-placeholder-fg: var(--field-fg-placeholder);
-$input-disabled-bg: var(--field-bg-disabled);
+$input-label-fg: var(--bds-field-label-fg);
+$input-fg: var(--bds-field-fg);
+$input-placeholder-fg: var(--bds-field-fg-placeholder);
+$input-disabled-bg: var(--bds-field-bg-disabled);
 $input-disabled-placeholder-fg: $neutral-300; // Figma에 disabled 전용 placeholder 토큰 없음 — 실측 고정값 유지
 // 2026-08-28 실측: Shadow/xs — hover·disabled까지 공통, focus에서는 포커스 링으로 완전히 대체된다(합쳐지지 않음).
 $input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -51,12 +51,12 @@ $input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 // invalid/valid의 ring은 스타일 이름이 "30%"라도 실제 바인딩은 solid red-200/green-100이다
 // (get_variable_defs로 확인 — 이름과 실제 alpha가 다르다).
 $input-validation-colors: (
-  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: var(--field-border-focus), ring: $effect-focus-ring, border-disabled: var(--field-border-disabled), hint-fg: var(--field-hint-fg)),
+  normal: (border: var(--bds-field-border), border-hover: var(--bds-field-border-hover), border-focus: var(--bds-field-border-focus), ring: $effect-focus-ring, border-disabled: var(--bds-field-border-disabled), hint-fg: var(--bds-field-hint-fg)),
   invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
-  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: var(--field-hint-fg)),
+  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: var(--bds-field-hint-fg)),
 );
 
-.input {
+.bds-input {
   display: flex;
   flex-direction: column;
   gap: 6px; // 2026-08-28 실측: space 토큰(4/8)에 안 맞는 리터럴 값
@@ -71,8 +71,8 @@ $input-validation-colors: (
     display: flex;
     align-items: center;
     gap: $space-2;
-    border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
-    background-color: var(--field-bg);
+    border-radius: var(--bds-field-radius); // ADR-027: 입력 전용 field/radius 토큰이 생겨 버튼 토큰 공유를 끝냈다
+    background-color: var(--bds-field-bg);
     box-shadow: $input-shadow;
     transition: border-color $motion-fast, box-shadow $motion-fast;
   }
@@ -112,22 +112,22 @@ $input-validation-colors: (
     flex-shrink: 0;
   }
 
-  // &__hint의 font-weight는 아래 @each의 text()로 이동(.input__control과 공유)
+  // &__hint의 font-weight는 아래 @each의 text()로 이동(.bds-input__control과 공유)
 }
 
 @each $size, $props in $input-sizes {
-  .input-#{$size} {
-    .input__field {
+  .bds-input-#{$size} {
+    .bds-input__field {
       height: map.get($props, height);
       padding-inline: map.get($props, padding-x);
     }
 
-    .input__control,
-    .input__hint {
+    .bds-input__control,
+    .bds-input__hint {
       @include mix.text(map.get($props, type), regular);
     }
 
-    .input__icon {
+    .bds-input__icon {
       width: map.get($props, icon);
       height: map.get($props, icon);
     }
@@ -135,8 +135,8 @@ $input-validation-colors: (
 }
 
 @each $validation, $c in $input-validation-colors {
-  .input-#{$validation} {
-    .input__field {
+  .bds-input-#{$validation} {
+    .bds-input__field {
       border: 1px solid map.get($c, border);
 
       &:hover {
@@ -149,24 +149,24 @@ $input-validation-colors: (
       }
     }
 
-    .input__hint {
+    .bds-input__hint {
       color: map.get($c, hint-fg);
     }
   }
 
-  .input-#{$validation}.input-disabled .input__field {
+  .bds-input-#{$validation}.bds-input-disabled .bds-input__field {
     border-color: map.get($c, border-disabled);
   }
 }
 
-.input {
+.bds-input {
   &-disabled {
-    .input__field {
+    .bds-input__field {
       background-color: $input-disabled-bg;
       box-shadow: $input-shadow;
     }
 
-    .input__hint {
+    .bds-input__hint {
       opacity: 0.4; // 2026-08-28 실측: disabled+invalid/valid 조합에서 힌트 텍스트만 40%로 흐려짐
     }
   }

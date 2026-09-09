@@ -22,23 +22,23 @@ $select-sizes: (
   xl: (height: 56px, padding-x: $space-6, type: body-lg, chevron: 20px),
 );
 
-$select-label-fg: var(--field-label-fg);
-$select-hint-fg: var(--field-hint-fg);
-$select-fg: var(--list-item-fg);
-$select-icon-fg: var(--icon-primary);
-$select-disabled-bg: var(--field-bg-disabled);
-$select-bg: var(--field-bg);
+$select-label-fg: var(--bds-field-label-fg);
+$select-hint-fg: var(--bds-field-hint-fg);
+$select-fg: var(--bds-list-item-fg);
+$select-icon-fg: var(--bds-icon-primary);
+$select-disabled-bg: var(--bds-field-bg-disabled);
+$select-bg: var(--bds-field-bg);
 
 // 2026-08-28 재실측: 포커스 링은 rgba 반투명이 아니라 solid 색 그대로다(invalid/valid는 이름에
 // "30%"가 붙어있어도 실제로는 solid — get_variable_defs로 재확인, 2026-08-30).
 // 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응 시맨틱이 없다.
 $select-validation-colors: (
-  normal: (border: var(--field-border), border-hover: var(--field-border-hover), border-focus: var(--field-border-focus), ring: $effect-focus-ring, border-disabled: var(--field-border-disabled)),
+  normal: (border: var(--bds-field-border), border-hover: var(--bds-field-border-hover), border-focus: var(--bds-field-border-focus), ring: $effect-focus-ring, border-disabled: var(--bds-field-border-disabled)),
   invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200),
   valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200),
 );
 
-.select {
+.bds-select {
   display: flex;
   flex-direction: column;
   gap: $space-1;
@@ -53,7 +53,7 @@ $select-validation-colors: (
     display: flex;
     align-items: center;
     gap: $space-2;
-    border-radius: var(--button-radius); // 2026-08-28 확인(inputs-spec): field/radius 없음, button/radius 공유
+    border-radius: var(--bds-field-radius); // ADR-027: 입력 전용 field/radius 토큰이 생겨 버튼 토큰 공유를 끝냈다
     background-color: $select-bg;
     color: $select-fg;
     cursor: pointer;
@@ -81,26 +81,26 @@ $select-validation-colors: (
 }
 
 @each $size, $props in $select-sizes {
-  .select-#{$size} {
-    .select__field {
+  .bds-select-#{$size} {
+    .bds-select__field {
       height: map.get($props, height);
       padding-inline: map.get($props, padding-x);
-      // .select__field는 font-weight를 별도로 선언한 적이 없으므로(상속값 유지) text() 믹스인 대신
+      // .bds-select__field는 font-weight를 별도로 선언한 적이 없으므로(상속값 유지) text() 믹스인 대신
       // $type-scale에서 size/lh만 뽑아 쓴다 — weight를 새로 추가하지 않기 위함.
       $select-field-type: map.get(maps.$type-scale, map.get($props, type));
       font-size: map.get($select-field-type, size);
       line-height: map.get($select-field-type, lh);
     }
 
-    .select__chevron {
+    .bds-select__chevron {
       width: map.get($props, chevron);
       height: map.get($props, chevron);
     }
 
     // dropdown.scss의 _List/Item 폰트·높이 맵 재사용(패널·옵션을 그대로 재사용하므로) — dropdown과
-    // 동일 컴포넌트 기반이라는 전제로 적용. font-weight는 _dropdown.scss의 기본 .list-item 규칙(medium)이
+    // 동일 컴포넌트 기반이라는 전제로 적용. font-weight는 _dropdown.scss의 기본 .bds-list-item 규칙(medium)이
     // 이미 전역으로 적용되므로 여기서는 재선언하지 않는다.
-    .list-item {
+    .bds-list-item {
       height: map.get(dd.$list-item-heights, $size);
       $list-item-type: map.get(maps.$type-scale, map.get(dd.$list-item-font, $size));
       font-size: map.get($list-item-type, size);
@@ -110,8 +110,8 @@ $select-validation-colors: (
 }
 
 @each $validation, $c in $select-validation-colors {
-  .select-#{$validation} {
-    .select__field {
+  .bds-select-#{$validation} {
+    .bds-select__field {
       border: 1px solid map.get($c, border);
 
       &:hover {
@@ -125,13 +125,13 @@ $select-validation-colors: (
     }
   }
 
-  .select-#{$validation}.select-disabled .select__field {
+  .bds-select-#{$validation}.bds-select-disabled .bds-select__field {
     border-color: map.get($c, border-disabled);
   }
 }
 
-.select-disabled {
-  .select__field {
+.bds-select-disabled {
+  .bds-select__field {
     background-color: $select-disabled-bg;
     cursor: not-allowed;
   }

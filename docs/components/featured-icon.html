@@ -15,12 +15,12 @@
   <div class="doc-breadcrumb"><a href="../index.html">피드백 컴포넌트</a> / Featured Icon</div>
   <div class="doc-page-header">
     <h1>Featured Icon</h1>
-    <p>전용 토큰이 없어 <code>chip/*</code> 커스텀 프로퍼티를 그대로 재사용합니다(<code>_featured-icon.scss</code>가 <code>var(--chip-brand-bg)</code> 등을 직접 참조 — Alert가 아니라 Chip입니다, info 색은 Chip에만 있고 여기엔 없습니다). 항상 원형입니다.</p>
+    <p>전용 토큰이 없어 <code>chip/*</code> 커스텀 프로퍼티를 그대로 재사용합니다(<code>_featured-icon.scss</code>가 <code>var(--bds-badge-brand-bg)</code> 등을 직접 참조 — Alert가 아니라 Chip입니다, info 색은 Chip에만 있고 여기엔 없습니다). 항상 원형입니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>Color × Size</h2>
-    <p class="doc-desc">구조: <code>.featured-icon.featured-icon-{size}.featured-icon-{color} &gt; svg.featured-icon__icon</code>.</p>
+    <p class="doc-desc">구조: <code>.bds-featured-icon.featured-icon-{size}.bds-featured-icon-{color} &gt; svg.featured-icon__icon</code>.</p>
     <div class="doc-matrix" id="featured-icon-matrix"></div>
   </section>
 </main>
@@ -46,7 +46,7 @@
         cell.className = 'doc-cell';
         cell.innerHTML =
           '<div class="featured-icon featured-icon-' + size + ' featured-icon-' + c[0] + '">' +
-          '<svg class="icon featured-icon__icon"><use href="../assets/icons/sprite.svg#icon-base-' + c[1] + '"></use></svg>' +
+          '<svg class="bds-icon bds-featured-icon__icon"><use href="../assets/icons/sprite.svg#icon-base-' + c[1] + '"></use></svg>' +
           '</div>' +
           '<span class="doc-cell__caption">featured-icon featured-icon-' + size + ' featured-icon-' + c[0] + '</span>';
         el.appendChild(cell);

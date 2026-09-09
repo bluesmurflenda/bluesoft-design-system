@@ -15,34 +15,34 @@
   <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Board</div>
   <div class="doc-page-header">
     <h1>Board</h1>
-    <p>post 행과 notice 행, board-list 컨테이너 유무, 모바일 board-card 형태를 함께 확인합니다. 페이지네이션은 컨테이너 유무에 따라 <code>pagination-numbers</code> 또는 <code>pagination-simple-icon</code>을 재사용합니다. hover는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외합니다.</p>
+    <p>post 행과 notice 행, board-list 컨테이너 유무, 모바일 board-card 형태를 함께 확인합니다. 페이지네이션은 컨테이너 유무에 따라 <code>bds-pagination-numbers</code> 또는 <code>bds-pagination-simple-icon</code>을 재사용합니다. hover는 정적 페이지로 재현할 수 없는 상호작용 상태라 제외합니다.</p>
   </div>
 
   <section class="doc-section">
     <h2>Row 종류(kind)</h2>
-    <p class="doc-desc"><code>.board-row__title</code> 자체는 kind와 무관하게 항상 동일한 크기·굵기(body-md/regular)입니다 — post와 notice의 차이는 제목 앞에 Notice 배지(chip 컴포넌트, <code>.chip .chip-sm .chip-brand</code>)가 붙는지 여부뿐입니다.</p>
+    <p class="doc-desc"><code>.bds-board-row__title</code> 자체는 kind와 무관하게 항상 동일한 크기·굵기(body-md/regular)입니다 — post와 notice의 차이는 제목 앞에 Notice 배지(chip 컴포넌트, <code>.bds-badge .bds-badge-sm .bds-badge-brand</code>)가 붙는지 여부뿐입니다.</p>
     <div class="doc-matrix doc-matrix-wide">
       <div class="doc-cell" style="width:100%;">
-        <div class="board-row" style="width:100%;">
-          <div class="board-row__content">
-            <span class="board-row__title">8월 정기 업데이트 노트입니다</span>
+        <div class="bds-board-row" style="width:100%;">
+          <div class="bds-board-row__content">
+            <span class="bds-board-row__title">8월 정기 업데이트 노트입니다</span>
           </div>
-          <div class="board-row__meta">
-            <span class="board-cell board-cell-body">2026.08.18</span>
-            <span class="board-cell board-cell-body">342</span>
+          <div class="bds-board-row__meta">
+            <span class="bds-board-cell bds-board-cell-body">2026.08.18</span>
+            <span class="bds-board-cell bds-board-cell-body">342</span>
           </div>
         </div>
         <span class="doc-cell__caption">board-row</span>
       </div>
       <div class="doc-cell" style="width:100%;">
-        <div class="board-row" style="width:100%;">
-          <div class="board-row__content">
-            <span class="chip chip-sm chip-brand">공지</span>
-            <span class="board-row__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
+        <div class="bds-board-row" style="width:100%;">
+          <div class="bds-board-row__content">
+            <span class="bds-badge bds-badge-sm bds-badge-brand">공지</span>
+            <span class="bds-board-row__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
           </div>
-          <div class="board-row__meta">
-            <span class="board-cell board-cell-body">2026.08.20</span>
-            <span class="board-cell board-cell-body">1,204</span>
+          <div class="bds-board-row__meta">
+            <span class="bds-board-cell bds-board-cell-body">2026.08.20</span>
+            <span class="bds-board-cell bds-board-cell-body">1,204</span>
           </div>
         </div>
         <span class="doc-cell__caption">board-row + notice 배지</span>
@@ -52,110 +52,110 @@
 
   <section class="doc-section">
     <h2>조립 예시 — container=yes</h2>
-    <p class="doc-desc"><code>.board-list-container</code>로 감싸 카드형으로 만든 목록. board-header(헤더행) + board-row(notice 1 + 기본 2). 하단 페이지네이션은 <code>.pagination-simple-icon</code>(아이콘 Prev/Next + "Page N of M")을 재사용합니다 — _pagination.scss 주석에 명시된 매핑입니다.</p>
-    <div class="board-list-container">
-      <div class="board-list">
-        <div class="board-header">
-          <span class="board-header__title">제목</span>
-          <span class="board-cell board-cell-header">작성일</span>
-          <span class="board-cell board-cell-header">조회수</span>
+    <p class="doc-desc"><code>.bds-board-list-container</code>로 감싸 카드형으로 만든 목록. board-header(헤더행) + board-row(notice 1 + 기본 2). 하단 페이지네이션은 <code>.bds-pagination-simple-icon</code>(아이콘 Prev/Next + "Page N of M")을 재사용합니다 — _pagination.scss 주석에 명시된 매핑입니다.</p>
+    <div class="bds-board-list-container">
+      <div class="bds-board-list">
+        <div class="bds-board-header">
+          <span class="bds-board-header__title">제목</span>
+          <span class="bds-board-cell bds-board-cell-header">작성일</span>
+          <span class="bds-board-cell bds-board-cell-header">조회수</span>
         </div>
-        <div class="board-row">
-          <div class="board-row__content">
-            <span class="chip chip-sm chip-brand">공지</span>
-            <span class="board-row__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
+        <div class="bds-board-row">
+          <div class="bds-board-row__content">
+            <span class="bds-badge bds-badge-sm bds-badge-brand">공지</span>
+            <span class="bds-board-row__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
           </div>
-          <div class="board-row__meta">
-            <span class="board-cell board-cell-body">2026.08.20</span>
-            <span class="board-cell board-cell-body">1,204</span>
-          </div>
-        </div>
-        <div class="board-row">
-          <div class="board-row__content">
-            <span class="board-row__title">8월 정기 업데이트 노트입니다</span>
-          </div>
-          <div class="board-row__meta">
-            <span class="board-cell board-cell-body">2026.08.18</span>
-            <span class="board-cell board-cell-body">342</span>
+          <div class="bds-board-row__meta">
+            <span class="bds-board-cell bds-board-cell-body">2026.08.20</span>
+            <span class="bds-board-cell bds-board-cell-body">1,204</span>
           </div>
         </div>
-        <div class="board-row">
-          <div class="board-row__content">
-            <span class="board-row__title">질문 있습니다 답변 부탁드려요</span>
+        <div class="bds-board-row">
+          <div class="bds-board-row__content">
+            <span class="bds-board-row__title">8월 정기 업데이트 노트입니다</span>
           </div>
-          <div class="board-row__meta">
-            <span class="board-cell board-cell-body">2026.08.17</span>
-            <span class="board-cell board-cell-body">128</span>
+          <div class="bds-board-row__meta">
+            <span class="bds-board-cell bds-board-cell-body">2026.08.18</span>
+            <span class="bds-board-cell bds-board-cell-body">342</span>
+          </div>
+        </div>
+        <div class="bds-board-row">
+          <div class="bds-board-row__content">
+            <span class="bds-board-row__title">질문 있습니다 답변 부탁드려요</span>
+          </div>
+          <div class="bds-board-row__meta">
+            <span class="bds-board-cell bds-board-cell-body">2026.08.17</span>
+            <span class="bds-board-cell bds-board-cell-body">128</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="pagination-simple-icon" style="margin-top:16px;">
-      <button class="icon-btn icon-btn-sm icon-btn-outline" aria-label="이전 페이지">
-        <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-left"></use></svg>
+    <div class="bds-pagination-simple-icon" style="margin-top:16px;">
+      <button class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-outline" aria-label="이전 페이지">
+        <svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-left"></use></svg>
       </button>
       <span>Page 1 of 12</span>
-      <button class="icon-btn icon-btn-sm icon-btn-outline" aria-label="다음 페이지">
-        <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-right"></use></svg>
+      <button class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-outline" aria-label="다음 페이지">
+        <svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-right"></use></svg>
       </button>
     </div>
   </section>
 
   <section class="doc-section">
     <h2>조립 예시 — container=no</h2>
-    <p class="doc-desc">카드 래퍼 없이 board-list만 노출하는 형태. 페이지네이션은 <code>.pagination-numbers</code>(<code>.pagination-sm</code>) + <code>.pagination-number</code> + <code>.pagination__nav</code> 조합을 재사용합니다.</p>
-    <div class="board-list">
-      <div class="board-header">
-        <span class="board-header__title">제목</span>
-        <span class="board-cell board-cell-header">작성일</span>
-        <span class="board-cell board-cell-header">조회수</span>
+    <p class="doc-desc">카드 래퍼 없이 board-list만 노출하는 형태. 페이지네이션은 <code>.bds-pagination-numbers</code>(<code>.bds-pagination-sm</code>) + <code>.bds-pagination-number</code> + <code>.bds-pagination__nav</code> 조합을 재사용합니다.</p>
+    <div class="bds-board-list">
+      <div class="bds-board-header">
+        <span class="bds-board-header__title">제목</span>
+        <span class="bds-board-cell bds-board-cell-header">작성일</span>
+        <span class="bds-board-cell bds-board-cell-header">조회수</span>
       </div>
-      <div class="board-row">
-        <div class="board-row__content">
-          <span class="board-row__title">디자인시스템 컴포넌트 문의드립니다</span>
+      <div class="bds-board-row">
+        <div class="bds-board-row__content">
+          <span class="bds-board-row__title">디자인시스템 컴포넌트 문의드립니다</span>
         </div>
-        <div class="board-row__meta">
-          <span class="board-cell board-cell-body">2026.08.16</span>
-          <span class="board-cell board-cell-body">57</span>
+        <div class="bds-board-row__meta">
+          <span class="bds-board-cell bds-board-cell-body">2026.08.16</span>
+          <span class="bds-board-cell bds-board-cell-body">57</span>
         </div>
       </div>
-      <div class="board-row">
-        <div class="board-row__content">
-          <span class="board-row__title">아이콘 스프라이트 업데이트 요청</span>
+      <div class="bds-board-row">
+        <div class="bds-board-row__content">
+          <span class="bds-board-row__title">아이콘 스프라이트 업데이트 요청</span>
         </div>
-        <div class="board-row__meta">
-          <span class="board-cell board-cell-body">2026.08.14</span>
-          <span class="board-cell board-cell-body">89</span>
+        <div class="bds-board-row__meta">
+          <span class="bds-board-cell bds-board-cell-body">2026.08.14</span>
+          <span class="bds-board-cell bds-board-cell-body">89</span>
         </div>
       </div>
     </div>
-    <div class="pagination-numbers pagination-sm" style="margin-top:0;">
-      <div class="pagination__nav">
-        <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-left"></use></svg>
+    <div class="bds-pagination-numbers bds-pagination-sm" style="margin-top:0;">
+      <div class="bds-pagination__nav">
+        <svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-left"></use></svg>
         <span>Prev</span>
       </div>
-      <div class="pagination__numbers">
-        <span class="pagination-number pagination-number-current">1</span>
-        <span class="pagination-number">2</span>
-        <span class="pagination-number">3</span>
-        <span class="pagination-number pagination-ellipsis">…</span>
-        <span class="pagination-number">10</span>
+      <div class="bds-pagination__numbers">
+        <span class="bds-pagination-number bds-pagination-number-current">1</span>
+        <span class="bds-pagination-number">2</span>
+        <span class="bds-pagination-number">3</span>
+        <span class="bds-pagination-number bds-pagination-ellipsis">…</span>
+        <span class="bds-pagination-number">10</span>
       </div>
-      <div class="pagination__nav">
+      <div class="bds-pagination__nav">
         <span>Next</span>
-        <svg class="icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-right"></use></svg>
+        <svg class="bds-icon"><use href="../assets/icons/sprite.svg#icon-base-chevron-right"></use></svg>
       </div>
     </div>
   </section>
 
   <section class="doc-section">
     <h2>모바일 카드형(board-card)</h2>
-    <p class="doc-desc">좁은 화면에서 board-row 대신 쓰는 카드형 게시글. <code>.board-card__title</code> + <code>.board-card__meta</code> 조합. notice는 board-row와 달리 배지가 제목과 한 줄에 있지 않고 <code>.board-card__tags</code>로 별도 줄에 붙어 카드 높이가 늘어납니다.</p>
+    <p class="doc-desc">좁은 화면에서 board-row 대신 쓰는 카드형 게시글. <code>.bds-board-card__title</code> + <code>.bds-board-card__meta</code> 조합. notice는 board-row와 달리 배지가 제목과 한 줄에 있지 않고 <code>.bds-board-card__tags</code>로 별도 줄에 붙어 카드 높이가 늘어납니다.</p>
     <div class="doc-col" style="max-width:360px;">
       <div class="doc-card" style="padding:0;">
-        <div class="board-card">
-          <span class="board-card__title">8월 정기 업데이트 노트입니다 - 신규 컴포넌트 6종 추가</span>
-          <div class="board-card__meta">
+        <div class="bds-board-card">
+          <span class="bds-board-card__title">8월 정기 업데이트 노트입니다 - 신규 컴포넌트 6종 추가</span>
+          <div class="bds-board-card__meta">
             <span>2026.08.18</span>
             <span>조회 342</span>
           </div>
@@ -163,12 +163,12 @@
         <span class="doc-cell__caption" style="padding:0 12px 12px;">board-card</span>
       </div>
       <div class="doc-card" style="padding:0;">
-        <div class="board-card">
-          <div class="board-card__tags">
-            <span class="chip chip-sm chip-brand">공지</span>
+        <div class="bds-board-card">
+          <div class="bds-board-card__tags">
+            <span class="bds-badge bds-badge-sm bds-badge-brand">공지</span>
           </div>
-          <span class="board-card__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
-          <div class="board-card__meta">
+          <span class="bds-board-card__title">시스템 점검 안내 - 8/30(일) 새벽 2시~4시</span>
+          <div class="bds-board-card__meta">
             <span>2026.08.20</span>
             <span>조회 1,204</span>
           </div>
