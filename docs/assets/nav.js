@@ -97,7 +97,7 @@
 
   function iconSvg(name, cls) {
     return (
-      '<svg class="' + (cls || 'side-nav-item__icon') + '"><use href="' +
+      '<svg class="' + (cls || 'bds-side-nav-item__icon') + '"><use href="' +
       BASE +
       'assets/icons/sprite.svg#icon-base-' +
       name +
@@ -130,7 +130,7 @@
     html += '<div class="doc-sidebar__header">';
     html += '<a href="' + BASE + 'index.html"><img class="bds-logo" src="' + BASE + 'assets/logo/logo-brand.svg" alt="BLUESOFT" /></a>';
     html += '<button type="button" class="bds-icon-btn bds-icon-btn-sm bds-icon-btn-ghost" id="doc-theme-toggle" aria-label="다크모드 전환">' +
-      iconSvg(isDark ? 'sun' : 'moon', 'icon icon-sm') +
+      iconSvg(isDark ? 'sun' : 'moon', 'bds-icon icon-sm') +
       '</button>';
     html += '</div>';
     html += '<div class="doc-sidebar__search">' +
@@ -152,7 +152,7 @@
       html += '<div class="doc-nav-group__header">';
       html += itemHtml(group, false);
       html += '<button type="button" class="doc-nav-group__toggle" data-nav-toggle aria-expanded="' + isOpen + '" aria-label="하위 메뉴 펼치기/접기">';
-      html += iconSvg('chevron-right', 'icon icon-sm doc-nav-group__chevron');
+      html += iconSvg('chevron-right', 'bds-icon icon-sm doc-nav-group__chevron');
       html += '</button>';
       html += '</div>';
       html += '<div class="doc-nav-group__children" data-nav-children><div class="doc-nav-group__children-inner">';
@@ -201,7 +201,7 @@
     themeToggle.addEventListener('click', function () {
       var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      themeToggle.innerHTML = iconSvg(next === 'dark' ? 'sun' : 'moon', 'icon icon-sm');
+      themeToggle.innerHTML = iconSvg(next === 'dark' ? 'sun' : 'moon', 'bds-icon icon-sm');
       try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
     });
 

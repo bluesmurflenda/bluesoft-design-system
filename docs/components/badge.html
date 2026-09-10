@@ -49,8 +49,8 @@
       SIZES.forEach(function (size) {
         var cell = document.createElement('div');
         cell.className = 'doc-cell';
-        cell.innerHTML = '<span class="chip chip-' + size + ' chip-' + color + '">' + LABEL_TEXT[color] + '</span>' +
-          '<span class="doc-cell__caption">chip-' + size + ' chip-' + color + '</span>';
+        cell.innerHTML = '<span class="bds-badge bds-badge-' + size + ' bds-badge-' + color + '">' + LABEL_TEXT[color] + '</span>' +
+          '<span class="doc-cell__caption">chip-' + size + ' bds-badge-' + color + '</span>';
         el.appendChild(cell);
       });
     });
@@ -61,7 +61,7 @@
     SIZES.forEach(function (size) {
       var wrap = document.createElement('div');
       wrap.className = 'doc-cell';
-      wrap.innerHTML = '<span class="chip chip-' + size + ' chip-brand"><span class="bds-badge__dot"></span><span>Brand</span></span>' +
+      wrap.innerHTML = '<span class="bds-badge bds-badge-' + size + ' bds-badge-brand"><span class="bds-badge__dot"></span><span>Brand</span></span>' +
         '<span class="doc-cell__caption">chip-' + size + ' chip-brand + .chip__dot</span>';
       el.appendChild(wrap);
     });

@@ -77,6 +77,16 @@ for (const n of [...CLASS_INVENTORY]) {
   if (n === 'badge' || n.startsWith('badge-') || n.startsWith('badge_')) CLASS_INVENTORY.add('chip' + n.slice(5));
 }
 
+// 문서 사이트 전용 클래스(docs.css 가 선언한 것). 리네임 대상이 아니지만, 라이브러리 클래스와
+// 한 목록에 섞여 나오므로 공존을 허용해야 한다 — 아래 js string 게이트에서 쓴다.
+const DOCS_CLASSES = new Set();
+{
+  const p = path.join(ROOT, 'docs/assets/docs.css');
+  if (fs.existsSync(p)) {
+    for (const m of fs.readFileSync(p, 'utf8').matchAll(/\.(-?[a-zA-Z_][a-zA-Z0-9_-]*)/g)) DOCS_CLASSES.add(m[1]);
+  }
+}
+
 // ── 이름 변환 ────────────────────────────────────────────────────
 function mapVar(name) {
   if (REVERSE) {
@@ -212,7 +222,11 @@ function mapClassListText(value, ctx, where) {
     // 요소맵(scripts/lib/element-map)의 셀렉터는 '.alert-{color}' 처럼 자리표시자를 담는다.
     // 앞의 클래스 부분만 떼어 판정한다 — 통째로 보면 목록에 없어서 파일 전체를 건너뛴다(D14 가 깨졌다).
     const classPart = (t) => t.replace(/^\./, '').split('{')[0];
-    const allClassLike = tokens.length > 0 && tokens.every((t) => isClassLike(classPart(t)));
+    // 라이브러리 클래스와 문서 전용 클래스가 한 목록에 섞인다 — 'icon icon-sm' 이 그렇다
+    // (icon 은 라이브러리, icon-sm 은 docs.css 소유). 문서 클래스를 공존 허용하지 않으면
+    // 그 리터럴 전체가 막혀서 icon 이 옛 이름으로 남는다.
+    const ok = (t) => isClassLike(classPart(t)) || DOCS_CLASSES.has(classPart(t));
+    const allClassLike = tokens.length > 0 && tokens.every(ok);
     if (!allClassLike) return value;
     const onlyBareWord = tokens.length === 1 && !tokens[0].includes('-') && !tokens[0].includes('_');
     if (onlyBareWord) {
@@ -251,16 +265,71 @@ function passUnterminatedClassAttr(value, where) {
   });
 }
 
-function passQuotedStrings(text, where) {
-  // class= 속성은 (C1)이 이미 처리했다. 여기서는 JS 문자열 리터럴을 본다.
-  // 이스케이프 처리는 넣지 않았다 — 대상 파일에 \' \" 가 한 건도 없다(2026-09-09 전수 확인).
-  // 생기면 이 정규식이 리터럴 경계를 잘못 잡으므로 그때 보강한다.
-  return text.replace(/(['"])([^'"\n]*)\1/g, (all, q, value) => {
-    if (!value) return all;
+// 문자열 리터럴 경계는 정규식으로 잡을 수 없다. 왼쪽부터 상태를 추적해야 한다.
+//
+// 정규식으로 하면 다른 리터럴 안의 인용부호에서 새 리터럴을 시작한다. 실제로
+//   '<svg class="' + (cls || 'side-nav-item__icon') + '">'
+// 에서 `"' + (cls || '` 를 리터럴로 잡아, side-nav-item__icon 이 모든 리터럴 밖으로
+// 밀려나 리네임에서 누락됐다 — 문서 사이트 왼쪽 메뉴가 그래서 깨졌다(2026-09-10).
+// 같은 원인으로 docs/ 여러 페이지의 조립식 클래스가 옛 이름으로 남아 있었다.
+// 조립식 class 목록의 꼬리.
+//   '<button class="bds-btn bds-btn-' + size + ' btn-outline">Prev</button>'
+// 앞 리터럴이 class=" 를 열고, 뒤 리터럴이 남은 클래스를 적은 뒤 " 로 닫는다.
+// 리터럴 하나만 보면 그 앞이 class= 였는지 알 수 없으므로, 첫 " 앞이 전부 클래스 토큰일
+// 때만 바꾼다 — 그게 아니면(예: ' style="width:100%">') 손대지 않는다.
+function passClassAttrTail(value, where) {
+  const q = value.indexOf('"');
+  if (q <= 0) return value;
+  const head = value.slice(0, q);
+  if (/[<>=]/.test(head)) return value; // 마크업이 섞였으면 클래스 목록이 아니다
+  const tokens = head.split(/\s+/).filter(Boolean);
+  if (!tokens.length) return value;
+  if (!tokens.every((t) => isClassLike(t) || DOCS_CLASSES.has(t))) return value;
+  const mapped = head
+    .split(/(\s+)/)
+    .map((t) => {
+      if (!t || /^\s+$/.test(t) || !isClassLike(t)) return t;
+      const to = mapClass(t);
+      record('class attr(꼬리)', t, to);
+      return to;
+    })
+    .join('');
+  return mapped + value.slice(q);
+}
+
+function scanJsLiterals(text, where) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    const c = text[i];
+    if (c !== '"' && c !== "'") { out += c; i++; continue; }
+
+    // 닫는 같은 인용부호를 찾는다. 줄바꿈을 먼저 만나면 리터럴이 아니다(주석 안 아포스트로피 등).
+    let j = i + 1;
+    let closed = false;
+    while (j < text.length) {
+      if (text[j] === '\\') { j += 2; continue; }
+      if (text[j] === '\n') break;
+      if (text[j] === c) { closed = true; break; }
+      j++;
+    }
+    if (!closed) { out += c; i++; continue; }
+
+    const value = text.slice(i + 1, j);
     let v = passUnterminatedClassAttr(value, where);
+    v = passClassAttrTail(v, where);
     v = mapClassListText(v, 'js string', where);
-    return q + v + q;
-  });
+    out += c + v + c;
+    i = j + 1;
+  }
+  return out;
+}
+
+// .html 은 마크업과 스크립트가 섞여 있다. 스크립트 블록 안에서만 리터럴로 본다 —
+// 마크업 본문의 아포스트로피까지 리터럴로 세면 엉뚱한 구간을 리터럴로 잡는다.
+function passQuotedStrings(text, where, scriptOnly) {
+  if (!scriptOnly) return scanJsLiterals(text, where);
+  return text.replace(/(<script[^>]*>)([\s\S]*?)(<\/script>)/gi, (all, open, body, close) => open + scanJsLiterals(body, where) + close);
 }
 
 function passCodeTags(text, where) {
@@ -294,7 +363,9 @@ for (const rel of files) {
   // (실제로 nav.js 의 class="logo" 를 놓쳤고, docs↔CSS 클래스 대조로 잡혔다).
   if (ext === '.html' || ext === '.js' || ext === '.mjs') text = passClassAttrs(text);
   if (ext === '.html') text = passCodeTags(text, rel);
-  if (ext === '.html' || ext === '.js' || ext === '.mjs') text = passQuotedStrings(text, rel);
+  // .html 은 <script> 안만, .js/.mjs 는 파일 전체를 리터럴로 본다.
+  if (ext === '.html') text = passQuotedStrings(text, rel, true);
+  if (ext === '.js' || ext === '.mjs') text = passQuotedStrings(text, rel, false);
 
   if (text !== original) {
     changedFiles++;

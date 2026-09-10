@@ -61,11 +61,11 @@
           ? 'background:var(--bds-neutral-100);width:160px;flex-shrink:0;height:200px;'
           : 'background:var(--bds-neutral-100);width:100%;height:200px;';
         cell.innerHTML =
-          '<div class="card card-' + orientation + ' card-' + style + '" style="width:100%;">' +
+          '<div class="bds-card bds-card-' + orientation + ' bds-card-' + style + '" style="width:100%;">' +
           '<div class="bds-card__media" style="' + mediaStyle + '"></div>' +
           cardBody() +
           '</div>' +
-          '<span class="doc-cell__caption">card card-' + orientation + ' card-' + style + '</span>';
+          '<span class="doc-cell__caption">card card-' + orientation + ' bds-card-' + style + '</span>';
         el.appendChild(cell);
       });
     });
@@ -78,7 +78,7 @@
       cell.className = 'doc-cell';
       cell.style.width = '100%';
       cell.innerHTML =
-        '<div class="card card-vertical card-' + style + ' card-disabled" style="width:100%;">' +
+        '<div class="bds-card bds-card-vertical bds-card-' + style + ' bds-card-disabled" style="width:100%;">' +
         '<div class="bds-card__media" style="background:var(--bds-neutral-100);width:100%;height:200px;"></div>' +
         cardBody() +
         '</div>' +

@@ -70,7 +70,7 @@
       SIZES.forEach(function (size) {
         var cell = document.createElement('td');
         cell.style.cssText = 'padding:8px 16px;';
-        var btnHtml = '<button class="btn btn-' + size + ' btn-' + variant + '">Button</button>';
+        var btnHtml = '<button class="bds-btn bds-btn-' + size + ' bds-btn-' + variant + '">Button</button>';
         if (variant === 'scrim-dark') btnHtml = darkWrap(btnHtml);
         if (variant === 'scrim-light') btnHtml = lightWrap(btnHtml);
         cell.innerHTML = btnHtml;
@@ -85,7 +85,7 @@
     VARIANTS.forEach(function (variant) {
       var wrap = document.createElement('div');
       wrap.className = 'doc-cell';
-      var btnHtml = '<button class="btn btn-md btn-' + variant + '" disabled>Button</button>';
+      var btnHtml = '<button class="bds-btn bds-btn-md bds-btn-' + variant + '" disabled>Button</button>';
       if (variant === 'scrim-dark') btnHtml = darkWrap(btnHtml);
       if (variant === 'scrim-light') btnHtml = lightWrap(btnHtml);
       wrap.innerHTML = btnHtml + '<span class="doc-cell__caption">btn-' + variant + '</span>';

@@ -103,7 +103,7 @@
           cell.className = 'doc-cell';
           var cls = 'bds-pagination-number' + shape[1] + state[1];
           cell.innerHTML =
-            '<div class="pagination-' + size + '" style="display:inline-flex;">' +
+            '<div class="bds-pagination-' + size + '" style="display:inline-flex;">' +
             '<span class="' + cls + '">' + state[2] + '</span>' +
             '</div>' +
             '<span class="doc-cell__caption">' + cls + ' (' + size + ')</span>';
@@ -121,7 +121,7 @@
       wrap.innerHTML =
         '<div class="doc-label">pagination-numbers pagination-' + size + '</div>' +
         '<div class="doc-card">' +
-        '<div class="pagination-numbers pagination-' + size + '">' +
+        '<div class="bds-pagination-numbers bds-pagination-' + size + '">' +
         '<div class="bds-pagination__nav">' + iconUse('chevron-left') + '<span>Prev</span></div>' +
         '<div class="bds-pagination__numbers">' +
         '<span class="bds-pagination-number bds-pagination-number-current">1</span>' +
@@ -144,11 +144,11 @@
       wrap.innerHTML =
         '<div class="doc-label">pagination-simple pagination-' + size + '</div>' +
         '<div class="doc-card">' +
-        '<div class="pagination-simple pagination-' + size + '">' +
+        '<div class="bds-pagination-simple bds-pagination-' + size + '">' +
         '<span>Page 1 of 12</span>' +
         '<div class="bds-pagination__actions">' +
-        '<button class="btn btn-' + size + ' btn-outline">Prev</button>' +
-        '<button class="btn btn-' + size + ' btn-outline">Next</button>' +
+        '<button class="bds-btn bds-btn-' + size + ' bds-btn-outline">Prev</button>' +
+        '<button class="bds-btn bds-btn-' + size + ' bds-btn-outline">Next</button>' +
         '</div></div></div>';
       el.appendChild(wrap);
     });
@@ -162,10 +162,10 @@
       wrap.innerHTML =
         '<div class="doc-label">pagination-simple-icon pagination-' + size + '</div>' +
         '<div class="doc-card">' +
-        '<div class="pagination-simple-icon pagination-' + size + '">' +
-        '<button class="icon-btn icon-btn-' + size + ' icon-btn-outline" aria-label="이전 페이지">' + iconUse('chevron-left') + '</button>' +
+        '<div class="bds-pagination-simple-icon bds-pagination-' + size + '">' +
+        '<button class="bds-icon-btn bds-icon-btn-' + size + ' bds-icon-btn-outline" aria-label="이전 페이지">' + iconUse('chevron-left') + '</button>' +
         '<span>Page 1 of 12</span>' +
-        '<button class="icon-btn icon-btn-' + size + ' icon-btn-outline" aria-label="다음 페이지">' + iconUse('chevron-right') + '</button>' +
+        '<button class="bds-icon-btn bds-icon-btn-' + size + ' bds-icon-btn-outline" aria-label="다음 페이지">' + iconUse('chevron-right') + '</button>' +
         '</div></div>';
       el.appendChild(wrap);
     });
@@ -180,15 +180,15 @@
         '<div class="doc-label">pagination-numbers-buttons — btn-' + size + ' + pagination-group pagination-' + size + '</div>' +
         '<div class="doc-card">' +
         '<div class="bds-pagination-numbers-buttons">' +
-        '<button class="btn btn-' + size + ' btn-outline">Prev</button>' +
-        '<div class="pagination-group pagination-' + size + '">' +
+        '<button class="bds-btn bds-btn-' + size + ' bds-btn-outline">Prev</button>' +
+        '<div class="bds-pagination-group bds-pagination-' + size + '">' +
         '<span class="bds-pagination-number bds-pagination-number-square bds-pagination-number-current">1</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">2</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">3</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">4</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">5</span>' +
         '</div>' +
-        '<button class="btn btn-' + size + ' btn-outline">Next</button>' +
+        '<button class="bds-btn bds-btn-' + size + ' bds-btn-outline">Next</button>' +
         '</div></div>';
       el.appendChild(wrap);
     });
@@ -202,14 +202,14 @@
       wrap.innerHTML =
         '<div class="doc-label">pagination-group pagination-' + size + '</div>' +
         '<div class="doc-card">' +
-        '<div class="pagination-group pagination-' + size + '">' +
-        '<div class="bds-pagination__nav">' + iconUse('chevron-left', 'icon icon-sm') + '<span>Prev</span></div>' +
+        '<div class="bds-pagination-group bds-pagination-' + size + '">' +
+        '<div class="bds-pagination__nav">' + iconUse('chevron-left', 'bds-icon icon-sm') + '<span>Prev</span></div>' +
         '<span class="bds-pagination-number bds-pagination-number-square bds-pagination-number-current">1</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">2</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">3</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">4</span>' +
         '<span class="bds-pagination-number bds-pagination-number-square">5</span>' +
-        '<div class="bds-pagination__nav"><span>Next</span>' + iconUse('chevron-right', 'icon icon-sm') + '</div>' +
+        '<div class="bds-pagination__nav"><span>Next</span>' + iconUse('chevron-right', 'bds-icon icon-sm') + '</div>' +
         '</div></div>';
       el.appendChild(wrap);
     });

@@ -88,9 +88,9 @@
           cell.className = 'doc-cell';
           cell.innerHTML =
             '<div style="width:100%;display:flex;">' +
-            '<div class="table-cell table-cell-' + size + ' table-cell-' + role[0] + ' ' + align[1] + '" style="width:100%;border:1px solid var(--bds-neutral-200);">' + role[2] + '</div>' +
+            '<div class="bds-table-cell bds-table-cell-' + size + ' bds-table-cell-' + role[0] + ' ' + align[1] + '" style="width:100%;border:1px solid var(--bds-neutral-200);">' + role[2] + '</div>' +
             '</div>' +
-            '<span class="doc-cell__caption">table-cell-' + size + ' table-cell-' + role[0] + (align[1] ? ' ' + align[1] : '') + '</span>';
+            '<span class="doc-cell__caption">table-cell-' + size + ' bds-table-cell-' + role[0] + (align[1] ? ' ' + align[1] : '') + '</span>';
           el.appendChild(cell);
         });
       });
@@ -105,7 +105,7 @@
       wrap.style.alignItems = 'center';
       wrap.style.gap = '8px';
       wrap.innerHTML =
-        '<div class="table-cell table-cell-' + pair[0] + ' table-cell-body" style="width:180px;border:1px solid var(--bds-neutral-200);">' +
+        '<div class="bds-table-cell bds-table-cell-' + pair[0] + ' bds-table-cell-body" style="width:180px;border:1px solid var(--bds-neutral-200);">' +
         '<span class="bds-table-cell__leading" style="background:var(--bds-blue-100);"></span>' +
         '<span class="bds-table-cell__text">size=' + pair[0] + '</span></div>';
       el.appendChild(wrap);
