@@ -2,6 +2,9 @@
   "name": "blue-ds",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=24"
+  },
   "description": "BLUESOFT 디자인시스템 — 컴파일된 CSS · SCSS 원본 · 아이콘",
   "scripts": {
     "prebuild": "node scripts/build-icons.mjs",

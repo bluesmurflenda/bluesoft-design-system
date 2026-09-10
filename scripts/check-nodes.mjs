@@ -40,15 +40,24 @@ function addDetail(id, title, items) {
   if (items.length) details.push({ id, title, items });
 }
 
-if (!FIGMA_TOKEN) {
+// REST 호출에 필요한 설정 — 하나라도 없으면 건너뛴다.
+// 토큰만 보고 판단하면 안 된다. 파일 키가 없으면 아래 figmaGet 이 /files/undefined 를 불러
+// 404 로 죽는다 — 건너뛰기가 아니라 실패로 나간다. CI 는 워크플로에서 우회했지만
+// 로컬에서 .env 에 키를 안 넣은 사람은 그대로 당했다. 원인 쪽에서 막는다.
+const missingConfig = [];
+if (!FIGMA_TOKEN) missingConfig.push('FIGMA_TOKEN');
+if (!FIGMA_FILE_KEY) missingConfig.push('FIGMA_FILE_KEY');
+
+if (missingConfig.length) {
+  const why = `${missingConfig.join(' · ')} 없음(.env 또는 환경변수) — REST 호출 불가`;
   if (dumpTarget) {
-    console.error('check-nodes.mjs --dump: FIGMA_TOKEN 없음(.env) — REST 호출 불가');
+    console.error(`check-nodes.mjs --dump: ${why}`);
     process.exit(1);
   }
-  rows.push(row('D1', '컬러 프리미티브 직접 참조', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
-  rows.push(row('D2', '하드코딩 색상', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
-  rows.push(row('D10', '컴포넌트 세트 규격', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
-  rows.push(row('D14', '요소별 토큰 매핑 대조', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
+  rows.push(row('D1', '컬러 프리미티브 직접 참조', 'SKIP', null, why));
+  rows.push(row('D2', '하드코딩 색상', 'SKIP', null, why));
+  rows.push(row('D10', '컴포넌트 세트 규격', 'SKIP', null, why));
+  rows.push(row('D14', '요소별 토큰 매핑 대조', 'SKIP', null, why));
   // 위 검사들이 전부 SKIP 이면 예외 목록을 조회한 자리가 없다 — 0 건이 아니라 '판정 보류'로 나간다.
   // 이 경로는 printReport 뒤 바로 종료하므로 상세 출력 루프를 타지 않는다 — 여기서 직접 찍는다.
   const skipEx = unusedExceptionReport();
@@ -60,7 +69,7 @@ if (!FIGMA_TOKEN) {
     console.log('-- D15 쓰이지 않는 예외 --');
     for (const item of skipEx.items) console.log('  ' + item);
   }
-  process.exit(0); // 토큰 부재는 실패가 아니다 — scripts/README.md
+  process.exit(0); // 설정 부재는 실패가 아니다 — SCSS.md 「완료 판정」 · scripts/README.md
 }
 
 async function figmaGet(pathname) {
