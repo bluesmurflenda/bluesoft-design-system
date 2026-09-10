@@ -23,10 +23,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Node 버전은 .nvmrc 한 곳에서만 정한다. 여기 숫자를 또 적으면 둘이 갈린다.
-      - uses: actions/setup-node@v4
+      # v4 는 Node 20 기반이라 러너가 강제로 24 에서 돌리며 폐기 경고를 냈다. v7 은 runs.using: node24 다.
+      # node-version-file·cache 입력 규격은 v7 에서 그대로다(action.yml 확인, 2026-09-10).
+      # v5·v6 이 바꾼 건 자동 캐싱(package.json 의 packageManager 로 감지)뿐이고, 그 필드가 없어
+      # 우리에겐 안 걸린다 — 아래 명시적 cache 가 그대로 동작한다.
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
