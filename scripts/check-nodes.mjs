@@ -53,6 +53,7 @@ if (!FIGMA_TOKEN) {
   // 이 경로는 printReport 뒤 바로 종료하므로 상세 출력 루프를 타지 않는다 — 여기서 직접 찍는다.
   const skipEx = unusedExceptionReport();
   rows.push(row('D15', '쓰이지 않는 예외', 'WARN', skipEx.count, skipEx.note));
+  if (skipEx.ciWarning && process.env.GITHUB_ACTIONS) console.log(skipEx.ciWarning);
   printReport('check-nodes.mjs — Figma 노드 검사', rows);
   if (skipEx.items.length) {
     console.log('');
@@ -419,6 +420,7 @@ addDetail('D14', '요소별 토큰 매핑 대조', d14.map((v) =>
   const ex = unusedExceptionReport();
   rows.push(row('D15', '쓰이지 않는 예외', 'WARN', ex.count, ex.note));
   addDetail('D15', '쓰이지 않는 예외 — 이번 실행에서 한 번도 맞지 않은 항목', ex.items);
+  if (ex.ciWarning && process.env.GITHUB_ACTIONS) console.log(ex.ciWarning);
 }
 
 const hasFail = printReport('check-nodes.mjs — Figma 노드 검사', rows);

@@ -118,9 +118,16 @@ export function unusedExceptionReport() {
   const parts = [`조회 ${consulted.length}목록`];
   if (unusedShared.length) parts.push(`공유목록 보류 ${unusedShared.length}건`);
   if (notLooked.length) parts.push(`미조회 ${notLooked.length}목록`);
+  // CI 에서 낼 주석. 로그를 grep 하지 않고 검사가 직접 낸다 — 로그를 파싱하면 여기 문구를
+  // 바꿀 때 조용히 깨진다. 문구를 한 곳에 두는 이유가 그것이다.
+  const ciWarning = unused.length
+    ? `::warning title=쓰이지 않는 예외::${unused.length}건이 이번 실행에서 한 번도 맞지 않았다. ` +
+      '해결돼서 지울 것인지, 이름이 바뀌어 못 맞추는 것인지, 결정이 뒤집혔는데 안 지운 것인지 확인해라.'
+    : null;
+
   // 행의 숫자는 "지금 판단할 수 있는 것" 만 센다 — 보류를 섞으면 숫자가 늘 0 이 아니라
   // 경고가 상시 켜지고, 그러면 아무도 안 읽는다.
-  return { count: unused.length, note: parts.join(' · '), items };
+  return { count: unused.length, note: parts.join(' · '), items, ciWarning };
 }
 
 export const ALWAYS_ALLOWED_PRIMITIVES = [

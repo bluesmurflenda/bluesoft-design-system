@@ -569,6 +569,45 @@ FAIL 로 만들면 지금 작업과 무관한 정리가 모든 커밋을 막고,
 
 ---
 
+## CI — GitHub Actions
+
+`.github/workflows/check.yml` 이 **push·pull_request 마다** 아래를 돈다.
+
+| 순서 | 무엇 | 시크릿 필요 |
+| --- | --- | --- |
+| 1 | `npm run check:tokens` (S1~S9) | 없음 — 스냅샷과 컴파일 결과만 본다 |
+| 2 | `npm run build` | 없음 |
+| 3 | `npm run check:nodes` (D1~D15) | `FIGMA_TOKEN` · `FIGMA_FILE_KEY` |
+
+**1·2 는 하나라도 실패하면 CI 가 실패한다.**
+
+**3 은 설정이 없으면 건너뛴다.** 실패가 아니다 — `SCSS.md` 「완료 판정」이 정한 동작이다.
+건너뜀과 통과를 구분해 낸다: 로그에 어느 설정이 없는지 적고, 실행 요약에 「건너뜀(통과가 아니다)」
+또는 「실행함」을 남긴다. 건너뛴 실행에서는 **D15 가 `D1_NODE_EXCEPTIONS` 를 못 본다** —
+S9 는 코드 쪽 목록만 보기 때문이다.
+
+### 저장소 설정
+
+| 이름 | 자리 | 왜 |
+| --- | --- | --- |
+| `FIGMA_TOKEN` | Settings → Secrets and variables → Actions → **Secrets** | 개인 액세스 토큰이다 |
+| `FIGMA_FILE_KEY` | 같은 화면 → **Variables** | 파일 키는 `CLAUDE.md` 에 공개돼 있어 비밀이 아니다. 시크릿에 넣어도 워크플로가 받아준다 |
+
+포크에서 온 PR 에는 시크릿이 전달되지 않는다 — 그 경우 3 은 자동으로 건너뛴다.
+
+### Node 버전
+
+`.nvmrc` 한 곳에서만 정한다. 워크플로는 `node-version-file` 로 그 파일을 읽는다 —
+워크플로에 숫자를 또 적으면 둘이 갈린다. `package.json` 에는 `engines` 가 없다.
+
+### 「쓰이지 않는 예외」가 매번 도는 자리
+
+S9 는 1 에서, D15 는 3 에서 돈다. 조치 대상이 0 건이 아니면 **검사 스크립트가 직접**
+`::warning` 을 내서 실행 요약에 뜬다 — 워크플로가 로그를 grep 하지 않는다.
+grep 하면 출력 문구를 바꿀 때 조용히 깨진다.
+
+---
+
 ## 실행 결과 형식
 
 ```

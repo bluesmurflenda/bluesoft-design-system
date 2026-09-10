@@ -566,6 +566,7 @@ function extractTopLevelBlocks(text) {
   const ex = unusedExceptionReport();
   rows.push(row('S9', '쓰이지 않는 예외', 'WARN', ex.count, ex.note));
   addDetail('S9', '쓰이지 않는 예외 — 이번 실행에서 한 번도 맞지 않은 항목', ex.items);
+  if (ex.ciWarning && process.env.GITHUB_ACTIONS) console.log(ex.ciWarning);
 }
 // ── 출력 ──────────────────────────────────────────────────────────
 const hasFail = printReport('check-tokens.mjs — SCSS 검사', rows);
