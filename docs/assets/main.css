@@ -532,8 +532,8 @@ html {
 body {
   min-height: 100vh;
   font-family: var(--bds-font-family-primary), -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--bds-neutral-900);
-  background: var(--bds-white);
+  color: var(--bds-text-primary);
+  background: var(--bds-surface-default);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }

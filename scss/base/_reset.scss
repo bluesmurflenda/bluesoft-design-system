@@ -37,8 +37,12 @@ html {
 body {
   min-height: 100vh;
   font-family: $font-family-primary, -apple-system, BlinkMacSystemFont, sans-serif;
-  color: $neutral-900;
-  background: $white;
+  // 시맨틱으로 받는다. 프리미티브는 모드가 하나라 다크모드에서 라이트 값이 그대로 나갔다 —
+  // 문서 사이트는 docs.css 가 body 를 덮어서 가려졌지만 이 저장소를 가져다 쓰는 프로젝트에는
+  // 그대로 노출됐다. 라이트 글자색이 neutral-900 에서 한 단계 밝아지는 것은 시맨틱을 쓰는
+  // 대가로 승인된 결과다. 배경은 라이트에서 그대로 흰색이다(surface/default 라이트 = white).
+  color: var(--bds-text-primary);
+  background: var(--bds-surface-default);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
