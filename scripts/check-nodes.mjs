@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import postcss from 'postcss';
 import { printReport, row } from './lib/report.mjs';
 import { loadFigmaIds, loadFigmaCollections, cssVarName } from './lib/tokens.mjs';
-import { ALWAYS_ALLOWED_PRIMITIVES, isD1NodeExempt } from './lib/allowlist.mjs';
+import { isAlwaysAllowedPrimitive, isD1NodeExempt, unusedExceptionReport } from './lib/allowlist.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -49,7 +49,16 @@ if (!FIGMA_TOKEN) {
   rows.push(row('D2', '하드코딩 색상', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
   rows.push(row('D10', '컴포넌트 세트 규격', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
   rows.push(row('D14', '요소별 토큰 매핑 대조', 'SKIP', null, 'FIGMA_TOKEN 없음(.env) — REST 호출 불가'));
+  // 위 검사들이 전부 SKIP 이면 예외 목록을 조회한 자리가 없다 — 0 건이 아니라 '판정 보류'로 나간다.
+  // 이 경로는 printReport 뒤 바로 종료하므로 상세 출력 루프를 타지 않는다 — 여기서 직접 찍는다.
+  const skipEx = unusedExceptionReport();
+  rows.push(row('D15', '쓰이지 않는 예외', 'WARN', skipEx.count, skipEx.note));
   printReport('check-nodes.mjs — Figma 노드 검사', rows);
+  if (skipEx.items.length) {
+    console.log('');
+    console.log('-- D15 쓰이지 않는 예외 --');
+    for (const item of skipEx.items) console.log('  ' + item);
+  }
   process.exit(0); // 토큰 부재는 실패가 아니다 — scripts/README.md
 }
 
@@ -189,7 +198,7 @@ function checkPaints(paints, styleId, ctx) {
     if (boundId) {
       const resolved = resolveVarId(boundId);
       if (resolved && resolved.collection === 'Primitive' && isColorPrimitive(resolved.name)) {
-        const okByAllowlist = ALWAYS_ALLOWED_PRIMITIVES.includes(resolved.name);
+        const okByAllowlist = isAlwaysAllowedPrimitive(resolved.name);
         const okByNodeException = isD1NodeExempt(ctx.component, resolved.name);
         if (!okByAllowlist && !okByNodeException && !ctx.exempt) {
           d1.push({ page: ctx.page, path: ctx.path, type: ctx.type, slot: i, primitive: resolved.name });
@@ -402,6 +411,15 @@ rows.push(row('D14', '요소별 토큰 매핑 대조',
     : 'scripts/lib/element-map/ 에 매핑 없음 — SKIP'));
 addDetail('D14', '요소별 토큰 매핑 대조', d14.map((v) =>
   `${v.set}[${v.variant}] ${v.element} (${v.kind === 'figma' ? 'Figma 불일치' : 'SCSS 불일치'}) — 기대: ${v.expected} / 실제: ${v.actual}`));
+
+// ── D15. 쓰이지 않는 예외 ─────────────────────────────────────────
+// 근거와 WARN 판단은 lib/allowlist.mjs 「예외 사용량 계측」에 있다.
+// D1 이 끝난 뒤에 와야 한다 — 그전에는 적중 수가 덜 세어졌다.
+{
+  const ex = unusedExceptionReport();
+  rows.push(row('D15', '쓰이지 않는 예외', 'WARN', ex.count, ex.note));
+  addDetail('D15', '쓰이지 않는 예외 — 이번 실행에서 한 번도 맞지 않은 항목', ex.items);
+}
 
 const hasFail = printReport('check-nodes.mjs — Figma 노드 검사', rows);
 console.log(`\n(검사 대상 페이지 ${componentPages.length}개: ${componentPages.map((p) => p.name.trim()).join(', ')})`);

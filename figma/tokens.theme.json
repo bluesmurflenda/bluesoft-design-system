@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "exportedAt": "2026-09-09",
+    "exportedAt": "2026-09-10",
     "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
     "collection": "Theme",
-    "count": 302
+    "count": 319
   },
   "_modes": [
     "Default",
@@ -541,6 +541,10 @@
     "Default": "var(--white)",
     "Dark": "var(--neutral-950)"
   },
+  "button-group/bg": {
+    "Default": "var(--surface-default)",
+    "Dark": "var(--surface-default)"
+  },
   "button-group/divider": {
     "Default": "var(--border-default)",
     "Dark": "var(--border-default)"
@@ -661,9 +665,33 @@
     "Default": "var(--neutral-400)",
     "Dark": "var(--neutral-500)"
   },
+  "choice/box/border-invalid": {
+    "Default": "var(--red-500)",
+    "Dark": "var(--red-300)"
+  },
+  "choice/box/border-invalid-hover": {
+    "Default": "var(--red-600)",
+    "Dark": "var(--red-400)"
+  },
+  "choice/box/border-valid": {
+    "Default": "var(--green-600)",
+    "Dark": "var(--green-400)"
+  },
+  "choice/box/border-valid-hover": {
+    "Default": "var(--green-700)",
+    "Dark": "var(--green-300)"
+  },
   "choice/box/fg-selected": {
     "Default": "var(--white)",
     "Dark": "var(--white)"
+  },
+  "choice/box/ring-invalid": {
+    "Default": "var(--red-200)",
+    "Dark": "var(--red-700)"
+  },
+  "choice/box/ring-valid": {
+    "Default": "var(--green-200)",
+    "Dark": "var(--green-700)"
   },
   "choice/description/fg": {
     "Default": "var(--text-tertiary)",
@@ -777,6 +805,30 @@
     "Default": "var(--neutral-400)",
     "Dark": "var(--neutral-600)"
   },
+  "field/border-invalid": {
+    "Default": "var(--red-500)",
+    "Dark": "var(--red-300)"
+  },
+  "field/border-invalid-disabled": {
+    "Default": "var(--red-200)",
+    "Dark": "var(--red-700)"
+  },
+  "field/border-invalid-hover": {
+    "Default": "var(--red-600)",
+    "Dark": "var(--red-400)"
+  },
+  "field/border-valid": {
+    "Default": "var(--green-600)",
+    "Dark": "var(--green-400)"
+  },
+  "field/border-valid-disabled": {
+    "Default": "var(--green-200)",
+    "Dark": "var(--green-700)"
+  },
+  "field/border-valid-hover": {
+    "Default": "var(--green-700)",
+    "Dark": "var(--green-300)"
+  },
   "field/fg": {
     "Default": "var(--text-primary)",
     "Dark": "var(--text-primary)"
@@ -785,6 +837,10 @@
     "Default": "var(--neutral-400)",
     "Dark": "var(--neutral-500)"
   },
+  "field/fg-placeholder-disabled": {
+    "Default": "var(--neutral-300)",
+    "Dark": "var(--neutral-600)"
+  },
   "field/hint/fg": {
     "Default": "var(--text-tertiary)",
     "Dark": "var(--text-tertiary)"
@@ -792,6 +848,14 @@
   "field/label/fg": {
     "Default": "var(--text-primary)",
     "Dark": "var(--text-primary)"
+  },
+  "field/ring-invalid": {
+    "Default": "var(--red-200)",
+    "Dark": "var(--red-700)"
+  },
+  "field/ring-valid": {
+    "Default": "var(--green-200)",
+    "Dark": "var(--green-700)"
   },
   "icon/brand": {
     "Default": "var(--brand-600)",
@@ -956,6 +1020,10 @@
   "scrollbar/thumb/bg": {
     "Default": "var(--neutral-400)",
     "Dark": "var(--neutral-600)"
+  },
+  "scrollbar/thumb/bg-hover": {
+    "Default": "var(--neutral-500)",
+    "Dark": "var(--neutral-500)"
   },
   "scrollbar/track/bg": {
     "Default": "var(--neutral-100)",

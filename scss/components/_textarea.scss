@@ -24,8 +24,8 @@ $textarea-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs, input과 공용
 // invalid/valid ring은 이름에 "30%"가 붙어있어도 실제로는 solid(get_variable_defs 확인).
 $textarea-validation-colors: (
   normal: (border: var(--bds-field-border), border-hover: var(--bds-field-border-hover), border-focus: var(--bds-field-border-focus), ring: $effect-focus-ring, border-disabled: var(--bds-field-border-disabled), hint-fg: var(--bds-field-hint-fg)),
-  invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200, hint-fg: $red-500),
-  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200, hint-fg: var(--bds-field-hint-fg)),
+  invalid: (border: var(--bds-field-border-invalid), border-hover: var(--bds-field-border-invalid-hover), border-focus: var(--bds-field-border-invalid), ring: var(--bds-field-ring-invalid), border-disabled: var(--bds-field-border-invalid-disabled), hint-fg: $red-500 /* 예외: 의미색 — Figma 도 이 자리에 red/500 을 직접 문다. field/hint/fg-invalid 토큰 신설이 필요하다 */),
+  valid: (border: var(--bds-field-border-valid), border-hover: var(--bds-field-border-valid-hover), border-focus: var(--bds-field-border-valid), ring: var(--bds-field-ring-valid), border-disabled: var(--bds-field-border-valid-disabled), hint-fg: var(--bds-field-hint-fg)),
 );
 
 .bds-textarea {

@@ -5,14 +5,14 @@
 //
 // 마크업 조합 예:
 //   .bds-upload-dropzone
-//     .bds-featured-icon.featured-icon-sm.featured-icon-neutral > .bds-featured-icon__icon(아이콘)
-//     .bds-upload-dropzone__action > button.btn.btn-link.btn-md("Click to upload") + span(hint)
+//     .bds-featured-icon.bds-featured-icon-sm.bds-featured-icon-neutral > .bds-featured-icon__icon(아이콘)
+//     .bds-upload-dropzone__action > button.bds-btn.bds-btn-link.bds-btn-md("Click to upload") + span(hint)
 //     .bds-upload-dropzone__supporting(안내문구)
-//   .bds-upload-item.upload-item-{uploading|done|error}
+//   .bds-upload-item.bds-upload-item-{uploading|done|error}
 //     .bds-upload-item__icon > .bds-icon(16px, 파일타입 아이콘)
 //     .bds-upload-item__content > .bds-upload-item__title/.bds-upload-item__supporting + .bds-progress-bar
-//     (done)             .bds-choice.choice-checkbox (showLabel 없이 box만)
-//     (uploading|error)  .bds-upload-item__action > button.icon-btn.icon-btn-sm.icon-btn-ghost
+//     (done)             .bds-choice.bds-choice-checkbox (showLabel 없이 box만)
+//     (uploading|error)  .bds-upload-item__action > button.bds-icon-btn.bds-icon-btn-sm.bds-icon-btn-ghost
 
 @use '../tokens/primitive' as *;
 @use '../tokens/theme' as *;
@@ -129,4 +129,4 @@ $upload-item-state-border: (
   }
 }
 
-// done 상태의 체크박스는 .bds-choice.choice-checkbox(showLabel 없이 box만)를 그대로 배치한다.
+// done 상태의 체크박스는 .bds-choice.bds-choice-checkbox(showLabel 없이 box만)를 그대로 배치한다.

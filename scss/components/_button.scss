@@ -51,6 +51,7 @@
   --bds-btn-link-fg-disabled: var(--bds-text-disabled);
   --bds-btn-tertiary-fg: var(--bds-white);
   --bds-button-group-divider: var(--bds-border-default);
+  --bds-button-group-bg: var(--bds-surface-default);
 }
 
 [data-theme='dark'] {
@@ -127,7 +128,7 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px $white, 0 0 0 4px $effect-focus-ring;
+    box-shadow: 0 0 0 2px var(--bds-surface-default), 0 0 0 4px $effect-focus-ring;
   }
 }
 

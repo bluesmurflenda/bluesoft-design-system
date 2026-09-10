@@ -6,7 +6,17 @@ import { fileURLToPath } from 'node:url';
 import * as sass from 'sass';
 
 import { printReport, row } from './lib/report.mjs';
-import { EXEMPTION_COMMENT_RE, EXEMPT_COMPONENT_FILES, ALWAYS_ALLOWED_PRIMITIVES, isS2MissingExempt, isS2ModeExempt, isS2CssOnlyExempt } from './lib/allowlist.mjs';
+// 예외는 반드시 아래 판정 함수로 거친다 — 배열을 직접 .includes() 로 쓰면 사용량 계측을
+// 우회해서 그 항목이 죽어도 S9 가 못 잡는다.
+import {
+  hasExemptionComment,
+  isExemptFile,
+  isAlwaysAllowedPrimitive,
+  isS2MissingExempt,
+  isS2ModeExempt,
+  isS2CssOnlyExempt,
+  unusedExceptionReport,
+} from './lib/allowlist.mjs';
 import {
   figmaSnapshotExists,
   loadFigmaCollections,
@@ -56,7 +66,7 @@ function addDetail(id, title, items) {
     if (rel(file) === 'scss/tokens/_primitive.scss') continue;
     const lines = fs.readFileSync(file, 'utf8').split('\n');
     lines.forEach((rawLine, i) => {
-      if (EXEMPTION_COMMENT_RE.test(rawLine)) return;
+      if (hasExemptionComment(rawLine)) return;
       const line = stripLineComment(rawLine);
       const matches = line.match(HEX_RE);
       if (matches) violations.push({ file: rel(file), line: i + 1, text: rawLine.trim(), matches });
@@ -255,25 +265,102 @@ function addDetail(id, title, items) {
     crossFile.map((c) => `${c.file}:${c.line}  ${c.name}  ← ${c.owners.join(', ')}`));
 }
 
-// ── S4. 컴포넌트의 프리미티브 직접 참조 ───────────────────────────
+// ── S4. 컴포넌트의 색 프리미티브 직접 참조 ─────────────────────────
+// 근거: SCSS.md 「클래스·변형 설계」 규칙 3 — 색은 파일 맨 위 :root/[data-theme='dark'] 에서만
+// 프리미티브로 받는다. 여백·반경 같은 치수 프리미티브는 선택자에서 직접 써도 된다.
+//
+// 왜 다시 썼나
+//   원래 찾던 이름은 $color-* 였다. ADR-018 이 그 접두사를 없앤 뒤로 저장소에 그 모양이
+//   한 건도 없어서, 이 검사는 계속 빈손으로 PASS 를 냈다. 아무것도 안 보면서 통과를 내는
+//   검사는 없는 것보다 나쁘다.
+//
+// 무엇을 색으로 보나
+//   스냅샷 Primitive 에서 값이 hex 인 것. check-nodes.mjs 의 isColorPrimitive 와 같은
+//   기준이다 — 색의 정의를 두 곳에 두지 않는다. 치수·굵기·시간 토큰은 값이 hex 가 아니라
+//   자동으로 빠진다(따로 이름 목록을 만들지 않는 이유다).
+//
+// 어디까지 보나
+//   scss/components/ 만 본다. 규칙 3 이 컴포넌트 설계 규칙이고, 범위를 넓히면 tokens 층·
+//   base 층까지 끌려 들어온다.
+//   :root/[data-theme='dark'] 블록 안은 규칙이 허용하는 자리라 뺀다. 그 밖은 전부 대상이다 —
+//   선택자뿐 아니라 $맵 선언도 포함한다. 맵 값이 그대로 선택자로 흘러가므로 구조가 같다.
 {
   const COMPONENTS_DIR = path.join(SCSS_ROOT, 'components');
-  const PRIMITIVE_ALIAS_RE = /\$color-([a-z]+)-?(\d+)?\b/g; // $color-blue-600, $color-white, $color-black 등
-  const violations = [];
   const componentFiles = fs.existsSync(COMPONENTS_DIR) ? walkScss(COMPONENTS_DIR) : [];
-  for (const file of componentFiles) {
-    const base = path.basename(file);
-    if (EXEMPT_COMPONENT_FILES.includes(base)) continue;
-    const lines = fs.readFileSync(file, 'utf8').split('\n');
-    lines.forEach((line, i) => {
-      if (EXEMPTION_COMMENT_RE.test(line)) return;
-      const matches = line.match(PRIMITIVE_ALIAS_RE);
-      if (matches) violations.push({ file: rel(file), line: i + 1, text: line.trim(), matches });
-    });
+
+  // 색 프리미티브 이름 -> 참조 형태 두 가지($별칭, var())
+  const colorByScssVar = new Map();
+  const colorByCssVar = new Map();
+  if (figmaSnapshotExists()) {
+    const prim = loadFigmaCollections().Primitive.data;
+    for (const [name, v] of Object.entries(prim)) {
+      if (typeof v !== 'string' || !/^#[0-9a-fA-F]{3,8}$/.test(v)) continue;
+      colorByScssVar.set(name.replace(/\//g, '-'), name);
+      colorByCssVar.set(cssVarName(name).toLowerCase(), name);
+    }
   }
-  rows.push(row('S4', '컴포넌트 프리미티브 직접 참조', violations.length ? 'FAIL' : 'PASS', violations.length,
-    violations[0] ? `예: ${violations[0].file}:${violations[0].line}` : ''));
-  addDetail('S4', '컴포넌트 프리미티브 직접 참조', violations.map((v) => `${v.file}:${v.line}  ${v.text}`));
+
+  // 주석을 지운다. 줄 주석을 먼저 지워야 한다 — "// … button/* …" 처럼 줄 주석 안에 든 /* 를
+  // 블록주석 시작으로 잡으면 그 뒤 :root 블록까지 통째로 주석으로 먹힌다(_button.scss 가 그렇다).
+  const blankComments = (text) =>
+    text
+      .replace(/\/\/[^\n]*/g, (m) => m.replace(/[^\n]/g, ' '))
+      .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+
+  // 규칙이 색 프리미티브를 허용하는 자리 = 최상위 :root · [data-theme='dark'] 블록.
+  // 중괄호 균형만 세는 경량 스캐너 — S5/S6 와 같은 방식이다.
+  function allowedRanges(text) {
+    const ranges = [];
+    const re = /^(:root|\[data-theme=['"]dark['"]\])\s*\{/gm;
+    let m;
+    while ((m = re.exec(text))) {
+      let i = re.lastIndex;
+      let depth = 1;
+      while (i < text.length && depth > 0) {
+        if (text[i] === '{') depth++;
+        else if (text[i] === '}') depth--;
+        i++;
+      }
+      ranges.push([m.index, i]);
+    }
+    return ranges;
+  }
+
+  const violations = [];
+  for (const file of componentFiles) {
+    if (isExemptFile(path.basename(file))) continue;
+    const raw = fs.readFileSync(file, 'utf8');
+    const text = blankComments(raw);
+    const ranges = allowedRanges(text);
+    const rawLines = raw.split('\n');
+
+    const hit = (pos, form, primitive) => {
+      if (ranges.some(([a, b]) => pos >= a && pos < b)) return; // 규칙이 허용하는 자리
+      if (isAlwaysAllowedPrimitive(primitive)) return;
+      const lineNo = raw.slice(0, pos).split('\n').length;
+      const lineText = rawLines[lineNo - 1] || '';
+      if (hasExemptionComment(lineText)) return; // S1 과 같은 줄 단위 예외 표기
+      violations.push({ file: rel(file), line: lineNo, form, primitive, text: lineText.trim() });
+    };
+
+    for (const m of text.matchAll(/\$([a-zA-Z][a-zA-Z0-9-]*)/g)) {
+      const p = colorByScssVar.get(m[1].toLowerCase());
+      if (p) hit(m.index, '$' + m[1], p);
+    }
+    for (const m of text.matchAll(/var\(\s*(--bds-[a-zA-Z0-9-]+)/g)) {
+      const p = colorByCssVar.get(m[1].toLowerCase());
+      if (p) hit(m.index, 'var(' + m[1] + ')', p);
+    }
+  }
+
+  violations.sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
+  const status = colorByScssVar.size ? (violations.length ? 'FAIL' : 'PASS') : 'SKIP';
+  rows.push(row('S4', '컴포넌트 색 프리미티브 직접 참조', status, violations.length,
+    colorByScssVar.size
+      ? (violations[0] ? `예: ${violations[0].file}:${violations[0].line} ${violations[0].form}` : `색 프리미티브 ${colorByScssVar.size}개 기준`)
+      : 'figma/tokens.*.json 없음 — 색 프리미티브 목록을 만들 수 없다'));
+  addDetail('S4', '컴포넌트 색 프리미티브 직접 참조(:root·[data-theme] 밖)',
+    violations.map((v) => `${v.file}:${v.line}  ${v.form} -> ${v.primitive}\n        ${v.text.slice(0, 100)}`));
 }
 
 // ── S5. 중복 오버라이드 ───────────────────────────────────────────
@@ -471,6 +558,15 @@ function extractTopLevelBlocks(text) {
   addDetail('S8', '문서 내 수치', violations.map((v) => `${v.file}:${v.line}  ${v.matches.join(' ')}  ${v.text.slice(0, 80)}`));
 }
 
+// ── S9. 쓰이지 않는 예외 ──────────────────────────────────────────
+// 예외 목록의 항목마다 이번 실행에서 몇 번 맞았는지 세고, 0 인 것을 낸다.
+// 근거와 WARN 으로 낸 판단은 lib/allowlist.mjs 「예외 사용량 계측」에 있다.
+// 이 검사는 반드시 다른 검사들이 다 끝난 뒤에 와야 한다 — 그전에는 적중 수가 덜 세어졌다.
+{
+  const ex = unusedExceptionReport();
+  rows.push(row('S9', '쓰이지 않는 예외', 'WARN', ex.count, ex.note));
+  addDetail('S9', '쓰이지 않는 예외 — 이번 실행에서 한 번도 맞지 않은 항목', ex.items);
+}
 // ── 출력 ──────────────────────────────────────────────────────────
 const hasFail = printReport('check-tokens.mjs — SCSS 검사', rows);
 for (const d of details) {

@@ -53,7 +53,7 @@ $board-col-width: var(--bds-board-col-meta);
   // 크기를 직접 대조하니 둘 다 height 22로 동일했다 — "Body/2Xs/Medium"은 Title이 아니라 그
   // 옆에 붙는 Notice 배지(.bds-badge)의 텍스트 스타일이었다(chip-brand-fg·chip-brand-bg와 함께 묶여
   // 바인딩됨). Title 자체는 Kind에 상관없이 항상 body-md/regular다 — 아래 &-notice 오버라이드 제거.
-  // "공지" 표시는 .bds-board-row__content 안에 .bds-badge.chip-sm.chip-brand를 조건부로 넣는 것으로 끝난다.
+  // "공지" 표시는 .bds-board-row__content 안에 .bds-badge.bds-badge-sm.bds-badge-brand를 조건부로 넣는 것으로 끝난다.
 
   &__meta {
     display: flex;

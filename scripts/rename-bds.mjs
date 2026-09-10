@@ -10,7 +10,7 @@
 //
 // 무엇을 근거로 바꾸나
 //   - CSS 변수: 규칙으로 바꾼다(전부 접두사). 스냅샷에 없는 코드 전용 변수도 있어서
-//     목록 기반으로 하면 빠진다 — 예: --avatar-online-ring, --progress-bar-value.
+//     목록 기반으로 하면 빠진다 — 예: --progress-bar-value(소비자가 인라인으로 채운다).
 //   - 클래스: 목록으로 바꾼다. 컴파일된 CSS 의 셀렉터에서 뽑는다(= SCSS 가 실제로 내보내는
 //     클래스 전수). 규칙으로 하면 <table> 태그나 doc-* 문서 클래스까지 건드린다.
 //
@@ -160,9 +160,15 @@ function passVars(text) {
   });
 }
 
-// (B) 점 붙은 클래스 셀렉터 — .scss/.css. map.get·mix.text·1.5·e.g. 를 피하려고 앞 문자를 본다.
+// (B) 점 붙은 클래스 셀렉터 — .scss/.css.
+//
+// 앞 문자로 단어문자를 제외하면 안 된다. 붙여 쓴 선택자(.a.b)의 두 번째 클래스가 바로 그 형태다 —
+// 처음에 제외했더니 .bds-social-btn-brand.social-btn-kakao 처럼 두 번째만 옛 이름으로 남아
+// 그 규칙이 아무 요소에도 안 걸리게 됐다(컴파일된 CSS 에 접두사 없는 클래스가 남는 것으로 드러났다).
+// map.get·mix.text·math.div 같은 네임스페이스 호출은 lookbehind 가 아니라 isClassLike 의
+// 목록 게이트가 막는다 — get·text·div 는 클래스 목록에 없다. 숫자(1.5)는 [a-z] 가 막는다.
 function passDotSelectors(text) {
-  return text.replace(/(?<![\w$.\-])\.([a-z][a-zA-Z0-9_-]*)/g, (all, name) => {
+  return text.replace(/(?<![$])\.([a-z][a-zA-Z0-9_-]*)/g, (all, name) => {
     if (!isClassLike(name)) return all;
     const to = mapClass(name);
     record('selector', '.' + name, '.' + to);

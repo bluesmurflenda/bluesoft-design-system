@@ -29,6 +29,12 @@
   --bds-toggle-track-bg-on-hover: var(--bds-brand-600);
   --bds-toggle-knob-bg: var(--bds-white);
   --bds-toggle-fg: var(--bds-icon-strong);
+  --bds-choice-box-border-invalid: var(--bds-red-500);
+  --bds-choice-box-border-invalid-hover: var(--bds-red-600);
+  --bds-choice-box-border-valid: var(--bds-green-600);
+  --bds-choice-box-border-valid-hover: var(--bds-green-700);
+  --bds-choice-box-ring-invalid: var(--bds-red-200);
+  --bds-choice-box-ring-valid: var(--bds-green-200);
 }
 
 [data-theme='dark'] {
@@ -38,6 +44,12 @@
   --bds-toggle-track-bg-off: var(--bds-neutral-700);
   --bds-toggle-track-bg-off-hover: var(--bds-neutral-600);
   --bds-toggle-knob-bg: var(--bds-neutral-950);
+  --bds-choice-box-border-invalid: var(--bds-red-300);
+  --bds-choice-box-border-invalid-hover: var(--bds-red-400);
+  --bds-choice-box-border-valid: var(--bds-green-400);
+  --bds-choice-box-border-valid-hover: var(--bds-green-300);
+  --bds-choice-box-ring-invalid: var(--bds-red-700);
+  --bds-choice-box-ring-valid: var(--bds-green-700);
 }
 
 $choice-size: 20px;
@@ -54,19 +66,19 @@ $choice-colors: (
     border-hover: var(--bds-choice-box-border-hover),
     ring: $effect-focus-ring,
     selected-bg: var(--bds-choice-box-bg-selected),
-    selected-bg-hover: $blue-700,
+    selected-bg-hover: var(--bds-choice-box-bg-selected),
     label-fg: var(--bds-choice-label-fg),
   ),
   valid: (
-    border: $green-600,
-    border-hover: $green-700,
-    ring: $green-100,
+    border: var(--bds-choice-box-border-valid),
+    border-hover: var(--bds-choice-box-border-valid-hover),
+    ring: var(--bds-choice-box-ring-valid),
     label-fg: var(--bds-choice-label-fg-valid),
   ),
   invalid: (
-    border: $red-500,
-    border-hover: $red-600,
-    ring: $red-200,
+    border: var(--bds-choice-box-border-invalid),
+    border-hover: var(--bds-choice-box-border-invalid-hover),
+    ring: var(--bds-choice-box-ring-invalid),
     label-fg: var(--bds-choice-label-fg-invalid),
   ),
 );

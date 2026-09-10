@@ -34,8 +34,8 @@ $select-bg: var(--bds-field-bg);
 // 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응 시맨틱이 없다.
 $select-validation-colors: (
   normal: (border: var(--bds-field-border), border-hover: var(--bds-field-border-hover), border-focus: var(--bds-field-border-focus), ring: $effect-focus-ring, border-disabled: var(--bds-field-border-disabled)),
-  invalid: (border: $red-500, border-hover: $red-600, border-focus: $red-500, ring: $red-200, border-disabled: $red-200),
-  valid: (border: $green-600, border-hover: $green-700, border-focus: $green-600, ring: $green-100, border-disabled: $green-200),
+  invalid: (border: var(--bds-field-border-invalid), border-hover: var(--bds-field-border-invalid-hover), border-focus: var(--bds-field-border-invalid), ring: var(--bds-field-ring-invalid), border-disabled: var(--bds-field-border-invalid-disabled)),
+  valid: (border: var(--bds-field-border-valid), border-hover: var(--bds-field-border-valid-hover), border-focus: var(--bds-field-border-valid), ring: var(--bds-field-ring-valid), border-disabled: var(--bds-field-border-valid-disabled)),
 );
 
 .bds-select {

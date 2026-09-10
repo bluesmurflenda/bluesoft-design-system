@@ -202,8 +202,8 @@ $tabs-segmented-colors: (
 }
 
 @each $size, $props in $tabs-underline-sizes {
-  .bds-tabs-item-underline.tabs-item-#{$size},
-  .bds-tabs-item-underline-brand.tabs-item-#{$size} {
+  .bds-tabs-item-underline.bds-tabs-item-#{$size},
+  .bds-tabs-item-underline-brand.bds-tabs-item-#{$size} {
     height: map.get($props, height);
 
     .bds-tabs-item__content {
@@ -237,7 +237,7 @@ $tabs-segmented-colors: (
 }
 
 @each $size, $props in $tabs-pill-sizes {
-  .bds-tabs-item-pill.tabs-item-#{$size} {
+  .bds-tabs-item-pill.bds-tabs-item-#{$size} {
     padding-block: map.get($props, padding-y);
     padding-inline: map.get($props, padding-x);
   }
@@ -265,7 +265,7 @@ $tabs-segmented-colors: (
 }
 
 @each $size, $props in $tabs-segmented-sizes {
-  .bds-tabs-item-segmented.tabs-item-#{$size} {
+  .bds-tabs-item-segmented.bds-tabs-item-#{$size} {
     padding-block: map.get($props, padding-y);
     padding-inline: map.get($props, padding-x);
   }

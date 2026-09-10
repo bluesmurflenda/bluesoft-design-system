@@ -106,7 +106,7 @@ $announcement-fg: var(--bds-nav-announcement-fg);
     }
   }
 
-  &-dark.site-header-floating {
+  &-dark.bds-site-header-floating {
     .bds-site-header__main {
       background-color: $header-bg-dark-floating;
     }
@@ -167,7 +167,7 @@ $announcement-fg: var(--bds-nav-announcement-fg);
     }
 
     .bds-nav-menu-item:hover,
-    .bds-nav-menu-item.is-selected {
+    .bds-nav-menu-item.bds-is-selected {
       color: $nav-menu-fg-dark;
     }
   }

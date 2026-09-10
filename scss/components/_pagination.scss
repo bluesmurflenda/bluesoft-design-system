@@ -138,10 +138,10 @@ $pagination-icon-fg: var(--bds-icon-primary);
   }
 }
 
-.bds-pagination-numbers.pagination-sm {
+.bds-pagination-numbers.bds-pagination-sm {
   padding-top: $space-10;
 }
-.bds-pagination-numbers.pagination-lg {
+.bds-pagination-numbers.bds-pagination-lg {
   padding-top: $space-16;
 }
 
@@ -164,10 +164,10 @@ $pagination-icon-fg: var(--bds-icon-primary);
   }
 }
 
-.bds-pagination-simple.pagination-sm {
+.bds-pagination-simple.bds-pagination-sm {
   padding-top: $space-10;
 }
-.bds-pagination-simple.pagination-lg {
+.bds-pagination-simple.bds-pagination-lg {
   padding-top: $space-16;
 }
 
