@@ -23,10 +23,12 @@
   --bds-pagination-group-border: var(--bds-border-control);
 }
 
+// 번호 간격은 사이즈 축이 아니다 — 2026-09-11 실측: Numbers 프레임의 itemSpacing 은 sm·md·lg
+// 전부 space/1 이다. 맵에 있던 gap 키는 @each 가 읽지 않는 죽은 값이었다(lg 만 space/2 로 적혀 있었다).
 $pagination-sizes: (
-  sm: (item: 32px, type: body-sm, gap: $space-1),
-  md: (item: 40px, type: body-lg, gap: $space-1),
-  lg: (item: 48px, type: body-xl, gap: $space-2),
+  sm: (item: 32px, type: body-sm),
+  md: (item: 40px, type: body-lg),
+  lg: (item: 48px, type: body-xl),
 );
 
 $pagination-border: var(--bds-pagination-group-border);
@@ -36,6 +38,7 @@ $pagination-bg-hover: var(--bds-pagination-item-bg-hover);
 $pagination-current-bg: var(--bds-pagination-current-bg);
 $pagination-current-fg: var(--bds-pagination-current-fg);
 $pagination-radius: var(--bds-pagination-radius); // 2026-08-28: [data-shape] 런타임 전환 반영
+$pagination-wrap-radius: var(--bds-pagination-wrap-radius); // 2026-09-11 신설 — 붙은 그룹의 바깥 반경
 $pagination-icon-fg: var(--bds-icon-primary);
 
 // ──────────────────────────────────────────────────────────────
@@ -70,7 +73,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
   // numbers-buttons/button-group 안에서는 사각형(라운드 없음) + 테두리로 서로 붙어있는 형태
   &-square {
     border-radius: 0;
-    border: 1px solid $pagination-border;
+    border: $border-hairline solid $pagination-border;
     margin-left: -1px;
 
     &:first-child {
@@ -113,8 +116,10 @@ $pagination-icon-fg: var(--bds-icon-primary);
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-top: $space-12; // 위 콘텐츠와의 구분선 여백(실측: sm 40/md 48/lg 64 — md 기준값, sm·lg는 아래 사이즈 오버라이드)
-  border-top: 1px solid $pagination-border;
+  // 2026-09-11 실측(15변형 전수): 상 40/48/64 · 좌우 20 · 하 12/16/20. 좌우·아래 패딩이 없었다.
+  // 구분선은 Figma 에서 stroke 가 visible:false 다 — 스크린샷으로도 numbers·simple 에는 선이
+  // 없고 numbers-buttons 에만 있다. 코드가 그리던 border-top 을 뺀다.
+  padding: $space-12 $space-5 $space-4;
 
   .bds-pagination__nav {
     display: inline-flex;
@@ -134,15 +139,15 @@ $pagination-icon-fg: var(--bds-icon-primary);
   .bds-pagination__numbers {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: $space-1;
   }
 }
 
 .bds-pagination-numbers.bds-pagination-sm {
-  padding-top: $space-10;
+  padding: $space-10 $space-5 $space-3;
 }
 .bds-pagination-numbers.bds-pagination-lg {
-  padding-top: $space-16;
+  padding: $space-16 $space-5 $space-5;
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -153,8 +158,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-top: $space-12;
-  border-top: 1px solid $pagination-border;
+  padding: $space-12 $space-5 $space-4; // numbers 와 같은 규격 — 구분선도 같은 이유로 없다
   color: $pagination-fg;
   font-weight: $font-weight-medium;
 
@@ -165,10 +169,10 @@ $pagination-icon-fg: var(--bds-icon-primary);
 }
 
 .bds-pagination-simple.bds-pagination-sm {
-  padding-top: $space-10;
+  padding: $space-10 $space-5 $space-3;
 }
 .bds-pagination-simple.bds-pagination-lg {
-  padding-top: $space-16;
+  padding: $space-16 $space-5 $space-5;
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -193,8 +197,10 @@ $pagination-icon-fg: var(--bds-icon-primary);
 .bds-pagination-group {
   display: inline-flex;
   align-items: stretch;
-  border-radius: $radius-md;
-  border: 1px solid $pagination-border;
+  // 2026-09-11: button-group-wrap 이 무는 Shape 토큰이 새로 생겼다. 프리미티브(radius/md)를
+  // 직접 물고 있어 각진·Pill 모드에서 이 테두리만 안 따라왔다.
+  border-radius: $pagination-wrap-radius;
+  border: $border-hairline solid $pagination-border;
   overflow: hidden;
 
   .bds-pagination-number-square {
@@ -224,10 +230,21 @@ $pagination-icon-fg: var(--bds-icon-primary);
   }
 }
 
+// 2026-09-11 실측: 이 Type 만 상단 구분선이 켜져 있다(다른 Type 은 stroke visible:false).
+// 루트 패딩은 상하 12/16/20 · 좌우 20 이고 배치는 SPACE_BETWEEN 이다 — gap 은 쓰지 않는다.
 .bds-pagination-numbers-buttons {
   display: flex;
   align-items: center;
-  gap: $space-3;
+  justify-content: space-between;
+  width: 100%;
+  padding: $space-4 $space-5;
+  border-top: $border-hairline solid $pagination-border;
+}
+.bds-pagination-numbers-buttons.bds-pagination-sm {
+  padding: $space-3 $space-5;
+}
+.bds-pagination-numbers-buttons.bds-pagination-lg {
+  padding: $space-5;
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -239,8 +256,8 @@ $pagination-icon-fg: var(--bds-icon-primary);
   width: 100%;
   justify-content: space-between;
   padding-block: $space-3;
-  border-top: 1px solid $pagination-border;
-  border-bottom: 1px solid $pagination-border;
+  // 실측: 테두리는 위쪽 하나뿐이다(individualStrokeWeights top=1, 나머지 0). 아래쪽도 그리고 있었다
+  border-top: $border-hairline solid $pagination-border;
 
   &__nav {
     display: inline-flex;
@@ -273,6 +290,6 @@ $pagination-icon-fg: var(--bds-icon-primary);
   &__numbers {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: $space-1;
   }
 }
