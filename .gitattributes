@@ -1,3 +1,9 @@
 # 셸 훅은 CRLF 로 체크아웃되면 shebang 뒤의 \r 때문에 실행되지 않는다.
 # 이 저장소는 Windows 에서 작업하므로 훅 디렉터리만 LF 로 고정한다.
 .githooks/** text eol=lf
+
+# 검사 스크립트는 SCSS 를 줄 단위 정규식으로 읽는다. CRLF 로 체크아웃되면
+# JS 의 `.` 가 \r 도 제외하는 탓에 `//.*$` 가 줄 끝에 닿지 못해 주석이 안 지워지고,
+# 주석 안에 적어 둔 hex 가 S1 위반으로 잡힌다. 검사 입력은 LF 로 고정한다.
+*.scss text eol=lf
+*.mjs text eol=lf

@@ -60,7 +60,9 @@ function addDetail(id, title, items) {
 // ── S1. hex 하드코딩 ──────────────────────────────────────────────
 {
   const HEX_RE = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g;
-  const stripLineComment = (line) => line.replace(/\/\/.*$/, ''); // 주석 안 예시 코드는 대상 아님
+  // s 플래그가 있어야 CRLF 에서도 줄 끝까지 지운다 — JS 의 `.` 는 \r 도 제외하므로,
+  // 없으면 `$` 가 \r 뒤 문자열 끝에 닿지 못해 주석이 통째로 남고 주석 안 hex 가 오탐된다.
+  const stripLineComment = (line) => line.replace(/\/\/.*$/s, ''); // 주석 안 예시 코드는 대상 아님
   const violations = [];
   for (const file of ALL_SCSS_FILES) {
     if (rel(file) === 'scss/tokens/_primitive.scss') continue;
