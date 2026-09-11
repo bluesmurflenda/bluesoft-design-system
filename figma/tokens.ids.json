@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "exportedAt": "2026-09-10",
+    "exportedAt": "2026-09-11",
     "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
     "purpose": "check-nodes.mjs가 REST boundVariables의 VariableID:<id>를 이름·컬렉션으로 해석하는 데 쓴다. Variables REST API(Enterprise 전용)를 못 쓰는 대신 MCP로 추출.",
     "note": "키는 'VariableID:' 접두사를 뺀 나머지(예: '997:12')다.",
-    "count": 602
+    "count": 609
   },
   "Primitive": {
     "5:75": "black",
@@ -211,7 +211,11 @@
     "66:26": "yellow/700",
     "5:70": "yellow/800",
     "66:27": "yellow/900",
-    "66:28": "yellow/950"
+    "66:28": "yellow/950",
+    "2034:2": "space/0-5",
+    "2034:3": "space/1-5",
+    "2034:4": "space/2-5",
+    "2034:5": "space/3-5"
   },
   "Theme": {
     "997:3": "accent/100",
@@ -532,7 +536,8 @@
     "744:4": "tooltip/dark/fg-supporting",
     "744:5": "tooltip/light/bg",
     "744:6": "tooltip/light/fg",
-    "744:7": "tooltip/light/fg-supporting"
+    "744:7": "tooltip/light/fg-supporting",
+    "2042:2": "field/hint/fg-invalid"
   },
   "Shape": {
     "1788:254": "accordion/rounded/radius",
@@ -575,7 +580,9 @@
     "1046:8": "table/cell/padding-x/sm",
     "983:3": "tabs/gap/pill",
     "983:2": "tabs/gap/underline",
-    "423:10048": "tabs/radius"
+    "423:10048": "tabs/radius",
+    "2115:170": "pagination/wrap/radius",
+    "2115:171": "pagination/wrap/radius-sm"
   },
   "Breakpoint": {
     "242:539": "breakpoint",

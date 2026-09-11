@@ -8,6 +8,8 @@
   --bds-btn-radius: var(--bds-radius-sm);
   --bds-tabs-radius: var(--bds-radius-lg);
   --bds-pagination-radius: var(--bds-radius-sm);
+  --bds-pagination-wrap-radius: var(--bds-radius-md);
+  --bds-pagination-wrap-radius-sm: var(--bds-radius-sm);
   --bds-con-radius: var(--bds-radius-sm);
   --bds-btn-padding-x-sm: var(--bds-space-3);
   --bds-btn-padding-x-md: var(--bds-space-5);
@@ -50,6 +52,8 @@
   --bds-btn-radius: var(--bds-radius-none);
   --bds-tabs-radius: var(--bds-radius-none);
   --bds-pagination-radius: var(--bds-radius-none);
+  --bds-pagination-wrap-radius: var(--bds-radius-none);
+  --bds-pagination-wrap-radius-sm: var(--bds-radius-none);
   --bds-con-radius: var(--bds-radius-none);
   --bds-calendar-radius: var(--bds-radius-none);
   --bds-calendar-cell-radius: var(--bds-radius-none);
@@ -64,6 +68,8 @@
   --bds-btn-radius: var(--bds-radius-full);
   --bds-tabs-radius: var(--bds-radius-full);
   --bds-pagination-radius: var(--bds-radius-full);
+  --bds-pagination-wrap-radius: var(--bds-radius-full);
+  --bds-pagination-wrap-radius-sm: var(--bds-radius-full);
   --bds-con-radius: var(--bds-radius-full);
   --bds-btn-padding-x-sm: var(--bds-space-4);
   --bds-btn-padding-x-xl: var(--bds-space-7);
@@ -80,6 +86,8 @@
 $btn-radius: var(--bds-btn-radius);
 $tabs-radius: var(--bds-tabs-radius);
 $pagination-radius: var(--bds-pagination-radius);
+$pagination-wrap-radius: var(--bds-pagination-wrap-radius);
+$pagination-wrap-radius-sm: var(--bds-pagination-wrap-radius-sm);
 $con-radius: var(--bds-con-radius);
 $btn-padding-x-sm: var(--bds-btn-padding-x-sm);
 $btn-padding-x-md: var(--bds-btn-padding-x-md);
