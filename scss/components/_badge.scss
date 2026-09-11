@@ -38,10 +38,12 @@
   --bds-badge-info-fg: var(--bds-blue-400);
 }
 
+// 2026-09-11 실측(18변형 전수): 좌우 패딩은 sm 만 space/2 이고 md·lg 는 space/3,
+// 항목 간격은 세 사이즈 모두 space/1 이다. md 가 리터럴 10px, lg 가 리터럴 6px 이었다.
 $badge-sizes: (
   sm: (height: 22px, padding-x: $space-2, gap: $space-1, type: body-2xs, icon: 12px, dot: 6px),
-  md: (height: 24px, padding-x: 10px, gap: $space-1, type: body-sm, icon: 14px, dot: 6px),
-  lg: (height: 28px, padding-x: $space-3, gap: 6px, type: body-sm, icon: 16px, dot: 8px),
+  md: (height: 24px, padding-x: $space-3, gap: $space-1, type: body-sm, icon: 14px, dot: 6px),
+  lg: (height: 28px, padding-x: $space-3, gap: $space-1, type: body-sm, icon: 16px, dot: 8px),
 );
 $badge-colors: (
   brand: (bg: var(--bds-badge-brand-bg), fg: var(--bds-badge-brand-fg)),
@@ -96,18 +98,23 @@ $badge-colors: (
   }
 }
 
-// Chip/dot(node 1010:1783) — Chip과 별개 컴포넌트. 배경 없이 점+텍스트만 있다(2026-08-28 확인,
-// status-spec 2장). height·텍스트 스케일은 Chip과 같지만 padding-x(8/8/9)·점 크기(6/8/10)가 다르다
-// — .bds-badge__dot(위, Chip 내부 Dot 슬롯)과는 별개라 이름 충돌을 피해 .bds-badge-dot__dot으로 둔다.
+// Badge/dot(node 1010:1783) — Badge 와 별개 컴포넌트. 배경 없이 점+텍스트만 있다.
+// .bds-badge__dot(위, Badge 내부 Dot 슬롯)과는 별개라 이름 충돌을 피해 .bds-badge-dot__dot 으로 둔다.
+
+// 2026-09-11 실측(18변형 전수): 좌우 패딩과 항목 간격은 사이즈와 무관하게 둘 다 space/2 다.
+// 사이즈로 갈리는 것은 높이·텍스트 스케일·점 크기뿐이라 공통값은 base 로 올렸다.
+// 패딩이 8/8/9 로, 간격이 4/4/6 으로 적혀 있었다.
 $badge-dot-sizes: (
-  sm: (height: 22px, padding-x: 8px, gap: $space-1, type: body-2xs, dot: 6px),
-  md: (height: 24px, padding-x: 8px, gap: $space-1, type: body-sm, dot: 8px),
-  lg: (height: 28px, padding-x: 9px, gap: 6px, type: body-sm, dot: 10px),
+  sm: (height: 22px, type: body-2xs, dot: 6px),
+  md: (height: 24px, type: body-sm, dot: 8px),
+  lg: (height: 28px, type: body-sm, dot: 10px),
 );
 
 .bds-badge-dot {
   display: inline-flex;
   align-items: center;
+  gap: $space-2; // 실측: 사이즈 무관
+  padding-inline: $space-2; // 실측: 사이즈 무관
 
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
@@ -121,8 +128,6 @@ $badge-dot-sizes: (
 @each $size, $props in $badge-dot-sizes {
   .bds-badge-dot-#{$size} {
     height: map.get($props, height);
-    padding-inline: map.get($props, padding-x);
-    gap: map.get($props, gap);
 
     @include mix.text(map.get($props, type), medium);
 

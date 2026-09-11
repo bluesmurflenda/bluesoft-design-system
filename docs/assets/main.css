@@ -1324,7 +1324,7 @@ table {
 
 .bds-badge-md {
   height: 24px;
-  padding-inline: 10px;
+  padding-inline: var(--bds-space-3);
   gap: var(--bds-space-1);
   font-size: var(--bds-font-size-body-sm);
   line-height: var(--bds-font-leading-body-sm);
@@ -1346,7 +1346,7 @@ table {
 .bds-badge-lg {
   height: 28px;
   padding-inline: var(--bds-space-3);
-  gap: 6px;
+  gap: var(--bds-space-1);
   font-size: var(--bds-font-size-body-sm);
   line-height: var(--bds-font-leading-body-sm);
   font-weight: var(--bds-font-weight-medium);
@@ -1415,6 +1415,8 @@ table {
 .bds-badge-dot {
   display: inline-flex;
   align-items: center;
+  gap: var(--bds-space-2);
+  padding-inline: var(--bds-space-2);
   white-space: nowrap;
 }
 .bds-badge-dot__dot {
@@ -1424,8 +1426,6 @@ table {
 
 .bds-badge-dot-sm {
   height: 22px;
-  padding-inline: 8px;
-  gap: var(--bds-space-1);
   font-size: var(--bds-font-size-body-2xs);
   line-height: var(--bds-font-leading-body-2xs);
   font-weight: var(--bds-font-weight-medium);
@@ -1437,8 +1437,6 @@ table {
 
 .bds-badge-dot-md {
   height: 24px;
-  padding-inline: 8px;
-  gap: var(--bds-space-1);
   font-size: var(--bds-font-size-body-sm);
   line-height: var(--bds-font-leading-body-sm);
   font-weight: var(--bds-font-weight-medium);
@@ -1450,8 +1448,6 @@ table {
 
 .bds-badge-dot-lg {
   height: 28px;
-  padding-inline: 9px;
-  gap: 6px;
   font-size: var(--bds-font-size-body-sm);
   line-height: var(--bds-font-leading-body-sm);
   font-weight: var(--bds-font-weight-medium);
