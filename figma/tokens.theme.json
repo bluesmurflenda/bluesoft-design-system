@@ -3,7 +3,7 @@
     "exportedAt": "2026-09-11",
     "source": "use_figma (Plugin API) — DS Master kJD5jv7RNKxLD1hP8oKtBG",
     "collection": "Theme",
-    "count": 320
+    "count": 321
   },
   "_modes": [
     "Default",
@@ -1288,5 +1288,9 @@
   "field/hint/fg-invalid": {
     "Default": "var(--red-500)",
     "Dark": "var(--red-300)"
+  },
+  "nav/fg-selected": {
+    "Default": "var(--text-brand)",
+    "Dark": "var(--text-brand)"
   }
 }

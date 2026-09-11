@@ -57,33 +57,10 @@ function addDetail(id, title, items) {
   if (items.length) details.push({ id, title, items });
 }
 
-// ── S1. hex 하드코딩 ──────────────────────────────────────────────
-{
-  const HEX_RE = /#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g;
-  // s 플래그가 있어야 CRLF 에서도 줄 끝까지 지운다 — JS 의 `.` 는 \r 도 제외하므로,
-  // 없으면 `$` 가 \r 뒤 문자열 끝에 닿지 못해 주석이 통째로 남고 주석 안 hex 가 오탐된다.
-  const stripLineComment = (line) => line.replace(/\/\/.*$/s, ''); // 주석 안 예시 코드는 대상 아님
-  const violations = [];
-  for (const file of ALL_SCSS_FILES) {
-    if (rel(file) === 'scss/tokens/_primitive.scss') continue;
-    const lines = fs.readFileSync(file, 'utf8').split('\n');
-    lines.forEach((rawLine, i) => {
-      if (hasExemptionComment(rawLine)) return;
-      const line = stripLineComment(rawLine);
-      const matches = line.match(HEX_RE);
-      if (matches) violations.push({ file: rel(file), line: i + 1, text: rawLine.trim(), matches });
-    });
-  }
-  const byFile = new Map();
-  for (const v of violations) byFile.set(v.file, (byFile.get(v.file) || 0) + 1);
-  const byFileSorted = [...byFile.entries()].sort((a, b) => b[1] - a[1]);
-  rows.push(
-    row('S1', 'hex 하드코딩', violations.length ? 'FAIL' : 'PASS', violations.length,
-      violations[0] ? `예: ${violations[0].file}:${violations[0].line}` : '')
-  );
-  addDetail('S1', 'hex 하드코딩', violations.map((v) => `${v.file}:${v.line}  ${v.text}`));
-  addDetail('S1-byfile', 'hex 하드코딩 — 파일별 건수', byFileSorted.map(([f, c]) => `${c}\t${f}`));
-}
+// S1(hex 하드코딩)은 지웠다 — stylelint 의 color-no-hex 가 같은 일을 더 정확하게 한다.
+// 겹치는 검사는 약한 쪽이 오탐을 낸다: S1 의 줄 단위 정규식이 CRLF 에서 주석을 못 지워
+// 주석 안에 적어 둔 hex 를 위반으로 잡았다. 예외 표기는 /* stylelint-disable-next-line
+// color-no-hex */ 로 옮겼다.
 
 // ── S2. Figma ↔ CSS 토큰 대조 ─────────────────────────────────────
 {

@@ -537,7 +537,8 @@
     "744:5": "tooltip/light/bg",
     "744:6": "tooltip/light/fg",
     "744:7": "tooltip/light/fg-supporting",
-    "2042:2": "field/hint/fg-invalid"
+    "2042:2": "field/hint/fg-invalid",
+    "2131:2": "nav/fg-selected"
   },
   "Shape": {
     "1788:254": "accordion/rounded/radius",
