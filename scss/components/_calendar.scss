@@ -1,7 +1,7 @@
 // Figma DS Master > Calendar(954:5704, Type=default/Card) + Day Cell(947:95), 2026-08-31 재실측
 // 셀은 44×44 원형(radius full), gap 4(행·열 공통). Type=Card만 배경(surface/subtle)이 있고
 // Type=default는 투명 — 둘 다 패딩·라운드는 동일.
-//
+
 // Day Cell의 State×Day 우선순위: default·today·available은 Day(요일) 색이 이기고, selected·past·
 // unavailable은 State 색이 이긴다 — 아래 클래스 선언 순서가 이미 이 규칙대로다(동일 특정도에서
 // 나중에 선언된 쪽이 이긴다): is-saturday/is-sunday를 먼저 두고, is-past/is-unavailable/is-selected를
@@ -21,6 +21,7 @@
   --bds-calendar-saturday-fg: var(--bds-text-brand);
   --bds-calendar-sunday-fg: var(--bds-red-700);
   --bds-calendar-day-fg: var(--bds-text-primary);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-calendar-cell-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴(완전 투명) */
   --bds-calendar-cell-selected-bg: var(--bds-brand-600);
   --bds-calendar-cell-selected-fg: var(--bds-text-inverse);

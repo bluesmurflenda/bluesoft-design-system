@@ -19,7 +19,7 @@
 // get_variable_defs로 Table/Header(1046:1073)·Table/Row(1046:1036) 라이브 바인딩을 직접 재확인해
 // (둘 다 #fafafa=neutral-50=surface/subtle) 전부 제거했다. header-col/bg와 header-row/bg가 다른
 // 값이라던 기존 주석은 slate→neutral 정리 이전의 낡은 측정이었다.
-//
+
 // table/header-col/* 의 codeSyntax가 깨져 있어(-col 누락, Figma Dev Mode엔 --bds-table-header-bg로
 // 표시된다) 실제 이름과 다르지만, 코드는 정상 이름(--bds-table-header-col-*)을 쓴다 — 7단계 후 Figma
 // 수정 예정(PROGRESS.md 막힌 것 참조). table/cell/fg-supporting도 기존 코드의 "muted" 대신
@@ -114,25 +114,8 @@ $table-cell-sizes: (
     flex: 1 0 0;
     min-width: 0;
   }
-}
 
-@each $size, $props in $table-cell-sizes {
-  .bds-table-cell-#{$size} {
-    // 2026-08-28 확인(table-nav-spec): counterAxisSizingMode AUTO + minHeight다 — height 고정 금지.
-    // 한 줄이면 이 값과 같고 텍스트가 여러 줄이면 셀이 늘어난다(고정 44라 잘리던 결함의 재발 방지).
-    // padding-y는 0 — 세로 여백은 align-items:center가 만든다(패딩과 함께 쓰면 여러 줄에서 과도해짐).
-    min-height: map.get($props, height);
-    padding-inline: map.get($props, padding-x);
-
-    // font-weight는 Role(body/header-col/header-row) 축이라 사이즈 축과 분리 — size/line-height만 $type-scale에서 읽는다.
-    $table-cell-type: map.get(maps.$type-scale, map.get($props, type));
-
-    font-size: map.get($table-cell-type, size);
-    line-height: map.get($table-cell-type, lh);
-  }
-}
-
-.bds-table-cell {
+  // 아래는 @each 뒤에 따로 열려 있었다(중복 선택자). 겹치는 속성이 없어 여기로 합쳐도 결과가 같다.
   &-body {
     color: $table-cell-fg;
     font-weight: $font-weight-medium;
@@ -171,6 +154,22 @@ $table-cell-sizes: (
       width: 32px;
       height: 32px;
     }
+  }
+}
+
+@each $size, $props in $table-cell-sizes {
+  .bds-table-cell-#{$size} {
+    // 2026-08-28 확인(table-nav-spec): counterAxisSizingMode AUTO + minHeight다 — height 고정 금지.
+    // 한 줄이면 이 값과 같고 텍스트가 여러 줄이면 셀이 늘어난다(고정 44라 잘리던 결함의 재발 방지).
+    // padding-y는 0 — 세로 여백은 align-items:center가 만든다(패딩과 함께 쓰면 여러 줄에서 과도해짐).
+    min-height: map.get($props, height);
+    padding-inline: map.get($props, padding-x);
+
+    // font-weight는 Role(body/header-col/header-row) 축이라 사이즈 축과 분리 — size/line-height만 $type-scale에서 읽는다.
+    $table-cell-type: map.get(maps.$type-scale, map.get($props, type));
+
+    font-size: map.get($table-cell-type, size);
+    line-height: map.get($table-cell-type, lh);
   }
 }
 

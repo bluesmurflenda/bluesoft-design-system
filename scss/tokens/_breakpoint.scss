@@ -1,11 +1,11 @@
 // Figma DS Master > Breakpoint collection(Mobile/Tablet/Laptop/Desktop/Wide) — 자동 생성.
 // 출처: figma/tokens.breakpoint.json. 값(--bds-x 커스텀 프로퍼티)의 미디어쿼리는 각 모드의 breakpoint
 // 토큰값을 그대로 쓴다. 각 미디어쿼리는 "바로 앞 구간과 값이 다른 토큰"만 담는다(모바일-퍼스트).
-//
+
 // 최상단(Wide) 모드는 미디어쿼리로 만들지 않는다 — ADR-026. Figma 에서는 모드를 유지하되
 // (아트보드 폭에 바인딩돼 실제로 일한다) 코드에는 분기를 두지 않는다는 결정이다.
 // Wide 에서 Desktop 과 값이 갈리는 토큰은 grid/margin · breakpoint 둘뿐이고 둘 다 시안 전용이다.
-//
+
 // $css-breakpoint-sm/md/lg 는 위와 별개다 — abstracts/_maps.scss($breakpoints 맵)·
 // components/_header.scss(모바일 nav 토글 등)가 @media 조건에 직접 쓰는 컴파일타임 픽셀 상수라
 // var()로 못 바꾼다(미디어쿼리 조건은 CSS 커스텀 프로퍼티를 못 읽는다).

@@ -12,14 +12,19 @@
 // 그룹이 아니라 button 네임스페이스를 공유한다. 커스텀 프로퍼티 이름도 그대로 맞춘다.
 :root {
   --bds-btn-ghost-inverse-fg: var(--bds-white);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-inverse-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-inverse-bg-hover: #ffffff1a; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-inverse-bg-pressed: #ffffff29; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-brand-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-ghost-brand-bg-hover: var(--bds-brand-50);
   --bds-btn-ghost-brand-bg-pressed: var(--bds-brand-100);
   --bds-btn-ghost-brand-fg: var(--bds-text-brand);
   --bds-btn-ghost-brand-fg-disabled: var(--bds-text-disabled);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-white-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-ghost-white-bg-hover: var(--bds-neutral-100);
   --bds-btn-ghost-white-bg-pressed: var(--bds-neutral-200);
@@ -68,6 +73,76 @@ $icon-button-extra-variants: (
     outline: none;
     box-shadow: 0 0 0 2px var(--bds-surface-default), 0 0 0 4px $effect-focus-ring;
   }
+
+  // 아래 세 변형은 @each 뒤에 따로 열려 있었다(중복 선택자). @each 가 내는 공유 8변형과 이름이 겹치지 않아 여기로 합쳐도 결과가 같다.
+  // ghost-inverse: 어두운 배경 위 아이콘 버튼. disabled여도 배경은 투명 유지, 글자만 공용 disabled 톤으로.
+  &-ghost-inverse {
+    $c: map.get($icon-button-extra-variants, ghost-inverse);
+
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: map.get($c, bg-hover);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background-color: map.get($c, bg-pressed);
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: transparent;
+      color: btn.$btn-disabled-fg;
+    }
+  }
+
+  // ghost-brand: 투명 배경 + 브랜드 글자색. disabled도 배경은 투명 유지(전용 fg-disabled 사용).
+  &-ghost-brand {
+    $c: map.get($icon-button-extra-variants, ghost-brand);
+
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: map.get($c, bg-hover);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background-color: map.get($c, bg-pressed);
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: transparent;
+      color: var(--bds-btn-ghost-brand-fg-disabled);
+    }
+  }
+
+  // ghost-white: ghost와 배경 처리 동일, 아이콘만 흰색. disabled는 배경 투명 유지 + 공용 disabled 톤(다른 공유 변형과 동일 처리).
+  &-ghost-white {
+    $c: map.get($icon-button-extra-variants, ghost-white);
+
+    background-color: map.get($c, bg);
+    color: map.get($c, fg);
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background-color: map.get($c, bg-hover);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background-color: map.get($c, bg-pressed);
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+    &:disabled,
+    &[aria-disabled='true'] {
+      background-color: transparent;
+      color: btn.$btn-disabled-fg;
+    }
+  }
 }
 
 @each $size, $props in $icon-button-sizes {
@@ -110,74 +185,6 @@ $icon-button-extra-variants: (
       @if map.has-key($colors, border) {
         border-color: btn.$btn-disabled-border;
       }
-    }
-  }
-}
-
-.bds-icon-btn {
-  // ghost-inverse: 어두운 배경 위 아이콘 버튼. disabled여도 배경은 투명 유지, 글자만 공용 disabled 톤으로.
-  &-ghost-inverse {
-    $c: map.get($icon-button-extra-variants, ghost-inverse);
-
-    background-color: map.get($c, bg);
-    color: map.get($c, fg);
-
-    &:hover:not(:disabled, [aria-disabled='true']) {
-      background-color: map.get($c, bg-hover);
-    }
-
-    &:active:not(:disabled, [aria-disabled='true']) {
-      background-color: map.get($c, bg-pressed);
-    }
-
-    &:disabled,
-    &[aria-disabled='true'] {
-      background-color: transparent;
-      color: btn.$btn-disabled-fg;
-    }
-  }
-
-  // ghost-brand: 투명 배경 + 브랜드 글자색. disabled도 배경은 투명 유지(전용 fg-disabled 사용).
-  &-ghost-brand {
-    $c: map.get($icon-button-extra-variants, ghost-brand);
-
-    background-color: map.get($c, bg);
-    color: map.get($c, fg);
-
-    &:hover:not(:disabled, [aria-disabled='true']) {
-      background-color: map.get($c, bg-hover);
-    }
-
-    &:active:not(:disabled, [aria-disabled='true']) {
-      background-color: map.get($c, bg-pressed);
-    }
-
-    &:disabled,
-    &[aria-disabled='true'] {
-      background-color: transparent;
-      color: var(--bds-btn-ghost-brand-fg-disabled);
-    }
-  }
-
-  // ghost-white: ghost와 배경 처리 동일, 아이콘만 흰색. disabled는 배경 투명 유지 + 공용 disabled 톤(다른 공유 변형과 동일 처리).
-  &-ghost-white {
-    $c: map.get($icon-button-extra-variants, ghost-white);
-
-    background-color: map.get($c, bg);
-    color: map.get($c, fg);
-
-    &:hover:not(:disabled, [aria-disabled='true']) {
-      background-color: map.get($c, bg-hover);
-    }
-
-    &:active:not(:disabled, [aria-disabled='true']) {
-      background-color: map.get($c, bg-pressed);
-    }
-
-    &:disabled,
-    &[aria-disabled='true'] {
-      background-color: transparent;
-      color: btn.$btn-disabled-fg;
     }
   }
 }

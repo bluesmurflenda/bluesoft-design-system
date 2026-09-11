@@ -137,6 +137,19 @@ $input-validation-colors: (
   }
 
   // &__hint의 타이포는 아래 @each의 text()로 낸다 — control 과 키가 다르다($input-sizes 주석)
+
+  // disabled 는 아래 @each 뒤에 따로 열려 있었다(중복 선택자). 여기로 합쳐도 결과가 같다 —
+  // @each 가 내는 .bds-input-{validation} 과 겹치는 속성이 없다(border 계열 vs 배경·그림자).
+  &-disabled {
+    .bds-input__field {
+      background-color: $input-disabled-bg;
+      box-shadow: $input-shadow;
+    }
+
+    .bds-input__hint {
+      opacity: 0.4; // 2026-08-28 실측: disabled+invalid/valid 조합에서 힌트 텍스트만 40%로 흐려짐
+    }
+  }
 }
 
 @each $size, $props in $input-sizes {
@@ -185,18 +198,5 @@ $input-validation-colors: (
 
   .bds-input-#{$validation}.bds-input-disabled .bds-input__field {
     border-color: map.get($c, border-disabled);
-  }
-}
-
-.bds-input {
-  &-disabled {
-    .bds-input__field {
-      background-color: $input-disabled-bg;
-      box-shadow: $input-shadow;
-    }
-
-    .bds-input__hint {
-      opacity: 0.4; // 2026-08-28 실측: disabled+invalid/valid 조합에서 힌트 텍스트만 40%로 흐려짐
-    }
   }
 }

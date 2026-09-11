@@ -27,6 +27,7 @@
   --bds-btn-outline-fg: var(--bds-text-secondary);
   --bds-btn-outline-border: var(--bds-border-default);
   --bds-btn-ghost-fg: var(--bds-text-secondary);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-ghost-bg-hover: var(--bds-neutral-100);
   --bds-btn-ghost-bg-pressed: var(--bds-neutral-200);
@@ -37,12 +38,18 @@
   --bds-btn-disabled-bg: var(--bds-neutral-100);
   --bds-btn-disabled-fg: var(--bds-text-disabled);
   --bds-btn-disabled-border: var(--bds-border-default);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-dark-bg: #0000004d; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-dark-bg-hover: #00000099; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-dark-bg-pressed: #000000cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-scrim-dark-fg: var(--bds-white);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-light-bg: #ffffff4d; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-light-bg-hover: #ffffff99; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-light-bg-pressed: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-scrim-light-fg: var(--bds-neutral-900);
   --bds-btn-link-fg: var(--bds-text-secondary);
@@ -196,6 +203,7 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
     color: $btn-link-fg-pressed;
   }
 
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
   &:disabled,
   &[aria-disabled='true'] {
     color: $btn-link-fg-disabled;

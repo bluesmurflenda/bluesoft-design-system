@@ -2,11 +2,11 @@
 // 2026-09-11 라이브 실측.
 // Accordion 은 Container(no|border|rounded|each) 한 축, Item 은 Size(sm/md/lg) ×
 // Expanded(no/yes) × Shape(square/rounded) × State(default/hover) 다.
-//
+
 // Item 의 Shape 축은 코드에서 별도 클래스로 두지 않는다 — Figma 에서도 컨테이너가
 // each 일 때만 아이템이 rounded 이고, 나머지 세 Container 에서는 전부 square 다.
 // 그래서 `.bds-accordion-each .bds-accordion__item` 이 그 자리를 대신한다.
-//
+
 // Container=no 는 아무 장식이 없다(테두리·반경 모두 없음) — base 클래스가 그대로 그 상태라
 // 변형 클래스를 두지 않는다. 나머지 셋만 `-border`·`-rounded`·`-each` 로 낸다.
 
@@ -146,10 +146,12 @@ $accordion-radius: var(--bds-accordion-rounded-radius);
       overflow: hidden;
     }
 
+    /* stylelint-disable no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다 */
     .bds-accordion__trigger,
     .bds-accordion__panel {
       border-bottom: none;
     }
+    /* stylelint-enable no-descending-specificity */
 
     .bds-accordion__trigger[aria-expanded='true'] {
       border-bottom: $border-hairline solid $accordion-border;

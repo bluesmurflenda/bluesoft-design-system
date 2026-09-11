@@ -2,14 +2,14 @@
 // Header(833:40, Theme×Right action×Width×Surface) + _Nav/Menu Item(831:47, Theme×State) +
 // _Nav/Announcement(832:33) 를 한 파일로 묶는다 — 전부 헤더 하나를 구성하는 부품이라 Pagination
 // 때와 같은 이유로 파일을 분리하지 않는다.
-//
+
 // 높이는 breakpoint 토큰(--bds-header-height)을 그대로 쓴다: mobile/tablet/laptop 64, desktop/wide 80.
 // laptop→desktop 전환점은 tokens/_breakpoint.scss 자체가 1440에서 --bds-header-height를 64->80으로
 // 바꾸는 지점과 같다(7단계에서 $css-breakpoint-lg를 1280->1440으로 정정 — 아래 "브레이크포인트
 // 결정" 참고). 다만 메뉴/햄버거 전환 자체는 이 lg 상수를 안 쓰고 sm(768)만 쓴다 — Figma엔 375(모바일)·
 // full/1920(데스크톱) 두 상태만 있고 768/1024 구간의 메뉴 노출 방식은 실측 근거가 없어 기존 768
 // 그대로 둔다(범위 밖 — 필요하면 별도 확인).
-//
+
 // Theme=light/dark는 다크모드가 아니라 "밝은/어두운 스타일" 축이다(FIGMA.md 「`Theme=dark` 는 다크모드가 아니다」) — 라이트·다크
 // 별칭 대상이 같은 토큰은 [data-theme=dark] 오버라이드를 두지 않는다. Surface=solid/floating은
 // 2026-08-28 당시 미확인이었으나 이번에 확인 완료 — floating은 반투명 배경(nav/bg-floating,
@@ -32,7 +32,9 @@
   --bds-nav-dark-fg: var(--bds-white);
   --bds-nav-announcement-bg: var(--bds-blue-800);
   --bds-nav-announcement-fg: var(--bds-white);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-nav-bg-floating: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-nav-dark-bg-floating: #262626cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴, Theme=dark 스타일이라 라이트·다크 공통 */
 }
 
@@ -51,6 +53,24 @@ $nav-menu-fg-dark: var(--bds-nav-dark-fg); // dark는 default/hover/selected 전
 
 $announcement-bg: var(--bds-nav-announcement-bg);
 $announcement-fg: var(--bds-nav-announcement-fg);
+
+// 메뉴 항목의 기본 스타일 — .bds-site-header-dark 가 이 위에 색을 덮으므로
+// 낮은 specificity 인 이 규칙이 먼저 와야 한다(no-descending-specificity).
+.bds-nav-menu-item {
+  display: inline-flex;
+  align-items: center;
+  padding: $space-3 $space-4;
+  color: $nav-menu-fg-light;
+
+  @include mix.text(body-xl, bold);
+
+  cursor: pointer;
+
+  &:hover,
+  &.bds-is-selected {
+    color: $nav-menu-fg-hover-light;
+  }
+}
 
 .bds-site-header {
   width: 100%;
@@ -94,6 +114,18 @@ $announcement-fg: var(--bds-nav-announcement-fg);
   &-dark {
     .bds-site-header__main {
       background-color: $header-bg-dark;
+    }
+
+    // 아래 둘은 파일 끝에서 같은 &-dark 를 다시 열어 두고 있었다(중복 선택자).
+    // 여기 합친다 — 메뉴 항목은 &-dark 안에 중첩하고 상태는 복합 선택자로 펼친다.
+    // .bds-nav-menu-item 안에서 다시 &:hover 를 쓰면 요소 중첩이 4단이 된다.
+    .bds-nav-menu-item {
+      color: $nav-menu-fg-dark;
+    }
+
+    .bds-nav-menu-item:hover,
+    .bds-nav-menu-item.bds-is-selected {
+      color: $nav-menu-fg-dark;
     }
   }
 
@@ -139,37 +171,6 @@ $announcement-fg: var(--bds-nav-announcement-fg);
 
     @media (max-width: bp.$css-breakpoint-sm - 1) {
       display: inline-flex;
-    }
-  }
-}
-
-.bds-nav-menu-item {
-  display: inline-flex;
-  align-items: center;
-  padding: $space-3 $space-4;
-  color: $nav-menu-fg-light;
-
-  @include mix.text(body-xl, bold);
-
-  cursor: pointer;
-
-  &:hover,
-  &.bds-is-selected {
-    color: $nav-menu-fg-hover-light;
-  }
-}
-
-// &-dark 안에 .bds-nav-menu-item을 중첩하고 그 안에서 다시 &:hover 상태를 쓰면 4단이 되므로
-// 복합 선택자로 펼친다(컴파일 결과 동일).
-.bds-site-header {
-  &-dark {
-    .bds-nav-menu-item {
-      color: $nav-menu-fg-dark;
-    }
-
-    .bds-nav-menu-item:hover,
-    .bds-nav-menu-item.bds-is-selected {
-      color: $nav-menu-fg-dark;
     }
   }
 }

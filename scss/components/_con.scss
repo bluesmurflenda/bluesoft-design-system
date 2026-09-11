@@ -2,7 +2,7 @@
 // Theme(color|gray|white) × Size(sm|md|lg) × State(default|hover|selected|focus|disabled) = 45변형
 // "탭처럼 선택 가능한 필터/세그먼트" 컴포넌트. fg/fg-selected는 테마 공용 토큰이고,
 // bg·border만 테마별로 갈린다. white만 hover 시 글자색도 바뀐다.
-//
+
 // 2026-08-28 Dark 모드 실측: white 테마의 selected pill은 다크에서 bg가 밝은 blue-400으로 바뀌면서
 // fg도 흰색이 아니라 거의 검정(#0a0a0a)으로 반전된다 — 대비 확보 목적, 추정 아니라 실측값 그대로.
 
@@ -81,6 +81,12 @@ $con-themes: (
     width: 20px; // 2026-08-28 확인: Leading·Close 아이콘은 전 사이즈 20×20 고정(사이즈별 가변 아님)
     height: 20px;
   }
+
+  // 아래는 @each 뒤에 따로 열려 있었다(중복 선택자). 겹치는 속성이 없어 여기로 합쳐도 결과가 같다.
+  &-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
 }
 
 @each $size, $props in $con-sizes {
@@ -118,12 +124,5 @@ $con-themes: (
     &:focus-visible {
       box-shadow: 0 0 0 2px $effect-focus-ring;
     }
-  }
-}
-
-.bds-con {
-  &-disabled {
-    opacity: 0.4;
-    pointer-events: none;
   }
 }

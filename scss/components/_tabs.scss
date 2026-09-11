@@ -1,6 +1,6 @@
 // Figma DS Master > Tabs/Item (node 368:3229) + Tabs/Segmented (1088:33), 2026-08-31 재실측
 // Type 4종(underline/underline-brand/pill/segmented) × Size 4(sm/md/lg/xl) × State 4(default/hover/selected/disabled)
-//
+
 // 2026-08-31 정정: "텍스트가 전 타입·전 사이즈 Body/Sm 고정"이라던 기존 실측이 틀렸다.
 // get_variable_defs로 각 사이즈의 실제 바인딩을 다시 대조하니 텍스트도 사이즈를 탄다 —
 // sm=Body/Sm(14/20), md·lg=Body/Lg(16/24), xl=Body/Xl(18/26). 세 Type(underline/pill/segmented)

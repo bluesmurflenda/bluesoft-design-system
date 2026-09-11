@@ -23,36 +23,62 @@
   --bds-avatar-bg: var(--bds-neutral-100);
   --bds-avatar-fg: var(--bds-text-tertiary);
   --bds-avatar-online: var(--bds-green-500);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-01: #fff3cd; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-02: #d7eee1; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-03: #d7ebee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-04: #dfedfb; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-05: #dadef0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-06: #f8dfe0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-07: #e0e0e0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-08: #eee6db; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-09: #dee3d4; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-10: #d1e1ec; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-11: #d8e1ef; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-12: #e0ddee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-13: #f8e9df; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
 [data-theme='dark'] {
   --bds-avatar-bg: var(--bds-neutral-900);
   --bds-avatar-online: var(--bds-green-400);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-01: #4a3c14; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-02: #1d3b2c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-03: #1c383c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-04: #1e3345; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-05: #26293e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-06: #452527; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-07: #333333; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-08: #3d362c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-09: #2e3327; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-10: #1f313c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-11: #252f3e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-12: #2d2a3d; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-13: #43342b; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
@@ -143,7 +169,9 @@ $avatar-group-overlap: -8px;
 }
 
 .bds-avatar-group__more {
+  /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder -- 더보기 칩은 아바타와 같은 크기·모양을 그대로 쓴다. 플레이스홀더로 빼면 .bds-avatar 쪽에 같은 규칙이 한 벌 더 생기고, 마크업에 클래스를 세 개 붙이는 방식은 이 칩이 쓰이는 자리와 안 맞는다 */
   @extend .bds-avatar;
+  /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder -- 위와 같은 이유 */
   @extend .bds-avatar-sm;
 
   font-weight: $font-weight-semibold;

@@ -685,6 +685,7 @@ table {
   --bds-btn-outline-fg: var(--bds-text-secondary);
   --bds-btn-outline-border: var(--bds-border-default);
   --bds-btn-ghost-fg: var(--bds-text-secondary);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-ghost-bg-hover: var(--bds-neutral-100);
   --bds-btn-ghost-bg-pressed: var(--bds-neutral-200);
@@ -695,12 +696,18 @@ table {
   --bds-btn-disabled-bg: var(--bds-neutral-100);
   --bds-btn-disabled-fg: var(--bds-text-disabled);
   --bds-btn-disabled-border: var(--bds-border-default);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-dark-bg: #0000004d; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-dark-bg-hover: #00000099; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-dark-bg-pressed: #000000cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-scrim-dark-fg: var(--bds-white);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-light-bg: #ffffff4d; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-light-bg-hover: #ffffff99; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-scrim-light-bg-pressed: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-scrim-light-fg: var(--bds-neutral-900);
   --bds-btn-link-fg: var(--bds-text-secondary);
@@ -921,20 +928,28 @@ table {
 .bds-btn-link:active:not(:disabled, [aria-disabled=true]) {
   color: var(--bds-btn-link-fg-pressed);
 }
+.bds-btn-link {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
 .bds-btn-link:disabled, .bds-btn-link[aria-disabled=true] {
   color: var(--bds-btn-link-fg-disabled);
 }
 
 :root {
   --bds-btn-ghost-inverse-fg: var(--bds-white);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-inverse-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-inverse-bg-hover: #ffffff1a; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-inverse-bg-pressed: #ffffff29; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-brand-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-ghost-brand-bg-hover: var(--bds-brand-50);
   --bds-btn-ghost-brand-bg-pressed: var(--bds-brand-100);
   --bds-btn-ghost-brand-fg: var(--bds-text-brand);
   --bds-btn-ghost-brand-fg-disabled: var(--bds-text-disabled);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-btn-ghost-white-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-btn-ghost-white-bg-hover: var(--bds-neutral-100);
   --bds-btn-ghost-white-bg-pressed: var(--bds-neutral-200);
@@ -963,6 +978,57 @@ table {
 .bds-icon-btn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--bds-surface-default), 0 0 0 4px var(--bds-effect-focus-ring);
+}
+.bds-icon-btn-ghost-inverse {
+  background-color: var(--bds-btn-ghost-inverse-bg);
+  color: var(--bds-btn-ghost-inverse-fg);
+}
+.bds-icon-btn-ghost-inverse:hover:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--bds-btn-ghost-inverse-bg-hover);
+}
+.bds-icon-btn-ghost-inverse:active:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--bds-btn-ghost-inverse-bg-pressed);
+}
+.bds-icon-btn-ghost-inverse {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
+.bds-icon-btn-ghost-inverse:disabled, .bds-icon-btn-ghost-inverse[aria-disabled=true] {
+  background-color: transparent;
+  color: var(--bds-btn-disabled-fg);
+}
+.bds-icon-btn-ghost-brand {
+  background-color: var(--bds-btn-ghost-brand-bg);
+  color: var(--bds-btn-ghost-brand-fg);
+}
+.bds-icon-btn-ghost-brand:hover:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--bds-btn-ghost-brand-bg-hover);
+}
+.bds-icon-btn-ghost-brand:active:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--bds-btn-ghost-brand-bg-pressed);
+}
+.bds-icon-btn-ghost-brand {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
+.bds-icon-btn-ghost-brand:disabled, .bds-icon-btn-ghost-brand[aria-disabled=true] {
+  background-color: transparent;
+  color: var(--bds-btn-ghost-brand-fg-disabled);
+}
+.bds-icon-btn-ghost-white {
+  background-color: var(--bds-btn-ghost-white-bg);
+  color: var(--bds-btn-ghost-white-fg);
+}
+.bds-icon-btn-ghost-white:hover:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--bds-btn-ghost-white-bg-hover);
+}
+.bds-icon-btn-ghost-white:active:not(:disabled, [aria-disabled=true]) {
+  background-color: var(--bds-btn-ghost-white-bg-pressed);
+}
+.bds-icon-btn-ghost-white {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
+.bds-icon-btn-ghost-white:disabled, .bds-icon-btn-ghost-white[aria-disabled=true] {
+  background-color: transparent;
+  color: var(--bds-btn-disabled-fg);
 }
 
 .bds-icon-btn-sm {
@@ -1120,49 +1186,6 @@ table {
 }
 .bds-icon-btn-scrim-light:disabled, .bds-icon-btn-scrim-light[aria-disabled=true] {
   background-color: var(--bds-btn-disabled-bg);
-  color: var(--bds-btn-disabled-fg);
-}
-
-.bds-icon-btn-ghost-inverse {
-  background-color: var(--bds-btn-ghost-inverse-bg);
-  color: var(--bds-btn-ghost-inverse-fg);
-}
-.bds-icon-btn-ghost-inverse:hover:not(:disabled, [aria-disabled=true]) {
-  background-color: var(--bds-btn-ghost-inverse-bg-hover);
-}
-.bds-icon-btn-ghost-inverse:active:not(:disabled, [aria-disabled=true]) {
-  background-color: var(--bds-btn-ghost-inverse-bg-pressed);
-}
-.bds-icon-btn-ghost-inverse:disabled, .bds-icon-btn-ghost-inverse[aria-disabled=true] {
-  background-color: transparent;
-  color: var(--bds-btn-disabled-fg);
-}
-.bds-icon-btn-ghost-brand {
-  background-color: var(--bds-btn-ghost-brand-bg);
-  color: var(--bds-btn-ghost-brand-fg);
-}
-.bds-icon-btn-ghost-brand:hover:not(:disabled, [aria-disabled=true]) {
-  background-color: var(--bds-btn-ghost-brand-bg-hover);
-}
-.bds-icon-btn-ghost-brand:active:not(:disabled, [aria-disabled=true]) {
-  background-color: var(--bds-btn-ghost-brand-bg-pressed);
-}
-.bds-icon-btn-ghost-brand:disabled, .bds-icon-btn-ghost-brand[aria-disabled=true] {
-  background-color: transparent;
-  color: var(--bds-btn-ghost-brand-fg-disabled);
-}
-.bds-icon-btn-ghost-white {
-  background-color: var(--bds-btn-ghost-white-bg);
-  color: var(--bds-btn-ghost-white-fg);
-}
-.bds-icon-btn-ghost-white:hover:not(:disabled, [aria-disabled=true]) {
-  background-color: var(--bds-btn-ghost-white-bg-hover);
-}
-.bds-icon-btn-ghost-white:active:not(:disabled, [aria-disabled=true]) {
-  background-color: var(--bds-btn-ghost-white-bg-pressed);
-}
-.bds-icon-btn-ghost-white:disabled, .bds-icon-btn-ghost-white[aria-disabled=true] {
-  background-color: transparent;
   color: var(--bds-btn-disabled-fg);
 }
 
@@ -1793,28 +1816,6 @@ table {
   flex: 1 0 0;
   min-width: 0;
 }
-
-.bds-table-cell-sm {
-  min-height: var(--bds-table-cell-min-height-sm);
-  padding-inline: var(--bds-table-cell-padding-x-sm);
-  font-size: var(--bds-font-size-body-sm);
-  line-height: var(--bds-font-leading-body-sm);
-}
-
-.bds-table-cell-md {
-  min-height: var(--bds-table-cell-min-height-md);
-  padding-inline: var(--bds-table-cell-padding-x-md);
-  font-size: var(--bds-font-size-body-sm);
-  line-height: var(--bds-font-leading-body-sm);
-}
-
-.bds-table-cell-lg {
-  min-height: var(--bds-table-cell-min-height-lg);
-  padding-inline: var(--bds-table-cell-padding-x-lg);
-  font-size: var(--bds-type-body-lg-size);
-  line-height: var(--bds-type-body-lg-leading);
-}
-
 .bds-table-cell-body {
   color: var(--bds-table-cell-fg);
   font-weight: var(--bds-font-weight-medium);
@@ -1845,6 +1846,27 @@ table {
 .bds-table-cell-lg .bds-table-cell__leading {
   width: 32px;
   height: 32px;
+}
+
+.bds-table-cell-sm {
+  min-height: var(--bds-table-cell-min-height-sm);
+  padding-inline: var(--bds-table-cell-padding-x-sm);
+  font-size: var(--bds-font-size-body-sm);
+  line-height: var(--bds-font-leading-body-sm);
+}
+
+.bds-table-cell-md {
+  min-height: var(--bds-table-cell-min-height-md);
+  padding-inline: var(--bds-table-cell-padding-x-md);
+  font-size: var(--bds-font-size-body-sm);
+  line-height: var(--bds-font-leading-body-sm);
+}
+
+.bds-table-cell-lg {
+  min-height: var(--bds-table-cell-min-height-lg);
+  padding-inline: var(--bds-table-cell-padding-x-lg);
+  font-size: var(--bds-type-body-lg-size);
+  line-height: var(--bds-type-body-lg-leading);
 }
 
 .bds-board-row {
@@ -1969,6 +1991,7 @@ table {
   --bds-calendar-saturday-fg: var(--bds-text-brand);
   --bds-calendar-sunday-fg: var(--bds-red-700);
   --bds-calendar-day-fg: var(--bds-text-primary);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-calendar-cell-bg: #ffffff00; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴(완전 투명) */
   --bds-calendar-cell-selected-bg: var(--bds-brand-600);
   --bds-calendar-cell-selected-fg: var(--bds-text-inverse);
@@ -2104,6 +2127,7 @@ table {
   --bds-modal-bg: var(--bds-white);
   --bds-modal-fg: var(--bds-neutral-900);
   --bds-modal-fg-supporting: var(--bds-neutral-600);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-modal-overlay: #0000007a; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
   --bds-modal-slot-bg: var(--bds-neutral-50);
   --bds-modal-slot-border: var(--bds-border-control);
@@ -2189,6 +2213,32 @@ table {
   gap: var(--bds-space-4);
   width: 100%;
 }
+.bds-modal__actions {
+  display: flex;
+  gap: var(--bds-space-3);
+  width: 100%;
+}
+.bds-modal__actions .bds-btn {
+  flex: 1 0 0;
+}
+.bds-modal-actions-stacked {
+  flex-direction: column;
+}
+.bds-modal-actions-stacked .bds-btn {
+  width: 100%;
+}
+.bds-modal__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px dashed var(--bds-modal-slot-border);
+  border-radius: var(--bds-radius-sm);
+  background-color: var(--bds-modal-slot-bg);
+  color: var(--bds-modal-fg-supporting);
+  font-size: var(--bds-font-size-body-sm);
+  line-height: var(--bds-font-leading-body-sm);
+}
 
 .bds-modal-featured-icon {
   display: flex;
@@ -2227,33 +2277,6 @@ table {
 .bds-modal-featured-icon-error {
   background-color: var(--bds-badge-error-bg);
   color: var(--bds-badge-error-fg);
-}
-
-.bds-modal__actions {
-  display: flex;
-  gap: var(--bds-space-3);
-  width: 100%;
-}
-.bds-modal__actions .bds-btn {
-  flex: 1 0 0;
-}
-.bds-modal-actions-stacked {
-  flex-direction: column;
-}
-.bds-modal-actions-stacked .bds-btn {
-  width: 100%;
-}
-.bds-modal__slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  border: 1px dashed var(--bds-modal-slot-border);
-  border-radius: var(--bds-radius-sm);
-  background-color: var(--bds-modal-slot-bg);
-  color: var(--bds-modal-fg-supporting);
-  font-size: var(--bds-font-size-body-sm);
-  line-height: var(--bds-font-leading-body-sm);
 }
 
 :root {
@@ -2298,6 +2321,15 @@ table {
   --bds-choice-box-ring-valid: var(--bds-green-700);
 }
 
+.bds-choice {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--bds-space-2);
+  cursor: pointer;
+}
+.bds-choice:has(.bds-choice__input:disabled) {
+  cursor: not-allowed;
+}
 .bds-choice__box {
   position: relative;
   display: inline-block;
@@ -2311,8 +2343,35 @@ table {
 .bds-choice-checkbox .bds-choice__box {
   border-radius: 6px;
 }
+.bds-choice-checkbox .bds-choice__input:checked + .bds-choice__box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid var(--bds-choice-box-fg-selected);
+  border-bottom: 2px solid var(--bds-choice-box-fg-selected);
+  transform: rotate(-45deg) translateY(-1px);
+}
+.bds-choice-checkbox .bds-choice__input:indeterminate + .bds-choice__box::after {
+  content: "";
+  position: absolute;
+  inset: 44.25% 25% 43.75%;
+  background-color: var(--bds-choice-box-fg-selected);
+}
 .bds-choice-radio .bds-choice__box {
   border-radius: var(--bds-radius-full);
+}
+.bds-choice-radio .bds-choice__input:checked + .bds-choice__box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--bds-radius-full);
+  background-color: var(--bds-choice-box-fg-selected);
 }
 .bds-choice__input {
   position: absolute;
@@ -2321,6 +2380,7 @@ table {
   padding: 0;
   margin: -1px;
   overflow: hidden;
+  /* stylelint-disable-next-line property-no-deprecated -- 스크린리더 전용 숨김의 표준 관용구다. clip-path 만 쓰면 지원이 없는 브라우저에서 입력이 화면에 드러난다 */
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
@@ -2329,20 +2389,48 @@ table {
   background-color: var(--bds-choice-box-bg-hover);
   border-color: var(--bds-choice-box-border-hover);
 }
+.bds-choice__input {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
 .bds-choice__input:focus-visible + .bds-choice__box {
   box-shadow: 0 0 0 2px var(--bds-effect-focus-ring);
+}
+.bds-choice__input {
+  /* stylelint-disable no-descending-specificity -- disabled 는 :not() 으로 이미 빠져 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
 }
 .bds-choice__input:checked + .bds-choice__box, .bds-choice__input:indeterminate + .bds-choice__box {
   border-color: transparent;
   background-color: var(--bds-choice-box-bg-selected);
 }
+.bds-choice__input {
+  /* stylelint-enable no-descending-specificity */
+}
 .bds-choice__input:checked:hover:not(:disabled) + .bds-choice__box, .bds-choice__input:indeterminate:hover:not(:disabled) + .bds-choice__box {
   background-color: var(--bds-choice-box-bg-selected);
+}
+.bds-choice__input {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
 }
 .bds-choice__input:disabled + .bds-choice__box {
   opacity: 0.5;
 }
-
+.bds-choice__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bds-space-1);
+}
+.bds-choice__label {
+  font-weight: var(--bds-font-weight-regular);
+  font-size: var(--bds-font-size-body-md);
+  line-height: var(--bds-font-leading-body-md);
+  color: var(--bds-choice-label-fg);
+}
+.bds-choice__description {
+  font-weight: var(--bds-font-weight-regular);
+  font-size: var(--bds-font-size-body-sm);
+  line-height: var(--bds-font-leading-body-sm);
+  color: var(--bds-choice-description-fg);
+}
 .bds-choice--valid .bds-choice__box {
   border-color: var(--bds-choice-box-border-valid);
 }
@@ -2366,61 +2454,6 @@ table {
 }
 .bds-choice--invalid .bds-choice__label {
   color: var(--bds-choice-label-fg-invalid);
-}
-
-.bds-choice-checkbox .bds-choice__input:checked + .bds-choice__box::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid var(--bds-choice-box-fg-selected);
-  border-bottom: 2px solid var(--bds-choice-box-fg-selected);
-  transform: rotate(-45deg) translateY(-1px);
-}
-.bds-choice-checkbox .bds-choice__input:indeterminate + .bds-choice__box::after {
-  content: "";
-  position: absolute;
-  inset: 44.25% 25% 43.75%;
-  background-color: var(--bds-choice-box-fg-selected);
-}
-.bds-choice-radio .bds-choice__input:checked + .bds-choice__box::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 8px;
-  height: 8px;
-  border-radius: var(--bds-radius-full);
-  background-color: var(--bds-choice-box-fg-selected);
-}
-
-.bds-choice {
-  display: inline-flex;
-  align-items: flex-start;
-  gap: var(--bds-space-2);
-  cursor: pointer;
-}
-.bds-choice:has(.bds-choice__input:disabled) {
-  cursor: not-allowed;
-}
-.bds-choice__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bds-space-1);
-}
-.bds-choice__label {
-  font-weight: var(--bds-font-weight-regular);
-  font-size: var(--bds-font-size-body-md);
-  line-height: var(--bds-font-leading-body-md);
-  color: var(--bds-choice-label-fg);
-}
-.bds-choice__description {
-  font-weight: var(--bds-font-weight-regular);
-  font-size: var(--bds-font-size-body-sm);
-  line-height: var(--bds-font-leading-body-sm);
-  color: var(--bds-choice-description-fg);
 }
 
 .bds-toggle {
@@ -2459,6 +2492,7 @@ table {
   padding: 0;
   margin: -1px;
   overflow: hidden;
+  /* stylelint-disable-next-line property-no-deprecated -- 스크린리더 전용 숨김의 표준 관용구다. clip-path 만 쓰면 지원이 없는 브라우저에서 입력이 화면에 드러난다 */
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
@@ -2466,8 +2500,14 @@ table {
 .bds-toggle__input:hover:not(:disabled) + .bds-toggle__track {
   background-color: var(--bds-toggle-track-bg-off-hover);
 }
+.bds-toggle__input {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
 .bds-toggle__input:focus-visible + .bds-toggle__track {
   box-shadow: 0 0 0 3px var(--bds-effect-focus-ring);
+}
+.bds-toggle__input {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
 }
 .bds-toggle__input:checked + .bds-toggle__track {
   background-color: var(--bds-toggle-track-bg-on);
@@ -2477,6 +2517,9 @@ table {
 }
 .bds-toggle__input:checked:hover:not(:disabled) + .bds-toggle__track {
   background-color: var(--bds-toggle-track-bg-on-hover);
+}
+.bds-toggle__input {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
 }
 .bds-toggle__input:disabled + .bds-toggle__track {
   opacity: 0.5;
@@ -2553,36 +2596,62 @@ table {
   --bds-avatar-bg: var(--bds-neutral-100);
   --bds-avatar-fg: var(--bds-text-tertiary);
   --bds-avatar-online: var(--bds-green-500);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-01: #fff3cd; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-02: #d7eee1; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-03: #d7ebee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-04: #dfedfb; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-05: #dadef0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-06: #f8dfe0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-07: #e0e0e0; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-08: #eee6db; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-09: #dee3d4; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-10: #d1e1ec; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-11: #d8e1ef; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-12: #e0ddee; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-13: #f8e9df; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
 [data-theme=dark] {
   --bds-avatar-bg: var(--bds-neutral-900);
   --bds-avatar-online: var(--bds-green-400);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-01: #4a3c14; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-02: #1d3b2c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-03: #1c383c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-04: #1e3345; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-05: #26293e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-06: #452527; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-07: #333333; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-08: #3d362c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-09: #2e3327; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-10: #1f313c; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-11: #252f3e; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-12: #2d2a3d; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-avatar-c-13: #43342b; /* 예외: 컴포넌트 고유 톤 — 시맨틱 없음 */
 }
 
@@ -2736,6 +2805,8 @@ table {
 }
 
 .bds-avatar-group__more {
+  /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder -- 더보기 칩은 아바타와 같은 크기·모양을 그대로 쓴다. 플레이스홀더로 빼면 .bds-avatar 쪽에 같은 규칙이 한 벌 더 생기고, 마크업에 클래스를 세 개 붙이는 방식은 이 칩이 쓰이는 자리와 안 맞는다 */
+  /* stylelint-disable-next-line scss/at-extend-no-missing-placeholder -- 위와 같은 이유 */
   font-weight: var(--bds-font-weight-semibold);
 }
 
@@ -2978,9 +3049,15 @@ table {
   border-radius: var(--bds-accordion-rounded-radius);
   overflow: hidden;
 }
+.bds-accordion-each {
+  /* stylelint-disable no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다 */
+}
 .bds-accordion-each .bds-accordion__trigger,
 .bds-accordion-each .bds-accordion__panel {
   border-bottom: none;
+}
+.bds-accordion-each {
+  /* stylelint-enable no-descending-specificity */
 }
 .bds-accordion-each .bds-accordion__trigger[aria-expanded=true] {
   border-bottom: var(--bds-border-hairline) solid var(--bds-accordion-border);
@@ -3852,6 +3929,9 @@ table {
   cursor: not-allowed;
   pointer-events: none;
 }
+.bds-pagination-compact__nav {
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
+}
 .bds-pagination-compact__nav .bds-icon {
   width: 18px;
   height: 18px;
@@ -3904,6 +3984,10 @@ table {
   flex-shrink: 0;
   width: 20px;
   height: 20px;
+}
+.bds-con-disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .bds-con-sm {
@@ -3978,11 +4062,6 @@ table {
 }
 .bds-con-white:focus-visible {
   box-shadow: 0 0 0 2px var(--bds-effect-focus-ring);
-}
-
-.bds-con-disabled {
-  opacity: 0.4;
-  pointer-events: none;
 }
 
 .bds-upload-dropzone {
@@ -4153,6 +4232,7 @@ table {
 }
 .bds-side-nav-item-dark {
   color: var(--bds-nav-dark-fg);
+  /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
 }
 .bds-side-nav-item-dark .bds-side-nav-item__icon {
   color: var(--bds-nav-dark-fg);
@@ -4251,6 +4331,13 @@ table {
 }
 .bds-input__icon {
   flex-shrink: 0;
+}
+.bds-input-disabled .bds-input__field {
+  background-color: var(--bds-field-bg-disabled);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.bds-input-disabled .bds-input__hint {
+  opacity: 0.4;
 }
 
 .bds-input-sm .bds-input__field {
@@ -4383,14 +4470,6 @@ table {
   border-color: var(--bds-field-border-valid-disabled);
 }
 
-.bds-input-disabled .bds-input__field {
-  background-color: var(--bds-field-bg-disabled);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-.bds-input-disabled .bds-input__hint {
-  opacity: 0.4;
-}
-
 .bds-textarea {
   display: flex;
   flex-direction: column;
@@ -4424,6 +4503,13 @@ table {
 }
 .bds-textarea__control::placeholder {
   color: var(--bds-field-fg-placeholder);
+}
+.bds-textarea-disabled .bds-textarea__field {
+  background-color: var(--bds-field-bg-disabled);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.bds-textarea-disabled .bds-textarea__hint {
+  opacity: 0.4;
 }
 
 .bds-textarea-sm .bds-textarea__field {
@@ -4522,14 +4608,6 @@ table {
   border-color: var(--bds-field-border-valid-disabled);
 }
 
-.bds-textarea-disabled .bds-textarea__field {
-  background-color: var(--bds-field-bg-disabled);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-.bds-textarea-disabled .bds-textarea__hint {
-  opacity: 0.4;
-}
-
 .bds-logo {
   display: inline-block;
   height: 15px;
@@ -4552,12 +4630,28 @@ table {
   --bds-nav-dark-fg: var(--bds-white);
   --bds-nav-announcement-bg: var(--bds-blue-800);
   --bds-nav-announcement-fg: var(--bds-white);
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-nav-bg-floating: #ffffffcc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴 */
+  /* stylelint-disable-next-line color-no-hex -- Figma 원본이 별칭 아닌 리터럴이라 토큰으로 못 바꾼다(옆 주석 참고) */
   --bds-nav-dark-bg-floating: #262626cc; /* 예외: 알파 — Figma 원본이 별칭 아닌 리터럴, Theme=dark 스타일이라 라이트·다크 공통 */
 }
 
 [data-theme=dark] {
   --bds-nav-announcement-bg: var(--bds-blue-700);
+}
+
+.bds-nav-menu-item {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--bds-space-3) var(--bds-space-4);
+  color: var(--bds-nav-fg);
+  font-size: var(--bds-type-body-xl-size);
+  line-height: var(--bds-type-body-xl-leading);
+  font-weight: var(--bds-font-weight-bold);
+  cursor: pointer;
+}
+.bds-nav-menu-item:hover, .bds-nav-menu-item.bds-is-selected {
+  color: var(--bds-nav-fg-hover);
 }
 
 .bds-site-header {
@@ -4600,6 +4694,13 @@ table {
 .bds-site-header-dark .bds-site-header__main {
   background-color: var(--bds-nav-dark-bg);
 }
+.bds-site-header-dark .bds-nav-menu-item {
+  color: var(--bds-nav-dark-fg);
+}
+.bds-site-header-dark .bds-nav-menu-item:hover,
+.bds-site-header-dark .bds-nav-menu-item.bds-is-selected {
+  color: var(--bds-nav-dark-fg);
+}
 .bds-site-header-floating .bds-site-header__main {
   background-color: var(--bds-nav-bg-floating);
   backdrop-filter: blur(16px);
@@ -4637,28 +4738,6 @@ table {
   .bds-site-header__menu-button {
     display: inline-flex;
   }
-}
-
-.bds-nav-menu-item {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--bds-space-3) var(--bds-space-4);
-  color: var(--bds-nav-fg);
-  font-size: var(--bds-type-body-xl-size);
-  line-height: var(--bds-type-body-xl-leading);
-  font-weight: var(--bds-font-weight-bold);
-  cursor: pointer;
-}
-.bds-nav-menu-item:hover, .bds-nav-menu-item.bds-is-selected {
-  color: var(--bds-nav-fg-hover);
-}
-
-.bds-site-header-dark .bds-nav-menu-item {
-  color: var(--bds-nav-dark-fg);
-}
-.bds-site-header-dark .bds-nav-menu-item:hover,
-.bds-site-header-dark .bds-nav-menu-item.bds-is-selected {
-  color: var(--bds-nav-dark-fg);
 }
 
 .bds-login-header {

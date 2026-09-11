@@ -1,6 +1,6 @@
 // Figma DS Master > Pagination 페이지 (node 359:3155 Pagination, 358:45 _Pagination/Number, 465:6816 Pagination Compact)
 // 2026-08-31 재실측
-//
+
 // 기본 Pagination(Type 5종: numbers/numbers-buttons/simple/simple-icon/button-group × Size sm/md/lg)과
 // 모바일용 Pagination Compact는 Figma에서 같은 "Pagination" 페이지에 속한 한 묶음이라 이 파일 하나로 구현한다
 // — 이전 세션에서 Compact만 먼저 만들어 _pagination-compact.scss로 떨어져 있던 것을 여기로 합쳤다.
@@ -287,6 +287,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
       pointer-events: none;
     }
 
+    /* stylelint-disable-next-line no-descending-specificity -- 짝이 되는 선택자와 서로 배타적이라(disabled 는 :not() 으로 빠진다, 변형 클래스는 동시에 안 붙는다) 이 순서가 결과를 바꾸지 않는다. 상태 흐름 순서를 지킨다 */
     .bds-icon {
       width: 18px;
       height: 18px;
