@@ -190,58 +190,5 @@ export function isD1NodeExempt(component, primitive) {
   return Boolean(found);
 }
 
-// S2 전용 — ADR-015. Figma엔 있지만 코드에서 일부러 안 내보내는 토큰(누락으로 잡히면 안 된다).
-// "컬렉션/이름" 문자열로 좁힌다 — 다른 토큰이 같은 이유로 빠지면 그때 항목을 추가한다.
-export const S2_MISSING_EXEMPT = new Set([
-  // ADR-033 으로 Figma 토큰 그룹이 button/* -> btn/* 으로 바뀌었다. 옛 이름으로 두면 매칭이 안 돼
-  // 예외가 조용히 풀린다(2026-09-09 리네임 때 실제로 그 상태였다).
-  'Shape/btn/radius-xs', // Button Size=xs 코드 제외(실사용 0건) — Figma 변형 자체는 유지
-  'Shape/btn/padding-x/xs',
-]);
-defineList('S2_MISSING_EXEMPT', S2_MISSING_EXEMPT);
 
-export function isS2MissingExempt(collection, name) {
-  consult('S2_MISSING_EXEMPT');
-  const key = `${collection}/${name}`;
-  const ok = S2_MISSING_EXEMPT.has(key);
-  if (ok) hit('S2_MISSING_EXEMPT', key);
-  return ok;
-}
 
-// S2 전용 — ADR-026. 특정 모드에서만 코드가 Figma 를 따라가지 않는 것(누락이 아니라 불일치로 잡힌다).
-// Wide 는 미디어쿼리를 만들지 않으므로 그 모드값을 조회하면 Desktop 값이 나온다. 모드까지 붙여
-// 좁힌다 — 같은 토큰의 다른 모드는 여전히 대조 대상이다.
-export const S2_MODE_EXEMPT = new Set([
-  'Breakpoint/grid/margin/Wide', // container/width 와 뷰포트 폭에서 나오는 종속값. margin-inline:auto 가 만든다
-  'Breakpoint/breakpoint/Wide', // 시안 프레임 폭 전용 — FIGMA.md 「모드와 프레임 폭은 다르다」
-]);
-defineList('S2_MODE_EXEMPT', S2_MODE_EXEMPT);
-
-export function isS2ModeExempt(collection, name, mode) {
-  consult('S2_MODE_EXEMPT');
-  const key = `${collection}/${name}/${mode}`;
-  const ok = S2_MODE_EXEMPT.has(key);
-  if (ok) hit('S2_MODE_EXEMPT', key);
-  return ok;
-}
-
-// S2 전용 — Figma 에 대응 토큰이 없는데 코드가 선언하는 커스텀 프로퍼티.
-// 이름을 하나씩만 등록하고 범주(접두사·컴포넌트 단위)로 열지 않는다. ADR-019 가 white 를
-// 전역으로 풀지 않고 (컴포넌트, 프리미티브) 쌍으로 좁힌 이유가 그대로 적용된다 —
-// 범주로 열면 "Figma 에 없는 변수"가 조용히 늘어나도 S2 가 못 잡는다.
-// 여기 있다는 것은 "지금 통과시킨다"는 뜻이고 "이대로 두기로 정했다"는 뜻이 아니다.
-// 2026-09-10 현재 항목이 없다. 목록과 판정 함수는 남겨 둔다 — 다음에 같은 상황이 오면
-// 이 자리에 이유와 함께 이름 하나를 올린다.
-//   지웠던 항목: --bds-avatar-online-ring. "Figma 가 white 를 직접 바인드한다" 가 사유였는데,
-//   링이 surface/default 로 옮겨가면서(Online 노드 15자리 전부) 그 사유가 거짓이 됐다.
-//   코드도 중간 변수를 없애고 $surface-default 를 직접 쓰게 바꿨으므로 예외 자체가 필요 없다.
-export const S2_CSS_ONLY_EXCEPTIONS = [];
-defineList('S2_CSS_ONLY_EXCEPTIONS', S2_CSS_ONLY_EXCEPTIONS.map((e) => e.name));
-
-export function isS2CssOnlyExempt(varName) {
-  consult('S2_CSS_ONLY_EXCEPTIONS');
-  const full = varName.startsWith('--') ? varName : '--' + varName;
-  const found = S2_CSS_ONLY_EXCEPTIONS.find((e) => e.name === full);
-  if (found) hit('S2_CSS_ONLY_EXCEPTIONS', found.name);
-  return Boolean(found);
-}

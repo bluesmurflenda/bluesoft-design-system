@@ -27,14 +27,18 @@ scripts/                   검사 스크립트 — 항목 정의는 scripts/READ
 figma/tokens.*.json        변수 스냅샷 = 값의 기준
 ```
 
-`_primitive.scss` 와 `_theme.scss` 는 **사람이 손대지 않는 파일로 취급한다.**
-Figma 조회 결과를 옮긴 것이다. 예외 주석이 필요하면 그 줄에만 남긴다.
+`_primitive.scss` · `_theme.scss` · `_shape.scss` 는 **생성물이다** — `build-tokens.mjs` 가
+스냅샷에서 만든다. 고쳐도 다음 빌드에 덮인다. 값을 바꾸려면 Figma 를 고치고 스냅샷을 다시 뽑는다.
+`_breakpoint.scss` 만 손으로 쓴다 — 미디어쿼리마다 앞 구간과 다른 값만 담고 컴파일타임 상수가 있어
+생성으로 덮으면 그 내용이 사라진다.
 
 ## 값의 출처
 
 **Figma Variables REST API 는 Enterprise 전용이라 이 계정에서 못 쓴다.**
 그래서 `figma/tokens.*.json` 스냅샷이 값의 기준이고, **퍼블리시할 때마다 다시 뽑는다.**
-추출 방법은 `scripts/README.md`. 검사 S2 가 스냅샷과 SCSS 를 대조한다.
+추출 방법은 `scripts/README.md`.
+**`scss/tokens/*.scss` 는 그 스냅샷에서 생성한다** — `npm run build:tokens`(빌드가 먼저 부른다).
+손으로 고치지 않는다. `_breakpoint.scss` 만 예외로 손으로 쓴다(미디어쿼리 계산과 컴파일타임 상수).
 
 ## 컴포넌트 하나를 끝내는 흐름
 
@@ -74,7 +78,7 @@ Figma 조회 결과를 옮긴 것이다. 예외 주석이 필요하면 그 줄�
    - **치수 프리미티브(여백·반경)는 선택자에서 직접 써도 된다**(`_alert.scss` 가 그렇게 한다) —
      모드에 따라 값이 갈리지 않아 시맨틱 단계를 둘 이유가 없다
    - 그 역할에 **컴포넌트 전용 변수를 두고 싶으면 Figma 에 토큰을 먼저 만든다.** 코드에만
-     있는 컴포넌트 변수는 Figma 에 같은 이름이 없어 **S2 가 영구 예외를 요구한다** —
+     있는 컴포넌트 변수는 Figma 에 같은 이름이 없어 **어느 쪽에서도 생성되지 않는다** —
      붙은 버튼들의 배경이 그 방식으로 해결한 예다
 4. **상태는 클래스보다 네이티브 훅을 먼저 쓴다.** `:hover`·`:disabled`·`:checked`·`[aria-*]`
    가 있으면 그것을 쓰고, JS 가 만드는 상태만 `[data-state="..."]` 로 남긴다
@@ -89,7 +93,7 @@ Figma 조회 결과를 옮긴 것이다. 예외 주석이 필요하면 그 줄�
 ```bash
 npm run lint:css        # stylelint — 표기법·선언 순서·중복 선택자
 npm run check:nodes     # Figma 노드 스캔 (FIGMA_TOKEN 필요)
-npm run check:tokens    # SCSS + 스냅샷 대조
+npm run check:tokens    # SCSS 규칙 검사
 npm run build           # 컴파일
 ```
 
@@ -123,7 +127,6 @@ npm run build           # 컴파일
 | 사례 | 원인 |
 | --- | --- |
 | ADR 이 Accepted 인데 코드에 미반영 | 결정 후 반영 확인 안 함. 예외로 집행되는 ADR 은 이제 D15·S9 가 잡는다 — 그 밖은 여전히 사람이 본다 |
-| 스냅샷이 낡은 채로 대조해 통과 처리 | 퍼블리시 후 재추출을 빠뜨림 |
 | 이름은 같은데 다른 변수였다 | 삭제 후 재생성이라 이름으로는 안 보인다. `tokens.ids.json` 의 id 로 확인한다 |
 | 검사 규칙을 다른 검사에 그대로 재사용해 오탐 | 그 규칙이 왜 생겼는지 확인 안 함 |
 | 저장소에 있는 검사를 안 쓰고 따로 훑어서 틀린 결론을 문서에 넣음 | 검사가 담고 있는 규칙을 다시 구현한 것이다. 사본은 낡는다 — Figma 감사는 `check:nodes` 로 돌린다 |
