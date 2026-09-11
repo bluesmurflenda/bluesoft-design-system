@@ -36,9 +36,10 @@ $card-border: var(--bds-card-border);
 $card-border-hover: var(--bds-card-border-hover);
 $card-fg: var(--bds-card-fg);
 $card-fg-supporting: var(--bds-card-fg-supporting);
+
 // 2026-08-28 라이브 실측: Default 상태는 레이어 2개 중 1개만 보임(2번째 alpha=0), Hover는 둘 다 보임.
-$card-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-$card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0, 0.1);
+$card-shadow-sm: 0 1px 2px rgb(0 0 0 / 6%);
+$card-shadow-md: 0 2px 4px -2px rgb(0 0 0 / 6%), 0 4px 8px -2px rgb(0 0 0 / 10%);
 
 .bds-card {
   display: flex;
@@ -119,6 +120,7 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 
   &__eyebrow {
     @include mix.text(body-2xs, medium);
+
     color: $card-fg-supporting;
   }
 
@@ -128,11 +130,13 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
 
   &__description {
     @include mix.text(body-sm, regular);
+
     color: $card-fg-supporting;
   }
 
   &__meta {
     @include mix.text(body-2xs, regular);
+
     color: $card-fg-supporting;
   }
 

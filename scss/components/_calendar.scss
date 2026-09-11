@@ -50,7 +50,6 @@ $calendar-cell-bg: var(--bds-calendar-cell-bg);
 $calendar-gap-cell: 4px;
 $calendar-gap-row: 4px;
 $calendar-cell-size: 44px;
-
 $calendar-cell-selected-bg: var(--bds-calendar-cell-selected-bg);
 $calendar-cell-selected-fg: var(--bds-calendar-cell-selected-fg);
 $calendar-cell-available-bg: var(--bds-calendar-cell-available-bg);
@@ -85,6 +84,7 @@ $calendar-today-fg: var(--bds-calendar-today-fg);
 
   &__month-label {
     @include mix.text(body-xl, bold);
+
     color: $calendar-header-fg;
   }
 
@@ -93,6 +93,7 @@ $calendar-today-fg: var(--bds-calendar-today-fg);
     align-items: center;
     gap: $space-2;
   }
+
   // nav 버튼은 icon-btn-ghost icon-btn-sm 재사용(32×32, ghost 배경)을 그대로 쓴다.
 
   &__weekday-row {
@@ -106,12 +107,15 @@ $calendar-today-fg: var(--bds-calendar-today-fg);
     height: 36px;
     align-items: center;
     justify-content: center;
+
     @include mix.text(body-sm, medium);
+
     color: $calendar-weekday-fg;
 
     &.bds-is-saturday {
       color: $calendar-saturday-fg;
     }
+
     &.bds-is-sunday {
       color: $calendar-sunday-fg;
     }
@@ -138,12 +142,15 @@ $calendar-today-fg: var(--bds-calendar-today-fg);
   border-radius: var(--bds-calendar-cell-radius);
   border: $border-hairline solid transparent; // unavailable에서만 채워진다 — 미리 선점해 레이아웃 시프트 방지
   background-color: $calendar-cell-bg;
+
   @include mix.text(body-sm, medium);
+
   color: $calendar-day-fg;
 
   &.bds-is-saturday {
     color: $calendar-saturday-fg;
   }
+
   &.bds-is-sunday {
     color: $calendar-sunday-fg;
   }
@@ -177,6 +184,7 @@ $calendar-today-fg: var(--bds-calendar-today-fg);
     &.bds-is-saturday {
       color: $calendar-saturday-fg;
     }
+
     &.bds-is-sunday {
       color: $calendar-sunday-fg;
     }

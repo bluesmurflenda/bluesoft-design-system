@@ -33,7 +33,6 @@ $accordion-sizes: (
   md: (min-height: var(--bds-accordion-trigger-min-height-md), pad: $space-5, type: body-md),
   lg: (min-height: var(--bds-accordion-trigger-min-height-lg), pad: $space-6, type: body-lg),
 );
-
 $accordion-bg: var(--bds-accordion-trigger-bg);
 $accordion-bg-hover: var(--bds-accordion-trigger-bg-hover);
 $accordion-fg: var(--bds-accordion-trigger-fg);
@@ -86,7 +85,9 @@ $accordion-radius: var(--bds-accordion-rounded-radius);
     align-items: center;
     gap: $space-2;
     flex-shrink: 0;
+
     @include mix.text(body-sm, regular);
+
     color: var(--bds-text-tertiary);
   }
 
@@ -161,11 +162,13 @@ $accordion-radius: var(--bds-accordion-rounded-radius);
     .bds-accordion__trigger {
       min-height: map.get($props, min-height);
       padding-inline: map.get($props, pad);
+
       @include mix.text(map.get($props, type), regular);
     }
 
     .bds-accordion__panel {
       padding: map.get($props, pad);
+
       @include mix.text(map.get($props, type), regular);
     }
   }

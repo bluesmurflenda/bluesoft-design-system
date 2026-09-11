@@ -25,6 +25,7 @@
   @if map.has-key($type, family) {
     font-family: map.get($type, family), -apple-system, BlinkMacSystemFont, sans-serif;
   }
+
   font-size: map.get($type, size);
   line-height: map.get($type, lh);
 
@@ -32,12 +33,14 @@
     @if not map.has-key(maps.$font-weight-scale, $weight) {
       @error "text(..., #{$weight}) — 존재하지 않는 굵기입니다. 사용 가능한 값: #{map.keys(maps.$font-weight-scale)}";
     }
+
     font-weight: map.get(maps.$font-weight-scale, $weight);
   }
 }
 
 @mixin container {
   width: 100%;
+
   // ADR-006: container/max-width 는 Figma 에서 삭제됐다(container/width 하나만 남기고 통합) —
   // CSS 구조에만 필요한 상한이라 토큰 없이 1200px 하드값을 폴백으로 둔다.
   max-width: var(--bds-container-max-width, 1200px);

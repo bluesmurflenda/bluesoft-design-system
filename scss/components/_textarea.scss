@@ -20,7 +20,7 @@ $textarea-label-fg: var(--bds-field-label-fg);
 $textarea-fg: var(--bds-field-fg);
 $textarea-placeholder-fg: var(--bds-field-fg-placeholder);
 $textarea-disabled-bg: var(--bds-field-bg-disabled);
-$textarea-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); // Shadow/xs, input과 공용
+$textarea-shadow: 0 1px 2px rgb(0 0 0 / 5%); // Shadow/xs, input과 공용
 
 // 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응 시맨틱이 없다.
 // invalid/valid ring은 이름에 "30%"가 붙어있어도 실제로는 solid(get_variable_defs 확인).
@@ -38,6 +38,7 @@ $textarea-validation-colors: (
 
   &__label {
     @include mix.text(body-sm, medium);
+
     color: $textarea-label-fg;
   }
 
@@ -59,6 +60,7 @@ $textarea-validation-colors: (
     outline: none;
     background: none;
     padding: 0;
+
     // font-weight는 아래 @each의 text()로 이동
     color: $textarea-fg;
 

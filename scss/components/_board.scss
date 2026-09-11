@@ -12,10 +12,12 @@
 $board-border: $border-default; // border/default — table의 slate-200과 다른 값이라 별도 정의
 $board-title-fg: $text-primary;
 $board-meta-fg: $text-tertiary;
+
 // 2026-08-31 재확인(get_variable_defs, board-header 1030:37): table/header-col/* 를 그대로
 // 재사용한다 — codeSyntax가 깨져 있어도(-col 누락) 코드는 정상 이름(table.scss 6단계에서 rename)을 쓴다.
 $board-header-bg: var(--bds-table-header-col-bg);
 $board-header-fg: var(--bds-table-header-col-fg);
+
 // 2026-08-31: 리터럴 120px 대신 tokens/_shape.scss의 board/col/meta 변수를 그대로 참조한다 —
 // board.scss엔 date/views 구분 클래스가 아예 없어서(.bds-board-cell 하나뿐) meta 하나면 충분하다.
 // board/col/views(100)는 아직 어떤 코드에서도 참조하지 않는 미사용 토큰으로 남아 있다.
@@ -45,7 +47,9 @@ $board-col-width: var(--bds-board-col-meta);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
     @include mix.text(body-md, regular);
+
     color: $board-title-fg;
   }
 
@@ -68,8 +72,10 @@ $board-col-width: var(--bds-board-col-meta);
   justify-content: center;
   width: $board-col-width;
   text-align: center;
+
   // font-weight는 Role(body/header) 축이라 사이즈와 분리 — size/line-height만 $type-scale에서 읽는다.
   $board-cell-type: map.get(maps.$type-scale, body-sm);
+
   font-size: map.get($board-cell-type, size);
   line-height: map.get($board-cell-type, lh);
 
@@ -95,7 +101,9 @@ $board-col-width: var(--bds-board-col-meta);
   &__title {
     flex: 1 0 0;
     min-width: 0;
+
     @include mix.text(body-sm, medium);
+
     color: $board-header-fg;
   }
 }
@@ -141,7 +149,9 @@ $board-col-width: var(--bds-board-col-meta);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
     @include mix.text(body-md, regular);
+
     color: $board-title-fg;
   }
 
@@ -149,8 +159,10 @@ $board-col-width: var(--bds-board-col-meta);
     display: flex;
     align-items: center;
     gap: $space-2;
+
     // font-weight 선언이 원래 없던 자리라 추가하지 않는다 — size/line-height만 $type-scale에서 읽는다.
     $board-card-meta-type: map.get(maps.$type-scale, body-sm);
+
     font-size: map.get($board-card-meta-type, size);
     line-height: map.get($board-card-meta-type, lh);
     color: $board-meta-fg;

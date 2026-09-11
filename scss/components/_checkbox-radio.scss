@@ -82,7 +82,6 @@ $choice-colors: (
     label-fg: var(--bds-choice-label-fg-invalid),
   ),
 );
-
 $choice-bg-hover: var(--bds-choice-box-bg-hover); // unselected hover 배경(검증 상태 무관 공통)
 $choice-description-fg: var(--bds-choice-description-fg);
 
@@ -163,9 +162,11 @@ $choice-description-fg: var(--bds-choice-description-fg);
       .bds-choice__input:hover:not(:disabled) + .bds-choice__box {
         border-color: map.get($c, border-hover);
       }
+
       .bds-choice__input:focus-visible + .bds-choice__box {
         box-shadow: 0 0 0 2px map.get($c, ring);
       }
+
       // checked·indeterminate(selected)는 검증 상태와 무관하게 normal의 브랜드색을 그대로 쓴다 —
       // 여기서 배경색을 덮어쓰지 않는다(문서 실측: "selected는 브랜드색을 유지한다").
 
@@ -194,10 +195,7 @@ $choice-description-fg: var(--bds-choice-description-fg);
     .bds-choice__input:indeterminate + .bds-choice__box::after {
       content: '';
       position: absolute;
-      top: 44.25%;
-      bottom: 43.75%;
-      left: 25%;
-      right: 25%;
+      inset: 44.25% 25% 43.75%;
       background-color: var(--bds-choice-box-fg-selected);
     }
   }

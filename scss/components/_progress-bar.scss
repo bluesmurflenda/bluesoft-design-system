@@ -32,7 +32,9 @@ $progress-bar-value-fg: $text-primary;
 
   &__value {
     flex-shrink: 0;
+
     @include mix.text(body-sm, medium);
+
     color: $progress-bar-value-fg;
   }
 }

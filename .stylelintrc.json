@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss"
+  ],
+  "ignoreFiles": [
+    "dist/**",
+    "docs/**",
+    "node_modules/**",
+    "scss/tokens/**"
+  ],
+  "rules": {
+    "no-descending-specificity": true,
+    "no-duplicate-selectors": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "color-no-hex": true,
+    "color-hex-length": null,
+    "media-feature-range-notation": null,
+    "custom-property-pattern": null,
+    "selector-class-pattern": null,
+    "scss/dollar-variable-pattern": null,
+    "scss/at-mixin-pattern": null,
+    "scss/at-function-pattern": null
+  },
+  "overrides": [
+    {
+      "files": [
+        "scss/_project-overrides.example.scss"
+      ],
+      "rules": {
+        "scss/comment-no-empty": null
+      }
+    }
+  ]
+}

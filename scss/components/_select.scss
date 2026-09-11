@@ -23,7 +23,6 @@ $select-sizes: (
   lg: (height: 48px, padding-x: $space-5, type: body-lg, hint: body-sm, chevron: 20px),
   xl: (height: 56px, padding-x: $space-6, type: body-lg, hint: body-sm, chevron: 20px),
 );
-
 $select-label-fg: var(--bds-field-label-fg);
 $select-hint-fg: var(--bds-field-hint-fg);
 $select-fg: var(--bds-list-item-fg);
@@ -43,12 +42,14 @@ $select-validation-colors: (
 .bds-select {
   display: flex;
   flex-direction: column;
+
   // 2026-09-11 실측: 라벨↔필드·필드↔힌트 모두 space/2 바인딩이다. space/1(4px) 이었다
   gap: $space-2;
   width: 100%;
 
   &__label {
     @include mix.text(body-sm, medium);
+
     color: $select-label-fg;
   }
 
@@ -87,9 +88,11 @@ $select-validation-colors: (
     .bds-select__field {
       height: map.get($props, height);
       padding-inline: map.get($props, padding-x);
+
       // .bds-select__field는 font-weight를 별도로 선언한 적이 없으므로(상속값 유지) text() 믹스인 대신
       // $type-scale에서 size/lh만 뽑아 쓴다 — weight를 새로 추가하지 않기 위함.
       $select-field-type: map.get(maps.$type-scale, map.get($props, type));
+
       font-size: map.get($select-field-type, size);
       line-height: map.get($select-field-type, lh);
     }
@@ -108,7 +111,9 @@ $select-validation-colors: (
     // 이미 전역으로 적용되므로 여기서는 재선언하지 않는다.
     .bds-list-item {
       height: map.get(dd.$list-item-heights, $size);
+
       $list-item-type: map.get(maps.$type-scale, map.get(dd.$list-item-font, $size));
+
       font-size: map.get($list-item-type, size);
       line-height: map.get($list-item-type, lh);
     }

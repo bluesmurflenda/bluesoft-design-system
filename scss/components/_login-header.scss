@@ -31,11 +31,13 @@ $login-header-supporting-fg: $text-secondary;
 
   &__title {
     @include mix.text(display-sm, semibold);
+
     color: $login-header-title-fg;
   }
 
   &__supporting {
     @include mix.text(body-lg, regular);
+
     color: $login-header-supporting-fg;
   }
 }

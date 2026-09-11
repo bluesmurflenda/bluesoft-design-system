@@ -43,7 +43,6 @@ $badge-sizes: (
   md: (height: 24px, padding-x: 10px, gap: $space-1, type: body-sm, icon: 14px, dot: 6px),
   lg: (height: 28px, padding-x: $space-3, gap: 6px, type: body-sm, icon: 16px, dot: 8px),
 );
-
 $badge-colors: (
   brand: (bg: var(--bds-badge-brand-bg), fg: var(--bds-badge-brand-fg)),
   neutral: (bg: var(--bds-badge-neutral-bg), fg: var(--bds-badge-neutral-fg)),
@@ -57,6 +56,7 @@ $badge-colors: (
   display: inline-flex;
   align-items: center;
   border-radius: $radius-full;
+
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
 }
@@ -66,6 +66,7 @@ $badge-colors: (
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
+
     @include mix.text(map.get($props, type), medium);
 
     .bds-badge__icon,
@@ -107,6 +108,7 @@ $badge-dot-sizes: (
 .bds-badge-dot {
   display: inline-flex;
   align-items: center;
+
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
 
@@ -121,6 +123,7 @@ $badge-dot-sizes: (
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
+
     @include mix.text(map.get($props, type), medium);
 
     .bds-badge-dot__dot {

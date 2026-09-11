@@ -82,6 +82,7 @@ $btn-sizes: (
   lg: (height: 48px, padding-x: var(--bds-btn-padding-x-lg), type: body-lg, radius: $btn-radius, gap: $space-2),
   xl: (height: 56px, padding-x: var(--bds-btn-padding-x-xl), type: body-xl, radius: $btn-radius, gap: $space-2),
 );
+
 // lg와 xl이 padding-x 둘 다 24로 동일 — Rounded/Square 모드 한정. Pill 모드에서는 sm·xl만 달라진다(6장).
 
 // 아이콘·라벨 내부 gap 은 사이즈에 딸린다 — 2026-09-11 실측(225변형 전수): sm 만 space/1(4px)
@@ -105,7 +106,6 @@ $btn-variants: (
 $btn-disabled-bg: var(--bds-btn-disabled-bg);
 $btn-disabled-border: var(--bds-btn-disabled-border);
 $btn-disabled-fg: var(--bds-btn-disabled-fg);
-
 $btn-link-fg: var(--bds-btn-link-fg);
 $btn-link-fg-hover: var(--bds-btn-link-fg-hover);
 $btn-link-fg-pressed: var(--bds-btn-link-fg-pressed);
@@ -115,8 +115,10 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   // gap 은 아래 @each 의 사이즈 클래스가 낸다(font-weight 와 같은 이유 — 항상 함께 쓰인다)
   border: none;
+
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
   cursor: pointer;
@@ -138,9 +140,11 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
+
     // 2026-09-11 실측(225변형 전수): Label 은 전부 Medium(500) 이다 — 텍스트 스타일이
     // Body/{Size}/Medium 이고 font/weight/medium 을 바인딩한다. semibold(600) 로 나가고 있었다.
     @include mix.text(map.get($props, type), medium);
+
     border-radius: map.get($props, radius);
   }
 }
@@ -149,17 +153,18 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
   .bds-btn-#{$variant} {
     background-color: map.get($colors, bg);
     color: map.get($colors, fg);
+
     @if map.has-key($colors, border) {
       // Figma 는 테두리 두께에 border/hairline 을 바인딩한다. 리터럴 1px 이었다 —
       // 값이 같아 화면은 안 바뀐다(ADR-034).
       border: $border-hairline solid map.get($colors, border);
     }
 
-    &:hover:not(:disabled):not([aria-disabled='true']) {
+    &:hover:not(:disabled, [aria-disabled='true']) {
       background-color: map.get($colors, bg-hover);
     }
 
-    &:active:not(:disabled):not([aria-disabled='true']) {
+    &:active:not(:disabled, [aria-disabled='true']) {
       background-color: map.get($colors, bg-pressed);
     }
 
@@ -167,6 +172,7 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
     &[aria-disabled='true'] {
       background-color: $btn-disabled-bg;
       color: $btn-disabled-fg;
+
       @if map.has-key($colors, border) {
         border-color: $btn-disabled-border;
       }
@@ -182,11 +188,11 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
   color: $btn-link-fg;
   text-decoration: underline;
 
-  &:hover:not(:disabled):not([aria-disabled='true']) {
+  &:hover:not(:disabled, [aria-disabled='true']) {
     color: $btn-link-fg-hover;
   }
 
-  &:active:not(:disabled):not([aria-disabled='true']) {
+  &:active:not(:disabled, [aria-disabled='true']) {
     color: $btn-link-fg-pressed;
   }
 

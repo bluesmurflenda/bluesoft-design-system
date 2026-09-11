@@ -45,7 +45,6 @@
 }
 
 $alert-fg-supporting: var(--bds-alert-fg-supporting);
-
 $alert-colors: (
   brand: (bg: var(--bds-alert-brand-bg), fg: var(--bds-alert-brand-fg), border: var(--bds-alert-brand-border)),
   neutral: (bg: var(--bds-alert-neutral-bg), fg: var(--bds-alert-neutral-fg), border: var(--bds-alert-neutral-border)),
@@ -75,6 +74,7 @@ $alert-colors: (
   &-inline,
   &-toast {
     padding: $space-4;
+
     // ADR-034: Shape 컬렉션의 alert/radius 를 쓴다. 프리미티브(radius/md)를 직접 물면 각진 모드에서
     // 이 컴포넌트만 둥글게 남는다 — 다른 컴포넌트는 전부 자기 Shape 토큰을 갖고 있었다.
     border-radius: var(--bds-alert-radius);
@@ -82,8 +82,9 @@ $alert-colors: (
 
   &-toast {
     width: 400px;
+
     // 2026-08-28 실측(Shadow/lg): rgba(0,0,0,.08) 0/12/16/-4 + rgba(0,0,0,.03) 0/4/6/-2
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.03), 0 12px 16px -4px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 6px -2px rgb(0 0 0 / 3%), 0 12px 16px -4px rgb(0 0 0 / 8%);
   }
 
   &-banner {
@@ -113,6 +114,7 @@ $alert-colors: (
 
   &__text {
     @include mix.text(body-sm, regular);
+
     color: $alert-fg-supporting; // 실측: alert/fg-supporting은 색상과 무관한 공용 톤
   }
 
@@ -127,6 +129,7 @@ $alert-colors: (
   .bds-alert-#{$color} {
     background-color: map.get($c, bg);
     color: map.get($c, fg);
+
     // Figma 는 테두리 두께에 border/hairline 을 바인딩한다(individualStrokeWeights, 18개 변형 전부).
     // 리터럴 1px 이었다 — 색만 대조하다 놓친 자리다(ADR-034).
     border: $border-hairline solid map.get($c, border);

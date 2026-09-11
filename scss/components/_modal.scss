@@ -40,8 +40,9 @@ $modal-widths: (
 $modal-bg: var(--bds-modal-bg);
 $modal-title-fg: var(--bds-modal-fg);
 $modal-description-fg: var(--bds-modal-fg-supporting);
+
 // Shadow/xl — 2026-08-28 재실측: blur·spread 값이 부정확했음(12→24, 4→8, spread -4px 누락)
-$modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0, 0.03);
+$modal-shadow: 0 20px 24px -4px rgb(0 0 0 / 8%), 0 8px 8px -4px rgb(0 0 0 / 3%);
 
 // 모달 뒤 딤드 배경 — 기존 코드에 아예 없었다. 마크업에서 .bds-modal과 형제로 둔다.
 .bds-modal-overlay {
@@ -96,11 +97,13 @@ $modal-shadow: 0 20px 24px -4px rgba(0, 0, 0, 0.08), 0 8px 8px -4px rgba(0, 0, 0
 
   &__title {
     @include mix.text(body-lg, semibold);
+
     color: $modal-title-fg;
   }
 
   &__description {
     @include mix.text(body-sm, medium);
+
     color: $modal-description-fg;
   }
 
@@ -145,6 +148,7 @@ $modal-icon-colors: (
   &.bds-modal-featured-icon-sm {
     padding: 10px;
   }
+
   &.bds-modal-featured-icon-md {
     padding: 12px;
   }
@@ -189,9 +193,11 @@ $modal-icon-colors: (
     border-radius: $radius-sm;
     background-color: var(--bds-modal-slot-bg);
     color: $modal-description-fg;
+
     // font-weight 선언이 원래 없던 자리라 text() 믹스인(weight 강제 포함)을 쓰지 않고
     // $type-scale에서 size/lh만 뽑아 쓴다(규칙 3 대체 경로).
     $modal-slot-type: map.get(maps.$type-scale, body-sm);
+
     font-size: map.get($modal-slot-type, size);
     line-height: map.get($modal-slot-type, lh);
   }

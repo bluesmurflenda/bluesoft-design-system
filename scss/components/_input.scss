@@ -59,14 +59,14 @@ $input-sizes: (
   lg: (height: 48px, padding-x: $space-4, type: body-lg, hint: body-sm, icon: 20px),
   xl: (height: 56px, padding-x: $space-4, type: body-lg, hint: body-sm, icon: 20px),
 );
-
 $input-label-fg: var(--bds-field-label-fg);
 $input-fg: var(--bds-field-fg);
 $input-placeholder-fg: var(--bds-field-fg-placeholder);
 $input-disabled-bg: var(--bds-field-bg-disabled);
 $input-disabled-placeholder-fg: var(--bds-field-fg-placeholder-disabled);
+
 // 2026-08-28 실측: Shadow/xs — hover·disabled까지 공통, focus에서는 포커스 링으로 완전히 대체된다(합쳐지지 않음).
-$input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+$input-shadow: 0 1px 2px rgb(0 0 0 / 5%);
 
 // 유효성 색(빨강/초록)은 프리미티브 직접 참조가 정상이다 — 대응하는 시맨틱이 없다(의미 자체가
 // 색에 있는 경우, FIGMA.md 「토큰 계층」). border-disabled의 red-200/green-200도 마찬가지.
@@ -86,6 +86,7 @@ $input-validation-colors: (
 
   &__label {
     @include mix.text(body-sm, medium);
+
     color: $input-label-fg;
   }
 
@@ -114,6 +115,7 @@ $input-validation-colors: (
     outline: none;
     background: none;
     padding: 0;
+
     // font-weight는 아래 @each의 text()로 이동
     color: $input-fg; // 값 입력 시 색상(filled). placeholder는 ::placeholder로 별도 처리.
 

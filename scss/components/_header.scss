@@ -45,7 +45,6 @@ $header-border-light: var(--bds-nav-border);
 $header-bg-dark: var(--bds-nav-dark-bg);
 $header-bg-floating: var(--bds-nav-bg-floating);
 $header-bg-dark-floating: var(--bds-nav-dark-bg-floating);
-
 $nav-menu-fg-light: var(--bds-nav-fg);
 $nav-menu-fg-hover-light: var(--bds-nav-fg-hover); // hover/selected 동일 색(실측)
 $nav-menu-fg-dark: var(--bds-nav-dark-fg); // dark는 default/hover/selected 전부 동일 고정(실측)
@@ -64,6 +63,7 @@ $announcement-fg: var(--bds-nav-announcement-fg);
     padding: $space-2 $space-10;
     background-color: $announcement-bg;
     color: $announcement-fg;
+
     @include mix.text(body-sm, medium);
 
     @media (max-width: bp.$css-breakpoint-sm - 1) {
@@ -102,7 +102,6 @@ $announcement-fg: var(--bds-nav-announcement-fg);
     .bds-site-header__main {
       background-color: $header-bg-floating;
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
     }
   }
 
@@ -149,7 +148,9 @@ $announcement-fg: var(--bds-nav-announcement-fg);
   align-items: center;
   padding: $space-3 $space-4;
   color: $nav-menu-fg-light;
+
   @include mix.text(body-xl, bold);
+
   cursor: pointer;
 
   &:hover,

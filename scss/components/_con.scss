@@ -50,12 +50,10 @@ $con-sizes: (
   md: (height: 40px, padding-x: $space-5, type: body-lg),
   lg: (height: 48px, padding-x: $space-6, type: body-xl),
 );
-
 $con-fg: var(--bds-con-fg);
 $con-fg-selected: var(--bds-con-fg-selected);
 $con-bg-selected-shared: var(--bds-con-bg-selected);
 $con-border-selected-shared: var(--bds-con-border-selected);
-
 $con-themes: (
   'color': (bg: var(--bds-con-color-bg), bg-hover: var(--bds-con-color-bg-hover), border: var(--bds-con-color-border), fg-hover: null, border-hover: null,
     bg-selected: $con-bg-selected-shared, border-selected: $con-border-selected-shared, fg-selected: $con-fg-selected),
@@ -74,6 +72,7 @@ $con-themes: (
   border-radius: var(--bds-con-radius); // 2026-08-28 재확인(status-spec): Square 모드에서 radius/none — 모드 무관 아니었음
   border: 1px solid transparent;
   color: $con-fg;
+
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   cursor: pointer;
 
@@ -88,6 +87,7 @@ $con-themes: (
   .bds-con-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
+
     @include mix.text(map.get($props, type), medium);
   }
 }
@@ -99,9 +99,11 @@ $con-themes: (
 
     &:hover:not(.bds-con-disabled) {
       background-color: map.get($c, bg-hover);
+
       @if map.get($c, fg-hover) {
         color: map.get($c, fg-hover);
       }
+
       @if map.get($c, border-hover) {
         border-color: map.get($c, border-hover);
       }

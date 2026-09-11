@@ -10,6 +10,7 @@
     @if map.has-key($type, family) {
       font-family: map.get($type, family), -apple-system, BlinkMacSystemFont, sans-serif;
     }
+
     font-size: map.get($type, size);
     line-height: map.get($type, lh);
   }

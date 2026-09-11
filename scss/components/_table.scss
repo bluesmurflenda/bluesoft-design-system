@@ -66,6 +66,7 @@ $table-cell-sizes: (
 
 .bds-table-header {
   display: flex;
+
   // 2026-08-28 확인(table-nav-spec): Table/Header 자체는 border 없음 — 위쪽 선은 Figma에 없는데
   // 코드에만 있던 것이라 제거. 헤더-바디 경계는 각 셀의 border-bottom이 담당.
 }
@@ -122,8 +123,10 @@ $table-cell-sizes: (
     // padding-y는 0 — 세로 여백은 align-items:center가 만든다(패딩과 함께 쓰면 여러 줄에서 과도해짐).
     min-height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
+
     // font-weight는 Role(body/header-col/header-row) 축이라 사이즈 축과 분리 — size/line-height만 $type-scale에서 읽는다.
     $table-cell-type: map.get(maps.$type-scale, map.get($props, type));
+
     font-size: map.get($table-cell-type, size);
     line-height: map.get($table-cell-type, lh);
   }
@@ -136,6 +139,7 @@ $table-cell-sizes: (
 
     .bds-table-cell__supporting {
       color: $table-cell-fg-supporting;
+
       @include mix.text(body-2xs, medium);
     }
   }

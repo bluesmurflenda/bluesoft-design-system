@@ -10,7 +10,7 @@ $social-height: 48px;
 $social-padding-x: $space-5;
 $social-gap: $space-2;
 $social-logo-size: 20px;
-$social-hover-overlay: rgba(0, 0, 0, 0.08);
+$social-hover-overlay: rgb(0 0 0 / 8%);
 
 // google은 브랜드 테마에서도 outline과 동일 처리(문서·실측 공통) — 별도 브랜드색 없음.
 $social-brand-colors: (
@@ -42,7 +42,7 @@ $social-brand-colors: (
     pointer-events: none;
   }
 
-  &:hover:not(:disabled):not([aria-disabled='true'])::after {
+  &:hover:not(:disabled, [aria-disabled='true'])::after {
     background-color: $social-hover-overlay;
   }
 

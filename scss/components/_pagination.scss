@@ -30,7 +30,6 @@ $pagination-sizes: (
   md: (item: 40px, type: body-lg),
   lg: (item: 48px, type: body-xl),
 );
-
 $pagination-border: var(--bds-pagination-group-border);
 $pagination-fg: var(--bds-pagination-item-fg);
 $pagination-fg-hover: var(--bds-pagination-item-fg-hover);
@@ -116,6 +115,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
   // 2026-09-11 실측(15변형 전수): 상 40/48/64 · 좌우 20 · 하 12/16/20. 좌우·아래 패딩이 없었다.
   // 구분선은 Figma 에서 stroke 가 visible:false 다 — 스크린샷으로도 numbers·simple 에는 선이
   // 없고 numbers-buttons 에만 있다. 코드가 그리던 border-top 을 뺀다.
@@ -146,6 +146,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
 .bds-pagination-numbers.bds-pagination-sm {
   padding: $space-10 $space-5 $space-3;
 }
+
 .bds-pagination-numbers.bds-pagination-lg {
   padding: $space-16 $space-5 $space-5;
 }
@@ -171,6 +172,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
 .bds-pagination-simple.bds-pagination-sm {
   padding: $space-10 $space-5 $space-3;
 }
+
 .bds-pagination-simple.bds-pagination-lg {
   padding: $space-16 $space-5 $space-5;
 }
@@ -197,6 +199,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
 .bds-pagination-group {
   display: inline-flex;
   align-items: stretch;
+
   // 2026-09-11: button-group-wrap 이 무는 Shape 토큰이 새로 생겼다. 프리미티브(radius/md)를
   // 직접 물고 있어 각진·Pill 모드에서 이 테두리만 안 따라왔다.
   border-radius: $pagination-wrap-radius;
@@ -240,9 +243,11 @@ $pagination-icon-fg: var(--bds-icon-primary);
   padding: $space-4 $space-5;
   border-top: $border-hairline solid $pagination-border;
 }
+
 .bds-pagination-numbers-buttons.bds-pagination-sm {
   padding: $space-3 $space-5;
 }
+
 .bds-pagination-numbers-buttons.bds-pagination-lg {
   padding: $space-5;
 }
@@ -256,6 +261,7 @@ $pagination-icon-fg: var(--bds-icon-primary);
   width: 100%;
   justify-content: space-between;
   padding-block: $space-3;
+
   // 실측: 테두리는 위쪽 하나뿐이다(individualStrokeWeights top=1, 나머지 0). 아래쪽도 그리고 있었다
   border-top: $border-hairline solid $pagination-border;
 
