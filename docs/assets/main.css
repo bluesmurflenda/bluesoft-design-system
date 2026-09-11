@@ -4083,6 +4083,7 @@ table {
   --bds-nav-item-bg-selected: var(--bds-surface-muted);
   --bds-nav-dark-item-bg-hover: var(--bds-blue-800);
   --bds-nav-dark-item-bg-selected: var(--bds-blue-600);
+  --bds-nav-fg-selected: var(--bds-text-brand);
 }
 
 .bds-side-nav-item {
@@ -4152,7 +4153,7 @@ table {
   color: var(--bds-nav-fg-hover);
 }
 .bds-side-nav-item-light.bds-side-nav-item-selected {
-  background-color: var(--bds-nav-item-bg-selected);
+  color: var(--bds-nav-fg-selected);
 }
 .bds-side-nav-item-dark {
   color: var(--bds-nav-dark-fg);
@@ -4164,7 +4165,7 @@ table {
   background-color: var(--bds-nav-dark-item-bg-hover);
 }
 .bds-side-nav-item-dark.bds-side-nav-item-selected {
-  background-color: var(--bds-nav-dark-item-bg-selected);
+  color: var(--bds-nav-fg-selected);
 }
 
 :root {
