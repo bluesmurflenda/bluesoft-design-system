@@ -1,8 +1,8 @@
 // Figma DS Master > Navigation (Header, Footer) 페이지 (node 1299:424 _Side Nav/Item), 2026-08-31 재실측
 // Type(default|sub|icon) × Theme(light|dark) × State(default|hover|selected) = 18변형
 
-@use '../tokens/primitive' as *;
-@use '../abstracts/mixins' as mix;
+@use "../tokens/primitive" as *;
+@use "../abstracts/mixins" as mix;
 
 // figma/tokens.theme.json의 nav/item/*·nav/dark-item/* 를 그대로 옮겼다. 전부 라이트·다크 별칭
 // 대상이 같아 [data-theme=dark] 오버라이드가 없다 — dark-item(Theme=dark 스타일)의 hover/selected가
@@ -11,101 +11,104 @@
 // 문제가 아니라 코드가 Theme=dark를 진짜 다크모드처럼 반전시키고 있었다). blue-800/blue-600 고정으로
 // 바로잡으면 글자(항상 흰색)와의 대비도 정상으로 돌아온다.
 :root {
-  --bds-nav-item-bg-hover: var(--bds-surface-subtle);
-  --bds-nav-item-bg-selected: var(--bds-surface-muted);
-  --bds-nav-dark-item-bg-hover: var(--bds-blue-800);
-  --bds-nav-dark-item-bg-selected: var(--bds-blue-600);
+    --bds-nav-item-bg-hover: var(--bds-surface-subtle);
+    --bds-nav-item-bg-selected: var(--bds-surface-muted);
+    --bds-nav-dark-item-bg-hover: var(--bds-blue-800);
+    --bds-nav-dark-item-bg-selected: var(--bds-blue-600);
+    --bds-nav-fg-selected: var(--bds-text-brand);
 }
 
 .bds-side-nav-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-2;
-  width: 100%;
-  height: 40px;
-  padding: $space-2 $space-3;
-  border-radius: $radius-sm; // 2026-08-28 확인(table-nav-spec 0장): default 12/hover·selected 8로 갈리던 결함 — radius/sm(8)로 통일
-  @include mix.text(body-lg, medium);
-  cursor: pointer;
-
-  &__content {
     display: flex;
     align-items: center;
-    gap: $space-3;
-    min-width: 0;
-  }
+    justify-content: space-between;
+    gap: $space-2;
+    width: 100%;
+    height: 40px;
+    padding: $space-2 $space-3;
+    border-radius: $radius-sm; // 2026-08-28 확인(table-nav-spec 0장): default 12/hover·selected 8로 갈리던 결함 — radius/sm(8)로 통일
+    @include mix.text(body-lg, medium);
+    cursor: pointer;
 
-  &__icon {
-    flex-shrink: 0;
-    width: 24px;
-    height: 24px;
-  }
-
-  &__label {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  &__badge {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 24px;
-    padding-inline: 10px; // 2026-08-28 실측: space 토큰(8/12)에 안 맞는 리터럴 값
-    border-radius: $radius-full;
-    background-color: var(--bds-surface-subtle);
-    color: var(--bds-text-tertiary);
-    @include mix.text(body-sm, medium);
-  }
-
-  &-sub {
-    padding-left: 48px;
-  }
-
-  &-icon {
-    width: 48px;
-    height: 48px;
-    padding: $space-3;
-    justify-content: center;
-  }
-
-  &-light {
-    color: var(--bds-nav-fg);
-
-    .bds-side-nav-item__icon {
-      color: var(--bds-nav-fg);
+    &__content {
+        display: flex;
+        align-items: center;
+        gap: $space-3;
+        min-width: 0;
     }
 
-    &:hover {
-      background-color: var(--bds-nav-item-bg-hover);
-      color: var(--bds-nav-fg-hover);
+    &__icon {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
     }
 
-    &:hover .bds-side-nav-item__icon {
-      color: var(--bds-nav-fg-hover);
+    &__label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    &.bds-side-nav-item-selected {
-      background-color: var(--bds-nav-item-bg-selected);
-    }
-  }
-
-  &-dark {
-    color: var(--bds-nav-dark-fg);
-
-    .bds-side-nav-item__icon {
-      color: var(--bds-nav-dark-fg);
-    }
-
-    &:hover {
-      background-color: var(--bds-nav-dark-item-bg-hover);
+    &__badge {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 24px;
+        padding-inline: 10px; // 2026-08-28 실측: space 토큰(8/12)에 안 맞는 리터럴 값
+        border-radius: $radius-full;
+        background-color: var(--bds-surface-subtle);
+        color: var(--bds-text-tertiary);
+        @include mix.text(body-sm, medium);
     }
 
-    &.bds-side-nav-item-selected {
-      background-color: var(--bds-nav-dark-item-bg-selected);
+    &-sub {
+        padding-left: 48px;
     }
-  }
+
+    &-icon {
+        width: 48px;
+        height: 48px;
+        padding: $space-3;
+        justify-content: center;
+    }
+
+    &-light {
+        color: var(--bds-nav-fg);
+
+        .bds-side-nav-item__icon {
+            color: var(--bds-nav-fg);
+        }
+
+        &:hover {
+            background-color: var(--bds-nav-item-bg-hover);
+            color: var(--bds-nav-fg-hover);
+        }
+
+        &:hover .bds-side-nav-item__icon {
+            color: var(--bds-nav-fg-hover);
+        }
+
+        &.bds-side-nav-item-selected {
+            color: var(--bds-nav-fg-selected);
+            // background-color: var(--bds-nav-item-bg-selected);
+        }
+    }
+
+    &-dark {
+        color: var(--bds-nav-dark-fg);
+
+        .bds-side-nav-item__icon {
+            color: var(--bds-nav-dark-fg);
+        }
+
+        &:hover {
+            background-color: var(--bds-nav-dark-item-bg-hover);
+        }
+
+        &.bds-side-nav-item-selected {
+            color: var(--bds-nav-fg-selected);
+            // background-color: var(--bds-nav-dark-item-bg-selected);
+        }
+    }
 }
