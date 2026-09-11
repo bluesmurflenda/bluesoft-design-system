@@ -88,7 +88,9 @@ $icon-button-extra-variants: (
     background-color: map.get($colors, bg);
     color: map.get($colors, fg);
     @if map.has-key($colors, border) {
-      border: 1px solid map.get($colors, border);
+      // Figma 는 테두리 두께에 border/hairline 을 바인딩한다(220변형 전수 확인).
+      // 리터럴 1px 이었다 — 값이 같아 화면은 안 바뀐다(ADR-034).
+      border: $border-hairline solid map.get($colors, border);
     }
 
     &:hover:not(:disabled):not([aria-disabled='true']) {

@@ -63,7 +63,7 @@ $list-item-fg-selected: var(--bds-list-item-fg-selected);
     display: inline-flex;
     align-items: center;
     gap: $space-2;
-    border: 1px solid $dropdown-border;
+    border: $border-hairline solid $dropdown-border;
     background-color: var(--bds-field-bg);
     color: $dropdown-fg;
     // font-weight는 아래 @each의 text()로 이동
@@ -141,9 +141,11 @@ $list-item-font: (
 .bds-list-panel {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-block: $space-1; // 문서 실측: padding-y만 4 — 좌우는 list-item 자체 padding-inline이 담당
-  border: 1px solid $list-panel-border;
+  // 2026-09-11 실측(_List/Panel 전 사이즈): 항목 간격도 패딩도 space/1 이고, 패딩은 상하만이
+  // 아니라 네 방향 전부다. 코드는 간격이 리터럴 2px 였고 좌우 패딩이 없었다
+  gap: $space-1;
+  padding: $space-1;
+  border: $border-hairline solid $list-panel-border;
   border-radius: $radius-md;
   background-color: $list-panel-bg;
 }

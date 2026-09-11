@@ -29,6 +29,7 @@
   --bds-field-border-valid-disabled: var(--bds-green-200);
   --bds-field-border-valid-hover: var(--bds-green-700);
   --bds-field-fg-placeholder-disabled: var(--bds-neutral-300);
+  --bds-field-hint-fg-invalid: var(--bds-red-500);
   --bds-field-ring-invalid: var(--bds-red-200);
   --bds-field-ring-valid: var(--bds-green-200);
 }
@@ -44,16 +45,19 @@
   --bds-field-border-valid-disabled: var(--bds-green-700);
   --bds-field-border-valid-hover: var(--bds-green-300);
   --bds-field-fg-placeholder-disabled: var(--bds-neutral-600);
+  --bds-field-hint-fg-invalid: var(--bds-red-300);
   --bds-field-ring-invalid: var(--bds-red-700);
   --bds-field-ring-valid: var(--bds-green-700);
 }
 
 // 2026-08-29: $type-scale 키로 전환(값은 동일, size/lh 중복 제거).
+// hint 는 control 과 따로 간다 — 2026-09-11 실측: 힌트는 sm 만 13/18 이고 md·lg·xl 은 전부
+// 14/20 이다. control 이 16/24 로 올라가는 lg·xl 에서도 힌트는 그대로다. 한 키로 묶여 있었다.
 $input-sizes: (
-  sm: (height: 32px, padding-x: $space-3, type: body-xs, icon: 16px),
-  md: (height: 40px, padding-x: $space-4, type: body-sm, icon: 16px),
-  lg: (height: 48px, padding-x: $space-4, type: body-lg, icon: 20px),
-  xl: (height: 56px, padding-x: $space-4, type: body-lg, icon: 20px),
+  sm: (height: 32px, padding-x: $space-3, type: body-xs, hint: body-xs, icon: 16px),
+  md: (height: 40px, padding-x: $space-4, type: body-sm, hint: body-sm, icon: 16px),
+  lg: (height: 48px, padding-x: $space-4, type: body-lg, hint: body-sm, icon: 20px),
+  xl: (height: 56px, padding-x: $space-4, type: body-lg, hint: body-sm, icon: 20px),
 );
 
 $input-label-fg: var(--bds-field-label-fg);
@@ -70,14 +74,14 @@ $input-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 // (get_variable_defs로 확인 — 이름과 실제 alpha가 다르다).
 $input-validation-colors: (
   normal: (border: var(--bds-field-border), border-hover: var(--bds-field-border-hover), border-focus: var(--bds-field-border-focus), ring: $effect-focus-ring, border-disabled: var(--bds-field-border-disabled), hint-fg: var(--bds-field-hint-fg)),
-  invalid: (border: var(--bds-field-border-invalid), border-hover: var(--bds-field-border-invalid-hover), border-focus: var(--bds-field-border-invalid), ring: var(--bds-field-ring-invalid), border-disabled: var(--bds-field-border-invalid-disabled), hint-fg: $red-500 /* 예외: 의미색 — Figma 도 이 자리에 red/500 을 직접 문다. field/hint/fg-invalid 토큰 신설이 필요하다 */),
+  invalid: (border: var(--bds-field-border-invalid), border-hover: var(--bds-field-border-invalid-hover), border-focus: var(--bds-field-border-invalid), ring: var(--bds-field-ring-invalid), border-disabled: var(--bds-field-border-invalid-disabled), hint-fg: var(--bds-field-hint-fg-invalid)),
   valid: (border: var(--bds-field-border-valid), border-hover: var(--bds-field-border-valid-hover), border-focus: var(--bds-field-border-valid), ring: var(--bds-field-ring-valid), border-disabled: var(--bds-field-border-valid-disabled), hint-fg: var(--bds-field-hint-fg)),
 );
 
 .bds-input {
   display: flex;
   flex-direction: column;
-  gap: 6px; // 2026-08-28 실측: space 토큰(4/8)에 안 맞는 리터럴 값
+  gap: $space-2; // 2026-09-11 실측: 라벨↔필드·필드↔힌트 모두 space/2 바인딩(전 20변형). 리터럴 6px 이었다
   width: 100%;
 
   &__label {
@@ -130,7 +134,7 @@ $input-validation-colors: (
     flex-shrink: 0;
   }
 
-  // &__hint의 font-weight는 아래 @each의 text()로 이동(.bds-input__control과 공유)
+  // &__hint의 타이포는 아래 @each의 text()로 낸다 — control 과 키가 다르다($input-sizes 주석)
 }
 
 @each $size, $props in $input-sizes {
@@ -140,9 +144,12 @@ $input-validation-colors: (
       padding-inline: map.get($props, padding-x);
     }
 
-    .bds-input__control,
-    .bds-input__hint {
+    .bds-input__control {
       @include mix.text(map.get($props, type), regular);
+    }
+
+    .bds-input__hint {
+      @include mix.text(map.get($props, hint), regular);
     }
 
     .bds-input__icon {
@@ -155,7 +162,9 @@ $input-validation-colors: (
 @each $validation, $c in $input-validation-colors {
   .bds-input-#{$validation} {
     .bds-input__field {
-      border: 1px solid map.get($c, border);
+      // Figma 는 테두리 두께에 border/hairline 을 바인딩한다(individualStrokeWeights, 20변형 전부).
+      // 리터럴 1px 이었다 — 값이 같아 화면은 안 바뀐다(ADR-034).
+      border: $border-hairline solid map.get($c, border);
 
       &:hover {
         border-color: map.get($c, border-hover);

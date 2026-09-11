@@ -26,7 +26,10 @@
   --bds-card-bg-tinted: var(--bds-neutral-700);
 }
 
-$card-radius: $radius-lg;
+// ADR-034: Shape 컬렉션의 card/radius 를 쓴다 — 실측(2026-09-11)에서 Figma 는 rectangleCornerRadii 에
+// Shape/card/radius 를 바인딩한다. 프리미티브(radius/lg)를 직접 물고 있어 각진·Pill 모드에서
+// 카드만 안 따라왔다(alert 과 같은 자리).
+$card-radius: var(--bds-card-radius);
 $card-bg: var(--bds-card-bg);
 $card-bg-tinted: var(--bds-card-bg-tinted);
 $card-border: var(--bds-card-border);
@@ -63,7 +66,7 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
   }
 
   &-default {
-    border: 1px solid transparent;
+    border: $border-hairline solid transparent;
     box-shadow: $card-shadow-sm;
 
     &:hover {
@@ -73,7 +76,7 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
   }
 
   &-outline {
-    border: 1px solid $card-border;
+    border: $border-hairline solid $card-border;
 
     &:hover {
       border-color: $card-border-hover;
@@ -81,7 +84,7 @@ $card-shadow-md: 0 2px 4px -2px rgba(0, 0, 0, 0.06), 0 4px 8px -2px rgba(0, 0, 0
   }
 
   &-tinted {
-    border: 1px solid transparent;
+    border: $border-hairline solid transparent;
     background-color: $card-bg-tinted;
 
     &:hover {

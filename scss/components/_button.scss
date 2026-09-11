@@ -77,14 +77,15 @@ $btn-radius: var(--bds-btn-radius);
 // 0건이라 제외 — Figma 쪽 변형 자체는 삭제하지 않는다(코드만 4단계).
 // padding-x는 sm·xl이 Pill 모드에서만 값이 달라져 var(--bds-btn-padding-x-*)로 뺐다(6장).
 $btn-sizes: (
-  sm: (height: 32px, padding-x: var(--bds-btn-padding-x-sm), type: body-sm, radius: $btn-radius),
-  md: (height: 40px, padding-x: var(--bds-btn-padding-x-md), type: body-md, radius: $btn-radius),
-  lg: (height: 48px, padding-x: var(--bds-btn-padding-x-lg), type: body-lg, radius: $btn-radius),
-  xl: (height: 56px, padding-x: var(--bds-btn-padding-x-xl), type: body-xl, radius: $btn-radius),
+  sm: (height: 32px, padding-x: var(--bds-btn-padding-x-sm), type: body-sm, radius: $btn-radius, gap: $space-1),
+  md: (height: 40px, padding-x: var(--bds-btn-padding-x-md), type: body-md, radius: $btn-radius, gap: $space-2),
+  lg: (height: 48px, padding-x: var(--bds-btn-padding-x-lg), type: body-lg, radius: $btn-radius, gap: $space-2),
+  xl: (height: 56px, padding-x: var(--bds-btn-padding-x-xl), type: body-xl, radius: $btn-radius, gap: $space-2),
 );
 // lg와 xl이 padding-x 둘 다 24로 동일 — Rounded/Square 모드 한정. Pill 모드에서는 sm·xl만 달라진다(6장).
 
-$btn-gap: $space-2; // 아이콘·라벨 내부 gap. 사이즈별 세분값은 문서화돼 있지 않아 단일값 사용.
+// 아이콘·라벨 내부 gap 은 사이즈에 딸린다 — 2026-09-11 실측(225변형 전수): sm 만 space/1(4px)
+// 이고 md·lg·xl 은 space/2(8px) 다. 전 사이즈 space/2 단일값이었다.
 
 // 8개 변형(link 제외) 전부 같은 패턴 — 프리미티브를 직접 물지 않고 위 --bds-btn-* 커스텀
 // 프로퍼티만 참조한다. 값이 라이트·다크 동일한 것(primary/danger 등)도 결과는 같다 —
@@ -114,7 +115,7 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: $btn-gap;
+  // gap 은 아래 @each 의 사이즈 클래스가 낸다(font-weight 와 같은 이유 — 항상 함께 쓰인다)
   border: none;
   // font-weight는 아래 @each 루프의 text()로 이동(사이즈 클래스와 항상 함께 쓰이므로 결과 동일)
   white-space: nowrap;
@@ -136,6 +137,7 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
   .bds-btn-#{$size} {
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
+    gap: map.get($props, gap);
     @include mix.text(map.get($props, type), semibold);
     border-radius: map.get($props, radius);
   }
@@ -146,7 +148,9 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
     background-color: map.get($colors, bg);
     color: map.get($colors, fg);
     @if map.has-key($colors, border) {
-      border: 1px solid map.get($colors, border);
+      // Figma 는 테두리 두께에 border/hairline 을 바인딩한다. 리터럴 1px 이었다 —
+      // 값이 같아 화면은 안 바뀐다(ADR-034).
+      border: $border-hairline solid map.get($colors, border);
     }
 
     &:hover:not(:disabled):not([aria-disabled='true']) {
