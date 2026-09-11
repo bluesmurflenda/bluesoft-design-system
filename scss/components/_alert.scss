@@ -127,7 +127,9 @@ $alert-colors: (
   .bds-alert-#{$color} {
     background-color: map.get($c, bg);
     color: map.get($c, fg);
-    border: 1px solid map.get($c, border);
+    // Figma 는 테두리 두께에 border/hairline 을 바인딩한다(individualStrokeWeights, 18개 변형 전부).
+    // 리터럴 1px 이었다 — 색만 대조하다 놓친 자리다(ADR-034).
+    border: $border-hairline solid map.get($c, border);
 
     .bds-alert__title {
       color: map.get($c, fg);

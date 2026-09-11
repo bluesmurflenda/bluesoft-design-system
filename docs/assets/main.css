@@ -2822,7 +2822,7 @@ table {
 .bds-alert-brand {
   background-color: var(--bds-alert-brand-bg);
   color: var(--bds-alert-brand-fg);
-  border: 1px solid var(--bds-alert-brand-border);
+  border: var(--bds-border-hairline) solid var(--bds-alert-brand-border);
 }
 .bds-alert-brand .bds-alert__title {
   color: var(--bds-alert-brand-fg);
@@ -2831,7 +2831,7 @@ table {
 .bds-alert-neutral {
   background-color: var(--bds-alert-neutral-bg);
   color: var(--bds-alert-neutral-fg);
-  border: 1px solid var(--bds-alert-neutral-border);
+  border: var(--bds-border-hairline) solid var(--bds-alert-neutral-border);
 }
 .bds-alert-neutral .bds-alert__title {
   color: var(--bds-alert-neutral-fg);
@@ -2840,7 +2840,7 @@ table {
 .bds-alert-success {
   background-color: var(--bds-alert-success-bg);
   color: var(--bds-alert-success-fg);
-  border: 1px solid var(--bds-alert-success-border);
+  border: var(--bds-border-hairline) solid var(--bds-alert-success-border);
 }
 .bds-alert-success .bds-alert__title {
   color: var(--bds-alert-success-fg);
@@ -2849,7 +2849,7 @@ table {
 .bds-alert-warning {
   background-color: var(--bds-alert-warning-bg);
   color: var(--bds-alert-warning-fg);
-  border: 1px solid var(--bds-alert-warning-border);
+  border: var(--bds-border-hairline) solid var(--bds-alert-warning-border);
 }
 .bds-alert-warning .bds-alert__title {
   color: var(--bds-alert-warning-fg);
@@ -2858,7 +2858,7 @@ table {
 .bds-alert-error {
   background-color: var(--bds-alert-error-bg);
   color: var(--bds-alert-error-fg);
-  border: 1px solid var(--bds-alert-error-border);
+  border: var(--bds-border-hairline) solid var(--bds-alert-error-border);
 }
 .bds-alert-error .bds-alert__title {
   color: var(--bds-alert-error-fg);
@@ -2867,7 +2867,7 @@ table {
 .bds-alert-info {
   background-color: var(--bds-alert-info-bg);
   color: var(--bds-alert-info-fg);
-  border: 1px solid var(--bds-alert-info-border);
+  border: var(--bds-border-hairline) solid var(--bds-alert-info-border);
 }
 .bds-alert-info .bds-alert__title {
   color: var(--bds-alert-info-fg);
