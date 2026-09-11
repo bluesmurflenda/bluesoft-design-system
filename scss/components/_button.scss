@@ -138,7 +138,9 @@ $btn-link-fg-disabled: var(--bds-btn-link-fg-disabled);
     height: map.get($props, height);
     padding-inline: map.get($props, padding-x);
     gap: map.get($props, gap);
-    @include mix.text(map.get($props, type), semibold);
+    // 2026-09-11 실측(225변형 전수): Label 은 전부 Medium(500) 이다 — 텍스트 스타일이
+    // Body/{Size}/Medium 이고 font/weight/medium 을 바인딩한다. semibold(600) 로 나가고 있었다.
+    @include mix.text(map.get($props, type), medium);
     border-radius: map.get($props, radius);
   }
 }

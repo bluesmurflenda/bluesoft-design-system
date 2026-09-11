@@ -752,7 +752,7 @@ table {
   gap: var(--bds-space-1);
   font-size: var(--bds-font-size-body-sm);
   line-height: var(--bds-font-leading-body-sm);
-  font-weight: var(--bds-font-weight-semibold);
+  font-weight: var(--bds-font-weight-medium);
   border-radius: var(--bds-btn-radius);
 }
 
@@ -762,7 +762,7 @@ table {
   gap: var(--bds-space-2);
   font-size: var(--bds-font-size-body-md);
   line-height: var(--bds-font-leading-body-md);
-  font-weight: var(--bds-font-weight-semibold);
+  font-weight: var(--bds-font-weight-medium);
   border-radius: var(--bds-btn-radius);
 }
 
@@ -772,7 +772,7 @@ table {
   gap: var(--bds-space-2);
   font-size: var(--bds-type-body-lg-size);
   line-height: var(--bds-type-body-lg-leading);
-  font-weight: var(--bds-font-weight-semibold);
+  font-weight: var(--bds-font-weight-medium);
   border-radius: var(--bds-btn-radius);
 }
 
@@ -782,7 +782,7 @@ table {
   gap: var(--bds-space-2);
   font-size: var(--bds-type-body-xl-size);
   line-height: var(--bds-type-body-xl-leading);
-  font-weight: var(--bds-font-weight-semibold);
+  font-weight: var(--bds-font-weight-medium);
   border-radius: var(--bds-btn-radius);
 }
 
