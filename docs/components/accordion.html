@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accordion · BLUESOFT Design System</title>
+<link rel="stylesheet" href="../assets/main.css" />
+<link rel="stylesheet" href="../assets/docs.css" />
+</head>
+<body>
+
+<nav class="doc-sidebar" id="sidebar-mount"></nav>
+
+<main class="doc-main">
+  <div class="doc-breadcrumb"><a href="../index.html">데이터 컴포넌트</a> / Accordion</div>
+  <div class="doc-page-header">
+    <h1>Accordion</h1>
+    <p>펼침 여부는 트리거의 <code>aria-expanded</code>로 읽고 패널은 <code>hidden</code> 속성으로 감춥니다 — 상태 전용 클래스가 없습니다. 트리거 최소 높이와 라운드 반경은 Shape 컬렉션 토큰이라 <code>[data-shape]</code> 전환을 따라갑니다.</p>
+  </div>
+
+  <section class="doc-section">
+    <h2>Container</h2>
+    <p class="doc-desc">컨테이너 장식이 네 가지입니다. 기본(클래스 없음)은 구분선만 있고, <code>border</code>는 바깥 테두리, <code>rounded</code>는 테두리와 라운드, <code>each</code>는 아이템마다 테두리·라운드를 갖고 <code>space/2</code>만큼 떨어집니다.</p>
+    <div class="doc-col" id="accordion-container-list"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Size</h2>
+    <p class="doc-desc">트리거 최소 높이 44/56/64와 좌우 여백 16/20/24가 사이즈를 만듭니다. 제목·본문은 sm·md가 15/22, lg만 16/24입니다.</p>
+    <div class="doc-col" id="accordion-size-list"></div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Meta</h2>
+    <p class="doc-desc">제목 오른쪽에 날짜 같은 보조 정보를 둘 수 있습니다. 사이즈와 무관하게 14/20이고 색은 <code>text/tertiary</code>입니다.</p>
+    <div class="doc-col" id="accordion-meta-list"></div>
+  </section>
+</main>
+
+<script>window.DOCS_BASE = '../';</script>
+<script src="../assets/nav.js"></script>
+<script>
+  var ITEMS = [
+    ['아코디언 제목', false],
+    ['아코디언 제목', true],
+    ['아코디언 제목', false],
+  ];
+
+  function chevron() {
+    return '<svg class="bds-icon bds-accordion__chevron"><use href="../assets/icons/sprite.svg#icon-base-chevron-down"></use></svg>';
+  }
+
+  function itemHtml(title, expanded, meta) {
+    return (
+      '<div class="bds-accordion__item">' +
+      '<button type="button" class="bds-accordion__trigger" aria-expanded="' + expanded + '">' +
+      '<span class="bds-accordion__title">' + title + '</span>' +
+      (meta ? '<span class="bds-accordion__meta">2026-09-11</span>' : '') +
+      chevron() +
+      '</button>' +
+      '<div class="bds-accordion__panel"' + (expanded ? '' : ' hidden') + '>' +
+      '본문 내용이 들어갑니다. 여러 줄이 되어도 높이가 늘어납니다.' +
+      '</div>' +
+      '</div>'
+    );
+  }
+
+  function accordionHtml(size, container, meta) {
+    return (
+      '<div class="bds-accordion bds-accordion-' + size + (container ? ' bds-accordion-' + container : '') + '">' +
+      ITEMS.map(function (it) { return itemHtml(it[0], it[1], meta); }).join('') +
+      '</div>'
+    );
+  }
+
+  function render(mountId, rows) {
+    var el = document.getElementById(mountId);
+    rows.forEach(function (r) {
+      var wrap = document.createElement('div');
+      wrap.className = 'doc-cell';
+      wrap.style.width = '100%';
+      wrap.innerHTML = r.html + '<span class="doc-cell__caption">' + r.caption + '</span>';
+      el.appendChild(wrap);
+    });
+  }
+
+  render('accordion-container-list', [
+    { html: accordionHtml('md', null), caption: 'accordion accordion-md' },
+    { html: accordionHtml('md', 'border'), caption: 'accordion accordion-md accordion-border' },
+    { html: accordionHtml('md', 'rounded'), caption: 'accordion accordion-md accordion-rounded' },
+    { html: accordionHtml('md', 'each'), caption: 'accordion accordion-md accordion-each' },
+  ]);
+
+  render('accordion-size-list', ['sm', 'md', 'lg'].map(function (s) {
+    return { html: accordionHtml(s, 'rounded'), caption: 'accordion accordion-' + s + ' accordion-rounded' };
+  }));
+
+  render('accordion-meta-list', [
+    { html: accordionHtml('md', 'rounded', true), caption: 'accordion__meta 포함' },
+  ]);
+
+  // 문서에서도 실제로 접었다 펼 수 있게 한다 — 컴포넌트 CSS는 aria-expanded 만 읽는다.
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest('.bds-accordion__trigger');
+    if (!trigger) return;
+    var expanded = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', String(!expanded));
+    var panel = trigger.nextElementSibling;
+    if (panel) panel.hidden = expanded;
+  });
+</script>
+</body>
+</html>

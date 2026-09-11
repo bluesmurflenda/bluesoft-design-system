@@ -77,6 +77,7 @@
         { label: 'Board', href: BASE + 'components/board.html' },
         { label: 'Calendar', href: BASE + 'components/calendar.html' },
         { label: 'Card', href: BASE + 'components/card.html' },
+        { label: 'Accordion', href: BASE + 'components/accordion.html' },
         { label: 'Avatar Group', href: BASE + 'components/avatar-group.html' },
         { label: 'Pagination', href: BASE + 'components/pagination.html' },
       ],

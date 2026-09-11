@@ -1,0 +1,172 @@
+// Figma DS Master > Accordion 페이지 (node 1770:117 Accordion, 1775:159 Accordion/Item),
+// 2026-09-11 라이브 실측.
+// Accordion 은 Container(no|border|rounded|each) 한 축, Item 은 Size(sm/md/lg) ×
+// Expanded(no/yes) × Shape(square/rounded) × State(default/hover) 다.
+//
+// Item 의 Shape 축은 코드에서 별도 클래스로 두지 않는다 — Figma 에서도 컨테이너가
+// each 일 때만 아이템이 rounded 이고, 나머지 세 Container 에서는 전부 square 다.
+// 그래서 `.bds-accordion-each .bds-accordion__item` 이 그 자리를 대신한다.
+//
+// Container=no 는 아무 장식이 없다(테두리·반경 모두 없음) — base 클래스가 그대로 그 상태라
+// 변형 클래스를 두지 않는다. 나머지 셋만 `-border`·`-rounded`·`-each` 로 낸다.
+
+@use '../tokens/primitive' as *;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+// figma/tokens.theme.json 의 accordion/* 를 그대로 옮겼다(2026-09-11).
+// 여섯 개 전부 Default·Dark 가 같은 대상을 가리켜 다크 오버라이드가 없다
+// (별칭 체인이 다크값을 물어온다 — 전역 「모드 오버라이드는 값이 다른 것만 쓴다」).
+:root {
+  --bds-accordion-trigger-bg: var(--bds-surface-default);
+  --bds-accordion-trigger-bg-hover: var(--bds-surface-subtle);
+  --bds-accordion-trigger-fg: var(--bds-text-primary);
+  --bds-accordion-icon-fg: var(--bds-icon-subtle);
+  --bds-accordion-panel-bg: var(--bds-surface-subtle);
+  --bds-accordion-border: var(--bds-border-default);
+}
+
+// 트리거 최소 높이와 라운드 반경은 Shape 컬렉션이 갖고 있다(accordion/trigger/min-height/*,
+// accordion/rounded/radius) — [data-shape] 전환을 따라가야 하므로 프리미티브를 직접 물지 않는다.
+$accordion-sizes: (
+  sm: (min-height: var(--bds-accordion-trigger-min-height-sm), pad: $space-4, type: body-md),
+  md: (min-height: var(--bds-accordion-trigger-min-height-md), pad: $space-5, type: body-md),
+  lg: (min-height: var(--bds-accordion-trigger-min-height-lg), pad: $space-6, type: body-lg),
+);
+
+$accordion-bg: var(--bds-accordion-trigger-bg);
+$accordion-bg-hover: var(--bds-accordion-trigger-bg-hover);
+$accordion-fg: var(--bds-accordion-trigger-fg);
+$accordion-icon-fg: var(--bds-accordion-icon-fg);
+$accordion-panel-bg: var(--bds-accordion-panel-bg);
+$accordion-border: var(--bds-accordion-border);
+$accordion-radius: var(--bds-accordion-rounded-radius);
+
+.bds-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__item {
+    background-color: $accordion-bg;
+  }
+
+  // 실측: 구분선은 Trigger 와 Panel 의 아래쪽 테두리다(individualStrokeWeights 의 bottom 만 1).
+  // 펼친 아이템에서는 Trigger 아래 선이 제목과 본문을 가르고, Panel 아래 선이 다음 아이템과 가른다.
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: $space-4;
+    width: 100%;
+    border: none;
+    border-bottom: $border-hairline solid $accordion-border;
+    background-color: $accordion-bg;
+    color: $accordion-fg;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color $motion-fast;
+
+    &:hover {
+      background-color: $accordion-bg-hover;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px $effect-focus-ring;
+    }
+  }
+
+  &__title {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    flex-shrink: 0;
+    @include mix.text(body-sm, regular);
+    color: var(--bds-text-tertiary);
+  }
+
+  &__chevron {
+    width: 24px; // 실측: 사이즈 축과 무관하게 전 변형 24
+    height: 24px;
+    flex-shrink: 0;
+    color: $accordion-icon-fg;
+    transition: transform $motion-fast;
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    border-bottom: $border-hairline solid $accordion-border;
+    background-color: $accordion-panel-bg;
+    color: var(--bds-text-secondary);
+  }
+
+  // 펼침 여부는 트리거의 aria-expanded 로 읽는다 — JS 전용 상태 클래스를 새로 만들지 않는다.
+  // 패널은 hidden 속성으로 감춘다(브라우저 기본 display:none 이 위 display:flex 에 지므로
+  // 여기서 되돌린다).
+  &__panel[hidden] {
+    display: none;
+  }
+
+  &__trigger[aria-expanded='true'] .bds-accordion__chevron {
+    transform: rotate(180deg);
+  }
+
+  // 마지막 아이템의 아래 선은 컨테이너 테두리와 겹친다 — 실측에서도 컨테이너가 선을 갖는
+  // border·rounded 에서 안쪽 마지막 선이 보이지 않는다.
+  &-border,
+  &-rounded {
+    border: $border-hairline solid $accordion-border;
+
+    .bds-accordion__item:last-child .bds-accordion__trigger,
+    .bds-accordion__item:last-child .bds-accordion__panel {
+      border-bottom: none;
+    }
+  }
+
+  &-rounded {
+    border-radius: $accordion-radius;
+    overflow: hidden; // 아이템 배경이 라운드 밖으로 새지 않게 한다
+  }
+
+  // each — 아이템마다 테두리와 반경을 갖고 사이가 space/2 만큼 떨어진다(실측: items 의 gap).
+  &-each {
+    gap: $space-2;
+
+    .bds-accordion__item {
+      border: $border-hairline solid $accordion-border;
+      border-radius: $accordion-radius;
+      overflow: hidden;
+    }
+
+    .bds-accordion__trigger,
+    .bds-accordion__panel {
+      border-bottom: none;
+    }
+
+    .bds-accordion__trigger[aria-expanded='true'] {
+      border-bottom: $border-hairline solid $accordion-border;
+    }
+  }
+}
+
+@each $size, $props in $accordion-sizes {
+  .bds-accordion-#{$size} {
+    .bds-accordion__trigger {
+      min-height: map.get($props, min-height);
+      padding-inline: map.get($props, pad);
+      @include mix.text(map.get($props, type), regular);
+    }
+
+    .bds-accordion__panel {
+      padding: map.get($props, pad);
+      @include mix.text(map.get($props, type), regular);
+    }
+  }
+}
