@@ -94,6 +94,10 @@ npm run build           # 컴파일
 
 **셋 다 통과해야 끝난 것이다.** 하나라도 실패하면 커밋하지 않는다.
 
+**빌드 산출물은 pre-commit 훅이 같은 커밋에 넣는다.** 문서 사이트는 `docs/assets/main.css` 를
+저장소에 있는 그대로 서빙하므로, SCSS 만 담긴 커밋이 나가면 배포본이 낡는다 — 검사는 그걸 못 잡는다.
+**새로 클론하면 한 번 연결한다:** `git config core.hooksPath .githooks`
+
 `FIGMA_TOKEN` 이 없으면 `check:nodes` 는 skip 된다. 그 사실만 출력하고 나머지로 판정한다.
 **토큰이 없다는 이유로 작업을 멈추거나 사람에게 묻지 않는다.** `.env` 는 만들어도 된다.
 

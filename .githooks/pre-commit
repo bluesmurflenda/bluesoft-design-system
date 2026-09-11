@@ -1,0 +1,25 @@
+#!/bin/sh
+# SCSS·아이콘이 스테이징되면 빌드하고 그 산출물을 같은 커밋에 넣는다.
+#
+# 왜 있나 — 문서 사이트는 docs/assets/main.css 를 저장소에 있는 그대로 서빙한다.
+# SCSS 만 담긴 커밋이 생기면 배포본이 소스보다 낡는데, npm run check 는 SCSS 와 Figma 만
+# 보기 때문에 그 어긋남을 잡지 못한다. 실제로 한 커밋이 그렇게 나갔다(2026-09-11).
+#
+# 건너뛰려면 git commit --no-verify — 산출물이 낡는다는 뜻이므로 이유가 있을 때만.
+
+set -e
+
+changed=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# 빌드 입력이 바뀐 커밋만 대상이다. 문서·설정만 고친 커밋은 그냥 지나간다.
+if ! printf '%s\n' "$changed" | grep -qE '^(scss/|icons/|scripts/(build-icons|generate-docs-tokens|sync-docs-assets)\.mjs$)'; then
+  exit 0
+fi
+
+echo "pre-commit: 빌드 입력이 바뀌었다 — npm run build"
+npm run build >/dev/null
+
+# 산출물 경로만 명시해서 넣는다. 작업 중인 다른 파일이 딸려 들어가지 않게 한다.
+git add -- icons/sprite.svg docs/assets docs/tokens/colors.html
+
+echo "pre-commit: 빌드 산출물을 스테이징했다"
