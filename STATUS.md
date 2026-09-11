@@ -40,8 +40,6 @@
 
 ## 남은 일
 
-- `npm run build` 가 안 돈다 — sass CLI 가 chokidar 를 require 하다 죽는다(SCSS 내용과 무관).
-  지금은 sass JS API 로 컴파일하고 postbuild 두 스크립트를 손으로 돌려 우회한다
 - **스냅샷을 전면 재추출해야 한다** — 2026-09-11 에 새로 생긴 변수(Shape 2 · Primitive 4 ·
   Theme 1)만 넣었다. 기존 항목의 값이 그 사이 바뀌었는지는 확인하지 않았다
 - 목록 항목·목록 패널의 반경에 맞는 Shape 토큰이 없다 — 각진·Pill 모드를 쓸 때 걸린다
