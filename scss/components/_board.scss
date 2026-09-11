@@ -96,7 +96,11 @@ $board-col-width: var(--bds-board-col-meta);
   gap: $space-4;
   padding: $space-4;
   background-color: $board-header-bg;
-  border-bottom: $border-hairline solid $board-border; // 2026-08-28 확인: 하단 테두리만 있음(상단은 없음)
+
+  // 2026-09-11 재실측: 위아래 둘 다 있다(individualStrokeWeights top 1 · bottom 1).
+  // 이전에 "하단만 있음"으로 적혀 있었다.
+  border-top: $border-hairline solid $board-border;
+  border-bottom: $border-hairline solid $board-border;
 
   &__title {
     flex: 1 0 0;
@@ -108,16 +112,25 @@ $board-col-width: var(--bds-board-col-meta);
   }
 }
 
+// Container 축은 default / container / rounded 세 가지다(실측). default 는 테두리가 없고,
+// container 는 테두리만, rounded 는 테두리에 radius/sm 을 더한다 — Table 과 같은 구성이다.
+// -container 가 radius/lg(16)를 갖고 있었는데 Figma 의 container 는 radius/none 이고,
+// 둥근 쪽은 별도 변형이며 값도 radius/sm(8)이다. -rounded 는 코드에 아예 없었다.
 .bds-board-list {
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  // container=yes — 카드형으로 감싼 목록
   &-container {
     background-color: $surface-default;
     border: $border-hairline solid $board-border;
-    border-radius: $radius-lg;
+    overflow: hidden;
+  }
+
+  &-rounded {
+    background-color: $surface-default;
+    border: $border-hairline solid $board-border;
+    border-radius: $radius-sm;
     overflow: hidden;
   }
 }

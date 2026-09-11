@@ -1935,6 +1935,7 @@ table {
   gap: var(--bds-space-4);
   padding: var(--bds-space-4);
   background-color: var(--bds-table-header-col-bg);
+  border-top: var(--bds-border-hairline) solid var(--bds-border-default);
   border-bottom: var(--bds-border-hairline) solid var(--bds-border-default);
 }
 .bds-board-header__title {
@@ -1954,7 +1955,12 @@ table {
 .bds-board-list-container {
   background-color: var(--bds-surface-default);
   border: var(--bds-border-hairline) solid var(--bds-border-default);
-  border-radius: var(--bds-radius-lg);
+  overflow: hidden;
+}
+.bds-board-list-rounded {
+  background-color: var(--bds-surface-default);
+  border: var(--bds-border-hairline) solid var(--bds-border-default);
+  border-radius: var(--bds-radius-sm);
   overflow: hidden;
 }
 
